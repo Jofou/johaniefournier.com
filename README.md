@@ -1,2 +1,2 @@
 # johaniefournier.com
-My blog, built with blogdown and Wowchemy
+My blog, built with blogdown and Hugo
