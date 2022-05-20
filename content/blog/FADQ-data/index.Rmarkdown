@@ -2,7 +2,7 @@
 title: "FADQ historical crops data"
 author: Johanie Fournier, agr. 
 date: "2022-05-22"
-slug: new-blog
+slug: FADQ-data
 categories:
   - rstats
   - tidyverse
