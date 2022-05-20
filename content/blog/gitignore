@@ -1,0 +1,16 @@
+.Rhistory
+.Rproj.user
+.RData
+.Ruserdata
+*.zip
+/public/*
+/blogdown/*
+*_cache*
+/index_cache/*
+.httr-oauth
+LondonStageFull.json
+LondonStageJSON.zip
+*.csv
+resources
+.DS_Store
+.hugo_build.lock
