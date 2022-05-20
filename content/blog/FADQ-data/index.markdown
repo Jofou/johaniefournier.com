@@ -43,7 +43,7 @@ Now, let’s see what we got in this data set!
 ``` r
 board_prepared <- pins::board_folder(path_to_file, versioned = TRUE)
 
-data<-board_prepared %>%
+data <- board_prepared %>%
   pins::pin_read("centroid")
 
 head(data)
@@ -64,11 +64,15 @@ In this dataset, **IDANPAR** is a unique ID for each combination field/year. **X
 First, I want to look at the number of field we have for each year.
 
 ``` r
-ggplot(data) + 
-  geom_histogram(aes(an), position = "identity", binwidth = 1,
-                     fill = "#DBBDC3", color = "black")+
-  labs(title = "Frequency Histogram for Year",
-       x=" ")
+ggplot(data) +
+  geom_histogram(aes(an),
+    position = "identity", binwidth = 1,
+    fill = "#DBBDC3", color = "black"
+  ) +
+  labs(
+    title = "Frequency Histogram for Year",
+    x = " "
+  )
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="2400" />
@@ -78,14 +82,16 @@ The number of information available for each year is constant. This doesn’t re
 Let’s have a look at the crop.
 
 ``` r
-data %>% 
-  count(culture_fadq) %>% 
-  filter(n>=5000) %>% 
-  ggplot(aes(reorder(culture_fadq, n), n)) + 
-  geom_bar(stat="identity", fill = "#DBBDC3", color = "black")+
-  coord_flip()+
-  labs(title = "Frequency Histogram for Crops",
-       x=" ")
+data %>%
+  count(culture_fadq) %>%
+  filter(n >= 5000) %>%
+  ggplot(aes(reorder(culture_fadq, n), n)) +
+  geom_bar(stat = "identity", fill = "#DBBDC3", color = "black") +
+  coord_flip() +
+  labs(
+    title = "Frequency Histogram for Crops",
+    x = " "
+  )
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="2400" />
@@ -95,27 +101,33 @@ Why is NA the main crop in this data? I looked in the original data and there ar
 Now let’s see how the field area look like.
 
 ``` r
-ggplot(data) + 
-  geom_histogram(aes(suphec), position = "identity", binwidth = 1,
-                     fill = "#DBBDC3", color = "black")+
-  labs(title = "Frequency Histogram for Field Area",
-       x=" ")
+ggplot(data) +
+  geom_histogram(aes(suphec),
+    position = "identity", binwidth = 1,
+    fill = "#DBBDC3", color = "black"
+  ) +
+  labs(
+    title = "Frequency Histogram for Field Area",
+    x = " "
+  )
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="2400" />
 
 ``` r
-ggplot(data) + 
-  geom_boxplot(aes(suphec), fill = "#DBBDC3", color = "black")+
-  labs(title = "Boxplot for Field Area",
-       x=" ")
+ggplot(data) +
+  geom_boxplot(aes(suphec), fill = "#DBBDC3", color = "black") +
+  labs(
+    title = "Boxplot for Field Area",
+    x = " "
+  )
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-2.png" width="2400" />
 
 ``` r
 data %>%
-  select(suphec) %>% 
+  select(suphec) %>%
   my_inspect_num()
 ```
 
@@ -187,7 +199,7 @@ suphec
 </tbody>
 </table>
 
-There are field of more than 200 ha in Quebec! 😨 Let me know, I don’t want to walk all this to get the soil samples 🤣 !
+There are field of more than 200 ha in Quebec! 😱 Let me know, I don’t want to walk all this to get the soil samples 😄 !
 
 There is a lot of outliers in this. Dealing with outliers is always tricky. I don’t even have found the perfect recipe yet.
 
@@ -202,22 +214,23 @@ So before I can have fun with this data set, it need a bit of cleaning:
 ### Simplify Crops
 
 ``` r
-data_clean_crops<-data %>% 
-  filter(!is.na(culture_fadq)) %>% 
+data_clean_crops <- data %>%
+  filter(!is.na(culture_fadq)) %>%
   mutate(groupe = case_when(
-    grepl("foin|panic|feverole|semis direct",culture_fadq) ~ "hay",
-    grepl("avoine|ble|orge|seigle|sarrasin|triticale|millet|canola|sorgho|tournesol|epeautre|lin|chanvre",culture_fadq) ~ "cereals",
-    grepl("pommes de terre",culture_fadq) ~ "potato",
-    grepl("framboisier|framboise|fraisier|fraise|pommier|bleuet|bleuetier|arbustes|coniferes|gadellier|camerise|vigne|poire|canneberges|fruitiers et arbres",culture_fadq) ~ "trees and fruits",
-    grepl("paturage",culture_fadq) ~ "pasture",
-    grepl("soya",culture_fadq) ~ "soy",
-    grepl("mais",culture_fadq) ~ "corn",
-    grepl("haricot|chou|brocoli|melon|laitue|oignon|piment|celeris|carotte|panais|radis|rutabaga|zucchini|tomate|betterave|cornichon|rabiole|endive|ail|artichaut|asperge|aubergine|poireau|fines herbes|topinambour|celeri-rave|aneth|epinard|pois|rhubarbe|citrouille|courge|concombre|chou-fleur|tabac|gourganes|echalottes|feverole|navets",culture_fadq) ~ "vegetables",
+    grepl("foin|panic|feverole|semis direct", culture_fadq) ~ "hay",
+    grepl("avoine|ble|orge|seigle|sarrasin|triticale|millet|canola|sorgho|tournesol|epeautre|lin|chanvre", culture_fadq) ~ "cereals",
+    grepl("pommes de terre", culture_fadq) ~ "potato",
+    grepl("framboisier|framboise|fraisier|fraise|pommier|bleuet|bleuetier|arbustes|coniferes|gadellier|camerise|vigne|poire|canneberges|fruitiers et arbres", culture_fadq) ~ "trees and fruits",
+    grepl("paturage", culture_fadq) ~ "pasture",
+    grepl("soya", culture_fadq) ~ "soy",
+    grepl("mais", culture_fadq) ~ "corn",
+    grepl("haricot|chou|brocoli|melon|laitue|oignon|piment|celeris|carotte|panais|radis|rutabaga|zucchini|tomate|betterave|cornichon|rabiole|endive|ail|artichaut|asperge|aubergine|poireau|fines herbes|topinambour|celeri-rave|aneth|epinard|pois|rhubarbe|citrouille|courge|concombre|chou-fleur|tabac|gourganes|echalottes|feverole|navets", culture_fadq) ~ "vegetables",
     grepl("non-cultive|tourbe|engrais vert", culture_fadq) ~ "not cultivated",
-          TRUE ~ as.character(.$culture_fadq))) 
+    TRUE ~ as.character(.$culture_fadq)
+  ))
 
-data_clean_crops %>% 
-  count(groupe, sort=TRUE) %>% 
+data_clean_crops %>%
+  count(groupe, sort = TRUE) %>%
   DT::datatable()
 ```
 
@@ -253,13 +266,17 @@ quantile(data_clean_crops$suphec, c(0.05, 0.95))
     ##  0.5 13.9
 
 ``` r
-data_clean_crops %>% 
-  filter(suphec <=13.9) %>% 
-  ggplot() + 
-  geom_histogram(aes(suphec), position = "identity", binwidth = 1,
-                     fill = "#DBBDC3", color = "black")+
-  labs(title = "Frequency Histogram for Field Area",
-       x=" ")
+data_clean_crops %>%
+  filter(suphec <= 13.9) %>%
+  ggplot() +
+  geom_histogram(aes(suphec),
+    position = "identity", binwidth = 1,
+    fill = "#DBBDC3", color = "black"
+  ) +
+  labs(
+    title = "Frequency Histogram for Field Area",
+    x = " "
+  )
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="2400" />
@@ -269,22 +286,26 @@ data_clean_crops %>%
 ### Hampel X85
 
 ``` r
-var<-data_clean_crops$suphec 
+var <- data_clean_crops$suphec
 
-upper_limit<-median(var)+1.4826*2*mad(var)
+upper_limit <- median(var) + 1.4826 * 2 * mad(var)
 upper_limit
 ```
 
     ## [1] 11.55279
 
 ``` r
-data_clean_crops %>% 
-  filter(suphec <= upper_limit) %>% 
-  ggplot() + 
-  geom_histogram(aes(suphec), position = "identity", binwidth = 1,
-                     fill = "#DBBDC3", color = "black")+
-  labs(title = "Frequency Histogram for Field Area",
-       x=" ")
+data_clean_crops %>%
+  filter(suphec <= upper_limit) %>%
+  ggplot() +
+  geom_histogram(aes(suphec),
+    position = "identity", binwidth = 1,
+    fill = "#DBBDC3", color = "black"
+  ) +
+  labs(
+    title = "Frequency Histogram for Field Area",
+    x = " "
+  )
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="2400" />
@@ -305,13 +326,13 @@ I try to avoid transformation at any cost. It usually just make a mess in the in
 | 2             | `\(x^2\)`                |
 
 ``` r
-b <- MASS::boxcox(lm(data_clean_crops$suphec  ~ 1))
+b <- MASS::boxcox(lm(data_clean_crops$suphec ~ 1))
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="2400" />
 
 ``` r
-lambda <- b$x[which.max(b$y)] 
+lambda <- b$x[which.max(b$y)]
 lambda
 ```
 
@@ -320,13 +341,17 @@ lambda
 The best transformation for the field area is the log transformation.
 
 ``` r
-data_clean_crops %>% 
-  mutate(suphec_log=log(suphec)) %>% 
-  ggplot() + 
-  geom_histogram(aes(suphec_log), position = "identity", binwidth = 1,
-                     fill = "#DBBDC3", color = "black")+
-  labs(title = "Frequency Histogram for Field Area",
-       x=" ")
+data_clean_crops %>%
+  mutate(suphec_log = log(suphec)) %>%
+  ggplot() +
+  geom_histogram(aes(suphec_log),
+    position = "identity", binwidth = 1,
+    fill = "#DBBDC3", color = "black"
+  ) +
+  labs(
+    title = "Frequency Histogram for Field Area",
+    x = " "
+  )
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="2400" />
@@ -336,20 +361,21 @@ Oh! We got something! The log transformation is the best way to make the field a
 ### Final data set
 
 ``` r
-data_clean<-data %>% 
-  filter(!is.na(culture_fadq)) %>% 
+data_clean <- data %>%
+  filter(!is.na(culture_fadq)) %>%
   mutate(culture = case_when(
-    grepl("foin|panic|feverole|semis direct",culture_fadq) ~ "hay",
-    grepl("avoine|ble|orge|seigle|sarrasin|triticale|millet|canola|sorgho|tournesol|epeautre|lin|chanvre",culture_fadq) ~ "cereals",
-    grepl("pommes de terre",culture_fadq) ~ "potato",
-    grepl("framboisier|framboise|fraisier|fraise|pommier|bleuet|bleuetier|arbustes|coniferes|gadellier|camerise|vigne|poire|canneberges|fruitiers et arbres",culture_fadq) ~ "trees and fruits",
-    grepl("paturage",culture_fadq) ~ "pasture",
-    grepl("soya",culture_fadq) ~ "soy",
-    grepl("mais",culture_fadq) ~ "corn",
-    grepl("haricot|chou|brocoli|melon|laitue|oignon|piment|celeris|carotte|panais|radis|rutabaga|zucchini|tomate|betterave|cornichon|rabiole|endive|ail|artichaut|asperge|aubergine|poireau|fines herbes|topinambour|celeri-rave|aneth|epinard|pois|rhubarbe|citrouille|courge|concombre|chou-fleur|tabac|gourganes|echalottes|feverole|navets",culture_fadq) ~ "vegetables",
+    grepl("foin|panic|feverole|semis direct", culture_fadq) ~ "hay",
+    grepl("avoine|ble|orge|seigle|sarrasin|triticale|millet|canola|sorgho|tournesol|epeautre|lin|chanvre", culture_fadq) ~ "cereals",
+    grepl("pommes de terre", culture_fadq) ~ "potato",
+    grepl("framboisier|framboise|fraisier|fraise|pommier|bleuet|bleuetier|arbustes|coniferes|gadellier|camerise|vigne|poire|canneberges|fruitiers et arbres", culture_fadq) ~ "trees and fruits",
+    grepl("paturage", culture_fadq) ~ "pasture",
+    grepl("soya", culture_fadq) ~ "soy",
+    grepl("mais", culture_fadq) ~ "corn",
+    grepl("haricot|chou|brocoli|melon|laitue|oignon|piment|celeris|carotte|panais|radis|rutabaga|zucchini|tomate|betterave|cornichon|rabiole|endive|ail|artichaut|asperge|aubergine|poireau|fines herbes|topinambour|celeri-rave|aneth|epinard|pois|rhubarbe|citrouille|courge|concombre|chou-fleur|tabac|gourganes|echalottes|feverole|navets", culture_fadq) ~ "vegetables",
     grepl("non-cultive|tourbe|engrais vert", culture_fadq) ~ "not cultivated",
-          TRUE ~ as.character(.$culture_fadq))) %>% 
-  mutate(suphec_log=log(suphec)) %>% 
+    TRUE ~ as.character(.$culture_fadq)
+  )) %>%
+  mutate(suphec_log = log(suphec)) %>%
   select(-culture_fadq)
 
 summary(data_clean)
