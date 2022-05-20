@@ -1,7 +1,7 @@
 ---
 title: "I Juste Make my Own Blog!"
 author: Johanie Fournier, agr. 
-date: "`r format(Sys.time(), '%Y-%m-%d')`"
+date: "2022-05-11"
 slug: new-blog
 categories:
   - rstats
@@ -11,9 +11,8 @@ tags:
   - blogdown
 subtitle: ''
 summary: "I just successfully use Blogdown and Apéro to completely transform/remake my website."
-featured: yes
+featured: no
 image:
-  placement: 1
   caption: ''
   focal_point: ''
   preview_only: false

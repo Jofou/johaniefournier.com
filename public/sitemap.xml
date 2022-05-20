@@ -2,31 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://johaniefournier.netlify.app/categories/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/blog/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/post/2020-12-01-r-rmarkdown/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/tag/blogdown/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/categories/blogdown/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/tags/plot/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/categories/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/post/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/blog/new-blog/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/categories/r/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/blog/new-blog/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/tags/r-markdown/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/tags/regression/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/tag/rstats/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://johaniefournier.netlify.app/tags/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    <loc>https://johaniefournier.com/categories/rstats/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/tags/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/tag/tidyverse/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/categories/tidyverse/</loc>
+    <lastmod>2022-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/about/</loc>
+  </url><url>
+    <loc>https://johaniefournier.com/license/</loc>
+  </url><url>
+    <loc>https://johaniefournier.com/series/</loc>
   </url>
 </urlset>

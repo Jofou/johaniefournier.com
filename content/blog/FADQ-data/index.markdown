@@ -1,7 +1,7 @@
 ---
 title: "FADQ historical crops data"
 author: Johanie Fournier, agr. 
-date: "2022-05-20"
+date: "2022-05-22"
 slug: new-blog
 categories:
   - rstats
@@ -11,9 +11,8 @@ tags:
   - tidyverse
 subtitle: ''
 summary: "I have a lot of things to try... so I need a lot of data to play with. Here I summarize you how I extract FADQ historic data. I'm going to place the tidy data in a repro on github and play with it for my next blogs."
-featured: yes
+featured: no
 image:
-  placement: 1
   caption: ''
   focal_point: ''
   preview_only: false
@@ -199,7 +198,7 @@ suphec
 </tbody>
 </table>
 
-There are field of more than 200 ha in Quebec! 😱 Let me know, I don’t want to walk all this to get the soil samples 😄 !
+There are field of more than 200 ha in Quebec! 😨 Let me know, I don’t want to walk all this to get the soil samples 😄 !
 
 There is a lot of outliers in this. Dealing with outliers is always tricky. I don’t even have found the perfect recipe yet.
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blogdown on Johanie Fournier</title>
+    <link>https://johaniefournier.com/tag/blogdown/</link>
+    <description>Recent content in blogdown on Johanie Fournier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 20 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/blogdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>I Juste Make my Own Blog!</title>
+      <link>https://johaniefournier.com/blog/new-blog/</link>
+      <pubDate>Fri, 20 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/new-blog/</guid>
+      <description>I just successfully use Blogdown and Apéro to completely transform/remake my website.</description>
+    </item>
+    
+  </channel>
+</rss>
