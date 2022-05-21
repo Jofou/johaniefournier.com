@@ -1,7 +1,7 @@
 ---
 title: "FADQ historical crops data"
 author: Johanie Fournier, agr. 
-date: "2022-05-22"
+date: "2022-05-20"
 slug: data-fadq
 categories:
   - rstats
@@ -198,7 +198,7 @@ suphec
 </tbody>
 </table>
 
-There are field of more than 200 ha in Quebec! 😨 Let me know, I don’t want to walk all this to get the soil samples 😂 !
+There are field of more than 200 ha in Quebec! 😨 Let me know, I don’t want to walk all this to get the soil samples 😄 !
 
 There is a lot of outliers in this. Dealing with outliers is always tricky. I don’t even have found the perfect recipe yet.
 
