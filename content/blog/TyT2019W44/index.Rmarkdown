@@ -1,7 +1,7 @@
 ---
 title: "TyT2019W44 - Show Some Informations"
 author: Johanie Fournier, agr. 
-date: "2010-10-31"
+date: "2019-10-31"
 slug: TyT2019W44
 categories:
   - rstats

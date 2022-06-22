@@ -1,7 +1,7 @@
 ---
 title: "TyT2019W49 - Visualize Mean Price"
 author: Johanie Fournier, agr. 
-date: "2010-12-07"
+date: "2019-12-07"
 slug: TyT2019W49
 categories:
   - rstats

@@ -1,0 +1,138 @@
+---
+title: "TyT2019W40 - Facet_wrap with dots and lines"
+author: Johanie Fournier, agr. 
+date: "2019-10-02"
+slug: TyT2019W40
+categories:
+  - rstats
+  - tidyverse
+  - tidytuesday
+tags:
+  - rstats
+  - tidyverse
+  - tidytuesday
+subtitle: ''
+summary: "Initially publish it on my wordpress blog. I put it here for reference purpose."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(magick)
+library(lubridate)
+library(inspectdf)
+library(ggtext)
+library(rmarkdown)
+library(patchwork)
+library(ggpmisc)
+library(tidytuesdayR)
+```
+
+
+## Get the data
+
+```{r}
+pizza_jared <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_jared.csv")
+```
+
+## Explore the data
+
+```{r}
+summary(pizza_jared)
+
+votes<-pizza_jared %>% 
+  select('votes') %>% 
+  inspect_num() 
+show_plot(votes)
+
+votes<-pizza_jared %>% 
+  filter(answer=="Excellent") %>% 
+  select('percent') %>% 
+  inspect_num() 
+show_plot(votes)
+```
+
+## Prepare the data
+
+```{r}
+excellent<-pizza_jared %>% 
+    filter(answer=="Excellent" & percent>=0.5) %>% 
+    select('place') %>% 
+    distinct()
+
+
+pizza_jared_top<-pizza_jared %>% 
+  right_join(excellent, by="place") %>% 
+  group_by(place, answer) %>% 
+  summarise(votes_corr=mean(votes))
+
+pizza_jared_top$answer <-factor(pizza_jared_top$answer, levels = c("Excellent", "Good", "Average", "Poor", "Never Again"))
+pizza_jared_top$place <-factor(pizza_jared_top$place, levels = c( "Prince Street Pizza",  "Patsy's", "Naples 45", "Tappo","Little Italy Pizza", "Fiore's"))
+
+pizza_jared_top<-pizza_jared_top %>% 
+  mutate(answer=case_when(answer == 'Excellent' ~ "Excellent",
+                          answer == 'Good' ~ "Bon",
+                          answer == 'Average' ~ "Moyen",
+                          answer == 'Poor' ~ "Mauvais",
+                          answer == 'Never Again' ~ "Plus Jamais"))
+
+pizza_jared_top$answer <-factor(pizza_jared_top$answer, levels = c("Excellent", "Bon", "Moyen", "Mauvais", "Plus Jamais"))
+```
+
+## Visualize the data
+
+```{r, eval=FALSE}
+#Graphique
+gg<-ggplot(pizza_jared_top, aes(x=votes_corr, y=place, color=answer))
+gg<-gg + geom_point(size=11, alpha=0.9)
+gg<-gg + facet_grid(. ~ answer)
+gg<-gg + scale_color_brewer(palette="Set1")
+#retier la légende
+gg<-gg + theme(legend.position = "none")
+#ajuster les axes
+gg<-gg + scale_x_continuous(breaks=seq(0,10,2), limits=c(-2, 12))
+#Ajouter les étiquettes de données 
+gg<-gg + geom_text(data=pizza_jared_top, aes(x=votes_corr, y=place, label=(round(pizza_jared_top$votes_corr,0))), color="#5D5D5D", size=5.5, vjust=0.5, hjust=0.5, family="Tw Cen MT", fontface="bold")
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_line(size=1, linetype = "solid", color="#A9A9A9"),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks = element_blank(), 
+                    strip.background =element_blank())
+
+#ajouter les titres
+gg<-gg + labs(title="How is the pizza?",
+              subtitle = "\nTop 6 restaurants serving pizza in New York according to Jared Lander's survey\n",
+              x=" ", 
+              y=" ", 
+              caption="\nSOURCE: Jared Lander   |  DESIGN: Johanie Fournier, agr.")
+gg<-gg + theme(  plot.title    = element_blank(),
+                 plot.subtitle = element_blank(),
+                 plot.caption  = element_text(size=8, hjust=1,vjust=0.5, family="Tw Cen MT", color="#5D5D5D"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(size=18, hjust=1,vjust=0.5, family="Tw Cen MT", color="#5D5D5D"), 
+                 axis.text.x   = element_blank(), 
+                 strip.text = element_text(size=18, hjust=0.5,vjust=0.5, family="Tw Cen MT", color="#5D5D5D"))
+```
+
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+magick::image_read('featured.png')
+```
+

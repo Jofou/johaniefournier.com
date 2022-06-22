@@ -1,7 +1,7 @@
 ---
 title: "TyT2019W47 - Treemap"
 author: Johanie Fournier, agr. 
-date: "2010-11-20"
+date: "2019-11-20"
 slug: TyT2019W47
 categories:
   - rstats

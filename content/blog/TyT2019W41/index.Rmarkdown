@@ -1,0 +1,133 @@
+---
+title: "TyT2019W41 - Ratios to compare"
+author: Johanie Fournier, agr. 
+date: "2019-10-10"
+slug: TyT2019W41
+categories:
+  - rstats
+  - tidyverse
+  - tidytuesday
+tags:
+  - rstats
+  - tidyverse
+  - tidytuesday
+subtitle: ''
+summary: "Initially publish it on my wordpress blog. I put it here for reference purpose."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(magick)
+library(lubridate)
+library(inspectdf)
+library(ggtext)
+library(rmarkdown)
+library(patchwork)
+library(ggpmisc)
+library(tidytuesdayR)
+```
+
+
+## Get the data
+
+```{r}
+ipf_lifts <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-08/ipf_lifts.csv")
+```
+
+## Explore the data
+
+```{r}
+summary(ipf_lifts)
+```
+
+## Prepare the data
+
+```{r}
+comp_poids<-ipf_lifts %>% 
+  mutate(ratio=best3deadlift_kg/bodyweight_kg) %>% 
+  filter(!is.na(ratio), !is.na(age_class), !age_class=="5-12") %>% 
+  select(age_class, sex, ratio) %>% 
+  group_by(sex, age_class) %>% 
+  summarise(moyenne=mean(ratio, na.rm=TRUE), et=sd(ratio, na.rm=TRUE)) %>% 
+  mutate(age_class=as.factor(age_class))
+```
+
+## Visualize the data
+
+```{r, eval=FALSE}
+#Graphique
+gg<-ggplot(data=comp_poids)
+gg<-gg + geom_rect(data=comp_poids, aes(x=age_class, y=moyenne), 
+                   xmin=as.numeric(comp_poids$age_class[[5]])-0.5,
+                   xmax=as.numeric(comp_poids$age_class[[6]])+0.5,
+                   ymin=0, 
+                   ymax=4,
+                   fill="#E7E7E7", alpha=0.6)
+gg<-gg + geom_rect(data=comp_poids, aes(x=age_class, y=moyenne), 
+                   xmin=as.numeric(comp_poids$age_class[[9]])-0.5,
+                   xmax=as.numeric(comp_poids$age_class[[10]])+0.5,
+                   ymin=0, 
+                   ymax=4,
+                   fill="#E7E7E7", alpha=0.6)
+gg<-gg + geom_rect(data=comp_poids, aes(x=age_class, y=moyenne), 
+                   xmin=as.numeric(comp_poids$age_class[[12]])-0.5,
+                   xmax=as.numeric(comp_poids$age_class[[13]])+0.5,
+                   ymin=0, 
+                   ymax=4,
+                   fill="#E7E7E7", alpha=0.6)
+gg<-gg + geom_segment( aes(x=as.numeric(comp_poids$age_class[[5]]),xend=as.numeric(comp_poids$age_class[[13]]),
+                   y=3.24, 
+                   yend=2.2),
+                   color="#EA9010", alpha=0.6)
+gg<-gg + geom_segment( aes(x=as.numeric(comp_poids$age_class[[5]]),xend=as.numeric(comp_poids$age_class[[13]]),
+                   y=2.73, 
+                   yend=1.92),
+                   color="#4A0D67", alpha=0.6)
+gg<-gg + geom_point(data=comp_poids,aes(x=age_class, y=moyenne, group=sex, color=sex), size=4.5)
+gg<-gg + geom_errorbar(data=comp_poids, aes(x=age_class, ymin=moyenne-et, ymax=moyenne+et, color=sex), width=0.3, size=0.6, alpha=0.6)
+gg<-gg + scale_color_manual(values=c("#4A0D67","#EA9010"))
+#retier la légende
+gg<-gg + theme(legend.position = "none")
+#ajuster les axes
+gg<-gg + scale_y_continuous(breaks=seq(0,4,0.5), limits=c(0, 4))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_line(size=0.5, color="#A9A9A9"),
+                    axis.line.y =element_line(size=0.5, color="#A9A9A9"),
+                    axis.ticks = element_blank())
+#ajouter les titres
+gg<-gg + labs(title="<span style='color:#4A0D67'>**Women**</span>  lose their super power slower than <span style='color:#EA9010'>**Men**</span> !",
+              subtitle = "\nAt their best, men can lift 3.2X their body weight at deadlift. Women can lift 2.7X their weight for the same age category.\nWhat is surprising is that women lose their physical capacity less quickly than men.\n",
+              x="Age", 
+              y="Lift Weight/Body Weight Ratio", 
+              caption="\nSOURCE: Open Powerlifting   |  DESIGN: Johanie Fournier, agr.")
+gg<-gg + theme(  plot.title    =  element_markdown(lineheight = 1.1,size=29, hjust=0,vjust=0.5, face="bold", color="#404040"),
+                 plot.subtitle = element_text(size=14, hjust=0,family="Tw Cen MT", color="#8B8B8B"),
+                 plot.caption  = element_text(size=8, hjust=1,vjust=0.5, family="Tw Cen MT", color="#8B8B8B"),
+                 axis.title.y  = element_text(size=12, hjust=1,vjust=0.5, family="Tw Cen MT", color="#8B8B8B", angle=90),
+                 axis.title.x  = element_text(size=12, hjust=0,vjust=0.5, family="Tw Cen MT", color="#8B8B8B"),
+                 axis.text.y   = element_text(size=12, hjust=0.5,vjust=0.5, family="Tw Cen MT", color="#8B8B8B"), 
+                 axis.text.x   = element_text(size=12, hjust=0.5,vjust=0.5, family="Tw Cen MT", color="#8B8B8B"))
+```
+
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+magick::image_read('featured.png')
+```
+

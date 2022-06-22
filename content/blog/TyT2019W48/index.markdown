@@ -1,7 +1,7 @@
 ---
 title: "TyT2019W48 - Put Together Two Histograms"
 author: Johanie Fournier, agr. 
-date: "2010-11-28"
+date: "2019-11-28"
 slug: TyT2019W48
 categories:
   - rstats
