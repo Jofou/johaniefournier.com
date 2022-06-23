@@ -1,0 +1,514 @@
+---
+title: "TyT2019|W31"
+author: "Johanie Fournier, agr."
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: 
+  html_document
+---
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE, echo=FALSE}
+#install.packages("zoo")
+#library(devtools)
+#devtools::install_github("duncantl/XMLRPC")
+#devtools::install_github("thebioengineer/tidytuesdayR")
+#devtools::install_github("alasairrushworth/inspectdf")
+#install.packages("extrafont")
+library(extrafont)
+#font_import()
+fonts()
+library(zoo)
+library(inspectdf)
+library(tidytuesdayR)
+library(knitr)
+library(RWordPress)
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(ggalt)
+library(magick)
+library(here)
+library(magrittr)
+library(Hmisc)
+library(patchwork)
+library(bbplot)
+library(ggpol)
+library(lubridate)
+```
+Le [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) de cette semaine va faire plaisir aux amateurs de jeu vidéo! On visualise l'évolution du pointage et du prix dans le temps à l'aide d'une viz pas beige du tout...
+
+
+<br><br>
+**CONTEXTE**
+
+Les données de cette semaine proviennent de [Steam Spy](https://steamspy.com/year/) et sont inspirées de Liza Wood, qui a récemment utilisée ces données pour identifier les jeux vidéos qui ont passés l'épreuve du temps. Son article de [blog](https://cruiseofdimensionality.home.blog/2019/07/24/pc-video-games-we-still-play/) présente un analyse détaillée. 
+
+Parmi les informations disponibles, on retouve le temps de jeu (des deux dernières semaines), la date de sortie du jeu, l'éditeur, le métascore et bien plus.
+
+
+<br><br>
+**OBJECTIFS**
+
+1) Visaliser l'évolution dans le temps du prix et du pointage de classement des jeu vidéo.
+2) Utiliser geom_jitter pour montrer les tendances
+
+<br><br>
+**IMPORTER**
+```{r, include=TRUE, echo=TRUE, warning=FALSE,comment=FALSE}
+video_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-30/video_games.csv")
+
+```
+
+<br><br>
+**EXPLORER**
+```{r, echo=TRUE}
+glimpse(video_games)
+summary(video_games)
+```
+
+```{r, echo=TRUE, eval=FALSE}
+plt1 <-video_games %>% 
+  filter(metascore>=45) %>% 
+  ggplot(aes(x=" ", y = metascore)) +
+  geom_boxplot(fill = "#FFFFFF", color = "black") + 
+  coord_flip() +
+  theme_classic() +
+  xlab("") +
+  ylab("metascore")+
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+plt2 <-video_games %>%
+  filter(metascore>=45) %>% 
+  ggplot() +
+   geom_histogram(aes(x = metascore, y = (..count..)/sum(..count..)),
+                       position = "identity", binwidth = 1, 
+                       fill = "#FFFFFF", color = "black") +
+   ylab("Fréquence Relative")+
+   xlab("")+
+  theme_classic()+
+  theme(axis.text.x = element_blank())+
+  theme(axis.ticks.x = element_blank())
+plt2 + plt1 + plot_layout(nrow = 2, heights = c(2, 1))
+
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-1.5
+height <- 5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/distribution score.png", 
+ #      height = height , width = height * aspect_ratio)
+
+# Call back the plot
+#plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/distribution score.png')
+#image_browse(plot1)
+```
+
+<br><br>
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/distribution score.png')
+```
+
+
+```{r, echo=TRUE, eval=FALSE}
+plt1 <-video_games %>% 
+  filter(price<=20) %>% 
+  ggplot(aes(x=" ", y = price)) +
+  geom_boxplot(fill = "#FFFFFF", color = "black") + 
+  coord_flip() +
+  theme_classic() +
+  xlab("") +
+  ylab("Prix")+
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+plt2 <-video_games %>%
+  filter(price<=20) %>% 
+  ggplot() +
+   geom_histogram(aes(x = price, y = (..count..)/sum(..count..)),
+                       position = "identity", binwidth = 1, 
+                       fill = "#FFFFFF", color = "black") +
+   ylab("Fréquence Relative")+
+   xlab("")+
+  theme_classic()+
+  theme(axis.text.x = element_blank())+
+  theme(axis.ticks.x = element_blank())
+plt2 + plt1 + plot_layout(nrow = 2, heights = c(2, 1))
+```
+<br><br>
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-1.5
+height <- 5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/distribution prix.png", 
+#       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+#plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/distribution prix.png')
+#image_browse(plot1)
+```
+
+<br><br>
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/distribution prix.png')
+```
+<br><br>
+Le format de la date est a modifié pour qu'on puisse lire et travailler le format. On doit aussi faire un peu de ménage dans les valeurs extrêmes pour les metascores et le pointage. Le choix des valeurs qu'on peut considérer aberhante est très discutable. Dans mon cas, je cherche à retirer le moins de données possible tout en m'assurant que les moyennes que je vais calculer vont être représentatives pour chacune des variables. 
+
+<br><br>
+
+##Partie 1: Metascore
+<br><br>
+**PRÉPARER**: 
+
+```{r, include=TRUE, echo=TRUE, warning=FALSE, eval=TRUE, comment=FALSE}
+#SCORE
+#moyenne globale
+moyenne_globale_score <- video_games %>% 
+  filter(metascore>=45) %>% 
+  summarise(score_moy_globale=mean(metascore, na.rm=TRUE))
+
+#moyenne annuelle
+moyenne_annee_score <- video_games %>% 
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))  %>%
+ filter(metascore>=45) %>% 
+  group_by(annee)%>%
+  summarise(score_moy_annee=mean(metascore, na.rm=TRUE))
+
+#fichier de travail
+games_score <- video_games %>% 
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))%>%
+  filter(metascore>=45) %>% 
+  group_by(annee, metascore) %>% 
+  summarise(moy_annee=mean(metascore)) %>% 
+  right_join(moyenne_annee_score, by="annee") %>%
+  mutate(score_moy_global=moyenne_globale_score$score_moy_globale)
+```
+
+
+<br><br>
+**VISUALISER**
+
+```{r, eval=FALSE}
+#Graphique score
+set.seed(123)
+gg1<-ggplot(games_score, aes(x=annee, y=metascore, fill=annee))
+gg1 <- gg1 + geom_jitter(color="#8597A0", size=5, alpha = 0.25, width = 0.20)
+gg1 <- gg1 + geom_hline(aes(yintercept = score_moy_global), color = "#6D7C83", size = 0.5) 
+gg1 <- gg1 + geom_segment(aes(x = annee, xend = annee,y = score_moy_global, yend = score_moy_annee), size = 0.5, color='#6D7C83')
+gg1 <- gg1 + geom_point(mapping=aes(x=annee, y=score_moy_annee, fill=annee), fill="#386FA4",color="#6D7C83", shape=21, size=7, stroke=1)
+#retirer la légende
+gg1 <- gg1 + theme(legend.position = "none")
+#ajuster les axes 
+gg1 <- gg1 + scale_y_continuous(breaks=seq(40,100,20), limits = c(40, 100))
+gg1 <- gg1 + scale_x_continuous(breaks=seq(2004,2018,1), limits = c(2003, 2018))
+#modifier le thème
+gg1 <- gg1 +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.y= element_line(size=0.1,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les étiquettes
+gg1<-gg1 + annotate(geom="text", x=2003,y=74, label="Moy=72", color="#6D7C83", size=4, hjust=0.5,vjust=0, fontface="bold")
+#ajouter les titres
+gg1<-gg1 + labs(title="L'évolution des jeux vidéo",
+              subtitle="\nLe pointage n'a pas beaucoup varié au cours des dernières années. Pour ce qui est du  prix par contre, on voit\nclairement qu'il y a de plus en plus de jeux vidéo qui sont disponible à petit prix.\n",
+              y="Metascore", 
+              x=" ")
+gg1<-gg1 + theme(plot.title    = element_text(hjust=0,size=36, color="#6D7C83", face="bold", family="Arial Rounded MT Bold"),
+                 plot.subtitle = element_text(hjust=0,size=12, color="#6D7C83", family="Arial Rounded MT Bold"),
+                 axis.title.y  = element_text(hjust=1, vjust=0, size=12, color="#6D7C83", face="bold"),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=0.5, vjust=0, size=12, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_blank())
+
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-2
+height <- 5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/score fra.png", 
+#       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+#plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/score fra.png')
+#image_browse(plot1)
+```
+
+##Partie 2: Prix
+
+<br><br>
+**PRÉPARER**: 
+
+```{r, include=TRUE, echo=TRUE, warning=FALSE, eval=TRUE, comment=FALSE}
+#PRIX
+#moyenne prix
+med_globale_prix <- video_games %>% 
+  summarise(prix_med_globale=mean(price, na.rm=TRUE))
+
+#median annuel
+med_annee_prix <- video_games %>% 
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))  %>%
+  group_by(annee)%>%
+  summarise(prix_med_annee=mean(price, na.rm=TRUE))
+
+#fichier de travail
+games_prix <- video_games %>% 
+ filter(price<=20) %>%
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))  %>%
+    group_by(annee, price) %>% 
+  summarise(moy_annee=mean(price)) %>% 
+  right_join(med_annee_prix, by="annee") %>%
+  mutate(prix_med_globale=med_globale_prix$prix_med_globale)
+```
+
+
+<br><br>
+**VISUALISER**
+
+```{r, eval=FALSE}
+#Graphique Prix
+set.seed(123)
+gg2<-ggplot(games_prix, aes(x=annee, y=price, fill=annee))
+gg2 <- gg2 + geom_jitter(color="#8597A0", size=6, alpha = 0.25, width = 0.20)
+gg2 <- gg2 + geom_hline(aes(yintercept = prix_med_globale), color = "#6D7C83", size = 0.5) 
+gg2 <- gg2 + geom_segment(aes(x = annee, xend = annee,y = prix_med_globale, yend = prix_med_annee), size = 0.5, color='#6D7C83')
+gg2 <- gg2 + geom_point(mapping=aes(x=annee, y=prix_med_annee, fill=annee), fill="#386FA4",color="#6D7C83", shape=21, size=8.5, stroke=1)
+#retirer la légende
+gg2 <- gg2 + theme(legend.position = "none")
+#ajuster les axes 
+gg2 <- gg2 + scale_y_continuous(breaks=seq(0,20,5), limits = c(0, 20))
+gg2 <- gg2 + scale_x_continuous(breaks=seq(2004,2018,1), limits = c(2003, 2018))
+#modifier le thème
+gg2 <- gg2 +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.y= element_line(size=0.1,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les étiquettes
+gg2<-gg2 + annotate(geom="text", x=2003,y=9.5, label="Moy=9", color="#6D7C83", size=5, hjust=0.5,vjust=0, fontface="bold")
+#ajouter les titres
+gg2<-gg2 + labs(title=" ",
+              subtitle=" ",
+              y="Prix ($US)", 
+              x=" ")
+gg2<-gg2 + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_blank(),
+                 axis.title.y  = element_text(hjust=1, vjust=0, size=14, color="#6D7C83", face="bold"),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=0.5, vjust=0, size=14, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_text(hjust=0.5, vjust=0, size=14, color="#6D7C83", face="bold"))
+```
+
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <- 2.5
+height <- 5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/price fra.png", 
+#       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot2 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/price fra.png')
+#image_browse(plot2)
+
+# And bring in a logo
+logo_raw <- image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_f.once_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x40") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "1250x20") %>%
+  image_annotate("SOURCE: Steam Spy                       DESIGN: Johanie Fournier, agr.",
+                 color = "#6D7C83", size = 34, location = "+850+20")
+#image_browse(logo)
+
+# And bring in a logo
+logo_raw <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+sep <- logo_raw %>%
+  image_scale("x40") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "1250x7") %>%
+  image_annotate("SOURCE: Steam Spy                       DESIGN: Johanie Fournier, agr.",
+                 color = "#FFFFFF", size = 34, location = "+850+20")
+#image_browse(sep)
+
+# Stack them on top of each other
+#final_plot <- image_append(image_scale(c(plot1,plot2,sep,logo), "1250"), stack = TRUE)
+#image_browse(final_plot)
+
+#And overwrite the plot without a logo
+#image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/fra FINAL.png')
+```
+
+
+```{r, eval=FALSE, include=FALSE}
+##################################################################################################################
+##################################################Anglais#########################################################
+##################################################################################################################
+#Graphique score
+set.seed(123)
+gg1<-ggplot(games_score, aes(x=annee, y=metascore, fill=annee))
+gg1 <- gg1 + geom_jitter(color="#8597A0", size=5, alpha = 0.25, width = 0.20)
+gg1 <- gg1 + geom_hline(aes(yintercept = score_moy_global), color = "#6D7C83", size = 0.5) 
+gg1 <- gg1 + geom_segment(aes(x = annee, xend = annee,y = score_moy_global, yend = score_moy_annee), size = 0.5, color='#6D7C83')
+gg1 <- gg1 + geom_point(mapping=aes(x=annee, y=score_moy_annee, fill=annee), fill="#386FA4",color="#6D7C83", shape=21, size=7, stroke=1)
+#retirer la légende
+gg1 <- gg1 + theme(legend.position = "none")
+#ajuster les axes 
+gg1 <- gg1 + scale_y_continuous(breaks=seq(40,100,20), limits = c(40, 100))
+gg1 <- gg1 + scale_x_continuous(breaks=seq(2004,2018,1), limits = c(2003, 2018))
+#modifier le thème
+gg1 <- gg1 +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.y= element_line(size=0.1,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les étiquettes
+gg1<-gg1 + annotate(geom="text", x=2003,y=74, label="Mean=72", color="#6D7C83", size=4, hjust=0.5,vjust=0, fontface="bold")
+#ajouter les titres
+gg1<-gg1 + labs(title="Evolution of Video Games",
+              subtitle="\nThe score has not changed much in recent years. As for the price, it is clear that there are more and more video\n games that are available at lower prices.",
+              y="Metascore", 
+              x=" ")
+gg1<-gg1 + theme(plot.title    = element_text(hjust=0,size=36, color="#6D7C83", face="bold", family="Arial Rounded MT Bold"),
+                 plot.subtitle = element_text(hjust=0,size=12, color="#6D7C83", family="Arial Rounded MT Bold"),
+                 axis.title.y  = element_text(hjust=1, vjust=0, size=12, color="#6D7C83", face="bold"),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=0.5, vjust=0, size=12, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_blank())
+
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-2
+height <- 5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/score eng.png", 
+#       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/score eng.png')
+#image_browse(plot1)
+```
+
+
+```{r, eval=FALSE, include=FALSE}
+#Graphique Prix
+set.seed(123)
+gg2<-ggplot(games_prix, aes(x=annee, y=price, fill=annee))
+gg2 <- gg2 + geom_jitter(color="#8597A0", size=6, alpha = 0.25, width = 0.20)
+gg2 <- gg2 + geom_hline(aes(yintercept = prix_med_globale), color = "#6D7C83", size = 0.5) 
+gg2 <- gg2 + geom_segment(aes(x = annee, xend = annee,y = prix_med_globale, yend = prix_med_annee), size = 0.5, color='#6D7C83')
+gg2 <- gg2 + geom_point(mapping=aes(x=annee, y=prix_med_annee, fill=annee), fill="#386FA4",color="#6D7C83", shape=21, size=8.5, stroke=1)
+#retirer la légende
+gg2 <- gg2 + theme(legend.position = "none")
+#ajuster les axes 
+gg2 <- gg2 + scale_y_continuous(breaks=seq(0,20,5), limits = c(0, 20))
+gg2 <- gg2 + scale_x_continuous(breaks=seq(2004,2018,1), limits = c(2003, 2018))
+#modifier le thème
+gg2 <- gg2 +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.y= element_line(size=0.1,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les étiquettes
+gg2<-gg2 + annotate(geom="text", x=2003,y=9.5, label="Mean=9", color="#6D7C83", size=5, hjust=0.5,vjust=0, fontface="bold")
+#ajouter les titres
+gg2<-gg2 + labs(title=" ",
+              subtitle=" ",
+              y="Price ($US)", 
+              x=" ")
+gg2<-gg2 + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_blank(),
+                 axis.title.y  = element_text(hjust=1, vjust=0, size=14, color="#6D7C83", face="bold"),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=0.5, vjust=0, size=14, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_text(hjust=0.5, vjust=0, size=14, color="#6D7C83", face="bold"))
+```
+
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <- 2.5
+height <- 5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/price eng.png", 
+ #      height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot2 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/price eng.png')
+#image_browse(plot2)
+
+# And bring in a logo
+logo_raw <- image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_f.once_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x40") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "1250x20") %>%
+  image_annotate("SOURCE: Steam Spy                       DESIGN: Johanie Fournier, agr.",
+                 color = "#6D7C83", size = 34, location = "+850+20")
+#image_browse(logo)
+
+# And bring in a logo
+logo_raw <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+sep <- logo_raw %>%
+  image_scale("x40") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "1250x7") %>%
+  image_annotate("SOURCE: Steam Spy                       DESIGN: Johanie Fournier, agr.",
+                 color = "#FFFFFF", size = 34, location = "+850+20")
+#image_browse(sep)
+
+# Stack them on top of each other
+#final_plot <- image_append(image_scale(c(plot1,plot2,sep,logo), "1250"), stack = TRUE)
+#image_browse(final_plot)
+
+#And overwrite the plot without a logo
+#image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/fra ENG.png')
+```
+<br><br>
+
+Voici ce que ça donne:
+
+<br><br>
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W31/fra FINAL.png')
+```
+<br><br>
+
+##CONCLUSION: on voit bien les tendances!
+
+Finalement, on peut constater que la tendance du métascore est resté relativement stable dans le temps. Pour le prix, après la hausse du prix moyen qui a eu lieu vers les années 2012, la tendance est à la baisse. Le nuage de point nous indique aussi qu'il y a une augmentation du nombre de jeux qui sont crées et vendu à moins de 5$ depuis 2015.
+
+Alors, tu veux en savoir plus sur ma démarche? Un épisode de [podcast](johaniefournier.com/category/podcast/) sera bientôt disponible dans lequel je t'explique toute la réflexion qui à mené à la création de cette viz.
+

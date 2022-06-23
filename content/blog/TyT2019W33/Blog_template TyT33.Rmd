@@ -1,0 +1,319 @@
+---
+title: "TyT2019|W33 - 'bullet graph' ou graphique à puce"
+author: "Johanie Fournier, agr."
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: 
+  html_document
+---
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE, echo=FALSE}
+#install.packages("eeptools")
+#library(devtools)
+#devtools::install_github("duncantl/XMLRPC")
+#devtools::install_github("thebioengineer/tidytuesdayR")
+#devtools::install_github("alasairrushworth/inspectdf")
+#install.packages("extrafont")
+library(extrafont)
+library(janitor)
+#font_import()
+library(zoo)
+library(inspectdf)
+library(tidytuesdayR)
+library(knitr)
+library(RWordPress)
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(ggalt)
+library(magick)
+library(here)
+library(magrittr)
+library(Hmisc)
+library(patchwork)
+library(bbplot)
+library(ggpol)
+library(lubridate)
+library(eeptools)
+```
+Au menu, visualisation des données avec un graphique à puce ou *bullet graph*. 
+Le [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) de cette semaine concerne les empreurs romains. Je visualise donc les reignes des différents empreurs en fonction de leur âge avec un graphique à puce. 
+
+<br><br>
+**CONTEXTE**
+
+Les données de cette semaine sont disponible sur [wikipedia](https://en.wikipedia.org/wiki/List_of_Roman_emperors). L'Article de blog qui a inspiré le sujet de cette semaine peut être conculté [ici](https://www.reddit.com/r/dataisbeautiful/comments/8tzfgz/roman_emperors_by_year_oc/).
+
+L'empereur Auguste fut le premier empereur romain en 27 av. Il a mis fin au règne républicain à Rome. Pendant les années qui suivirent, le territoire sous le commandement de l'empereur occupant la majeure partie de l'Europe et des parties de l'Afrique du Nord et de l'Asie occidentale. 
+
+
+<br><br>
+**OBJECTIFS**
+
+1) Calculer l'âge du début du reigne, de la fin du reigne et l'âge du déces de chaque empereur
+2) Visaliser le reigne de chaque empereur selon son age avec un graphique à puce ou *bullet graph*
+
+
+<br><br>
+**IMPORTER**
+```{r, include=TRUE, echo=TRUE, warning=FALSE,comment=FALSE}
+emperors <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv")
+```
+
+<br><br>
+**EXPLORER**
+```{r, echo=TRUE}
+glimpse(emperors)
+```
+Toutes les dates sont stockées sous le bon format, reste juste à calculer les âges. Attention ici, ce sont des date de avant Jésus-Christ, à prendre en considération dans les calculs. 
+
+<br><br>
+
+**PRÉPARER**: 
+
+```{r, include=TRUE, echo=TRUE, warning=FALSE, eval=TRUE, comment=FALSE}
+data<-emperors %>% 
+  mutate(annee_naiss=year(birth)) %>% 
+  mutate(annee_mort=year(death)) %>% 
+  mutate(annee_deb=year(reign_start)) %>% 
+  mutate(annee_fin=year(reign_end)) %>% 
+  mutate(age_mort=abs(annee_mort-annee_naiss)) %>% 
+  mutate(age_deb=abs(annee_deb-annee_naiss)) %>% 
+  mutate(age_fin=abs(annee_fin-annee_naiss)) %>% 
+  mutate(duree=abs(age_fin-age_deb)) %>%
+  mutate(remove=ifelse(age_deb==age_mort, 'retirer', NA)) %>% 
+  filter(!age_mort %in% NA,!age_deb %in% NA,!age_fin %in% NA, 
+         !age_mort %in% 4, !remove %in% "retirer") %>% 
+  select(name, age_deb, age_fin, age_mort, duree) 
+```
+
+
+<br><br>
+**VISUALISER**
+
+```{r, eval=FALSE}
+#Graphique
+gg<-ggplot(data, aes(x=reorder(name, -age_mort), y=age_mort))
+gg <- gg + geom_bar(stat="identity", position="stack", width=0.65, fill="#6D7C83", alpha=0.4)
+gg <- gg + geom_segment(aes(y = age_deb, 
+                            x = name, 
+                            yend = age_fin, 
+                            xend = name), 
+                        color = "#175676", size=2.3, alpha=0.8) 
+gg <- gg + geom_errorbar(aes(y=age_mort, x=name, ymin=age_mort, ymax=age_mort), color="black", width=0.85) 
+gg <- gg + geom_point(aes(name, age_mort), colour="black", size=0.75) 
+gg <- gg + coord_flip()
+#ajuster les axes 
+gg <- gg + scale_y_continuous(breaks=seq(0,80,10), limits = c(0,80))
+gg <- gg + expand_limits(x=c(0, 56))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_line(size=0.2,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title=" ",
+              subtitle="",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_blank(),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=1, vjust=0.5, size=12, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_text(hjust=0.5, vjust=0, size=12, color="#6D7C83", face="bold"))
+#Faire des flèches
+arrows <- tibble(
+  x1 = c(50, 16, 53.5, 53.5, 53.5),
+  x2 = c(49, 15,   51,   51,   51),
+  y1 = c(35, 70,    5,   25,   40),
+  y2 = c(22, 61,    0,   13,   19)
+)
+gg<-gg +    geom_curve(data = arrows, aes(x = x1, y = y1, xend = x2, yend = y2), 
+                              arrow = arrow(length = unit(0.1, "inch")), 
+                              size = 0.3, color = "#6D7C83", curvature = -0.3)
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=50,y=35, label="Le plus jeune à\ndevenir Empereur", color="#6D7C83", size=3, hjust=0,vjust=0.5, fontface="bold")
+gg<-gg + annotate(geom="text", x=18,y=70, label="Son règne\na pris fin\navant\nson décès", color="#6D7C83", size=3, hjust=0.5,vjust=0.5, fontface="bold")
+gg<-gg + annotate(geom="text", x=54,y=5, label="Naissance", color="#6D7C83", size=3, hjust=0.5,vjust=0.5, fontface="bold")
+gg<-gg + annotate(geom="text", x=55,y=25, label="Début du\nrègne", color="#6D7C83", size=3, hjust=0.5,vjust=0.8, fontface="bold")
+gg<-gg + annotate(geom="text", x=54,y=40, label="Décès", color="#6D7C83", size=3, hjust=0.5,vjust=0.5, fontface="bold")
+gg
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-0.5
+height <- 10
+ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W33/bullet fra.png", 
+       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W33/bullet fra.png')
+image_browse(plot1)
+
+#Créer le titre
+couleur <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+titre<- couleur %>%
+  image_scale("x20") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "500x50") %>% 
+  image_annotate("La vie des Empereurs Romains...",
+                 color = "black", size = 63, location = "+20+5", font='Arial Rounded MT Bold')
+image_browse(titre)
+
+# And bring in a logo
+logo_raw<-image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_gris_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x30") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "10x10")
+
+couleur <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+backgound <- couleur %>%
+  image_scale("x20") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "500x40")
+  
+footer<-image_composite(backgound, logo, offset="+0+50") %>% 
+  image_annotate("SOURCE: Wikipedia  |  DESIGN: Johanie Fournier, agr.",
+                 color = "#8597A0", size = 20, gravity='northeast', location = "+10+55")
+#image_browse(footer)
+
+# Stack them on top of each other
+final_plot <- image_append(image_scale(c(titre,plot1, footer),"500"), stack = TRUE)
+image_browse(final_plot)
+
+# And overwrite the plot without a logo
+image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W33/bullet fra FINAL.png')
+
+###########################################################################################################################
+####################################################Anglais################################################################
+###########################################################################################################################
+#Graphique
+gg<-ggplot(data, aes(x=reorder(name, -age_mort), y=age_mort))
+gg <- gg + geom_bar(stat="identity", position="stack", width=0.65, fill="#6D7C83", alpha=0.4)
+gg <- gg + geom_segment(aes(y = age_deb, 
+                            x = name, 
+                            yend = age_fin, 
+                            xend = name), 
+                        color = "#175676", size=2.3, alpha=0.8) 
+gg <- gg + geom_errorbar(aes(y=age_mort, x=name, ymin=age_mort, ymax=age_mort), color="black", width=0.85) 
+gg <- gg + geom_point(aes(name, age_mort), colour="black", size=0.75) 
+gg <- gg + coord_flip()
+#ajuster les axes 
+gg <- gg + scale_y_continuous(breaks=seq(0,80,10), limits = c(0,80))
+gg <- gg + expand_limits(x=c(0, 56))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_line(size=0.2,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title=" ",
+              subtitle="",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_blank(),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=1, vjust=0.5, size=12, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_text(hjust=0.5, vjust=0, size=12, color="#6D7C83", face="bold"))
+#Faire des flèches
+arrows <- tibble(
+  x1 = c(50, 16, 53.5, 53.5, 53.5),
+  x2 = c(49, 15,   51,   51,   51),
+  y1 = c(35, 70,    5,   25,   40),
+  y2 = c(22, 61,    0,   13,   19)
+)
+gg<-gg +    geom_curve(data = arrows, aes(x = x1, y = y1, xend = x2, yend = y2), 
+                              arrow = arrow(length = unit(0.1, "inch")), 
+                              size = 0.3, color = "#6D7C83", curvature = -0.3)
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=50,y=35, label="The youngest to\nbecome Emperor", color="#6D7C83", size=3, hjust=0,vjust=0.5, fontface="bold")
+gg<-gg + annotate(geom="text", x=18,y=70, label="His reign\nend before\nhe dies", color="#6D7C83", size=3, hjust=0.5,vjust=0.5, fontface="bold")
+gg<-gg + annotate(geom="text", x=54,y=5, label="Birth", color="#6D7C83", size=3, hjust=0.5,vjust=0.5, fontface="bold")
+gg<-gg + annotate(geom="text", x=55,y=25, label="Reign\nStart", color="#6D7C83", size=3, hjust=0.5,vjust=0.8, fontface="bold")
+gg<-gg + annotate(geom="text", x=54,y=40, label="Death", color="#6D7C83", size=3, hjust=0.5,vjust=0.5, fontface="bold")
+
+aspect_ratio <-0.5
+height <- 10
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W33/bullet eng.png", 
+#       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W33/bullet eng.png')
+#image_browse(plot1)
+
+#Créer le titre
+couleur <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+titre<- couleur %>%
+  image_scale("x20") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "500x50") %>% 
+  image_annotate("Romains Emperors Life...",
+                 color = "black", size = 65, location = "+20+5", font='Arial Rounded MT Bold')
+#image_browse(titre)
+
+# And bring in a logo
+logo_raw<-image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_gris_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x30") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "10x10")
+
+couleur <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+backgound <- couleur %>%
+  image_scale("x20") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "500x40")
+  
+footer<-image_composite(backgound, logo, offset="+0+50") %>% 
+  image_annotate("SOURCE: Wikipedia  |  DESIGN: Johanie Fournier, agr.",
+                 color = "#8597A0", size = 20, gravity='northeast', location = "+10+55")
+#image_browse(footer)
+
+# Stack them on top of each other
+#final_plot <- image_append(image_scale(c(titre,plot1, footer),"500"), stack = TRUE)
+#image_browse(final_plot)
+
+# And overwrite the plot without a logo
+#image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W33/bullet eng FINAL.png')
+
+```
+
+Voici ce que ça donne:
+
+<br><br>
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W33/bullet fra FINAL.png')
+```
+<br><br>
+
+
+## CONCLUSION: 
+
+On constate rapidement que, pour la plupart des empereurs c'est le décès qui est la cause de la fin du reigne et que quand même plusieurs empereurs sont mis en position avant l'âge de 20 ans. De plus, la durée du reigne de chaque empereur est de durée variable. 
+
+
+Alors, tu veux en savoir plus sur ma démarche? Un épisode de [podcast](johaniefournier.com/category/podcast/) sera bientôt disponible dans lequel je t'explique toute la réflexion et les concepts de data visualisation qui ont menés à la création de cette viz.
+

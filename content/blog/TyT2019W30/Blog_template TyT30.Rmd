@@ -1,0 +1,240 @@
+---
+title: "TyT2019|W30"
+author: "Johanie Fournier, agr."
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: 
+  html_document
+---
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE, echo=FALSE}
+#install.packages("zoo")
+#library(devtools)
+#devtools::install_github("duncantl/XMLRPC")
+#devtools::install_github("thebioengineer/tidytuesdayR")
+#devtools::install_github("alasairrushworth/inspectdf")
+#install.packages("extrafont")
+library(extrafont)
+#font_import()
+fonts()
+library(zoo)
+library(inspectdf)
+library(tidytuesdayR)
+library(knitr)
+library(RWordPress)
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(ggalt)
+library(magick)
+library(here)
+library(magrittr)
+library(Hmisc)
+library(patchwork)
+library(bbplot)
+library(ggpol)
+library(lubridate)
+```
+Est-ce que vous prenez souvent l'avion? Pour ma part, pas vraiment, mais les fois ou je l'ai fait je suis vraiment contente de ne pas avoir expérimenté de collision avec des oiseaux. Pour le [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) de cette semaine, on regarde le nombre d'impact entre les vols enregistrés aux États-Unis et les animaux sauvages. Au menu: pourcentage, histogramme et data viz en noir et blanc toute simple.
+
+
+<br><br>
+**CONTEXTE**
+
+
+La base de données de la [FAA Wildlife Strike](https://wildlife.faa.gov) contient les enregistrements des impacts entre les avions et les animaux de la faune qui ont été signalés depuis 1990. La déclaration des impacts se fait sur une base volontaire. Par conséquent, cette base de données ne représente que les informations qui ont été fournies par les compagnies aériennes, les aéroports, les pilotes et les autres sources qui désiraient fournir l'information. Pour simplifier les choses, on travaille cette semaine seulement avec les données de American Airlines, Delta, Southwest et United, ce qui représentent environ 70% des passagers aux États-Unis.
+
+Pour mettre en perspective ces données, j'ai été sur le site de [US departement of transportation](https://www.transtats.bts.gov/Data_Elements.aspx?Data=2) pour obtenir le nombre de vols totaux qui out eu lieu aus États-Unis par année depuis 2002.
+
+
+<br><br>
+**OBJECTIFS**
+
+1) Visaliser la porportion des vols aux États-Unis qui entrent en collision avec des oiseaux.
+2) Créer une visualisation de données la plus simple possible 
+
+<br><br>
+**IMPORTER**
+```{r, include=TRUE, echo=TRUE, warning=FALSE,comment=FALSE}
+wildlife_impacts <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-23/wildlife_impacts.csv")
+total_flight <- read_xls("Flights_7_26_2019 2_47_33 PM.xls")
+```
+
+<br><br>
+**EXPLORER**
+```{r, echo=TRUE}
+glimpse(wildlife_impacts)
+summary(wildlife_impacts$incident_year)
+
+glimpse(total_flight)
+summary(total_flight$Year)
+summary(total_flight$TOTAL)
+```
+<br><br>
+
+Pour ce qui est du nombre total de vol réalisés aux États-Unis, on dispose des données de 2002 à 2019. Toutefois, 2002 et 2019 ne sont pas des années complètes, je vais donc gardé seulement les données de 2003 à 2018. Avant de faire le travail de visualisation de données, il faut sélectionner les mêmes périodes dans les deux bases de données. 
+
+<br><br>
+**PRÉPARER**: 
+
+```{r, include=TRUE, echo=TRUE, warning=FALSE, eval=TRUE, comment=FALSE}
+nb_impact<-wildlife_impacts %>%
+  mutate(Year=incident_year) %>% 
+  select(Year) %>% 
+  filter(Year >= 2003 & Year <=2018 & !Year %in% NA)%>%
+  group_by(Year)%>% 
+  summarise(nb_impact=dplyr::n())
+
+
+nb_vol<-total_flight %>%
+  filter(Year >= 2003 & Year <=2018 & !Year %in% NA) %>% 
+  select(Year, TOTAL) %>% 
+  left_join(nb_impact,by="Year") %>% 
+  mutate(pct=(nb_impact/TOTAL*100))
+```
+
+<br><br>
+**VISUALISER**
+
+```{r, eval=FALSE}
+#Graphique 
+gg<-ggplot(data=nb_vol, aes(x = Year, y=pct))
+gg<-gg + geom_bar(stat="identity", position="stack", width=0.80, color="#000505", fill="#000505")
+#Ajouter les étiquettes de données 
+gg<-gg + geom_text(data=nb_vol, aes(x=Year, y=pct, label=paste0(round(nb_vol$pct,2),"%", sep="")),
+                     color=c("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF","#FFFFFF", "#FFFFFF", "#FFFFFF","#FFFFFF", "#FFFFFF", "#FFFFFF" ), size=4, vjust=1.6, family="Calibri", fontface="bold")
+#ajuster les axes 
+gg<-gg + scale_y_continuous(breaks=seq(0,0.05,0.01), limits = c(0, 0.05))
+gg<-gg + scale_x_continuous(breaks=seq(2003,2018,1), limits = c(2002.5, 2018.5))
+#modifier le thème
+gg<-gg +theme(panel.border = element_blank(),
+              panel.background = element_blank(),
+              plot.background = element_blank(),
+              panel.grid.major.y= element_blank(),
+              panel.grid.major.x= element_blank(),
+              panel.grid.minor = element_blank(),
+              axis.line.x = element_blank(),
+              axis.line.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title="Collision des vols US avec les oiseaux\n  ",
+              subtitle="Le nombre d'avion qui heurte des oiseaux est passé de 2/10 000 par année en 2003\nà 4/10 000 en 2018. L'année passée, c'est près de 4 500 vols qui sont entrés en\ncollision avec des oiseaux sur le millions de vols qu'il y a eu au États-Unis.\nCependant, la déclaration des collisions se fait sur une base volontaire.",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_text(hjust=0,size=36, color="#000505", face="bold", family="Arial Rounded MT Bold"),
+               plot.subtitle = element_text(hjust=0,size=12, color="#000505"),
+               axis.title.y  = element_blank(),
+               axis.title.x  = element_blank(),
+               axis.text.y   = element_blank(), 
+               axis.text.x   = element_text(hjust=0.5, vjust=15, size=12, color="#FFFFFF", face="bold"))
+```
+
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <- 1.75
+height <- 5.5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W30/dash.png", 
+#       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W30/dash.png')
+#image_browse(plot)
+
+# And bring in a logo
+logo_raw <- image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_f.once_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x40") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "963x20") %>%
+  image_annotate("SOURCE: FAA Wildlife Strike | US Department of Transportation                       DESIGN: Johanie Fournier, agr.",
+                 color = "#000505", size = 28, location = "+105+25")
+#image_browse(logo)
+
+
+# Stack them on top of each other
+final_plot <- image_append(image_scale(c(plot,logo), "963"), stack = TRUE)
+#image_browse(final_plot)
+
+#And overwrite the plot without a logo
+#image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W30/fra FINAL.png')
+
+##################################################################################################################
+##################################################Anglais#########################################################
+##################################################################################################################
+
+#Graphique 
+gg<-ggplot(data=nb_vol, aes(x = Year, y=pct))
+gg<-gg + geom_bar(stat="identity", position="stack", width=0.80, color="#000505", fill="#000505")
+#Ajouter les étiquettes de données 
+gg<-gg + geom_text(data=nb_vol, aes(x=Year, y=pct, label=paste0(round(nb_vol$pct,2),"%", sep="")),
+                     color=c("#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF","#FFFFFF", "#FFFFFF", "#FFFFFF","#FFFFFF", "#FFFFFF", "#FFFFFF" ), size=4, vjust=1.6, family="Calibri", fontface="bold")
+#ajuster les axes 
+gg<-gg + scale_y_continuous(breaks=seq(0,0.05,0.01), limits = c(0, 0.05))
+gg<-gg + scale_x_continuous(breaks=seq(2003,2018,1), limits = c(2002.5, 2018.5))
+#modifier le thème
+gg<-gg +theme(panel.border = element_blank(),
+              panel.background = element_blank(),
+              plot.background = element_blank(),
+              panel.grid.major.y= element_blank(),
+              panel.grid.major.x= element_blank(),
+              panel.grid.minor = element_blank(),
+              axis.line.x = element_blank(),
+              axis.line.y = element_blank(),
+              axis.ticks.y = element_blank(),
+              axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title="US Planes Strikes with Wildlife\n  ",
+              subtitle="The number of planes hitting birds has increased from 2/10 000 per year in 2003\nto 4/10 000 in 2018. Last year, nearly 4 500 flights collided with birds on the\nmillions of flights that took place in the United States.\nHowever, collision reporting is voluntary.",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_text(hjust=0,size=36, color="#000505", face="bold", family="Arial Rounded MT Bold"),
+               plot.subtitle = element_text(hjust=0,size=12, color="#000505"),
+               axis.title.y  = element_blank(),
+               axis.title.x  = element_blank(),
+               axis.text.y   = element_blank(), 
+               axis.text.x   = element_text(hjust=0.5, vjust=15, size=12, color="#FFFFFF", face="bold"))
+
+
+aspect_ratio <- 1.7
+height <- 5.5
+#ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W30/dash eng.png", 
+#       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W30/dash eng.png')
+#image_browse(plot)
+
+# And bring in a logo
+logo_raw <- image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_f.once_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x40") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "935x20") %>%
+  image_annotate("SOURCE: FAA Wildlife Strike | US Department of Transportation                       DESIGN: Johanie Fournier, agr.",
+                 color = "#000505", size = 28, location = "+85+25")
+#image_browse(logo)
+
+
+# Stack them on top of each other
+final_plot <- image_append(image_scale(c(plot,logo), "935"), stack = TRUE)
+#image_browse(final_plot)
+
+#And overwrite the plot without a logo
+#image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W30/eng FINAL.png')
+```
+<br><br>
+
+Voici ce que ça donne:
+
+<br><br>
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W30/fra FINAL.png')
+```

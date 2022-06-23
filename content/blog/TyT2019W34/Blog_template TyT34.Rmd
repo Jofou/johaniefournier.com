@@ -1,0 +1,531 @@
+---
+title: "TyT2019|W34 - Histogrammes empilés et 'geom_chicklet'"
+author: "Johanie Fournier, agr."
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: 
+  html_document
+---
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE, echo=FALSE}
+#install.packages("eeptools")
+#library(devtools)
+#devtools::install_github("duncantl/XMLRPC")
+#devtools::install_github("thebioengineer/tidytuesdayR")
+#devtools::install_github("alasairrushworth/inspectdf")
+#install.packages("extrafont")
+#install.packages("ggchicklet", repos = "https://cinc.rud.is")
+library(ggchicklet)
+library(extrafont)
+library(janitor)
+#font_import()
+library(zoo)
+library(inspectdf)
+#library(tidytuesdayR)
+library(knitr)
+#library(RWordPress)
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+#library(ggalt)
+#library(magick)
+#library(here)
+library(magrittr)
+library(Hmisc)
+#library(patchwork)
+#library(bbplot)
+#library(ggpol)
+library(lubridate)
+#library(eeptools)
+```
+Le [#Tidytuesday](https://github.com/rfordatascience/tidytuesday) de cette semaine concerne les armes nucléaires. J'ai donc utilisé 3 histogrammes pour créer une histoire entourant les armes nucléaires et tester 'geom_chicklet'. 
+
+<br><br>
+**CONTEXTE**
+
+Les données de cette semaine sont disponible dans le [rapport suivant](https://github.com/data-is-plural/nuclear-explosions/blob/master/documents/sipri-report-original.pdf) et sur [wikipedia](https://en.wikipedia.org/wiki/List_of_nuclear_weapons_tests). Des informations aditionnelles peuvent être concultées [ici](https://ourworldindata.org/nuclear-weapons).
+
+La technologie des armes nucléaires a été mise au point dans les années 1930 et 1940. Les premières armes nucléaires ont explosées sur Hiroshima et Nagasaki en août 1945. La puissance dévastatrice des bombes larguées sur le Japon a forcé la reddition des Japonais. Depuis lors, le contrôle de la prolifération des armes nucléaires est une question importante dans les relations internationales et les deux détonations au Japon sont restées le seul usage de tous les temps en guerre. 
+
+
+<br><br>
+**OBJECTIFS**
+
+1) Identifier le pays qui a enregistré le plus d'explosion nucléaire.
+2) Visualiser la région où ces bombes ont explosées avec la raison de la manière à monter une histoire sur le sujet.
+3) Utiliser 'geom_chicklet' pour créer les hisogrammes
+
+
+<br><br>
+**IMPORTER**
+```{r, include=TRUE, echo=TRUE, warning=FALSE,comment=FALSE}
+nuclear_explosions <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-20/nuclear_explosions.csv")
+```
+
+<br><br>
+**EXPLORER**
+```{r, echo=TRUE}
+summary(nuclear_explosions)
+```
+Toutes les informations nécessaire sont déjà dans la base de donnée. Reste juste à créer des tables avec l'information dont j'ai besion pour monter mon histoire.  
+
+<br><br>
+
+**PRÉPARER** 
+
+```{r, include=TRUE, echo=TRUE, warning=FALSE, eval=TRUE, comment=FALSE}
+#quel est le pays qui enregistre le plus d'explosion nucléaire?
+nuclear_explosions_cat <- nuclear_explosions %>% 
+  inspect_cat()
+pct_country<-nuclear_explosions_cat$levels$country %>% 
+  mutate(type="country")
+#rep=USA avec 50%
+
+#Dans quel région les États-Unis font-ils exploser leurs bombes?
+nuclear_explosions_cat <- nuclear_explosions %>% 
+  filter(country=="USA") %>% 
+  inspect_cat()
+pct_region<-nuclear_explosions_cat$levels$region %>% 
+  mutate(type="country")
+#rep: NTS avec 88% (Nevada Test Site)
+
+#Pour quel raison?
+nuclear_explosions_cat <- nuclear_explosions %>% 
+  filter(country=="USA") %>% 
+  mutate(raison="autres") %>% 
+  mutate(raison=ifelse(purpose=="COMBAT", "COMBAT", raison)) %>% 
+  mutate(raison=ifelse(purpose %in% c("WR", "WE", "WE/WR", "WR/WE", "SE/WR", "WR/SE"), "Training", raison)) %>% 
+  inspect_cat()
+pct_purpose<-nuclear_explosions_cat$levels$purpose
+pct_purpose<-nuclear_explosions_cat$levels$raison %>% 
+  mutate(type="country")
+#Entrainement
+```
+
+
+<br><br>
+**VISUALISER**
+
+```{r, eval=FALSE}
+#Graphique 1: Qui
+gg<-ggplot(pct_country, aes(x=type, y=prop, fill=reorder(value, -prop)))
+gg <- gg + geom_chicklet(width = 1.8)
+gg <- gg + coord_flip()
+gg <- gg + scale_fill_manual(values=c("#749594", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB"))
+#retirer la légende
+gg <- gg + theme(legend.position = "none")
+#ajuster les axes 
+gg <- gg + expand_limits(y=c(0, 1.3))
+gg <- gg + expand_limits(x=c(-4, 3))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title="Qui s'amuse avec des armes nucléaires?",
+              subtitle="\nLa technologie des armes nucléaires a été mise au point dans les\nannées 1930 et 1940. Depuis, 2078 bombes ont été déployées.\n\nPourcentage des dispositifs nucléaires déployés par pays",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_text(size=40, hjust=0,vjust=0, face="bold", family="Tw Cen MT"),
+                 plot.subtitle = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_blank(), 
+                 axis.text.x   = element_blank())
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=1,y=0.01, label="États-Unis", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=0.38, label="50%", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-2
+height <- 5
+ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/qui fra.png", 
+       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/qui fra.png')
+#image_browse(plot1)
+```
+
+```{r, eval=FALSE}
+#Graphique 2: pourquoi
+gg<-ggplot(pct_purpose, aes(x=type, y=prop))
+gg <- gg + geom_chicklet(aes(fill=reorder(value, -prop)),width = 1.8)
+gg <- gg + coord_flip()
+gg <- gg + scale_fill_manual(values=c("#749594", "#AFB7BB", "#AFB7BB"))
+#retirer la légende
+gg <- gg + theme(legend.position = "none")
+#ajuster les axes 
+gg <- gg + expand_limits(y=c(0, 1.3))
+gg <- gg + expand_limits(x=c(-4, 3))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title=" ",
+              subtitle="Raisons du déploiement des bombes des États-Unis",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_blank(), 
+                 axis.text.x   = element_blank())
+#Faire des flèches
+arrows <- tibble(
+  x1 = c(2.2),
+  x2 = c(1.9),
+  y1 = c(1.20),
+  y2 = c(1)
+)
+gg<-gg +    geom_curve(data = arrows, aes(x = x1, y = y1, xend = x2, yend = y2), 
+                              arrow = arrow(length = unit(0.1, "inch")), 
+                              size = 0.8, color = "#D33E43", curvature = 0.3)
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=1,y=0.01, label="Entrainement", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=0.78, label="90%", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=1.2, label="Combat\n0.002%", color="#D33E43", size=7, hjust=0.5,vjust=0.5, fontface="bold", family="Tw Cen MT")
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-3.333
+height <- 3
+ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/pourquoi fra.png", 
+       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot2 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/pourquoi fra.png')
+#image_browse(plot2)
+```
+
+```{r, eval=FALSE}
+#Graphique 3: ou
+gg<-ggplot(pct_region, aes(x=type, y=prop))
+gg <- gg + geom_chicklet(aes(fill=reorder(value, -prop)),width = 1.8)
+gg <- gg + coord_flip()
+gg <- gg + scale_fill_manual(values=c("#749594", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB"))
+#retirer la légende
+gg <- gg + theme(legend.position = "none")
+#ajuster les axes 
+gg <- gg + expand_limits(y=c(0, 1.3))
+gg <- gg + expand_limits(x=c(-4, 3))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title=" ",
+              subtitle="Région où les bombes des États-Unis ont été déployées",
+              y=" ", 
+              x=" ",
+              caption= "Les premières armes nucléaires ont explosées sur Hiroshima et\nNagasaki en août 1945 au cours de la 2e Guerre Mondiale et ont\ncausées des  milliers de morts. Depuis, le contrôle de la prolifération\ndes armes nucléaires est une question importante dans les\nrelations internationales.")
+gg<-gg + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 plot.caption = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_blank(), 
+                 axis.text.x   = element_blank())
+#Faire des flèches
+arrows <- tibble(
+  x1 = c(2.2),
+  x2 = c(1.9),
+  y1 = c(1.20),
+  y2 = c(0.99)
+)
+gg<-gg +    geom_curve(data = arrows, aes(x = x1, y = y1, xend = x2, yend = y2), 
+                              arrow = arrow(length = unit(0.1, "inch")), 
+                              size = 0.8, color = "#D33E43", curvature = 0.3)
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=1,y=0.01, label="Site test au Nevada", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=0.76, label="88%", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=1.2, label="Hiroshima et\nNagasaki 0.002%", color="#D33E43", size=7, hjust=0.5,vjust=0.5, fontface="bold", family="Tw Cen MT")
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-2
+height <- 5
+ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/ou fra.png", 
+       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot3 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/ou fra.png')
+#image_browse(plot3)
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+# And bring in a logo
+logo_raw<-image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_gris_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x30") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "10x10")
+
+couleur <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+backgound <- couleur %>%
+  image_scale("x20") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "1000x40")
+  
+footer<-image_composite(backgound, logo, offset="+0+50") %>% 
+  image_annotate("SOURCE:  Stockholm International Peace Research Institute  |  DESIGN: Johanie Fournier, agr.",
+                 color = "#8597A0", size = 32, gravity='northeast', location = "+10+55")
+#image_browse(footer)
+
+# Stack them on top of each other
+final_plot <- image_append(image_scale(c(plot1,plot2, plot3,footer),1000), stack = TRUE)
+#image_browse(final_plot)
+
+# And overwrite the plot without a logo
+#image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/fra FINAL.png')
+
+###########################################################################################################################
+####################################################Anglais################################################################
+###########################################################################################################################
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+#Graphique 1: Qui
+gg<-ggplot(pct_country, aes(x=type, y=prop, fill=reorder(value, -prop)))
+gg <- gg + geom_chicklet(width = 1.8)
+gg <- gg + coord_flip()
+gg <- gg + scale_fill_manual(values=c("#749594", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB"))
+#retirer la légende
+gg <- gg + theme(legend.position = "none")
+#ajuster les axes 
+gg <- gg + expand_limits(y=c(0, 1.3))
+gg <- gg + expand_limits(x=c(-4, 3))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title="Who Plays With Nuclear Weapons?",
+              subtitle="\nNuclear weapons technology was developed in the 1930s and 1940s.\nSince then, 2078 bombs have been deployed.\n\nPercentage of nuclear devices deployed by country",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_text(size=40, hjust=0,vjust=0, face="bold", family="Tw Cen MT"),
+                 plot.subtitle = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_blank(), 
+                 axis.text.x   = element_blank())
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=1,y=0.01, label="United States", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=0.38, label="50%", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-2
+height <- 5
+ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/qui eng.png", 
+       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot1 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/qui eng.png')
+#image_browse(plot1)
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+#Graphique 2: pourquoi
+gg<-ggplot(pct_purpose, aes(x=type, y=prop))
+gg <- gg + geom_chicklet(aes(fill=reorder(value, -prop)),width = 1.8)
+gg <- gg + coord_flip()
+gg <- gg + scale_fill_manual(values=c("#749594", "#AFB7BB", "#AFB7BB"))
+#retirer la légende
+gg <- gg + theme(legend.position = "none")
+#ajuster les axes 
+gg <- gg + expand_limits(y=c(0, 1.3))
+gg <- gg + expand_limits(x=c(-4, 3))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title=" ",
+              subtitle="Reasons for deploying US bombs",
+              y=" ", 
+              x=" ")
+gg<-gg + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_blank(), 
+                 axis.text.x   = element_blank())
+#Faire des flèches
+arrows <- tibble(
+  x1 = c(2.2),
+  x2 = c(1.9),
+  y1 = c(1.20),
+  y2 = c(1)
+)
+gg<-gg +    geom_curve(data = arrows, aes(x = x1, y = y1, xend = x2, yend = y2), 
+                              arrow = arrow(length = unit(0.1, "inch")), 
+                              size = 0.8, color = "#D33E43", curvature = 0.3)
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=1,y=0.01, label="Training", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=0.78, label="90%", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=1.2, label="Combat\n0.002%", color="#D33E43", size=7, hjust=0.5,vjust=0.5, fontface="bold", family="Tw Cen MT")
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-3.333
+height <- 3
+ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/pourquoi eng.png", 
+       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot2 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/pourquoi eng.png')
+#image_browse(plot2)
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+#Graphique 3: ou
+gg<-ggplot(pct_region, aes(x=type, y=prop))
+gg <- gg + geom_chicklet(aes(fill=reorder(value, -prop)),width = 1.8)
+gg <- gg + coord_flip()
+gg <- gg + scale_fill_manual(values=c("#749594", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB", "#AFB7BB"))
+#retirer la légende
+gg <- gg + theme(legend.position = "none")
+#ajuster les axes 
+gg <- gg + expand_limits(y=c(0, 1.3))
+gg <- gg + expand_limits(x=c(-4, 3))
+#modifier le thème
+gg <- gg +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les titres
+gg<-gg + labs(title=" ",
+              subtitle="Region where US bombs were deployed",
+              y=" ", 
+              x=" ",
+              caption= "The first nuclear weapons exploded on Hiroshima and Nagasaki in\nAugust 1945 during the Second World War and caused thousands of\ndeaths. Since then, control over the proliferation of nuclear weapons\nhas been an important issue in international relations.\n")
+gg<-gg + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 plot.caption = element_text(size=25, hjust=0,vjust=0, family="Tw Cen MT", color="#7A878E"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_blank(), 
+                 axis.text.x   = element_blank())
+#Faire des flèches
+arrows <- tibble(
+  x1 = c(2.2),
+  x2 = c(1.9),
+  y1 = c(1.20),
+  y2 = c(0.99)
+)
+gg<-gg +    geom_curve(data = arrows, aes(x = x1, y = y1, xend = x2, yend = y2), 
+                              arrow = arrow(length = unit(0.1, "inch")), 
+                              size = 0.8, color = "#D33E43", curvature = 0.3)
+#ajouter les étiquettes de données
+gg<-gg + annotate(geom="text", x=1,y=0.01, label="Nevada test site", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=0.76, label="88%", color="black", size=10, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=1,y=1.2, label="Hiroshima and\nNagasaki 0.002%", color="#D33E43", size=7, hjust=0.5,vjust=0.5, fontface="bold", family="Tw Cen MT")
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+aspect_ratio <-2
+height <- 5
+ggsave("~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/ou eng.png", 
+       height = height , width = height * aspect_ratio)
+
+# Call back the plot
+plot3 <- image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/ou eng.png')
+#image_browse(plot3)
+```
+
+```{r, include=FALSE, echo=FALSE, warning=FALSE}
+# And bring in a logo
+logo_raw<-image_read('~/Documents/ENTREPRISE/Projets R/Logo/Logo_gris_FFFFFF.png')
+logo <- logo_raw %>%
+  image_scale("x30") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "10x10")
+
+couleur <- image_read('~/Documents/ENTREPRISE/Projets R/couleur/FFFFFF.png')
+backgound <- couleur %>%
+  image_scale("x20") %>% 
+  image_background("#FFFFFF", flatten = TRUE) %>%
+  image_border("#FFFFFF", "1000x40")
+  
+footer<-image_composite(backgound, logo, offset="+0+50") %>% 
+  image_annotate("SOURCE:  Stockholm International Peace Research Institute  |  DESIGN: Johanie Fournier, agr.",
+                 color = "#8597A0", size = 32, gravity='northeast', location = "+10+55")
+#image_browse(footer)
+
+# Stack them on top of each other
+final_plot <- image_append(image_scale(c(plot1,plot2, plot3,footer),1000), stack = TRUE)
+#image_browse(final_plot)
+
+# And overwrite the plot without a logo
+#image_write(final_plot, '~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/eng FINAL.png')
+```
+Voici ce que ça donne:
+
+<br><br>
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+image_read('~/Documents/ENTREPRISE/Projets R/Tidytuesday/TyT2019/W34/fra FINAL.png')
+```
+<br><br>
+
+
+**Conclusion**
+
+Même si la grande majorité des bombes déployées par les États-Unis l'on été pour des raisons d'entrainement dans des zones contrôlées, cette technologie a déjà démontré à quelle point elle peut être destructrice.
+
+<br><br>
+
+Alors, tu veux en savoir plus sur ma démarche? Un épisode de [podcast](johaniefournier.com/category/podcast/) sera bientôt disponible dans lequel je t'explique toute la réflexion et les concepts de data visualisation qui ont menés à la création de cette viz.
+
