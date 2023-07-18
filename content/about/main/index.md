@@ -8,7 +8,7 @@ show_intro: true
 show_outro: false
 intro: |
 
-  I am an aspiring business scientist. I work at Logiag, a consulting firm whose mission is to support the implementation of sustainable farming practices. My focus is to find insight from farming data to facilitate the work of agronomists in their advising of good management practices to farmers. I love making beautiful charts, the statistical programming language R, my Australian Shepherd dog, my beautiful garden, and black tea.
+  I am an aspiring business scientist. I work at [Laserag](https://www.laserag.com), a consulting firm whose mission is to support the implementation of sustainable farming practices. My focus is to find insight from farming data to facilitate the work of agronomists in their advising of good management practices to farmers. I love making beautiful charts, the statistical programming language R, my Australian Shepherd dog, my beautiful garden, and black tea.
 
   I studied agronomy, finished my M.Sc. in 2012. I worked in industry mostly doing research and helping farmers with their environmental obligations. I rediscovered R (had a brief introduction at school) in 2018 and never looked back. You can find me on [Linkedin](https://www.linkedin.com/in/johanie-fournier-agr) and [GitHub](https://github.com/jofou). 
 
