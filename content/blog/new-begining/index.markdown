@@ -31,4 +31,4 @@ This is exactly what I want to do with this blog, make it a place to synthetis t
 
 So, let's get started! 💥
 
-[^1]: Disclosure: I only recommend products I would use myself and all opinions expressed here are my own. This post may contain affiliate links that at no additional cost to you, I may earn a small commission. Thanks for your support!
+[^1]: A little disclosure: I only recommend products I would use myself and all opinions expressed here are my own. This post may contain affiliate links that at no additional cost to you, I may earn a small commission. Thanks for your support!
