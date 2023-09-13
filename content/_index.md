@@ -1,7 +1,7 @@
 ---
 title: "Johanie Fournier"
-subtitle: "Aspiring Data Scientist"
-description: "I am an agronomist focusing on data analysis and machine learning. I love playing with data, creating beautiful graphs and helping people get insights from their data."
+subtitle: "Aspiring Business Scientist"
+description: "I am an agronomist focusing on spatial data analysis and machine learning. I love playing with data, creating beautiful graphs/maps and helping people get insights from their data."
 images:
   - img/cartoon_avatar.png
 image_left: true
