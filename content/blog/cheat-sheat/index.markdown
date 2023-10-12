@@ -1,8 +1,8 @@
 ---
 title: "This is the begining of a cheat sheet!"
 author: Johanie Fournier, agr. 
-date: "2023-07-20"
-slug: new-begining
+date: "2023-10-12"
+slug: cheat-sheet
 categories:
   - rstats
 tags:
