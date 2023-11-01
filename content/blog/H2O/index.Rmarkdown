@@ -216,3 +216,9 @@ h2o::h2o.varimp_plot(model_gbm)
 future::plan(future::sequential)
 ```
 
+## Session Info
+
+```{r}
+git2r::repository()
+sessionInfo()
+```

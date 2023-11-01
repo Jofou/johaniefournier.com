@@ -33,7 +33,7 @@ H2O is a powerful tools to have a general idea of the performance of different m
 
 So I mainly use it to know which model perform best with my data. This make me gain a considerable amount of time. From there I can work on the few best models a make solid code for production purpose.
 
-Let’s see if I can make a template of this H2O technologies that will resist the test of time (and constant update 😆)!
+Let’s see if I can make a template of this H2O technologies that will resist the test of time (and constant update 😄)!
 
 ## Get the data
 
@@ -488,3 +488,73 @@ h2o::h2o.varimp_plot(model_gbm)
 # End Parallele Processing
 future::plan(future::sequential)
 ```
+
+## Session Info
+
+``` r
+git2r::repository()
+```
+
+    ## Local:    main /Users/johaniefournier/Library/Mobile Documents/com~apple~CloudDocs/ADV/johaniefournier.com
+    ## Remote:   main @ origin (https://github.com/Jofou/johaniefournier.com.git)
+    ## Head:     [7187110] 2023-11-01: update cheat sheet and H2O
+
+``` r
+sessionInfo()
+```
+
+    ## R version 4.1.1 (2021-08-10)
+    ## Platform: x86_64-apple-darwin17.0 (64-bit)
+    ## Running under: macOS Big Sur 10.16
+    ## 
+    ## Matrix products: default
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+    ## 
+    ## locale:
+    ## [1] en_CA.UTF-8/en_CA.UTF-8/en_CA.UTF-8/C/en_CA.UTF-8/en_CA.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ##  [1] h2o_3.34.0.3         embed_0.1.5          jofou.lib_0.0.0.9000
+    ##  [4] yardstick_1.2.0      workflowsets_0.1.0   workflows_0.2.4     
+    ##  [7] tune_0.1.6           rsample_0.1.0        recipes_0.1.17      
+    ## [10] parsnip_0.1.7        modeldata_0.1.1      infer_1.0.0         
+    ## [13] dials_0.0.10         scales_1.2.1         broom_1.0.4         
+    ## [16] tidymodels_0.1.4     lubridate_1.9.2      forcats_1.0.0       
+    ## [19] stringr_1.5.0        dplyr_1.1.2          purrr_1.0.1         
+    ## [22] readr_2.1.4          tidyr_1.3.0          tibble_3.2.1        
+    ## [25] ggplot2_3.4.2        tidyverse_2.0.0      knitr_1.36          
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] colorspace_2.0-2     class_7.3-19         base64enc_0.1-3     
+    ##  [4] rstudioapi_0.14      listenv_0.8.0        furrr_0.2.3         
+    ##  [7] prodlim_2019.11.13   fansi_0.5.0          R.methodsS3_1.8.1   
+    ## [10] codetools_0.2-18     splines_4.1.1        zeallot_0.1.0       
+    ## [13] jsonlite_1.8.4       R.oo_1.24.0          png_0.1-7           
+    ## [16] tfruns_1.5.0         uwot_0.1.10          compiler_4.1.1      
+    ## [19] backports_1.4.1      assertthat_0.2.1     Matrix_1.3-4        
+    ## [22] fastmap_1.1.0        cli_3.6.1            htmltools_0.5.2     
+    ## [25] tools_4.1.1          gtable_0.3.0         glue_1.6.2          
+    ## [28] Rcpp_1.0.7           jquerylib_0.1.4      styler_1.7.0        
+    ## [31] DiceDesign_1.9       vctrs_0.6.2          blogdown_1.9.4      
+    ## [34] iterators_1.0.13     timeDate_3043.102    gower_0.2.2         
+    ## [37] xfun_0.30            globals_0.14.0       timechange_0.1.1    
+    ## [40] lifecycle_1.0.3      future_1.22.1        MASS_7.3-54         
+    ## [43] ipred_0.9-12         hms_1.1.3            parallel_4.1.1      
+    ## [46] yaml_2.2.1           reticulate_1.22-9000 keras_2.7.0         
+    ## [49] sass_0.4.0           rpart_4.1-15         stringi_1.7.5       
+    ## [52] tensorflow_2.7.0     foreach_1.5.1        lhs_1.1.3           
+    ## [55] hardhat_1.3.0        lava_1.6.10          rlang_1.1.1         
+    ## [58] pkgconfig_2.0.3      bitops_1.0-7         evaluate_0.14       
+    ## [61] lattice_0.20-44      tidyselect_1.2.0     parallelly_1.28.1   
+    ## [64] magrittr_2.0.3       bookdown_0.24        R6_2.5.1            
+    ## [67] generics_0.1.3       pillar_1.9.0         whisker_0.4         
+    ## [70] withr_2.5.0          survival_3.2-11      RCurl_1.98-1.5      
+    ## [73] nnet_7.3-16          future.apply_1.8.1   crayon_1.4.2        
+    ## [76] utf8_1.2.2           tzdb_0.1.2           rmarkdown_2.11      
+    ## [79] emo_0.0.0.9000       grid_4.1.1           git2r_0.28.0        
+    ## [82] digest_0.6.29        R.cache_0.15.0       R.utils_2.11.0      
+    ## [85] GPfit_1.0-8          munsell_0.5.0        bslib_0.3.1
