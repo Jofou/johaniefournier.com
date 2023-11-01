@@ -65,8 +65,6 @@ date: "`r format(Sys.time(), '%Y-%m-%d')`"
 <script src="https://hypothes.is/embed.js" async></script>
 ```
 
-
-
 ### Setup
 
 ```r
@@ -99,6 +97,33 @@ theme_map <- function(base_size=9, base_family="") { # 3
 			  legend.position = c(0,0),
 			  plot.title= element_text(size=20, hjust=0, color="black", face="bold"),
 		)
+```
+
+### emo::ji!
+
+
+```r
+`r emo::ji("collision")`
+
+`r emo::ji("popper")`
+
+`r emo::ji("bomb")`
+
+`r emo::ji("bug")`
+
+`r emo::ji("chart")`
+
+`r emo::ji("cry")`
+
+`r emo::ji("disaster")`
+
+`r emo::ji("fear")`
+
+`r emo::ji("chart")`
+
+`r emo::ji("flowers")`
+
+`r emo::ji("laugh")`
 ```
 
 ## Parallel Processing
