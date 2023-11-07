@@ -178,5 +178,11 @@ df %>%
   mutate(new_name = tolower(stringi::stri_trans_general(old_name, "Latin-ASCII")))
 ```
 
+### Read all rds file in folder
 
-[^1]: A little disclosure: I only recommend products I would use myself and all opinions expressed here are my own. This post may contain affiliate links that at no additional cost to you, I may earn a small commission. Thanks for your support!
+```r
+data <- list.files(path = "path_to_files", pattern = ".rds", full.names = T) %>%
+  map_dfr(readRDS) %>%
+  bind_rows()
+```
+
