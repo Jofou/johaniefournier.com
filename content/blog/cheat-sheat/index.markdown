@@ -186,3 +186,23 @@ data <- list.files(path = "path_to_files", pattern = ".rds", full.names = T) %>%
   bind_rows()
 ```
 
+### Corrrelation Funnel
+
+```r
+library(correlationfunnel)
+
+var <- "name_of_interest_variable"
+
+var_select <- tbl_prep %>%
+  select(var) %>%
+  binarize() %>%
+  select(starts_with(var) & ends_with("_Inf")) %>%
+  names()
+
+tbl_prep %>%
+  binarize() %>%
+  correlate(var_select) %>%
+  plot_correlation_funnel() +
+  labs(title = paste0(label, " - Correlation Funnel"))
+```
+
