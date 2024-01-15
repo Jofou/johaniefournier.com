@@ -45,6 +45,10 @@ sf::st_as_sf(.) %>%
 sf::st_transform(., 3978)
 ```
 
+```{r, eval=FALSE}
+sf::st_as_sf(coords = c("longitude", "latitude"))
+```
+
 ### Add a buffer distance around points
 ```{r, eval=FALSE}
 sf::st_buffer(dist=20) 

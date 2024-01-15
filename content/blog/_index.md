@@ -1,7 +1,7 @@
 ---
 title: Blog
 description: | 
-  Machine learning, data analysis, and more
+  Machine Learning, Spatial Data Analysis, and so much more
 author: "Johanie Fournier, agr."
 show_post_thumbnail: true
 thumbnail_left: true # for list-sidebar only
