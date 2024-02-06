@@ -172,6 +172,13 @@ df %>%
 mutate(new_name=tolower(stringi::stri_trans_general(old_name, "Latin-ASCII")))
 ```
 
+
+### Remove quote in dataframe
+```{r, eval=FALSE}
+df %>%
+  mutate(new_colum=gsub("\"", "", old_colum))
+```
+
 ### Read all rds file in folder
 ```{r, eval=FALSE}
 data<-list.files(path="path_to_files", pattern = ".rds", full.names=T) %>%
