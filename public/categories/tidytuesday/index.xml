@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tidytuesday on Johanie Fournier</title>
+    <link>https://johaniefournier.com/categories/tidytuesday/</link>
+    <description>Recent content in tidytuesday on Johanie Fournier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/categories/tidytuesday/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TyT2024W21 - Carbon Majors Emissions Data</title>
+      <link>https://johaniefournier.com/blog/tyt2019w11/</link>
+      <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w11/</guid>
+      <description>This week we&amp;rsquo;re exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. I add the coordinates to see if their is a relationship between the emissions and the geographical position.</description>
+    </item>
+    
+    <item>
+      <title>TyT2020W10 - 3D Aeras</title>
+      <link>https://johaniefournier.com/blog/tyt2020w10/</link>
+      <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2020w10/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2020W08 - Comparison with Dumbells</title>
+      <link>https://johaniefournier.com/blog/tyt2020w08/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2020w08/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2020W07 - Waterfall Chart</title>
+      <link>https://johaniefournier.com/blog/tyt2020w7/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2020w7/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2020W06 - Facet Wrap and Areas Under the Curve</title>
+      <link>https://johaniefournier.com/blog/tyt2020w6/</link>
+      <pubDate>Sat, 08 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2020w6/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2020W04 - Visualize Index</title>
+      <link>https://johaniefournier.com/blog/tyt2020w4/</link>
+      <pubDate>Wed, 22 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2020w4/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2020W03 - Percentage by Category</title>
+      <link>https://johaniefournier.com/blog/tyt2020w3/</link>
+      <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2020w3/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W49 - Visualize Mean Price</title>
+      <link>https://johaniefournier.com/blog/tyt2019w49/</link>
+      <pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w49/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W48 - Put Together Two Histograms</title>
+      <link>https://johaniefournier.com/blog/tyt2019w48/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w48/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W47 - Treemap</title>
+      <link>https://johaniefournier.com/blog/tyt2019w47/</link>
+      <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w47/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W46 - Radar</title>
+      <link>https://johaniefournier.com/blog/tyt2019w46/</link>
+      <pubDate>Thu, 14 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w46/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W44 - Show Some Informations</title>
+      <link>https://johaniefournier.com/blog/tyt2019w44/</link>
+      <pubDate>Thu, 31 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w44/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W43 - Heat Map</title>
+      <link>https://johaniefournier.com/blog/tyt2019w43/</link>
+      <pubDate>Thu, 24 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w43/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W42 - Show Progress</title>
+      <link>https://johaniefournier.com/blog/tyt2019w42/</link>
+      <pubDate>Thu, 17 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w42/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W41 - Ratios to compare</title>
+      <link>https://johaniefournier.com/blog/tyt2019w41/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w41/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W40 - Facet_wrap with dots and lines</title>
+      <link>https://johaniefournier.com/blog/tyt2019w40/</link>
+      <pubDate>Wed, 02 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w40/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W39 - Not a Real Graph</title>
+      <link>https://johaniefournier.com/blog/tyt2019w39/</link>
+      <pubDate>Wed, 25 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w39/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W38 - When Your Data Form a Tree!</title>
+      <link>https://johaniefournier.com/blog/tyt2019w38/</link>
+      <pubDate>Fri, 20 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w38/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W37 - Two Graphs for a Summary</title>
+      <link>https://johaniefournier.com/blog/tyt2019w37/</link>
+      <pubDate>Wed, 11 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w37/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W36 - Mix and Match</title>
+      <link>https://johaniefournier.com/blog/tyt2019w36/</link>
+      <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w36/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W35 - tvthemes: Les Simpsons</title>
+      <link>https://johaniefournier.com/blog/tyt2019w35/</link>
+      <pubDate>Tue, 27 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w35/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W34 - Stack of Histograms</title>
+      <link>https://johaniefournier.com/blog/tyt2019w34/</link>
+      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w34/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W33 - Bullet Graph</title>
+      <link>https://johaniefournier.com/blog/tyt2019w33/</link>
+      <pubDate>Tue, 13 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w33/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W32 - Bob Ross Painting</title>
+      <link>https://johaniefournier.com/blog/tyt2019w32/</link>
+      <pubDate>Wed, 07 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w32/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W31 - Video Games</title>
+      <link>https://johaniefournier.com/blog/tyt2019w31/</link>
+      <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w31/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W30 - Black and White</title>
+      <link>https://johaniefournier.com/blog/tyt2019w30/</link>
+      <pubDate>Fri, 26 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w30/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W29 - R4DS</title>
+      <link>https://johaniefournier.com/blog/tyt2019w29/</link>
+      <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w29/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W28 - Sankey Diagram</title>
+      <link>https://johaniefournier.com/blog/tyt2019w28/</link>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w28/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W17 - Is There a Relation?</title>
+      <link>https://johaniefournier.com/blog/tyt2019w17/</link>
+      <pubDate>Tue, 23 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w17/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W11 - Side by Side</title>
+      <link>https://johaniefournier.com/blog/tyt2019w11/</link>
+      <pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w11/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W15 - Left_join or Right_join?</title>
+      <link>https://johaniefournier.com/blog/tyt2019w15/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w15/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+    <item>
+      <title>TyT2019W16 - Stil a Man&#39;s World?</title>
+      <link>https://johaniefournier.com/blog/tyt2019w16/</link>
+      <pubDate>Sun, 13 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2019w16/</guid>
+      <description>Initially publish it on my wordpress blog. I put it here for reference purpose.</description>
+    </item>
+    
+  </channel>
+</rss>

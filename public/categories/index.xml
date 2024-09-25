@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Johanie Fournier</title>
+    <link>https://johaniefournier.com/categories/</link>
+    <description>Recent content in Categories on Johanie Fournier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rstats</title>
+      <link>https://johaniefournier.com/categories/rstats/</link>
+      <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/categories/rstats/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidymodels</title>
+      <link>https://johaniefournier.com/categories/tidymodels/</link>
+      <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/categories/tidymodels/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidytuesday</title>
+      <link>https://johaniefournier.com/categories/tidytuesday/</link>
+      <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/categories/tidytuesday/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidyverse</title>
+      <link>https://johaniefournier.com/categories/tidyverse/</link>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/categories/tidyverse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blogdown</title>
+      <link>https://johaniefournier.com/categories/blogdown/</link>
+      <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/categories/blogdown/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -5,8 +5,14 @@ date: "2023-10-12"
 slug: cheat-sheet
 categories:
   - rstats
+  - viz
+  - eda
+  - models 
 tags:
   - rstats
+  - viz
+  - eda
+  - models 
 subtitle: ''
 summary: "I will list here all the little snipset of code that I look up all the time."
 featured: no
@@ -39,19 +45,22 @@ sf::st_as_sf(.) %>%
   sf::st_transform(., 3978)
 ```
 
+
+```r
+sf::st_as_sf(coords = c("longitude", "latitude"))
+```
+
 ### Add a buffer distance around points
 
 ```r
-sf::st_buffer(dist = 20)
+sf::st_buffer(dist=20) 
 ```
 
 ### Get coordinate from a sf object
 
 ```r
-mutate(
-  longitude = sf::st_coordinates(.)[, 1],
-  latitude = sf::st_coordinates(.)[, 2]
-)
+mutate(longitude = sf::st_coordinates(.)[,1],
+        latitude = sf::st_coordinates(.)[,2])
 ```
 
 ## Markdown in R
@@ -68,14 +77,12 @@ date: "`r format(Sys.time(), '%Y-%m-%d')`"
 ### Setup
 
 ```r
-knitr::opts_chunk$set(
-  include = TRUE, # TRUE = run and include the chunk in document
-  echo = FALSE, # FALSE = not display the code
-  eval = TRUE, # FALSE = not run the code in all chunk
-  comment = FALSE,
-  message = FALSE,
-  warning = FALSE
-)
+knitr::opts_chunk$set(include=TRUE, #TRUE = run and include the chunk in document
+                      echo   =FALSE, #FALSE = not display the code
+                      eval   =TRUE, #FALSE = not run the code in all chunk
+                      comment=FALSE,
+                      message=FALSE, 
+                      warning=FALSE)
 ```
 
 ### Theme Map
@@ -108,9 +115,9 @@ theme_map <- function(base_size=9, base_family="") { # 3
 `r emo::ji("popper")`
 
 `r emo::ji("bomb")`
-
+ 
 `r emo::ji("bug")`
-
+  
 `r emo::ji("chart")`
 
 `r emo::ji("cry")`
@@ -132,10 +139,10 @@ theme_map <- function(base_size=9, base_family="") { # 3
 
 ```r
 doFuture::registerDoFuture()
-n_cores <- parallel::detectCores() - 1
+n_cores<-parallel::detectCores()-1
 future::plan(
-  strategy = future::cluster,
-  workers = parallel::makeCluster(n_cores)
+  strategy=future::cluster,
+  workers=parallel::makeCluster(n_cores)
 )
 ```
 
@@ -151,39 +158,47 @@ future::plan(future::sequential)
 ### Replace Inf with NA
 
 ```r
-df %>%
-  mutate_if(is.numeric, list(~ na_if(., Inf))) %>%
-  mutate_if(is.numeric, list(~ na_if(., -Inf)))
+df %>% 
+  mutate_if(is.numeric, list(~na_if(., Inf))) %>% 
+  mutate_if(is.numeric, list(~na_if(., -Inf)))
 ```
 
 
 ```r
-df %>%
-  mutate_at(vars(auc_evi), ~ na_if(., Inf))
+df %>% 
+mutate_at(vars(auc_evi), ~na_if(., Inf))
 ```
 
 ### Rename in a loop
 
 ```r
-lookup <- c(new_name = "old_name")
+lookup<-c (new_name="old_name")
 
-df %>%
+df %>% 
   rename(any_of(lookup))
 ```
 
 ### Remove cap and accent
 
 ```r
+df %>% 
+mutate(new_name=tolower(stringi::stri_trans_general(old_name, "Latin-ASCII")))
+```
+
+
+### Remove quote in dataframe
+
+```r
 df %>%
-  mutate(new_name = tolower(stringi::stri_trans_general(old_name, "Latin-ASCII")))
+  mutate(new_colum=gsub("\"", "", old_colum))
 ```
 
 ### Read all rds file in folder
 
 ```r
-data <- list.files(path = "path_to_files", pattern = ".rds", full.names = T) %>%
-  map_dfr(readRDS) %>%
-  bind_rows()
+data<-list.files(path="path_to_files", pattern = ".rds", full.names=T) %>%
+  map_dfr(readRDS) %>% 
+  bind_rows() 
 ```
 
 ### Corrrelation Funnel
@@ -191,18 +206,18 @@ data <- list.files(path = "path_to_files", pattern = ".rds", full.names = T) %>%
 ```r
 library(correlationfunnel)
 
-var <- "name_of_interest_variable"
+var="name_of_interest_variable"
 
-var_select <- tbl_prep %>%
-  select(var) %>%
-  binarize() %>%
+var_select <-tbl_prep %>% 
+  select(var) %>% 
+  binarize() %>% 
   select(starts_with(var) & ends_with("_Inf")) %>%
   names()
-
-tbl_prep %>%
-  binarize() %>%
-  correlate(var_select) %>%
+  
+  tbl_prep %>% 
+  binarize() %>% 
+  correlate(var_select) %>% 
   plot_correlation_funnel() +
-  labs(title = paste0(label, " - Correlation Funnel"))
+  labs(title= paste0(label, " - Correlation Funnel"))
 ```
 

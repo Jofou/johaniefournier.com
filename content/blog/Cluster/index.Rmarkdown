@@ -1,7 +1,7 @@
 ---
 title: "Some Clusters"
 author: Johanie Fournier, agr. 
-date: "`r format(Sys.time(), '%Y-%m-%d')`"
+date: "2023-11-16"
 slug: Clusters
 categories:
   - rstats

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.98.0" />
+<title>FADQ historical crops data | Johanie Fournier</title>
+
+
+<meta property="twitter:site" content="@fournierjohanie">
+<meta property="twitter:creator" content="@fournierjohanie">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="A data science blog">
+
+
+<meta property="og:site_name" content="Johanie Fournier">
+<meta property="og:title" content="FADQ historical crops data | Johanie Fournier">
+<meta property="og:description" content="A data science blog" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://johaniefournier.com/blog/data-fadq/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://johaniefournier.com/blog/data-fadq/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://johaniefournier.com/blog/data-fadq/featured.png" >
+    
+    
+  <meta itemprop="name" content="FADQ historical crops data">
+<meta itemprop="description" content="I have a lot of things to try&hellip; so I need a lot of data to play with. Here I summarize you how I extract FADQ historic data. I&rsquo;m going to place the tidy data in a repro on github and play with it for my next blogs."><meta itemprop="datePublished" content="2022-05-20T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-05-20T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1198"><meta itemprop="image" content="https://johaniefournier.com/blog/data-fadq/featured.png">
+<meta itemprop="keywords" content="rstats,tidyverse," />
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
+<script>
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-K3765H3YGW', { 'anonymize_ip': true });
+}
+</script>
+
+  
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K3765H3YGW', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.934ab0c39d760cb2a3d6c2d9f252dada805049003f570a926d19dea3b61aacfc.css" integrity="sha256-k0qww512DLKj1sLZ8lLa2oBQSQA/VwqSbRneo7YarPw=" media="screen">
+  
+  
+  <script src="/panelset.min.8f4cba0107356728f266d94a12a4d18ef504eda8a9a284cda73675bae7884a68.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.5c2a34ae6659865a008a6856c3d0035205be131e5a950ccb863e57f6a76d4b1c.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://johaniefournier.com/" title="Home">
+      <img src="/img/icon.png" class="dib db-l h2 w-auto" alt="Johanie Fournier">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">FADQ historical crops data</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a> </p>
+        <p class="f7 db mv0 ttu">May 20, 2022</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="https://johaniefournier.com/blog/data-fadq/index_files/kePrint/kePrint.js"></script>
+<link href="https://johaniefournier.com/blog/data-fadq/index_files/lightable/lightable.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/data-fadq/index_files/htmlwidgets/htmlwidgets.js"></script>
+<link href="https://johaniefournier.com/blog/data-fadq/index_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/data-fadq/index_files/datatables-binding/datatables.js"></script>
+<script src="https://johaniefournier.com/blog/data-fadq/index_files/jquery/jquery-3.6.0.min.js"></script>
+<link href="https://johaniefournier.com/blog/data-fadq/index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://johaniefournier.com/blog/data-fadq/index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/data-fadq/index_files/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="https://johaniefournier.com/blog/data-fadq/index_files/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/data-fadq/index_files/crosstalk/js/crosstalk.min.js"></script>
+<p>
+<a href="https://www.fadq.qc.ca/accueil/" target="_blank" rel="noopener">FADQ</a> here in Quebec, is generous enough to put on their website all the historical data of crop used for each Quebec’s fiend back to 2003. You can find it 
+<a href="https://www.fadq.qc.ca/documents/donnees/base-de-donnees-des-parcelles-et-productions-agricoles-declarees/" target="_blank" rel="noopener">here</a></p>
+<p>I download all of it on my computer and you can find the process in 
+<a href="https://github.com/Jofou/PINs/tree/master/FADQ/1%20Import" target="_blank" rel="noopener">this github repro</a>.</p>
+<p>Now, let’s see what we got in this data set!</p>
+
+
+
+
+<h2 id="get-the-data">Get the data
+  <a href="#get-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>board_prepared <span style="color:#666">&lt;-</span> pins<span style="color:#666">::</span><span style="color:#06287e">board_folder</span>(path_to_file, versioned <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data <span style="color:#666">&lt;-</span> board_prepared <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  pins<span style="color:#666">::</span><span style="color:#06287e">pin_read</span>(<span style="color:#4070a0">&#34;centroid&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">head</span>(data)
+</span></span></code></pre></div><pre><code>##           x        y   an  idanpar suphec culture_fadq
+## 1 -78.72440 48.41762 2003 12388602    5.9     paturage
+## 2 -77.92157 48.23231 2003 13489650   12.5         foin
+## 3 -79.38860 48.75419 2003  9809436   13.2         foin
+## 4 -78.04803 48.36055 2003 12382926    9.6         foin
+## 5 -79.38775 48.60837 2003 12384941   11.6         foin
+## 6 -79.02590 48.69386 2003  9809848   12.5     paturage
+</code></pre>
+
+
+
+
+<h2 id="explore-the-data">Explore the data
+  <a href="#explore-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>In this dataset, <strong>IDANPAR</strong> is a unique ID for each combination field/year. <strong>X</strong> and <strong>Y</strong> are GPS coordinate.</p>
+<p>First, I want to look at the number of field we have for each year.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_histogram</span>(<span style="color:#06287e">aes</span>(an),
+</span></span><span style="display:flex;"><span>    position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;identity&#34;</span>, binwidth <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
+</span></span><span style="display:flex;"><span>    fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Frequency Histogram for Year&#34;</span>,
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-3-1.png" width="2400" />
+<p>The number of information available for each year is constant. This doesn’t represent all the cultivated field of Quebec, because adhesion to FADQ is not mandatory, but this gives a pretty good idea.</p>
+<p>Let’s have a look at the crop.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">count</span>(culture_fadq) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(n <span style="color:#666">&gt;=</span> <span style="color:#40a070">5000</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(<span style="color:#06287e">reorder</span>(culture_fadq, n), n)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_bar</span>(stat <span style="color:#666">=</span> <span style="color:#4070a0">&#34;identity&#34;</span>, fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">coord_flip</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Frequency Histogram for Crops&#34;</span>,
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-4-1.png" width="2400" />
+<p>Why is NA the main crop in this data? I looked in the original data and there are indeed a lot of missing crops. Since this information is not available, I think it’s safe to delete those lines.</p>
+<p>Now let’s see how the field area look like.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_histogram</span>(<span style="color:#06287e">aes</span>(suphec),
+</span></span><span style="display:flex;"><span>    position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;identity&#34;</span>, binwidth <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
+</span></span><span style="display:flex;"><span>    fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Frequency Histogram for Field Area&#34;</span>,
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-5-1.png" width="2400" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_boxplot</span>(<span style="color:#06287e">aes</span>(suphec), fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Boxplot for Field Area&#34;</span>,
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-5-2.png" width="2400" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(suphec) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">my_inspect_num</span>()
+</span></span></code></pre></div><table class="table table-condensed" style="width: auto !important; ">
+<caption>
+Table 1: Numeric Variables Summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:right;">
+Min
+</th>
+<th style="text-align:right;">
+Q1
+</th>
+<th style="text-align:right;">
+Med
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+Q3
+</th>
+<th style="text-align:right;">
+Max
+</th>
+<th style="text-align:right;">
+SD
+</th>
+<th style="text-align:right;">
+NA (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+suphec
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+227
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p>There are field of more than 200 ha in Quebec! 😨 Let me know, I don’t want to walk all this to get the soil samples 😄 !</p>
+<p>There is a lot of outliers in this. Dealing with outliers is always tricky. I don’t even have found the perfect recipe yet.</p>
+<p>So before I can have fun with this data set, it need a bit of cleaning:</p>
+<ul>
+<li>Remove <em>NA</em> crop</li>
+<li>Simplify crop list</li>
+<li>Remove outliers in field area</li>
+</ul>
+
+
+
+
+<h2 id="tidy-data">Tidy data
+  <a href="#tidy-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="simplify-crops">Simplify Crops
+  <a href="#simplify-crops"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_clean_crops <span style="color:#666">&lt;-</span> data <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(<span style="color:#666">!</span><span style="color:#06287e">is.na</span>(culture_fadq)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(groupe <span style="color:#666">=</span> <span style="color:#06287e">case_when</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;foin|panic|feverole|semis direct&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;hay&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;avoine|ble|orge|seigle|sarrasin|triticale|millet|canola|sorgho|tournesol|epeautre|lin|chanvre&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;cereals&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;pommes de terre&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;potato&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;framboisier|framboise|fraisier|fraise|pommier|bleuet|bleuetier|arbustes|coniferes|gadellier|camerise|vigne|poire|canneberges|fruitiers et arbres&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;trees and fruits&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;paturage&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;pasture&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;soya&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;soy&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;mais&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;corn&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;haricot|chou|brocoli|melon|laitue|oignon|piment|celeris|carotte|panais|radis|rutabaga|zucchini|tomate|betterave|cornichon|rabiole|endive|ail|artichaut|asperge|aubergine|poireau|fines herbes|topinambour|celeri-rave|aneth|epinard|pois|rhubarbe|citrouille|courge|concombre|chou-fleur|tabac|gourganes|echalottes|feverole|navets&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;vegetables&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;non-cultive|tourbe|engrais vert&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;not cultivated&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#06287e">as.character</span>(.$culture_fadq)
+</span></span><span style="display:flex;"><span>  ))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data_clean_crops <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">count</span>(groupe, sort <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>()
+</span></span></code></pre></div><div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9"],["hay","corn","cereals","soy","pasture","not cultivated","vegetables","trees and fruits","potato"],[2124244,1304128,951038,852642,396077,154203,76294,12312,9000]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>groupe<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>The crop list look much better now! ✨. Time to deal with the field area outliers.</p>
+<p>I mainly use 3 ways of dealing with them:</p>
+<ul>
+<li>
+<ol>
+<li>The 5% out</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>
+<a href="https://dsf.berkeley.edu/jmh/papers/cleaning-unece.pdf" target="_blank" rel="noopener">Hampel X84</a> calculus, a robust outliers detection technique that label as outliers any point that is more than 1.4826 <em>x</em> MADs (median absolute deviation) away from the median.</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>Box-Cox transformation</li>
+</ol>
+</li>
+</ul>
+<p>I usual look at the 2 first and chose the one that make the mean and the median the closest (good indication of normal distribution). If I can stay away from transformation I will.</p>
+
+
+
+
+<h3 id="5-out">5% Out
+  <a href="#5-out"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">summary</span>(data_clean_crops<span style="color:#666">$</span>suphec)
+</span></span></code></pre></div><pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.100   1.600   3.200   4.731   5.900 226.900
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">quantile</span>(data_clean_crops<span style="color:#666">$</span>suphec, <span style="color:#06287e">c</span>(<span style="color:#40a070">0.05</span>, <span style="color:#40a070">0.95</span>))
+</span></span></code></pre></div><pre><code>##   5%  95% 
+##  0.5 13.9
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_clean_crops <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(suphec <span style="color:#666">&lt;=</span> <span style="color:#40a070">13.9</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_histogram</span>(<span style="color:#06287e">aes</span>(suphec),
+</span></span><span style="display:flex;"><span>    position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;identity&#34;</span>, binwidth <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
+</span></span><span style="display:flex;"><span>    fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Frequency Histogram for Field Area&#34;</span>,
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-7-1.png" width="2400" />
+<p>95% of the field contain in this dataset have an area smaller than 13.9 ha. This exclude a lot of field. Is all the field with more than 14 ha all outliers? I don’t think so…</p>
+
+
+
+
+<h3 id="hampel-x85">Hampel X85
+  <a href="#hampel-x85"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>var <span style="color:#666">&lt;-</span> data_clean_crops<span style="color:#666">$</span>suphec
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>upper_limit <span style="color:#666">&lt;-</span> <span style="color:#06287e">median</span>(var) <span style="color:#666">+</span> <span style="color:#40a070">1.4826</span> <span style="color:#666">*</span> <span style="color:#40a070">2</span> <span style="color:#666">*</span> <span style="color:#06287e">mad</span>(var)
+</span></span><span style="display:flex;"><span>upper_limit
+</span></span></code></pre></div><pre><code>## [1] 11.55279
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_clean_crops <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(suphec <span style="color:#666">&lt;=</span> upper_limit) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_histogram</span>(<span style="color:#06287e">aes</span>(suphec),
+</span></span><span style="display:flex;"><span>    position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;identity&#34;</span>, binwidth <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
+</span></span><span style="display:flex;"><span>    fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Frequency Histogram for Field Area&#34;</span>,
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-8-1.png" width="2400" />
+OK, I can see that in this case the Hampel X84 method make the distribution of the variable more normal. But I still can’t consider all the field over 12 or 14 ha as outliers. And this doesn’t help much to normalize the shape of the curve.
+
+
+
+
+<h3 id="box-cox-transformation">Box-Cox Transformation
+  <a href="#box-cox-transformation"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>I try to avoid transformation at any cost. It usually just make a mess in the interpretation of the model accuracy. In some case, I can’t avoid it. I like to use the Box-Cox method to choose the right transformation to use. This technique is quite simple. The most common transformation are presented here:</p>
+<table>
+<thead>
+<tr>
+<th><code>\(\lambda\)</code></th>
+<th>Transformation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-2</td>
+<td><code>\(\frac{1}{x^2}\)</code></td>
+</tr>
+<tr>
+<td>-1</td>
+<td><code>\(\frac{1}{x}\)</code></td>
+</tr>
+<tr>
+<td>-0.5</td>
+<td><code>\(\frac{1}{\sqrt(x)}\)</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td><code>\(\log(x)\)</code></td>
+</tr>
+<tr>
+<td>0.5</td>
+<td><code>\(\sqrt(x)\)</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>\(x\)</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>\(x^2\)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>b <span style="color:#666">&lt;-</span> MASS<span style="color:#666">::</span><span style="color:#06287e">boxcox</span>(<span style="color:#06287e">lm</span>(data_clean_crops<span style="color:#666">$</span>suphec <span style="color:#666">~</span> <span style="color:#40a070">1</span>))
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-9-1.png" width="2400" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>lambda <span style="color:#666">&lt;-</span> b<span style="color:#666">$</span>x<span style="color:#06287e">[which.max</span>(b<span style="color:#666">$</span>y)]
+</span></span><span style="display:flex;"><span>lambda
+</span></span></code></pre></div><pre><code>## [1] 0.1010101
+</code></pre>
+<p>The best transformation for the field area is the log transformation.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_clean_crops <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(suphec_log <span style="color:#666">=</span> <span style="color:#06287e">log</span>(suphec)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_histogram</span>(<span style="color:#06287e">aes</span>(suphec_log),
+</span></span><span style="display:flex;"><span>    position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;identity&#34;</span>, binwidth <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
+</span></span><span style="display:flex;"><span>    fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;black&#34;</span>
+</span></span><span style="display:flex;"><span>  ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>    title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Frequency Histogram for Field Area&#34;</span>,
+</span></span><span style="display:flex;"><span>    x <span style="color:#666">=</span> <span style="color:#4070a0">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>  )
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-fadq/index_files/figure-html/unnamed-chunk-10-1.png" width="2400" />
+<p>Oh! We got something! The log transformation is the best way to make the field area variable look normal and I can keep all the big field.</p>
+
+
+
+
+<h3 id="final-data-set">Final data set
+  <a href="#final-data-set"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_clean <span style="color:#666">&lt;-</span> data <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(<span style="color:#666">!</span><span style="color:#06287e">is.na</span>(culture_fadq)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(culture <span style="color:#666">=</span> <span style="color:#06287e">case_when</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;foin|panic|feverole|semis direct&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;hay&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;avoine|ble|orge|seigle|sarrasin|triticale|millet|canola|sorgho|tournesol|epeautre|lin|chanvre&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;cereals&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;pommes de terre&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;potato&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;framboisier|framboise|fraisier|fraise|pommier|bleuet|bleuetier|arbustes|coniferes|gadellier|camerise|vigne|poire|canneberges|fruitiers et arbres&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;trees and fruits&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;paturage&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;pasture&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;soya&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;soy&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;mais&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;corn&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;haricot|chou|brocoli|melon|laitue|oignon|piment|celeris|carotte|panais|radis|rutabaga|zucchini|tomate|betterave|cornichon|rabiole|endive|ail|artichaut|asperge|aubergine|poireau|fines herbes|topinambour|celeri-rave|aneth|epinard|pois|rhubarbe|citrouille|courge|concombre|chou-fleur|tabac|gourganes|echalottes|feverole|navets&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;vegetables&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">grepl</span>(<span style="color:#4070a0">&#34;non-cultive|tourbe|engrais vert&#34;</span>, culture_fadq) <span style="color:#666">~</span> <span style="color:#4070a0">&#34;not cultivated&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#007020;font-weight:bold">TRUE</span> <span style="color:#666">~</span> <span style="color:#06287e">as.character</span>(.$culture_fadq)
+</span></span><span style="display:flex;"><span>  )) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(suphec_log <span style="color:#666">=</span> <span style="color:#06287e">log</span>(suphec)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>culture_fadq)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">summary</span>(data_clean)
+</span></span></code></pre></div><pre><code>##        x                y               an          idanpar        
+##  Min.   :-79.54   Min.   :44.99   Min.   :2003   Min.   : 9804822  
+##  1st Qu.:-73.24   1st Qu.:45.65   1st Qu.:2007   1st Qu.:11704702  
+##  Median :-72.43   Median :46.17   Median :2011   Median :13610854  
+##  Mean   :-72.24   Mean   :46.48   Mean   :2011   Mean   :13976700  
+##  3rd Qu.:-71.03   3rd Qu.:47.10   3rd Qu.:2016   3rd Qu.:16231983  
+##  Max.   :-61.76   Max.   :50.25   Max.   :2021   Max.   :19363670  
+##      suphec          culture            suphec_log    
+##  Min.   :  0.100   Length:5879938     Min.   :-2.303  
+##  1st Qu.:  1.600   Class :character   1st Qu.: 0.470  
+##  Median :  3.200   Mode  :character   Median : 1.163  
+##  Mean   :  4.731                      Mean   : 1.100  
+##  3rd Qu.:  5.900                      3rd Qu.: 1.775  
+##  Max.   :226.900                      Max.   : 5.425
+</code></pre>
+<p>🎉 I have a tidy dataset. You can fin it 
+<a href="https://github.com/Jofou/PINs/tree/master/FADQ/3%20Tidy/fadq_tidy/20220520T165247Z-b35d9" target="_blank" rel="noopener">here</a></p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">May 20, 2022</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">6 minute read, 1198 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidyverse">tidyverse</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/tyt2019w11/">TyT2024W21 - Carbon Majors Emissions Data</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/irda-h2o/">Predicting MO with H2O Models from IRDA data</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/data-irda/">IRDA soil data</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://johaniefournier.com/blog/new-begining/">&larr; This is a new begining!</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://johaniefournier.com/blog/new-blog/">I Juste Make my Own Blog! &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+  
+  <script src="https://utteranc.es/client.js"
+          repo="jofou/johaniefournier.com"
+          issue-term="title"
+          theme="github-light"
+          label="comments :speech_balloon:"
+          crossorigin="anonymous"
+          async
+          type="text/javascript">
+  </script>
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Johanie Fournier
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="License">License</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

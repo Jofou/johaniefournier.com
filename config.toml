@@ -121,6 +121,31 @@ enableEmoji = true
     url = "/blog/"
     weight = 2
 
+    [[menu.header]]
+    name = "eda"
+    title = "eda"
+    url = "/categories/eda/"
+    weight = 3
+
+    [[menu.header]]
+    name = "viz"
+    title = "viz"
+    url = "/categories/viz/"
+    weight = 4
+
+    [[menu.header]]
+    name = "models"
+    title = "models"
+    url = "/categories/models/"
+    weight = 5
+
+   [[menu.header]]
+    name = "Cheat Sheet"
+    title = "cheat_sheet"
+    url = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"
+    weight = 6
+
+
   # Configure footer
   [[menu.footer]]
     name = "License"
