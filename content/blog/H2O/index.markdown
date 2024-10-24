@@ -20,12 +20,16 @@ projects: []
 ---
 
 <script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+
 <link href="{{< blogdown/postref >}}index_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
 <script src="{{< blogdown/postref >}}index_files/datatables-binding/datatables.js"></script>
+
 <script src="{{< blogdown/postref >}}index_files/jquery/jquery-3.6.0.min.js"></script>
+
 <link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="{{< blogdown/postref >}}index_files/dt-core/js/jquery.dataTables.min.js"></script>
+
 <link href="{{< blogdown/postref >}}index_files/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="{{< blogdown/postref >}}index_files/crosstalk/js/crosstalk.min.js"></script>
 
@@ -33,7 +37,7 @@ H2O is a powerful tools to have a general idea of the performance of different m
 
 So I mainly use it to know which model perform best with my data. This make me gain a considerable amount of time. From there I can work on the few best models a make solid code for production purpose.
 
-Let’s see if I can make a template of this H2O technologies that will resist the test of time (and constant update 😄)!
+Let’s see if I can make a template of this H2O technologies that will resist the test of time (and constant update 🤣)!
 
 ## Get the data
 
@@ -59,7 +63,7 @@ data <- board_prepared %>%
 
 ## Explore the data
 
--   Organic Matter distribution
+- Organic Matter distribution
 
 ``` r
 data %>%

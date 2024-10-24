@@ -1,7 +1,7 @@
 ---
 title: "IRDA soil data"
 author: Johanie Fournier, agr. 
-date: "2023-10-25"
+date: "2023-10-23"
 slug: data-IRDA
 categories:
   - rstats
@@ -21,7 +21,7 @@ projects: []
 
 
 
-[IRDA](https://www.irda.qc.ca/fr/) here in Quebec, is generous enough to put on their website all the from their soil study. You can find it [here](https://www.irda.qc.ca/fr/services/protection-ressources/sante-sols/information-sols/etudes-pedologiques/) 
+[IRDA](https://www.irda.qc.ca/fr/) here in Quebec, is generous enough to put on their website all the data from their soil studies. You can find it [here](https://www.irda.qc.ca/fr/services/protection-ressources/sante-sols/information-sols/etudes-pedologiques/) 
 
 I download all of it on my computer and you can find the process in [this github repro](https://github.com/Jofou/PINs/tree/master/IRDA/1%20Import).
 
