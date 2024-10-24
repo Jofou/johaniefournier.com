@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.98.0" />
-<title>TyT2024W21 - Carbon Majors Emissions Data | Johanie Fournier</title>
+<title>TyT2019W11 - Side by Side | Johanie Fournier</title>
 
 
 <meta property="twitter:site" content="@fournierjohanie">
@@ -28,7 +28,7 @@
 
 
 <meta property="og:site_name" content="Johanie Fournier">
-<meta property="og:title" content="TyT2024W21 - Carbon Majors Emissions Data | Johanie Fournier">
+<meta property="og:title" content="TyT2019W11 - Side by Side | Johanie Fournier">
 <meta property="og:description" content="A data science blog" />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="https://johaniefournier.com/blog/tyt2019w11/" />
@@ -43,11 +43,11 @@
         <meta name="twitter:image" content="https://johaniefournier.com/blog/tyt2019w11/featured.png" >
     
     
-  <meta itemprop="name" content="TyT2024W21 - Carbon Majors Emissions Data">
-<meta itemprop="description" content="This week we&rsquo;re exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. I add the coordinates to see if their is a relationship between the emissions and the geographical position."><meta itemprop="datePublished" content="2024-06-04T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2024-06-04T00:00:00+00:00" />
-<meta itemprop="wordCount" content="208"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2019w11/featured.png">
-<meta itemprop="keywords" content="rstats,tidymodels,tidytuesday," />
+  <meta itemprop="name" content="TyT2019W11 - Side by Side">
+<meta itemprop="description" content="Initially publish it on my wordpress blog. I put it here for reference purpose."><meta itemprop="datePublished" content="2019-03-12T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-03-12T00:00:00+00:00" />
+<meta itemprop="wordCount" content="724"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2019w11/featured.png">
+<meta itemprop="keywords" content="rstats,tidyverse,tidytuesday," />
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
 <script>
@@ -106,6 +106,26 @@ if (!doNotTrack) {
         
       <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
       
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/eda/" title="eda">eda</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/viz/" title="viz">viz</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/models/" title="models">models</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367" title="cheat_sheet">Cheat Sheet</a>
+      
       
     </div>
   </nav>
@@ -115,93 +135,201 @@ if (!doNotTrack) {
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">TyT2024W21 - Carbon Majors Emissions Data</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">TyT2019W11 - Side by Side</h1>
         
-        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidymodels">tidymodels</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </p>
-        <p class="f7 db mv0 ttu">June 4, 2024</p>
+        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </p>
+        <p class="f7 db mv0 ttu">March 12, 2019</p>
 
       
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>This is the latest in my series of&hellip;, with a recent 
-<a href="https://github.com/rfordatascience/tidytuesday" target="_blank" rel="noopener"><code>#TidyTuesday</code> dataset</a> on educational attainment in UK towns.</p>
-</br>
-<p>Here is the code I used in the video, for those who prefer reading instead of or in addition to video.</p>
+        
 
 
 
-
-<h2 id="explore-data">Explore data
-  <a href="#explore-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="get-the-data">Get the data
+  <a href="#get-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Our modeling goal is to&hellip;</p>
-<p>Let&rsquo;s start by reading in the data:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(tidyverse)
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>board_games <span style="color:#666">&lt;-</span> readr<span style="color:#666">::</span><span style="color:#06287e">read_csv</span>(<span style="color:#4070a0">&#34;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv&#34;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>## Rows: 10532 Columns: 22
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &#34;,&#34;
+## chr (12): description, image, name, thumbnail, artist, category, compilation...
+## dbl (10): game_id, max_players, max_playtime, min_age, min_players, min_play...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</code></pre>
+
+
+
+<h2 id="explore-the-data">Explore the data
+  <a href="#explore-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">summary</span>(board_games)
+</span></span></code></pre></div><pre tabindex="0"><code>##     game_id       description           image            max_players     
+##  Min.   :     1   Length:10532       Length:10532       Min.   :  0.000  
+##  1st Qu.:  5444   Class :character   Class :character   1st Qu.:  4.000  
+##  Median : 28822   Mode  :character   Mode  :character   Median :  4.000  
+##  Mean   : 62059                                         Mean   :  5.657  
+##  3rd Qu.:126410                                         3rd Qu.:  6.000  
+##  Max.   :216725                                         Max.   :999.000  
+##   max_playtime         min_age        min_players     min_playtime     
+##  Min.   :    0.00   Min.   : 0.000   Min.   :0.000   Min.   :    0.00  
+##  1st Qu.:   30.00   1st Qu.: 8.000   1st Qu.:2.000   1st Qu.:   25.00  
+##  Median :   45.00   Median :10.000   Median :2.000   Median :   45.00  
+##  Mean   :   91.34   Mean   : 9.715   Mean   :2.071   Mean   :   80.88  
+##  3rd Qu.:   90.00   3rd Qu.:12.000   3rd Qu.:2.000   3rd Qu.:   90.00  
+##  Max.   :60000.00   Max.   :42.000   Max.   :9.000   Max.   :60000.00  
+##      name            playing_time       thumbnail         year_published
+##  Length:10532       Min.   :    0.00   Length:10532       Min.   :1950  
+##  Class :character   1st Qu.:   30.00   Class :character   1st Qu.:1998  
+##  Mode  :character   Median :   45.00   Mode  :character   Median :2007  
+##                     Mean   :   91.34                      Mean   :2003  
+##                     3rd Qu.:   90.00                      3rd Qu.:2012  
+##                     Max.   :60000.00                      Max.   :2016  
+##     artist            category         compilation          designer        
+##  Length:10532       Length:10532       Length:10532       Length:10532      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##   expansion            family            mechanic          publisher        
+##  Length:10532       Length:10532       Length:10532       Length:10532      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##  average_rating   users_rated     
+##  Min.   :1.384   Min.   :   50.0  
+##  1st Qu.:5.830   1st Qu.:   85.0  
+##  Median :6.393   Median :  176.0  
+##  Mean   :6.371   Mean   :  870.1  
+##  3rd Qu.:6.943   3rd Qu.:  518.0  
+##  Max.   :9.004   Max.   :67655.0
+</code></pre>
+
+
+
+<h2 id="prepare-the-data">Prepare the data
+  <a href="#prepare-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>rate<span style="color:#666">&lt;-</span>board_games<span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(category,average_rating)<span style="color:#666">%&gt;%</span> <span style="color:#60a0b0;font-style:italic"># conserver seulement les 2 colonnes pertinentes pour l&#39;analyse</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">mutate</span>(category <span style="color:#666">=</span> <span style="color:#06287e">str_replace_all</span>(category, <span style="color:#4070a0">&#34;\\/&#34;</span>,<span style="color:#4070a0">&#34;,&#34;</span>))<span style="color:#666">%&gt;%</span> <span style="color:#60a0b0;font-style:italic">#uniformiser les séparateurs de catégories</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">separate</span>(category, <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;no1&#34;</span>,<span style="color:#4070a0">&#34;no2&#34;</span>,<span style="color:#4070a0">&#34;no3&#34;</span>,<span style="color:#4070a0">&#34;no4&#34;</span>,<span style="color:#4070a0">&#34;no5&#34;</span>,<span style="color:#4070a0">&#34;no6&#34;</span>,<span style="color:#4070a0">&#34;no7&#34;</span>,<span style="color:#4070a0">&#34;no8&#34;</span>,<span style="color:#4070a0">&#34;no9&#34;</span>,<span style="color:#4070a0">&#34;no10&#34;</span>,<span style="color:#4070a0">&#34;no11&#34;</span>,<span style="color:#4070a0">&#34;no12&#34;</span>,<span style="color:#4070a0">&#34;no13&#34;</span>,<span style="color:#4070a0">&#34;no14&#34;</span>,
+</span></span><span style="display:flex;"><span>                         <span style="color:#4070a0">&#34;no15&#34;</span>), sep<span style="color:#666">=</span><span style="color:#4070a0">&#34;,&#34;</span>)<span style="color:#666">%&gt;%</span> <span style="color:#60a0b0;font-style:italic">#séparer les catégories en différents colonnes</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">gather</span>(key<span style="color:#666">=</span><span style="color:#4070a0">&#34;No&#34;</span>, value<span style="color:#666">=</span><span style="color:#4070a0">&#34;Categories&#34;</span>, <span style="color:#666">-</span>average_rating)<span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(Categories,average_rating) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#60a0b0;font-style:italic">#summarise(mean=mean(average_rating)) # la note moyenne est de 6.37</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(divergence<span style="color:#666">=</span>average_rating<span style="color:#40a070">-6.37</span>)<span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(Categories)<span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(average_div_rate<span style="color:#666">=</span><span style="color:#06287e">mean</span>(divergence))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>emissions <span style="color:#666">&lt;-</span> readr<span style="color:#666">::</span><span style="color:#06287e">read_csv</span>(<span style="color:#4070a0">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-05-21/emissions.csv&#39;</span>)
-</span></span></code></pre></div><pre><code>Rows: 12551 Columns: 7
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (4): parent_entity, parent_type, commodity, production_unit
-dbl (3): year, production_value, total_emissions_MtCO2e
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-</code></pre>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">glimpse</span>(emissions)
-</span></span></code></pre></div><pre><code>Rows: 12,551
-Columns: 7
-$ year                   &lt;dbl&gt; 1962, 1962, 1963, 1963, 1964, 1964, 1965, 1965,…
-$ parent_entity          &lt;chr&gt; &quot;Abu Dhabi National Oil Company&quot;, &quot;Abu Dhabi Na…
-$ parent_type            &lt;chr&gt; &quot;State-owned Entity&quot;, &quot;State-owned Entity&quot;, &quot;St…
-$ commodity              &lt;chr&gt; &quot;Oil &amp; NGL&quot;, &quot;Natural Gas&quot;, &quot;Oil &amp; NGL&quot;, &quot;Natur…
-$ production_value       &lt;dbl&gt; 0.91250, 1.84325, 1.82500, 4.42380, 7.30000, 17…
-$ production_unit        &lt;chr&gt; &quot;Million bbl/yr&quot;, &quot;Bcf/yr&quot;, &quot;Million bbl/yr&quot;, &quot;…
-$ total_emissions_MtCO2e &lt;dbl&gt; 0.3638848, 0.1343552, 0.7277697, 0.3224525, 2.9…
-</code></pre>
-<p>Questions to answers&hellip;</p>
-<p>(Code)</p>
-<p>Conclusion from data</p>
+</span></span><span style="display:flex;"><span>top_10<span style="color:#666">&lt;-</span>rate<span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">top_n</span>(<span style="color:#40a070">10</span>, average_div_rate) <span style="color:#60a0b0;font-style:italic">#sélectionner les 10 meilleures évaluations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bottom_10<span style="color:#666">&lt;-</span>rate<span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">top_n</span>(<span style="color:#40a070">-10</span>, average_div_rate)<span style="color:#60a0b0;font-style:italic">#sélectionner les 10 pires évaluations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rate<span style="color:#666">&lt;-</span>top_10<span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">rbind</span>(bottom_10)
+</span></span></code></pre></div>
 
 
 
-
-<h2 id="build-a-model">Build a model
-  <a href="#build-a-model"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="visualize-the-data">Visualize the data
+  <a href="#visualize-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Goal for the model&hellip;</p>
-<p>(code)</p>
-<p>some figures to show the result and the model performances</p>
-<p>This plot shows us that&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#Graphique</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span><span style="color:#06287e">ggplot</span>(data<span style="color:#666">=</span>rate, <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#06287e">reorder</span>(Categories, average_div_rate), y<span style="color:#666">=</span>average_div_rate, fill<span style="color:#666">=</span>Categories))
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">geom_bar</span>(stat<span style="color:#666">=</span><span style="color:#4070a0">&#34;identity&#34;</span>, width<span style="color:#666">=</span><span style="color:#40a070">0.85</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">coord_flip</span>()
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">scale_fill_manual</span>(values <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, <span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, <span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, <span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, <span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, <span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, <span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, <span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>,<span style="color:#4070a0">&#34;#A44A3F&#34;</span>,<span style="color:#4070a0">&#34;#090446&#34;</span>,<span style="color:#4070a0">&#34;#A9A9A9&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#Ajouter les étiquettes de données</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">1</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.84</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;5.6&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A44A3F&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">4</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">20</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.85</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;7.2&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#090446&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">4</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">1</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Trivia&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">2</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Children&#39;s Game&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">3</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Memory&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">4</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Math&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">5</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Radio Theme&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">6</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;TV&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">7</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Movies&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">8</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Electronic&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">9</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Music&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">10</span>,y<span style="color:#666">=</span><span style="color:#40a070">0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Word Game&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">11</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Age of Reason&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">12</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Post-Napoleonic&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">13</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Miniature&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">14</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Civilization&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">15</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;American Revolutionary War&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">16</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;American Indian Wars&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">17</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Book&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">18</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Civil War&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">19</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Expansion for Base-game&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">20</span>,y<span style="color:#666">=</span><span style="color:#40a070">-0.02</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Vietman War&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#A9A9A9&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#modifier la légende</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">theme</span>(legend.position<span style="color:#666">=</span><span style="color:#4070a0">&#34;none&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#modifier le thème</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span><span style="color:#06287e">theme</span>(panel.border <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>              panel.background <span style="color:#666">=</span> <span style="color:#06287e">element_rect</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, colour <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#FFFFFF&#34;</span>),
+</span></span><span style="display:flex;"><span>              plot.background <span style="color:#666">=</span> <span style="color:#06287e">element_rect</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, colour <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#FFFFFF&#34;</span>),
+</span></span><span style="display:flex;"><span>              panel.grid.major.y<span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>              panel.grid.major.x<span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>              panel.grid.minor <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>              axis.line <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>              axis.ticks.y <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>              axis.ticks.x <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>())
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajouter les titres</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">labs</span>(title<span style="color:#666">=</span><span style="color:#4070a0">&#34;Which categories of board games are the best and worst rated?&#34;</span>,
+</span></span><span style="display:flex;"><span>              subtitle<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">NULL</span>,
+</span></span><span style="display:flex;"><span>              y<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">NULL</span>, 
+</span></span><span style="display:flex;"><span>              x<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">NULL</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">theme</span>(plot.title    <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>,size<span style="color:#666">=</span><span style="color:#40a070">26</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#8B8B8B&#34;</span>, face<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>),
+</span></span><span style="display:flex;"><span>               plot.subtitle <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>,size<span style="color:#666">=</span><span style="color:#40a070">18</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#8B8B8B&#34;</span>),
+</span></span><span style="display:flex;"><span>               axis.title.y  <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>               axis.title.x  <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>               axis.text.y   <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>               axis.text.x   <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>())
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/tyt2019w11/index_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Posted on:</dt>
-    <dd class="fw5 ml0">June 4, 2024</dd>
+    <dd class="fw5 ml0">March 12, 2019</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">1 minute read, 208 words</dd>
+    <dd class="fw5 ml0">4 minute read, 724 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Categories:</dt>
-    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidymodels">tidymodels</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidymodels">tidymodels</a>  <a href="https://johaniefournier.com/tags/tidytuesday">tidytuesday</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/tags/tidytuesday">tidytuesday</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -221,10 +349,13 @@ $ total_emissions_MtCO2e &lt;dbl&gt; 0.3638848, 0.1343552, 0.7277697, 0.3224525,
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://johaniefournier.com/blog/tyt2019w17/">&larr; TyT2019W17 - Is There a Relation?</a>
+  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://johaniefournier.com/blog/irda-h2o/">Predicting MO with H2O Models from IRDA data &rarr;</a>
+    href="https://johaniefournier.com/blog/tyt2019w15/">TyT2019W15 - Left_join or Right_join? &rarr;</a>
   
 </div>
 

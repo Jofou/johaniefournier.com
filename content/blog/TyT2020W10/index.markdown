@@ -33,17 +33,11 @@ game_goals <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience
 
 ```
 ## Rows: 49384 Columns: 25
-```
-
-```
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
 ## chr   (7): player, age, team, at, opp, location, outcome
 ## dbl  (17): season, rank, game_num, goals, assists, points, plus_minus, penal...
 ## date  (1): date
-```
-
-```
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -105,6 +99,14 @@ plt2 <-game %>%
   theme(axis.text.x = element_blank())+
   theme(axis.ticks.x = element_blank())
 plt2 + plt1 + plot_layout(nrow = 2, heights = c(2, 1))
+```
+
+```
+## Warning: The dot-dot notation (`..count..`) was deprecated in ggplot2 3.4.0.
+## ℹ Please use `after_stat(count)` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />

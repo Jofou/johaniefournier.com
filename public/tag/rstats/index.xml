@@ -6,16 +6,7 @@
     <description>Recent content in rstats on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 04 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/rstats/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>TyT2024W21 - Carbon Majors Emissions Data</title>
-      <link>https://johaniefournier.com/blog/tyt2019w11/</link>
-      <pubDate>Tue, 04 Jun 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/blog/tyt2019w11/</guid>
-      <description>This week we&amp;rsquo;re exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. I add the coordinates to see if their is a relationship between the emissions and the geographical position.</description>
-    </item>
-    
+    <lastBuildDate>Wed, 01 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/rstats/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Predicting MO with H2O Models from IRDA data</title>
       <link>https://johaniefournier.com/blog/irda-h2o/</link>

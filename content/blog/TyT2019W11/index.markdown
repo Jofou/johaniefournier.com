@@ -33,16 +33,10 @@ board_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascienc
 
 ```
 ## Rows: 10532 Columns: 22
-```
-
-```
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
 ## chr (12): description, image, name, thumbnail, artist, category, compilation...
 ## dbl (10): game_id, max_players, max_playtime, min_age, min_players, min_play...
-```
-
-```
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.

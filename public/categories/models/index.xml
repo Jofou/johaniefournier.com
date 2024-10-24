@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>models on Johanie Fournier</title>
+    <link>https://johaniefournier.com/categories/models/</link>
+    <description>Recent content in models on Johanie Fournier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 12 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/categories/models/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>This is the begining of a cheat sheet!</title>
+      <link>https://johaniefournier.com/blog/cheat-sheet/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/cheat-sheet/</guid>
+      <description>I will list here all the little snipset of code that I look up all the time.</description>
+    </item>
+    
+  </channel>
+</rss>
