@@ -1,6 +1,6 @@
 ---
 title: 'TyT2024W21 - EDA:Carbon Majors Emissions Data'
-author: Johanie Fournier, agr.
+author: Johanie Fournier, agr., M.Sc.
 date: "2024-10-24"
 slug: TyT2024W21_EDA
 categories:
@@ -10,7 +10,7 @@ categories:
 tags:
   - eda
   - tidytuesday
-summary: "This week we're exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In tihs first part, I start with some exploratory data analysis."
+summary: "This week we're exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this first part, I start with some exploratory data analysis."
 editor_options: 
   chunk_output_type: inline
 ---
@@ -174,8 +174,6 @@ We have a clear indication that country does not produce the same amount of carb
 Can we link the spatial trend to the temporal trend? Let's find out by looking at the top 10 countries with the highest emissions.
 
 ```{r}
-#| fig-width: 7
-#| fig-height: 5
 
 top10_entity<-sum_emissions_entity |> 
   top_n(6, sum) |> 
@@ -198,10 +196,9 @@ plot_data |>
     plot_time_series(
         .date_var    = date,
         .value       = sum,
-        .interactive = TRUE,
+        .interactive = FALSE,
         .facet_ncol  = 2,
         .facet_scales = "free",
-        .plotly_slider = TRUE
     )
 ```
 
