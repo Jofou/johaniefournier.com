@@ -7,12 +7,12 @@ categories:
   - rstats
   - tidymodels
   - tidytuesday
-  - ml
+  - models
 tags:
   - rstats
   - tidymodels
   - tidytuesday
-  - ml
+  - models
 summary: "This week we're exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this second part, I'm predicting carbon emission over space and time."
 editor_options: 
   chunk_output_type: inline
