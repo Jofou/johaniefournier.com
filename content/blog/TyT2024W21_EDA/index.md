@@ -7,8 +7,11 @@ categories:
   - rstats
   - tidymodels
   - tidytuesday
+  - eda
 tags:
   - eda
+  - rstats
+  - tidymodels
   - tidytuesday
 summary: "This week we're exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this first part, I start with some exploratory data analysis."
 editor_options: 
