@@ -68,23 +68,8 @@ anim_save("data/ggmap_animation.gif", animation = anim)
 ``` r
 # Read and display the saved GIF animation
 animation <- magick::image_read("data/ggmap_animation.gif")
-print(animation)
+print(animation, info = FALSE)
 ```
-
-    # A tibble: 179 × 7
-       format width height colorspace matte filesize density
-       <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
-     1 GIF      480    480 sRGB       FALSE        0 72x72  
-     2 GIF      480    480 sRGB       FALSE        0 72x72  
-     3 GIF      480    480 sRGB       FALSE        0 72x72  
-     4 GIF      480    480 sRGB       FALSE        0 72x72  
-     5 GIF      480    480 sRGB       FALSE        0 72x72  
-     6 GIF      480    480 sRGB       FALSE        0 72x72  
-     7 GIF      480    480 sRGB       FALSE        0 72x72  
-     8 GIF      480    480 sRGB       FALSE        0 72x72  
-     9 GIF      480    480 sRGB       FALSE        0 72x72  
-    10 GIF      480    480 sRGB       FALSE        0 72x72  
-    # ℹ 169 more rows
 
 ![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.gif)
 

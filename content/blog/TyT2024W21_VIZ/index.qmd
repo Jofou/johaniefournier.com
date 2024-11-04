@@ -159,7 +159,7 @@ anim_save("data/ggmap_animation.gif", animation = anim)
 ```{r}
 # Read and display the saved GIF animation
 animation <- magick::image_read("data/ggmap_animation.gif")
-print(animation)
+print(animation, info = FALSE)
 ```
 
 
