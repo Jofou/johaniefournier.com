@@ -59,10 +59,34 @@ base_map <- ggplot() +
         axis.title.y = element_blank(),
         plot.title=element_text(hjust=0.5))
 num_years <- max(data_with_pred$date) - min(data_with_pred$date) + 1
-animate(base_map, nframes = num_years)
+
+# Save the animation as a GIF
+anim <- animate(base_map, nframes = num_years)
+anim_save("data/ggmap_animation.gif", animation = anim)
 ```
 
-![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.gif)
+``` r
+# Read and display the saved GIF animation
+animation <- magick::image_read("data/ggmap_animation.gif")
+print(animation)
+```
+
+    # A tibble: 179 × 7
+       format width height colorspace matte filesize density
+       <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+     1 GIF      480    480 sRGB       FALSE        0 72x72  
+     2 GIF      480    480 sRGB       FALSE        0 72x72  
+     3 GIF      480    480 sRGB       FALSE        0 72x72  
+     4 GIF      480    480 sRGB       FALSE        0 72x72  
+     5 GIF      480    480 sRGB       FALSE        0 72x72  
+     6 GIF      480    480 sRGB       FALSE        0 72x72  
+     7 GIF      480    480 sRGB       FALSE        0 72x72  
+     8 GIF      480    480 sRGB       FALSE        0 72x72  
+     9 GIF      480    480 sRGB       FALSE        0 72x72  
+    10 GIF      480    480 sRGB       FALSE        0 72x72  
+    # ℹ 169 more rows
+
+![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.gif)
 
 ## Conclusion
 
@@ -119,16 +143,15 @@ sessionInfo()
     [33] ipred_0.9-12       webshot_0.5.2      future.apply_1.8.1 DBI_1.1.1         
     [37] Rcpp_1.0.13        viridisLite_0.4.0  progress_1.2.2     units_0.7-2       
     [41] GPfit_1.0-8        proxy_0.4-26       lava_1.6.10        prodlim_2019.11.13
-    [45] httr_1.4.6         wk_0.6.0           pkgconfig_2.0.3    farver_2.1.0      
-    [49] nnet_7.3-16        utf8_1.2.2         labeling_0.4.2     tidyselect_1.2.0  
-    [53] rlang_1.1.1        DiceDesign_1.9     munsell_0.5.0      cellranger_1.1.0  
-    [57] tools_4.1.1        cli_3.6.1          generics_0.1.3     evaluate_0.14     
-    [61] fastmap_1.2.0      yaml_2.2.1         zip_2.2.0          s2_1.0.7          
-    [65] xml2_1.3.4         compiler_4.1.1     rstudioapi_0.14    curl_5.2.3        
-    [69] png_0.1-7          e1071_1.7-9        lhs_1.1.3          tweenr_2.0.3      
-    [73] stringi_1.7.5      lattice_0.20-44    Matrix_1.3-4       classInt_0.4-3    
-    [77] vctrs_0.6.5        pillar_1.9.0       lifecycle_1.0.3    furrr_0.2.3       
-    [81] R6_2.5.1           renv_1.0.7         KernSmooth_2.23-20 parallelly_1.28.1 
-    [85] codetools_0.2-18   MASS_7.3-54        withr_2.5.0        parallel_4.1.1    
-    [89] hms_1.1.3          grid_4.1.1         rpart_4.1-15       timeDate_3043.102 
-    [93] class_7.3-19       rmarkdown_2.25     base64enc_0.1-3   
+    [45] httr_1.4.6         pkgconfig_2.0.3    farver_2.1.0       nnet_7.3-16       
+    [49] utf8_1.2.2         tidyselect_1.2.0   rlang_1.1.1        DiceDesign_1.9    
+    [53] munsell_0.5.0      cellranger_1.1.0   tools_4.1.1        cli_3.6.1         
+    [57] generics_0.1.3     evaluate_0.14      fastmap_1.2.0      yaml_2.2.1        
+    [61] zip_2.2.0          xml2_1.3.4         compiler_4.1.1     rstudioapi_0.14   
+    [65] curl_5.2.3         png_0.1-7          e1071_1.7-9        lhs_1.1.3         
+    [69] tweenr_2.0.3       stringi_1.7.5      lattice_0.20-44    Matrix_1.3-4      
+    [73] classInt_0.4-3     vctrs_0.6.5        pillar_1.9.0       lifecycle_1.0.3   
+    [77] furrr_0.2.3        R6_2.5.1           renv_1.0.7         KernSmooth_2.23-20
+    [81] parallelly_1.28.1  codetools_0.2-18   MASS_7.3-54        withr_2.5.0       
+    [85] parallel_4.1.1     hms_1.1.3          grid_4.1.1         rpart_4.1-15      
+    [89] timeDate_3043.102  class_7.3-19       rmarkdown_2.25     base64enc_0.1-3   

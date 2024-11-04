@@ -123,6 +123,7 @@ data_with_pred<- read_rds("data/data_with_pred.rds") |>
 ## Animated Visualization
 
 ```{r}
+#| eval: FALSE
 library(gganimate)
 library(rnaturalearth)
 library(rnaturalearthdata)
@@ -149,7 +150,16 @@ base_map <- ggplot() +
         axis.title.y = element_blank(),
         plot.title=element_text(hjust=0.5))
 num_years <- max(data_with_pred$date) - min(data_with_pred$date) + 1
-animate(base_map, nframes = num_years)
+
+# Save the animation as a GIF
+anim <- animate(base_map, nframes = num_years)
+anim_save("data/ggmap_animation.gif", animation = anim)
+```
+
+```{r}
+# Read and display the saved GIF animation
+animation <- magick::image_read("data/ggmap_animation.gif")
+print(animation)
 ```
 
 
