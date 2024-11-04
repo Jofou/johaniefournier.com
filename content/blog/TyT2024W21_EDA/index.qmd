@@ -263,7 +263,6 @@ final_data<-emissions |>
 ```
 
 
-
 ## Conclusion
 
 In this first part, we have explored the dataset and identified the main characteristics. We have seen that the carbon emissions have increased over time and that the top 50 countries have different trends. We have also identified some anomalies and outliers that have been correct for the work to come in the next part. 
