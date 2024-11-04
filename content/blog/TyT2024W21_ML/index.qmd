@@ -124,7 +124,8 @@ In this second part, I will be predicting carbon emissions over space and time. 
 
 ## Data Preprocessing
 
-The first step here is to add the GPS coordinate for all th 50 *parent_entity* in the dataset. To do so, we first need to find the headquarters location for each company. 
+The first step here is to add the GPS coordinate for all th 50 *parent_entity* in the dataset. To do so, we first need to find the headquarters location for each company.
+
 
 ### Get Headquarters Location
 
