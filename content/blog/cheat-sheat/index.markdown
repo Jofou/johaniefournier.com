@@ -221,3 +221,9 @@ var_select <-tbl_prep %>%
   labs(title= paste0(label, " - Correlation Funnel"))
 ```
 
+# Ressources
+
+* https://www.r-bloggers.com. 
+* https://www.business-science.io/
+* https://juliasilge.com/
+
