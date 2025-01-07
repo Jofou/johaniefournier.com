@@ -13,7 +13,7 @@ tags:
   - tidymodels
   - tidytuesday
   - viz
-summary: "This week we're exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In the first and second part I did some EDA and created a spatio-temporal machine learning model. In this part, I'm creating an animated vizualisation of the data including the predictions."
+summary: "This week we are exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In the first and second part I did some EDA and created a spatio-temporal machine learning model. In this part, I'm creating an animated vizualisation of the data including the predictions."
 ---
 
 This is my latest contribution to the [`#TidyTuesday` dataset](https://github.com/rfordatascience/tidytuesday) project, featuring a recent dataset on carbon major emissions.
