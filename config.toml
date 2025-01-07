@@ -144,7 +144,7 @@ enableEmoji = true
    [[menu.header]]
     name = "Tutorials"
     title = "tutorials"
-    url = "johanie-fournier-s-school.teachable.com/p/geos-data-analysis-tutorials"
+    url = "https://johanie-fournier-s-school.teachable.com/p/geos-data-analysis-tutorials"
     weight = 7
 
   # Configure footer
