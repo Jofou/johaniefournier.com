@@ -35,7 +35,7 @@ enableEmoji = true
 [params]
   orgName = "Johanie Fournier"
   orgLocal = ""
-  description = "A data science blog"
+  description = "Freelance Agronomist Doing Data Analysis"
   favicon = "/img/icon.png"
   logo = "/img/icon.png"
   mainSections = ""
