@@ -15,7 +15,12 @@ intro: |
   This blog is built with [blogdown](https://github.com/rstudio/blogdown) and [Hugo](https://gohugo.io/), and deployed using [Netlify](https://www.netlify.com/). My blog posts are released under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/). 
   
   
-  
+  All this work wouldn't have been possible without the help of the amaizing ressources available on the web. Here a list of some of them:
+  * https://www.r-bloggers.com
+  * https://www.business-science.io/
+  * https://juliasilge.com/
+  * https://www.tidyverse.org/
+  * https://www.rstudio.com/
   
 
 ---
