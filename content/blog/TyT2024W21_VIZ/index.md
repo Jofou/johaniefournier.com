@@ -20,6 +20,8 @@ This is my latest contribution to the [`#TidyTuesday` dataset](https://github.co
 
 In the first part, I did some Exploratory Data Analysis (EDA) to look at the data set and summarize the main characteristics. In the second part, I built a spatio-temporal machine learning model to predict future emissions. In this part, I'm creating an animated map of the data including the predictions.
 
+{{% youtube "3xoz262R-qM" %}}
+
 ## Load the Data
 
 ``` r
@@ -71,7 +73,7 @@ animation <- magick::image_read("data/ggmap_animation.gif")
 print(animation, info = FALSE)
 ```
 
-![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.gif)
+![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.gif)
 
 ## Conclusion
 
@@ -134,9 +136,10 @@ sessionInfo()
     [57] generics_0.1.3     evaluate_0.14      fastmap_1.2.0      yaml_2.2.1        
     [61] zip_2.2.0          xml2_1.3.4         compiler_4.1.1     rstudioapi_0.14   
     [65] curl_5.2.3         png_0.1-7          e1071_1.7-9        lhs_1.1.3         
-    [69] tweenr_2.0.3       stringi_1.7.5      lattice_0.20-44    Matrix_1.3-4      
-    [73] classInt_0.4-3     vctrs_0.6.5        pillar_1.9.0       lifecycle_1.0.3   
-    [77] furrr_0.2.3        R6_2.5.1           renv_1.0.7         KernSmooth_2.23-20
-    [81] parallelly_1.28.1  codetools_0.2-18   MASS_7.3-54        withr_2.5.0       
-    [85] parallel_4.1.1     hms_1.1.3          grid_4.1.1         rpart_4.1-15      
-    [89] timeDate_3043.102  class_7.3-19       rmarkdown_2.25     base64enc_0.1-3   
+    [69] tweenr_2.0.3       stringi_1.7.5      blogdown_1.9.4     lattice_0.20-44   
+    [73] Matrix_1.3-4       classInt_0.4-3     vctrs_0.6.5        pillar_1.9.0      
+    [77] lifecycle_1.0.3    furrr_0.2.3        R6_2.5.1           renv_1.0.7        
+    [81] KernSmooth_2.23-20 parallelly_1.28.1  codetools_0.2-18   MASS_7.3-54       
+    [85] withr_2.5.0        parallel_4.1.1     hms_1.1.3          grid_4.1.1        
+    [89] rpart_4.1-15       timeDate_3043.102  class_7.3-19       rmarkdown_2.25    
+    [93] base64enc_0.1-3   

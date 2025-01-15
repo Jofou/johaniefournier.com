@@ -121,6 +121,10 @@ In the [firs part](https://www.johaniefournier.com/blog/tyt2024w21_eda/), the go
 
 In this second part, I will be predicting carbon emissions over space and time. I will be using machine learning techniques to predict future emissions based on historical data. I will be using the `spdep` package to create a spatial weights matrix, and the `modeltime` package to train machine learning models and make predictions for future emissions. Let's get started!
 
+```{r}
+#| echo: false
+blogdown::shortcode("youtube", "3xoz262R-qM")
+```
 
 ## Data Preprocessing
 

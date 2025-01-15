@@ -116,6 +116,11 @@ I have worked extensively with spatial data over the past two years, so I decide
 
 My latest contribution to the [`#TidyTuesday`](https://github.com/rfordatascience/tidytuesday) project featuring a recent dataset on carbon major emissions. The dataset is a compilation of emissions data from 1854 to 2019.
 
+```{r}
+#| echo: false
+blogdown::shortcode("youtube", "3xoz262R-qM")
+```
+
 ## Goal 
 
 The overall goal of this blog series is to predict carbon emissions over time and space.

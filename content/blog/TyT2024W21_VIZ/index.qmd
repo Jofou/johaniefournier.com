@@ -110,6 +110,11 @@ This is my latest contribution to the [`#TidyTuesday` dataset](https://github.co
 
 In the first part, I did  some Exploratory Data Analysis (EDA) to look at the data set and summarize the main characteristics. In the second part, I built a spatio-temporal machine learning model to predict future emissions. In this part, I'm creating an animated map of the data including the predictions.
 
+```{r}
+#| echo: false
+blogdown::shortcode("youtube", "3xoz262R-qM")
+```
+
 ## Load the Data
 
 ```{r}

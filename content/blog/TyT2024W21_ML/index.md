@@ -35,6 +35,8 @@ In the [firs part](https://www.johaniefournier.com/blog/tyt2024w21_eda/), the go
 
 In this second part, I will be predicting carbon emissions over space and time. I will be using machine learning techniques to predict future emissions based on historical data. I will be using the `spdep` package to create a spatial weights matrix, and the `modeltime` package to train machine learning models and make predictions for future emissions. Let's get started!
 
+{{% youtube "3xoz262R-qM" %}}
+
 ## Data Preprocessing
 
 The first step here is to add the GPS coordinate for all th 50 *parent_entity* in the dataset. To do so, we first need to find the headquarters location for each company.
@@ -66,8 +68,8 @@ parent_entity<-data|>
 DT::datatable(parent_entity)
 ```
 
-<div id="htmlwidget-9533a2ffab19746c3140" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9533a2ffab19746c3140">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["Abu Dhabi National Oil Company","Alpha Metallurgical Resources","Anglo American","Arch Resources","BHP","BP","British Coal Corporation","Chevron","China (Cement)","China (Coal)","CNPC","Coal India","ConocoPhillips","CONSOL Energy","Czechoslovakia","Eni","Equinor","ExxonMobil","Former Soviet Union","Gazprom","Glencore","Iraq National Oil Company","Kazakhstan","Kuwait Petroleum Corp.","Libya National Oil Corp.","Lukoil","National Iranian Oil Co.","Nigerian National Petroleum Corp.","Occidental Petroleum","ONGC India","Peabody Coal Group","Pemex","Pertamina","Petrobras","Petroleos de Venezuela","Petronas","Poland","QatarEnergy","Repsol","Rio Tinto","Rosneft","Russian Federation","RWE","Sasol","Saudi Aramco","Shell","Sonatrach","Surgutneftegas","TotalEnergies","Ukraine"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parent_entity<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-01d78cbf3971deab4dad" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-01d78cbf3971deab4dad">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["Abu Dhabi National Oil Company","Alpha Metallurgical Resources","Anglo American","Arch Resources","BHP","BP","British Coal Corporation","Chevron","China (Cement)","China (Coal)","CNPC","Coal India","ConocoPhillips","CONSOL Energy","Czechoslovakia","Eni","Equinor","ExxonMobil","Former Soviet Union","Gazprom","Glencore","Iraq National Oil Company","Kazakhstan","Kuwait Petroleum Corp.","Libya National Oil Corp.","Lukoil","National Iranian Oil Co.","Nigerian National Petroleum Corp.","Occidental Petroleum","ONGC India","Peabody Coal Group","Pemex","Pertamina","Petrobras","Petroleos de Venezuela","Petronas","Poland","QatarEnergy","Repsol","Rio Tinto","Rosneft","Russian Federation","RWE","Sasol","Saudi Aramco","Shell","Sonatrach","Surgutneftegas","TotalEnergies","Ukraine"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parent_entity<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
 
 ``` python
 import pandas as pd
@@ -230,7 +232,7 @@ data_spatial |>
                      .interactive = FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="1260" />
 
 ## Modeling
 
@@ -352,7 +354,7 @@ nested_best_tbl |>
                             .interactive = FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="1260" />
 
 ### Refit Models
 
@@ -387,7 +389,7 @@ nested_best_refit_tbl|>
                             .interactive = FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-30-1.png" width="1260" />
 
 ## Save preds
 
@@ -432,48 +434,51 @@ sessionInfo()
     [10] timetk_2.6.1          yardstick_1.2.0       workflowsets_0.1.0   
     [13] workflows_0.2.4       tune_0.1.6            rsample_0.1.0        
     [16] parsnip_1.1.1         modeldata_0.1.1       infer_1.0.0          
-    [19] dials_0.0.10          scales_1.2.1          broom_1.0.4          
+    [19] dials_0.0.10          scales_1.3.0          broom_1.0.4          
     [22] tidymodels_0.1.4      recipes_0.1.17        doFuture_0.12.0      
     [25] future_1.22.1         foreach_1.5.1         skimr_2.1.5          
     [28] forcats_1.0.0         stringr_1.5.0         dplyr_1.1.2          
     [31] purrr_1.0.1           readr_2.1.4           tidyr_1.3.0          
-    [34] tibble_3.2.1          ggplot2_3.4.2         tidyverse_2.0.0      
+    [34] tibble_3.2.1          ggplot2_3.5.1         tidyverse_2.0.0      
     [37] lubridate_1.9.2       kableExtra_1.3.4.9000 inspectdf_0.0.11     
     [40] openxlsx_4.2.4        knitr_1.36           
 
     loaded via a namespace (and not attached):
       [1] readxl_1.4.2         backports_1.4.1      systemfonts_1.0.3   
       [4] repr_1.1.7           sp_1.4-5             splines_4.1.1       
-      [7] listenv_0.8.0        usethis_2.0.1        digest_0.6.29       
-     [10] htmltools_0.5.8.1    fansi_0.5.0          magrittr_2.0.3      
-     [13] doParallel_1.0.16    tzdb_0.1.2           globals_0.14.0      
-     [16] ggfittext_0.9.1      gower_0.2.2          RcppParallel_5.1.4  
-     [19] xts_0.12.1           svglite_2.0.0        hardhat_1.3.0       
-     [22] timechange_0.1.1     prettyunits_1.1.1    colorspace_2.0-2    
-     [25] rvest_1.0.3          rappdirs_0.3.3       xfun_0.39           
-     [28] crayon_1.4.2         jsonlite_1.8.4       survival_3.2-11     
-     [31] zoo_1.8-12           iterators_1.0.13     glue_1.6.2          
-     [34] gtable_0.3.0         ipred_0.9-12         webshot_0.5.2       
-     [37] future.apply_1.8.1   DBI_1.1.1            Rcpp_1.0.13         
-     [40] spData_2.3.1         viridisLite_0.4.0    progress_1.2.2      
-     [43] units_0.7-2          spdep_1.3-5          GPfit_1.0-8         
-     [46] proxy_0.4-26         lava_1.6.10          StanHeaders_2.21.0-7
-     [49] prodlim_2019.11.13   httr_1.4.6           ellipsis_0.3.2      
-     [52] wk_0.6.0             farver_2.1.0         pkgconfig_2.0.3     
-     [55] deldir_2.0-4         nnet_7.3-16          utf8_1.2.2          
-     [58] labeling_0.4.2       tidyselect_1.2.0     rlang_1.1.1         
-     [61] DiceDesign_1.9       munsell_0.5.0        cellranger_1.1.0    
-     [64] tools_4.1.1          xgboost_1.4.1.1      cli_3.6.1           
-     [67] generics_0.1.3       evaluate_0.14        fastmap_1.2.0       
-     [70] yaml_2.2.1           zip_2.2.0            s2_1.0.7            
-     [73] xml2_1.3.4           compiler_4.1.1       rstudioapi_0.14     
-     [76] curl_5.2.3           png_0.1-7            e1071_1.7-9         
-     [79] lhs_1.1.3            stringi_1.7.5        lattice_0.20-44     
-     [82] Matrix_1.3-4         classInt_0.4-3       vctrs_0.6.5         
-     [85] pillar_1.9.0         lifecycle_1.0.3      furrr_0.2.3         
-     [88] data.table_1.14.2    R6_2.5.1             renv_1.0.7          
-     [91] KernSmooth_2.23-20   parallelly_1.28.1    codetools_0.2-18    
-     [94] boot_1.3-28          MASS_7.3-54          withr_2.5.0         
-     [97] anomalize_0.3.0      parallel_4.1.1       hms_1.1.3           
-    [100] grid_4.1.1           rpart_4.1-15         timeDate_3043.102   
-    [103] class_7.3-19         rmarkdown_2.25       base64enc_0.1-3     
+      [7] crosstalk_1.1.1      listenv_0.8.0        usethis_2.0.1       
+     [10] digest_0.6.29        htmltools_0.5.8.1    fansi_0.5.0         
+     [13] magrittr_2.0.3       doParallel_1.0.16    tzdb_0.1.2          
+     [16] globals_0.14.0       ggfittext_0.9.1      gower_0.2.2         
+     [19] RcppParallel_5.1.4   xts_0.12.1           svglite_2.0.0       
+     [22] hardhat_1.3.0        timechange_0.1.1     prettyunits_1.1.1   
+     [25] colorspace_2.0-2     rvest_1.0.3          rappdirs_0.3.3      
+     [28] xfun_0.39            crayon_1.4.2         jsonlite_1.8.4      
+     [31] survival_3.2-11      zoo_1.8-12           iterators_1.0.13    
+     [34] glue_1.6.2           gtable_0.3.0         ipred_0.9-12        
+     [37] webshot_0.5.2        future.apply_1.8.1   DBI_1.1.1           
+     [40] Rcpp_1.0.13          spData_2.3.1         viridisLite_0.4.0   
+     [43] progress_1.2.2       units_0.7-2          spdep_1.3-5         
+     [46] GPfit_1.0-8          proxy_0.4-26         DT_0.19             
+     [49] lava_1.6.10          StanHeaders_2.21.0-7 prodlim_2019.11.13  
+     [52] htmlwidgets_1.5.4    httr_1.4.6           ellipsis_0.3.2      
+     [55] wk_0.6.0             farver_2.1.0         pkgconfig_2.0.3     
+     [58] deldir_2.0-4         sass_0.4.0           nnet_7.3-16         
+     [61] utf8_1.2.2           labeling_0.4.2       tidyselect_1.2.0    
+     [64] rlang_1.1.1          DiceDesign_1.9       munsell_0.5.0       
+     [67] cellranger_1.1.0     tools_4.1.1          xgboost_1.4.1.1     
+     [70] cli_3.6.1            generics_0.1.3       evaluate_0.14       
+     [73] fastmap_1.2.0        yaml_2.2.1           zip_2.2.0           
+     [76] s2_1.0.7             xml2_1.3.4           compiler_4.1.1      
+     [79] rstudioapi_0.14      curl_5.2.3           png_0.1-7           
+     [82] e1071_1.7-9          lhs_1.1.3            bslib_0.3.1         
+     [85] stringi_1.7.5        blogdown_1.9.4       lattice_0.20-44     
+     [88] Matrix_1.3-4         classInt_0.4-3       vctrs_0.6.5         
+     [91] pillar_1.9.0         lifecycle_1.0.3      furrr_0.2.3         
+     [94] jquerylib_0.1.4      data.table_1.14.2    R6_2.5.1            
+     [97] renv_1.0.7           KernSmooth_2.23-20   parallelly_1.28.1   
+    [100] codetools_0.2-18     boot_1.3-28          MASS_7.3-54         
+    [103] anomalize_0.3.0      withr_2.5.0          parallel_4.1.1      
+    [106] hms_1.1.3            grid_4.1.1           rpart_4.1-15        
+    [109] timeDate_3043.102    class_7.3-19         rmarkdown_2.25      
+    [112] base64enc_0.1-3     
