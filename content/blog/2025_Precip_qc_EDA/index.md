@@ -188,7 +188,7 @@ Data summary
 
 ## Trend over time
 
-Is there a general trend over time?
+Is there a general trend over time? Let's find out!
 
 ``` r
 precipitation_dt_year<-precipitation_dt |> 
