@@ -116,6 +116,8 @@ We will extract precipitation data from the AgERA5 dataset using the KrigR packa
 
 ### Data preperation
 
+We will convert the raster data to a dataframe and extract the precipitation values for the region of interest.
+
 ``` r
 # Change layer names
 months_vector <- seq(

@@ -52,13 +52,13 @@ The primary objective of this analysis is to explore 30 years of precipitation d
 -   Visualize yearly precipitation patterns to highlight trends and deviations over time.
 -   Provide data-driven insights into how precipitation has evolved and its potential implications for climate research, agriculture, and water resource management.
 
-This analysis will help uncover climate patterns, extreme weather events, and precipitation shifts over the past tree decades in Quebec
+This analysis will help uncover climate patterns, extreme weather events, and precipitation shifts over the past tree decades in for the agricultural land of Quebec
 
 ## Get the data
 
 ### Country borders
 
-We need the polygon of the region of interest.
+We need the polygon of the region of interest. We will use the `rgeoboundaries` package to extract the polygon of Quebec.
 
 ``` r
 qc_sf <- rgeoboundaries::gb_adm2(country = "CAN") |>
@@ -106,7 +106,7 @@ plot(qc_sf$geometry)
 
 ### Precipitation data
 
-We will extract precipitation data from the AgERA5 dataset using the KrigR package.
+We will extract precipitation data from the AgERA5 dataset using the KrigR package. The AgERA5 dataset provides high-resolution climate data, including precipitation, temperature, and wind speed, for global climate research.
 
 <img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="800" />
 

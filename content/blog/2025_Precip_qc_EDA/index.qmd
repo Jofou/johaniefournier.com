@@ -209,6 +209,7 @@ precipitation_raw<-rast("Data/precipitation_raw.nc")
 
 ### Data preperation
 
+We will convert the raster data to a dataframe and extract the precipitation values for the region of interest.
 
 ```{r}
 #| eval: FALSE
