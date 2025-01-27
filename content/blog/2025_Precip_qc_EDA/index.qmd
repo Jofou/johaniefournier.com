@@ -1,0 +1,671 @@
+---
+title: 'St. Lawrence Lowlands Precipitation Data: 30-Year Trends & Anomalies'
+author: Johanie Fournier, agr., M.Sc.
+date: "2025-01-27"
+slug: st_lawrence_lowlands_precipitation_EDA
+categories:
+  - rstats
+  - tidymodels
+  - tidytuesday
+  - eda
+  - viz
+tags:
+  - eda
+  - rstats
+  - tidymodels
+  - tidytuesday
+  - viz
+summary: "Understanding long-term precipitation patterns is essential for climate research, agriculture, and water resource management. In this post, we analyze 30 years of precipitation data from the AgERA5 dataset for St. Lawrence Lowlands, using exploratory data analysis (EDA) techniques to uncover trends, seasonal variations, and anomalies."
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup}
+#| include: false
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE, 
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 7, fig.height = 5)
+
+# Importer des données
+library(openxlsx)
+
+# explorer et présenter les données
+library(inspectdf)
+library(kableExtra)
+library(lubridate)
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+library(skimr)
+
+# Parallel Processing
+library(doFuture)
+
+# Core 
+library(recipes)
+library(tidymodels)
+library(timetk)
+library(fs)
+
+
+#Import data
+library(pins)
+
+#H2O
+#library(h2o)
+
+#Geospatial
+library(sf)
+library(terra)
+#remotes::install_github("wmgeolab/rgeoboundaries")
+library(rgeoboundaries)
+
+#Monitorer le temps que ça prend
+library(tictoc)
+
+#Tidytuesday
+library(tidytuesdayR)
+
+#Python
+library(reticulate)
+#renv::use_python()
+Sys.setenv(RETICULATE_PYTHON = "~/Library/Mobile Documents/com~apple~CloudDocs/ADV/johaniefournier.com/renv/python/virtualenvs/renv-python-3.9/bin/python")
+
+#Mes fonctions
+#devtools::install_github("jofou/jofou.lib")
+library(jofou.lib)
+
+#Theme_map
+theme_map <- function(base_size=9, base_family="") { # 3
+	require(grid)
+	theme_bw(base_size=base_size, base_family=base_family) %+replace%
+		theme(axis.line=element_blank(),
+			  axis.text=element_blank(),
+			  axis.ticks=element_blank(),
+			  axis.title=element_blank(),
+			  panel.background=element_blank(),
+			  panel.border=element_blank(),
+			  panel.grid=element_blank(),
+			  panel.spacing=unit(0, "lines"),
+			  plot.background=element_blank(),
+			  legend.justification = c(0,0),
+			  legend.position = c(0,0),
+			  plot.title= element_text(size=20, hjust=0, color="black", face="bold"),
+		)
+}
+
+#Graph theme
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", linewidth=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", linewidth=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+
+update_geom_defaults("rect", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("line", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
+
+#CRS
+#Geographic
+#WGS84:"EPSG:4326"
+#Projected
+#NAD83:"EPSG3978"
+
+Dir.Base <- getwd() # identifying the current directory
+Dir.Data <- file.path(Dir.Base, "Data") # folder path for data
+Dir.Covariates <- file.path(Dir.Base, "Covariates") # folder path for covariates
+Dir.Exports <- file.path(Dir.Base, "Exports") # folder path for exports
+```
+
+
+<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+</a>
+
+<br>
+
+Precipitation plays a crucial role in Quebec’s climate, influencing everything from agriculture to hydrology and urban planning. Understanding long-term rainfall patterns is essential for assessing climate variability, detecting anomalies, and making informed environmental decisions.
+
+In this blog post, we explore 30 years of precipitation data from the AgERA5 dataset, a high-resolution global reanalysis dataset widely used for climate studies. Using Exploratory Data Analysis (EDA) techniques, we investigate rainfall trends, seasonal variations, and precipitation anomalies across St. Lawrence Lowlands.
+
+By the end of this analysis, you’ll gain insights into how precipitation patterns have evolved over tree decades and what this means for Quebec’s climate. Whether you're a data scientist, climate researcher, or just curious about our weather trends, this post will provide valuable insights using reproducible R-based data analysis techniques.
+
+## Goal
+
+The primary objective of this analysis is to explore 30 years of precipitation data from the AgERA5 dataset for Quebec using Exploratory Data Analysis (EDA). Specifically, we aim to:
+
+* Analyze long-term precipitation trends to understand rainfall variability across different regions.
+* Detect anomalies in precipitation patterns to identify periods of unusually high or low rainfall.
+* Visualize yearly precipitation patterns to highlight trends and deviations over time.
+* Provide data-driven insights into how precipitation has evolved and its potential implications for climate research, agriculture, and water resource management.
+
+This analysis will help uncover climate patterns, extreme weather events, and precipitation shifts over the past tree decades in Quebec
+
+## Get the data
+
+### Country borders
+
+We need the polygon of the region of interest. 
+
+```{r}
+qc_sf <- rgeoboundaries::gb_adm2(country = "CAN") |>
+  filter(shapeName %in% c("Bas-Saint-Laurent", 
+                          "Gaspésie--Îles-de-la-Madelei", 
+                          "Capitale-Nationale",
+                          "Chaudière-Appalaches",
+                          "Estrie",
+                          "Centre-du-Québec",
+                          "Montérégie",
+                          "Montréal",
+                          "Laval",
+                          "Outaouais",
+                          "Abitibi-Témiscamingue",
+                          "Lanaudière",
+                          "Laurentides",
+                          "Mauricie")) |> 
+  select(shapeName, geometry) 
+qc_sf #geographic coordinate
+```
+
+```{r}
+plot(qc_sf$geometry)
+```
+
+### Precipitation data
+
+We will extract precipitation data from the AgERA5 dataset using the KrigR package.
+
+```{r}
+#| echo: FALSE
+
+image<-magick::image_read("code_1.jpeg") |> 
+magick::image_scale("3000")
+
+print(image, info = FALSE)
+```
+
+<br>
+
+```{r}
+#| echo: FALSE
+#| 
+image<-magick::image_read("code_2.jpeg") |> 
+magick::image_scale("3000")
+
+print(image, info = FALSE)
+```
+
+
+
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+precipitation_raw<-rast("Data/precipitation_raw.nc")
+```
+
+### Data preperation
+
+```{r}
+#| eval: FALSE
+# Change layer names
+months_vector <- seq(
+    from = as.Date(start_date),
+    to = as.Date(end_date),
+    by = "month"
+)
+names(precipitation_raw) <- months_vector
+
+# Raster to dataframe
+precipitation_sf <- as.data.frame(
+    precipitation_raw,
+    xy = TRUE, na.rm = TRUE)|>
+    tidyr::pivot_longer(
+        !c(x, y),
+        names_to = "date",
+        values_to = "value"
+    ) |> 
+  mutate(year=year(date), 
+         month=month(date)) |> 
+  select(x, y, date, year, month, value) |> 
+  st_as_sf(coords=c("x", "y")) |> 
+  st_set_crs("WGS84") |> 
+  st_intersection(qc_sf) 
+
+ precipitation_dt<-precipitation_sf |> 
+  as_tibble() |> 
+  select(-geometry) |> 
+  group_by(shapeName, date, year, month) |> 
+  summarise(mean=mean(value, na.rm=TRUE)) |> 
+  ungroup()
+```
+
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+#Save
+write_rds(precipitation_dt, "Data/precipitation_dt.rds")
+write_rds(precipitation_sf, "Data/precipitation_sf.rds")
+```
+
+```{r}
+#| echo: FALSE
+precipitation_dt<-readRDS("Data/precipitation_dt.rds")
+```
+
+## General trend
+
+```{r}
+skimr::skim(precipitation_dt)
+```
+
+## Trend over time
+
+Is there a general trend over time?
+
+```{r}
+precipitation_dt_year<-precipitation_dt |> 
+  group_by(year) |>  
+  summarise(sum=sum(mean)) |>  
+  ungroup()
+
+ggplot(data=precipitation_dt_year, aes(x=year, y=sum))+
+  geom_line()
+```
+
+Precipitation has increased over time.
+
+## Space trend
+
+Is there a general trend over space?
+
+```{r}
+precipitation_dt_site<-precipitation_dt  |> 
+  group_by(shapeName) |>  
+  summarise(sum=sum(mean)-102494.3) |>  
+  ungroup() 
+
+ggplot(data=precipitation_dt_site, 
+       aes(x=reorder(shapeName, -sum), y=sum))+
+  geom_bar(stat="identity")+
+  coord_flip()+
+  theme(axis.title.y = element_blank()) +
+  ylab("Precipitation for 30 years (m) over Capitale-Nationale")
+```
+
+The total precipitation for 30 years is different for each *shapeName*.
+
+## Spatio-temporal trend
+
+Can we link the spatial trend to the temporal trend? Let's find out!
+
+```{r}
+precipitation_dt |>
+  group_by(shapeName, year) |> 
+  summarize(value_year=sum(mean)) |> 
+  mutate(year_date=as.Date(as.character(year), "%Y")) |>
+  ungroup() |> 
+  group_by(shapeName) |>
+    plot_time_series(
+        .date_var    = year_date,
+        .value       = value_year,
+        .interactive = FALSE,
+        .facet_ncol  = 4,
+        .facet_scales = "free",
+    )
+```
+
+The trend looks similar for all the *shapeName* but the values are different.
+
+## Anomalies and outliers
+
+Are there any anomalies or outliers in the precipitation data? Let's investigate!
+
+### Time serie anomalies
+
+```{r}
+library(anomalize)
+
+precipitation_dt |> 
+  group_by(shapeName, year) |> 
+  summarize(value_year=sum(mean)) |> 
+  mutate(year_date=as.Date(as.character(year), "%Y")) |>
+  select(-year) |> 
+  ungroup() |> 
+  filter(shapeName %in% "Chaudière-Appalaches") |>
+  time_decompose(value_year) |> 
+  anomalize(remainder) |>
+  plot_anomaly_decomposition()
+```
+
+### Weather anomalies
+
+What are monthly precipitation anomalies?
+
+#### Reference group
+
+```{r}
+# estimating anomalies
+ref <- precipitation_dt |>
+  group_by(shapeName, month) |>
+  summarise(ref = mean(mean))
+
+monthly_anomalies <- precipitation_dt |> 
+  left_join(ref, by = c("shapeName", "month")) |> 
+  mutate(anomalie = (mean * 100 / ref) - 100,
+  sign = ifelse(anomalie > 0, "pos", "neg") |> factor(c("pos", "neg")),
+  date=as.Date(date),
+  month_name_abb = month(date, label = TRUE))
+```
+
+#### Statistical Metrics
+
+```{r}
+data_norm <- group_by(monthly_anomalies, month_name_abb) |>
+                summarise(
+                  mx = max(anomalie),
+                  min = min(anomalie),
+                  q25 = stats::quantile(anomalie, .25),
+                  q75 = stats::quantile(anomalie, .75),
+                  iqr = q75 - q25
+                )
+DT::datatable(data_norm) |> 
+  DT::formatRound(c("mx","min","q25","q75","iqr"), digits=1)
+```
+
+#### Create the graph
+
+```{r}
+#| eval: FALSE
+library(ggthemes)
+library(gganimate)
+
+gg <- ggplot(data_norm ) +
+  geom_crossbar(aes(x = month_name_abb, 
+                    y = 0, 
+                    ymin = min, 
+                    ymax = mx),
+    fatten = 0, fill = "grey90", colour = "NA") + 
+  geom_crossbar(aes(x = month_name_abb, 
+                    y = 0, 
+                    ymin = q25, 
+                    ymax = q75),
+  fatten = 0, fill = "grey70"
+)  +
+  geom_crossbar(
+  data = filter(monthly_anomalies, shapeName=="Chaudière-Appalaches"),
+  aes(x = month_name_abb, 
+      y = 0, 
+      ymin = 0, 
+      ymax = anomalie, 
+      group= year,
+      fill = sign),
+  fatten = 0, width = 0.7, alpha = .7, colour = "NA",
+  show.legend = FALSE
+) + 
+  transition_time(as.integer(year)) +
+  ggtitle('Precipitation anomaly in Chaudière-Appalaches {frame_time}') +
+  shadow_mark(past=FALSE) +
+  geom_hline(yintercept = 0) +
+  scale_fill_manual(values = c("#99000d", "#034e7b")) +
+  scale_y_continuous("Precipitation anomaly (%)",
+    breaks = seq(-5, 5, 1)
+  ) +
+  labs(
+    x = "",
+    caption = "Data: AgERA5"
+  ) +
+  theme_hc()
+num_years <- max(monthly_anomalies$year) - min(monthly_anomalies$year) + 1
+
+# Save the animation as a GIF
+gganimate::animate(gg, duration = 30, fps = 4, width = 500, height = 300, renderer = gifski_renderer())
+anim_save("gif/output.gif")
+```
+
+```{r}
+# Read and display the saved GIF animation
+animation <- magick::image_read("gif/output.gif")
+print(animation, info = FALSE)
+```
+
+This animation shows the monthly precipitation anomalies in Chaudière-Appalaches over the past 30 years. The blue bars represent positive anomalies, while the red bars represent negative anomalies.
+
+
+## Conclusion
+
+In this analysis, we explored 30 years of precipitation data from the AgERA5 dataset for Quebec using Exploratory Data Analysis (EDA) techniques. By analyzing long-term precipitation trends, seasonal variations, and anomalies, we uncovered valuable insights into how rainfall patterns have evolved over the past tree decades.
+
+
+
+<!-- AWeber Web Form Generator 3.0.1 -->
+<style type="text/css">
+#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
+#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
+#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
+#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
+#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url("https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
+#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
+#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
+#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
+#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
+#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
+#af-form-88198013 .buttonContainer{text-align:center;}
+#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
+#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
+#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
+#af-form-88198013.af-quirksMode{overflow-x:hidden;}
+#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
+#af-form-88198013{overflow:hidden;}
+#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
+#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
+#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
+#af-form-88198013 .buttonContainer input.submit {width:auto;}
+#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
+#af-form-88198013 div {margin:0;}
+#af-form-88198013 {display:block;}
+#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
+#af-form-88198013 p { color:inherit;}
+#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
+#af-form-88198013 .bodyText p {margin:1em 0;}
+#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
+#af-form-88198013 fieldset {border:0;}
+.af-clear{clear:both;}
+.af-form{box-sizing:border-box; margin:auto; text-align:left;}
+.af-element{padding-bottom:5px; padding-top:5px;}
+.af-form-wrapper{text-indent: 0;}
+.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
+.af-body input.submit{white-space: inherit;}
+.af-body input.text{width:100%; padding:2px!important;}
+.af-body .af-textWrap{text-align:left;}
+.af-element label{float:left; text-align:left;}
+.lbl-right .af-element label{text-align:right;}
+.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
+.af-body.af-standards input.submit{padding:4px 12px;}
+.af-body input.image{border:none!important;}
+.af-body input.text{float:none;}
+.af-element label{display:block; float:left;}
+.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
+body {
+}
+
+#af-form-88198013 .af-body .af-textWrap {
+  width: 100% !important;
+}
+
+#af-form-88198013 .af-body .af-element {
+  padding-top: 0px!important;
+  padding-bottom: 0.5rem!important;
+}
+#af-form-88198013 .af-body .af-element:first-child {
+  margin-top: 0 !important;
+}
+#af-form-88198013 .af-body input.text,
+#af-form-88198013 .af-body textarea {
+  box-sizing: border-box !important;
+  border-radius:2px;
+  margin-bottom: 0.75rem !important;
+  padding: 8px 12px !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+#af-form-88198013 .af-body select {
+  width: 100%;
+}
+#af-form-88198013 .choiceList-radio-stacked {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+#af-form-88198013 .af-element-radio {
+  margin: 0 !important;
+}
+#af-form-88198013 .af-element-radio input.radio {
+  display: inline;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label {
+  font-weight: 700 !important;
+}
+#af-form-88198013 .af-element-radio input.radio:focus ~ label {
+  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
+  background-color: #777777;
+  border-color: #d6dee3;
+}
+#af-form-88198013 .af-element-radio label.choice {
+  display: block !important;
+  font-weight: 300 !important;
+  margin: 0rem 0rem 0.5rem 1rem !important;
+  padding: 0.25rem 1rem !important;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-element-radio label.choice:before {
+  background-color: #FFF;
+  border: 1px solid #d6dee3;
+  border-radius: 50%;
+  content: '';
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: -1.3rem;
+  position: absolute;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  width: 0.75rem;
+}
+#af-form-88198013 .af-selectWrap, 
+#af-form-88198013 .af-dateWrap {
+  width:100% !important;
+  margin: 0.5rem 0rem 0.5rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-selectWrap select {
+  padding: 0.5rem !important;
+  height: 2.5rem;
+}
+#af-form-88198013 .af-dateWrap select {
+  width: 32% !important;
+  height: 2.5rem;
+  padding: 0.5rem !important;
+  margin: 0rem 0rem 0.75rem 0rem !important;
+}
+#af-form-88198013 .af-checkWrap {
+  padding: 0.5rem 0.5rem 0.75rem !important;
+}
+#af-form-88198013 .buttonContainer {
+  box-sizing: border-box !important;
+}
+#af-form-88198013 .af-footer {
+  box-sizing: border-box !important;
+}
+
+#af-form-88198013 .af-footer p {
+  margin: 0 !important;
+}
+#af-form-88198013 input.submit,
+#af-form-88198013 #webFormSubmitButton {
+  border: none;
+  border-radius:2px;
+  font-weight: bold;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !Important;
+  padding: 0.75rem 2rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  }
+#af-form-88198013 input.submit:hover,
+#af-form-88198013 #webFormSubmitButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+#af-form-88198013 input.text:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.poweredBy a,
+.privacyPolicy p {
+  color: #333333 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0rem !important;
+}
+</style>
+<form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl"  >
+<div style="display: none;">
+<input type="hidden" name="meta_web_form_id" value="88198013" />
+<input type="hidden" name="meta_split_id" value="" />
+<input type="hidden" name="listname" value="awlist6634098" />
+<input type="hidden" name="redirect" value="https://www.aweber.com/thankyou-coi.htm?m=text" id="redirect_54bc847594a3cbc94af88c076598c2e4" />
+
+<input type="hidden" name="meta_adtracking" value="Sign_Up_Form" />
+<input type="hidden" name="meta_message" value="1" />
+<input type="hidden" name="meta_required" value="name,email" />
+
+<input type="hidden" name="meta_tooltip" value="" />
+</div>
+<div id="af-form-88198013" class="af-form"><div id="af-header-88198013" class="af-header"><div class="bodyText"><h5><br><span style="font-size:36px;"><strong>WANT MORE?</strong></span></h5><p>Sign up for exclusive content, emails &amp; things I doesn’t share anywhere else.</p></div></div><div id="af-body-88198013" class="af-body af-standards">
+<div class="af-element">
+<label class="previewLabel" for="awf_field-117870704">Name:</label>
+<div class="af-textWrap">
+<input id="awf_field-117870704" type="text" name="name" class="text" value="" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';} " tabindex="500" />
+</div>
+<div class="af-clear"></div>
+</div><div class="af-element">
+<label class="previewLabel" for="awf_field-117870705">Email:</label>
+<div class="af-textWrap"><input class="text" id="awf_field-117870705" type="email" name="email" value="" tabindex="501" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';}" />
+</div><div class="af-clear"></div>
+</div><div class="af-element buttonContainer">
+<input name="submit" class="submit" type="submit" value="Let&#x27;s do it!" tabindex="502" />
+<div class="af-clear"></div>
+</div><div class="af-element privacyPolicy" style="text-align: center"><p>We respect your <a title="Privacy Policy" href="https://www.aweber.com/permission.htm" target="_blank" rel="nofollow">email privacy</a></p>
+<div class="af-clear"></div>
+</div><div class="af-element poweredBy" style="text-align: center; font-size: 9px;"><p><a href="https://www.aweber.com" title="AWeber Email Marketing" target="_blank" rel="nofollow">Powered by AWeber Email Marketing</a></p>
+<div class="af-clear"></div>
+</div>
+</div>
+<div id="af-footer-88198013" class="af-footer"><div class="bodyText"><p>&nbsp;</p></div></div></div>
+<div style="display: none;"><img src="https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=" alt="" /></div>
+</form>
+
+
+<!-- /AWeber Web Form Generator 3.0.1 -->
+
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
