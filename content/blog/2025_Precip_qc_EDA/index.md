@@ -208,7 +208,7 @@ Precipitation has increased over time.
 
 ## Space trend
 
-Is there a general trend over space?
+Is there a general trend over space? Let's find out!
 
 ``` r
 precipitation_dt_site<-precipitation_dt  |> 
