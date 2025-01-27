@@ -6,7 +6,25 @@
     <description>Recent content in eda on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 12 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/eda/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/eda/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends &amp; Anomalies</title>
+      <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/</link>
+      <pubDate>Mon, 27 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/</guid>
+      <description>Understanding long-term precipitation patterns is essential for climate research, agriculture, and water resource management. In this post, we analyze 30 years of precipitation data from the AgERA5 dataset for St. Lawrence Lowlands, using exploratory data analysis (EDA) techniques to uncover trends, seasonal variations, and anomalies.</description>
+    </item>
+    
+    <item>
+      <title>TyT2024W21 - EDA:Carbon Majors Emissions Data</title>
+      <link>https://johaniefournier.com/blog/tyt2024w21_eda/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2024w21_eda/</guid>
+      <description>This week we are exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this first part, I start with some exploratory data analysis.</description>
+    </item>
+    
     <item>
       <title>This is the begining of a cheat sheet!</title>
       <link>https://johaniefournier.com/blog/cheat-sheet/</link>
@@ -14,15 +32,6 @@
       
       <guid>https://johaniefournier.com/blog/cheat-sheet/</guid>
       <description>I will list here all the little snipset of code that I look up all the time.</description>
-    </item>
-    
-    <item>
-      <title>TyT2024W21 - EDA:Carbon Majors Emissions Data</title>
-      <link>https://johaniefournier.com/blog/tyt2024w21_eda/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/blog/tyt2024w21_eda/</guid>
-      <description>This week we&amp;rsquo;re exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In tihs first part, I start with some exploratory data analysis.</description>
     </item>
     
   </channel>

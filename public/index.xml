@@ -6,7 +6,43 @@
     <description>Recent content on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 01 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends &amp; Anomalies</title>
+      <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/</link>
+      <pubDate>Mon, 27 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/</guid>
+      <description>Understanding long-term precipitation patterns is essential for climate research, agriculture, and water resource management. In this post, we analyze 30 years of precipitation data from the AgERA5 dataset for St. Lawrence Lowlands, using exploratory data analysis (EDA) techniques to uncover trends, seasonal variations, and anomalies.</description>
+    </item>
+    
+    <item>
+      <title>TyT2024W21 - VIZ:Carbon Majors Emissions Data</title>
+      <link>https://johaniefournier.com/blog/tyt2024w21_viz/</link>
+      <pubDate>Thu, 31 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2024w21_viz/</guid>
+      <description>This week we are exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In the first and second part I did some EDA and created a spatio-temporal machine learning model. In this part, I&amp;rsquo;m creating an animated vizualisation of the data including the prediction.</description>
+    </item>
+    
+    <item>
+      <title>TyT2024W21 - ML:Carbon Majors Emissions Data</title>
+      <link>https://johaniefournier.com/blog/tyt2024w21_ml/</link>
+      <pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2024w21_ml/</guid>
+      <description>This week we&amp;rsquo;re exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this second part, I&amp;rsquo;m predicting carbon emission over space and time.</description>
+    </item>
+    
+    <item>
+      <title>TyT2024W21 - EDA:Carbon Majors Emissions Data</title>
+      <link>https://johaniefournier.com/blog/tyt2024w21_eda/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2024w21_eda/</guid>
+      <description>This week we are exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this first part, I start with some exploratory data analysis.</description>
+    </item>
+    
     <item>
       <title>Predicting MO with H2O Models from IRDA data</title>
       <link>https://johaniefournier.com/blog/irda-h2o/</link>
@@ -19,7 +55,7 @@
     <item>
       <title>IRDA soil data</title>
       <link>https://johaniefournier.com/blog/data-irda/</link>
-      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/blog/data-irda/</guid>
       <description>I recently prepare FADQ data to make some predictives models. Those are great spatial data, but I can&amp;rsquo;t go without a bit of soil information.</description>
@@ -348,15 +384,6 @@
       <guid>https://johaniefournier.com/license/</guid>
       <description>My blog posts are released under a Creative Commons Attribution-ShareAlike 4.0 International License.
    </description>
-    </item>
-    
-    <item>
-      <title>TyT2024W21 - EDA:Carbon Majors Emissions Data</title>
-      <link>https://johaniefournier.com/blog/tyt2024w21_eda/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/blog/tyt2024w21_eda/</guid>
-      <description>This week we&amp;rsquo;re exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In tihs first part, I start with some exploratory data analysis.</description>
     </item>
     
   </channel>

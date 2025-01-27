@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>models on Johanie Fournier</title>
@@ -6,14 +5,871 @@
     <description>Recent content in models on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 12 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/categories/models/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Oct 2024 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://johaniefournier.com/categories/models/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TyT2024W21 - ML:Carbon Majors Emissions Data</title>
+      <link>https://johaniefournier.com/blog/tyt2024w21_ml/</link>
+      <pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2024w21_ml/</guid>
+      <description>&lt;link href=&#34;index_files/libs/htmltools-fill-0.5.8.1/fill.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;index_files/libs/datatables-css-0.0.0/datatables-crosstalk.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/datatables-binding-0.33/datatables.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;index_files/libs/jquery-3.6.0/jquery-3.6.0.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;index_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;link href=&#34;index_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
+&lt;p&gt;This is my latest contribution to the 
+&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;code&gt;#TidyTuesday&lt;/code&gt; dataset&lt;/a&gt; project, featuring a recent dataset on carbon major emissions.&lt;/p&gt;
+&lt;p&gt;In the 
+&lt;a href=&#34;https://www.johaniefournier.com/blog/tyt2024w21_eda/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;firs part&lt;/a&gt;, the goal was to do some Exploratory Data Analysis (EDA). To do so, I looked at the data structure, anomalies, outliers and relationships to ensure I have everithing I need for this second part.&lt;/p&gt;
+&lt;p&gt;In this second part, I will be predicting carbon emissions over space and time. I will be using machine learning techniques to predict future emissions based on historical data. I will be using the &lt;code&gt;spdep&lt;/code&gt; package to create a spatial weights matrix, and the &lt;code&gt;modeltime&lt;/code&gt; package to train machine learning models and make predictions for future emissions. Let&amp;rsquo;s get started!&lt;/p&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube-nocookie.com/embed/3xoz262R-qM&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+
+
+
+&lt;h2 id=&#34;data-preprocessing&#34;&gt;Data Preprocessing
+  &lt;a href=&#34;#data-preprocessing&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;The first step here is to add the GPS coordinate for all th 50 &lt;em&gt;parent_entity&lt;/em&gt; in the dataset. To do so, we first need to find the headquarters location for each company.&lt;/p&gt;
+
+
+
+
+&lt;h3 id=&#34;get-headquarters-location&#34;&gt;Get Headquarters Location
+  &lt;a href=&#34;#get-headquarters-location&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Load the data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;read_rds&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;data/final_data.rds&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;head&lt;/span&gt;(data)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 6 × 3
+  parent_entity_fct              date       observed
+  &amp;lt;fct&amp;gt;                          &amp;lt;date&amp;gt;        &amp;lt;dbl&amp;gt;
+1 Abu Dhabi National Oil Company 1962-10-24    0.498
+2 Abu Dhabi National Oil Company 1963-10-24    1.05 
+3 Abu Dhabi National Oil Company 1964-10-24    4.17 
+4 Abu Dhabi National Oil Company 1965-10-24    6.19 
+5 Abu Dhabi National Oil Company 1966-10-24    7.56 
+6 Abu Dhabi National Oil Company 1967-10-24    8.00 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;parent_entity&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;data&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(parent_entity &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;as.character&lt;/span&gt;(parent_entity_fct))&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(parent_entity)&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;unique&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DT&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;datatable&lt;/span&gt;(parent_entity)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;datatables html-widget html-fill-item&#34; id=&#34;htmlwidget-0be696abd135366757ed&#34; style=&#34;width:100%;height:auto;&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-0be696abd135366757ed&#34;&gt;{&#34;x&#34;:{&#34;filter&#34;:&#34;none&#34;,&#34;vertical&#34;:false,&#34;data&#34;:[[&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;4&#34;,&#34;5&#34;,&#34;6&#34;,&#34;7&#34;,&#34;8&#34;,&#34;9&#34;,&#34;10&#34;,&#34;11&#34;,&#34;12&#34;,&#34;13&#34;,&#34;14&#34;,&#34;15&#34;,&#34;16&#34;,&#34;17&#34;,&#34;18&#34;,&#34;19&#34;,&#34;20&#34;,&#34;21&#34;,&#34;22&#34;,&#34;23&#34;,&#34;24&#34;,&#34;25&#34;,&#34;26&#34;,&#34;27&#34;,&#34;28&#34;,&#34;29&#34;,&#34;30&#34;,&#34;31&#34;,&#34;32&#34;,&#34;33&#34;,&#34;34&#34;,&#34;35&#34;,&#34;36&#34;,&#34;37&#34;,&#34;38&#34;,&#34;39&#34;,&#34;40&#34;,&#34;41&#34;,&#34;42&#34;,&#34;43&#34;,&#34;44&#34;,&#34;45&#34;,&#34;46&#34;,&#34;47&#34;,&#34;48&#34;,&#34;49&#34;,&#34;50&#34;],[&#34;Abu Dhabi National Oil Company&#34;,&#34;Alpha Metallurgical Resources&#34;,&#34;Anglo American&#34;,&#34;Arch Resources&#34;,&#34;BHP&#34;,&#34;BP&#34;,&#34;British Coal Corporation&#34;,&#34;Chevron&#34;,&#34;China (Cement)&#34;,&#34;China (Coal)&#34;,&#34;CNPC&#34;,&#34;Coal India&#34;,&#34;ConocoPhillips&#34;,&#34;CONSOL Energy&#34;,&#34;Czechoslovakia&#34;,&#34;Eni&#34;,&#34;Equinor&#34;,&#34;ExxonMobil&#34;,&#34;Former Soviet Union&#34;,&#34;Gazprom&#34;,&#34;Glencore&#34;,&#34;Iraq National Oil Company&#34;,&#34;Kazakhstan&#34;,&#34;Kuwait Petroleum Corp.&#34;,&#34;Libya National Oil Corp.&#34;,&#34;Lukoil&#34;,&#34;National Iranian Oil Co.&#34;,&#34;Nigerian National Petroleum Corp.&#34;,&#34;Occidental Petroleum&#34;,&#34;ONGC India&#34;,&#34;Peabody Coal Group&#34;,&#34;Pemex&#34;,&#34;Pertamina&#34;,&#34;Petrobras&#34;,&#34;Petroleos de Venezuela&#34;,&#34;Petronas&#34;,&#34;Poland&#34;,&#34;QatarEnergy&#34;,&#34;Repsol&#34;,&#34;Rio Tinto&#34;,&#34;Rosneft&#34;,&#34;Russian Federation&#34;,&#34;RWE&#34;,&#34;Sasol&#34;,&#34;Saudi Aramco&#34;,&#34;Shell&#34;,&#34;Sonatrach&#34;,&#34;Surgutneftegas&#34;,&#34;TotalEnergies&#34;,&#34;Ukraine&#34;]],&#34;container&#34;:&#34;&lt;table class=\&#34;display\&#34;&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;\n      &lt;th&gt; &lt;\/th&gt;\n      &lt;th&gt;parent_entity&lt;\/th&gt;\n    &lt;\/tr&gt;\n  &lt;\/thead&gt;\n&lt;\/table&gt;&#34;,&#34;options&#34;:{&#34;columnDefs&#34;:[{&#34;orderable&#34;:false,&#34;targets&#34;:0},{&#34;name&#34;:&#34; &#34;,&#34;targets&#34;:0},{&#34;name&#34;:&#34;parent_entity&#34;,&#34;targets&#34;:1}],&#34;order&#34;:[],&#34;autoWidth&#34;:false,&#34;orderClasses&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pd&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;requests&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Load data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; r&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;parent_entity
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Function to get headquarters from Wikidata&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;get_wikidata_headquarters&lt;/span&gt;(company):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Search for the company in Wikidata&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        search_url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;https://www.wikidata.org/w/api.php?action=wbsearchentities&amp;amp;search=&lt;/span&gt;&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;{&lt;/span&gt;company&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;amp;language=en&amp;amp;format=json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        search_response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(search_url)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;json()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;if&lt;/span&gt; search_response[&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;search&amp;#39;&lt;/span&gt;]:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Get the Wikidata ID of the first search result&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wikidata_id &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; search_response[&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;search&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;][&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Get detailed information from Wikidata using the ID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            entity_url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;https://www.wikidata.org/wiki/Special:EntityData/&lt;/span&gt;&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;{&lt;/span&gt;wikidata_id&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;.json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            entity_response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(entity_url)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;json()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Extract the headquarters location&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            entity_data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; entity_response[&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;entities&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(wikidata_id, {})
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            claims &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; entity_data&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;claims&amp;#39;&lt;/span&gt;, {})
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            headquarters_claim &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; claims&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;P159&amp;#39;&lt;/span&gt;, [])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;if&lt;/span&gt; headquarters_claim:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Get the headquarters location label&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                location_id &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; headquarters_claim[&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;][&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;mainsnak&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;datavalue&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;value&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                location_url &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;https://www.wikidata.org/wiki/Special:EntityData/&lt;/span&gt;&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;{&lt;/span&gt;location_id&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;.json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                location_response &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(location_url)&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;json()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                location_data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; location_response[&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;entities&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(location_id, {})
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                location_label &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; location_data[&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;labels&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;en&amp;#39;&lt;/span&gt;, {})&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;value&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;Unknown&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;return&lt;/span&gt; location_label
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;Headquarters not found&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;except&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;as&lt;/span&gt; e:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;Error: &lt;/span&gt;&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;str&lt;/span&gt;(e)&lt;span style=&#34;color:#70a0d0;font-style:italic&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Assuming &amp;#39;data&amp;#39; is your dataframe and &amp;#39;parent_entity&amp;#39; is the column containing company names&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data[&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;headquarters&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; data[&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;parent_entity&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;apply(get_wikidata_headquarters)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Display the updated dataframe&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data&lt;span style=&#34;color:#666&#34;&gt;.&lt;/span&gt;head()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Complete missing headquarters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;headquarters&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;py&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;data &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(headquarters&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;case_when&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Alpha Metallurgical Resources&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Bristol, Tennessee, États-Unis&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;BHP&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Melbourne, Ausralie&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;BP&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Londres, Royaume-Uni&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;British Coal Corporation&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Hobart House, Grosvenor Place, London&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Chevron&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;San Ramon, Californie, États-Unis&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;China (Cement)&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;China&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;China (Coal)&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Beijing, Chine&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Czechoslovakia&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Czech Republic&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Eni&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Rpme, Italie&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Former Soviet Union&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Moscou, Russie&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Kazakhstan&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Astana, Kazakhstan&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Kuwait Petroleum Corp.&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Kuwait City, Koweït&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Libya National Oil Corp.&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Tripoli, Libye&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;National Iranian Oil Co.&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Tehran, Iran&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Nigerian National Petroleum Corp.&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Abuja, Nigeria&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;ONGC India&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;India&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Peabody Coal Group&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Saint-Louis, Missouri, États-Unis&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Poland&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Poland&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Russian Federation&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Russie&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Shell&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Londres, Royaume-Uni&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    parent_entity&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Ukraine&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Ukraine&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; headquarters
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;get-gps-coordinates&#34;&gt;Get GPS Coordinates
+  &lt;a href=&#34;#get-gps-coordinates&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Now that we have the headquarters locations, we can extract the GPS coordinates for each location using the &lt;code&gt;ggmap&lt;/code&gt; package.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Get GPS coordinate with ggmap&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ggmap&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;register_google&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Insert_your_key_here&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;geocoded_data&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;ggmap&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;geocode&lt;/span&gt;(headquarters&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;headquarters) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;bind_cols&lt;/span&gt;(headquarters) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;drop_na&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;write_rds&lt;/span&gt;(geocoded_data, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;data/geocoded_data.rds&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Load my data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;geocoded_data&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;read_rds&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;data/geocoded_data.rds&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;head&lt;/span&gt;(geocoded_data)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 6 × 4
+      lon   lat parent_entity                  headquarters                  
+    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;                          &amp;lt;chr&amp;gt;                         
+1  54.4    24.5 Abu Dhabi National Oil Company Abu Dhabi                     
+2 -82.2    36.6 Alpha Metallurgical Resources  Bristol, Tennessee, États-Unis
+3  -0.128  51.5 Anglo American                 London                        
+4 -90.2    38.6 Arch Resources                 St. Louis                     
+5 145.    -37.8 BHP                            Melbourne, Ausralie           
+6  -0.128  51.5 BP                             Londres, Royaume-Uni          
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let&amp;rsquo;s put it all together!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data_final&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;data &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(parent_entity &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;as.character&lt;/span&gt;(parent_entity_fct)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;right_join&lt;/span&gt;(geocoded_data, by&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;parent_entity&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;parent_entity_fct, &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;headquarters) 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;create-a-spatial-weights-matrix&#34;&gt;Create a Spatial Weights Matrix
+  &lt;a href=&#34;#create-a-spatial-weights-matrix&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;We need some spatial information extracted from the coordinate to put into the temporal model. We will use the GPS coordinates to create a k-nearest neighbors spatial weights matrix. This matrix will be used as spatial information of the observed emissions, which will be used as a predictor in the machine learning models.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Extract coordinates&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;coords &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; data_final &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(lon, lat)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Create k-nearest neighbors spatial weights matrix (example with k = 4)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;knn &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;knearneigh&lt;/span&gt;(coords, k &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;4&lt;/span&gt;, longlat &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nb &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;knn2nb&lt;/span&gt;(knn)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;listw_knn &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;nb2listw&lt;/span&gt;(nb, style &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;W&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Compute spatial lag using the weights matrix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;spatial_lag &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;lag.listw&lt;/span&gt;(listw_knn, data_final&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;observed)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Add the spatial lag&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data_spatial &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; data_final &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(spatial_lag &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; spatial_lag) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;lon, &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;lat)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;top6_entity&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;data_spatial &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(parent_entity) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;unique&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;top_n&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;6&lt;/span&gt;) 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data_spatial &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(parent_entity) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(parent_entity &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; top6_entity&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;parent_entity) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;plot_time_series&lt;/span&gt;(date, observed,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     .facet_ncol &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     .smooth &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     .interactive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h2 id=&#34;modeling&#34;&gt;Modeling
+  &lt;a href=&#34;#modeling&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Now that we have the spatial information, we can start training machine learning models to predict future emissions. We will use the &lt;code&gt;modeltime&lt;/code&gt; package to train and evaluate the models.&lt;/p&gt;
+
+
+
+
+&lt;h3 id=&#34;extend-nesting-and-splitting-data&#34;&gt;Extend, Nesting and Splitting Data
+  &lt;a href=&#34;#extend-nesting-and-splitting-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;First, we need to extend the time series data to include future observations for the next 20 years, then nest the data by the parent entity, and finally split the data into training and testing sets.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_data_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; data_spatial&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(parent_entity)&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Extend&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extend_timeseries&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .id_var &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; parent_entity,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .date_var &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; date,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .length_future &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;20&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Nest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;nest_timeseries&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .id_var &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; parent_entity,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .length_future &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;20&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Split&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;split_nested_timeseries&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .length_test &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;20&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;model-training&#34;&gt;Model training
+  &lt;a href=&#34;#model-training&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Next, we will train machine learning models to predict future emissions. We will train two XGBoost models with different learning rates and a Temporal Hierarchical Forecasting (THief) model.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Recipe&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rec_xgb &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;recipe&lt;/span&gt;(observed &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; ., &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_train_split&lt;/span&gt;(nested_data_tbl)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_timeseries_signature&lt;/span&gt;(date) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_rm&lt;/span&gt;(date) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_zv&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;all_predictors&lt;/span&gt;()) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_dummy&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;all_nominal_predictors&lt;/span&gt;(), one_hot &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Models &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wflw_xgb_1 &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;workflow&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_model&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;boost_tree&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;regression&amp;#34;&lt;/span&gt;, learn_rate &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0.35&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;set_engine&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;xgboost&amp;#34;&lt;/span&gt;))&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_recipe&lt;/span&gt;(rec_xgb)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wflw_xgb_2 &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;workflow&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_model&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;boost_tree&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;regression&amp;#34;&lt;/span&gt;, learn_rate &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0.50&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;set_engine&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;xgboost&amp;#34;&lt;/span&gt;))&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_recipe&lt;/span&gt;(rec_xgb)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wflw_thief &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;workflow&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_model&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;temporal_hierarchy&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;set_engine&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;thief&amp;#34;&lt;/span&gt;))&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_recipe&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;recipe&lt;/span&gt;(observed &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; ., &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_train_split&lt;/span&gt;(nested_data_tbl)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Nested Modeling&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;parallel_start&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;6&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_modeltime_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; nested_data_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;modeltime_nested_fit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        model_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;list&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wflw_xgb_1,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wflw_xgb_2,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wflw_thief
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        control &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;control_nested_fit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            verbose   &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            allow_par &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;review-errors&#34;&gt;Review Errors
+  &lt;a href=&#34;#review-errors&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Before selecting the best model, we need to review any errors that occurred during the training process. We will also check the accuracy of the models and investigate any anomalies.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# #1) list errors&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# errors&amp;lt;-nested_modeltime_tbl|&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#   extract_nested_error_report()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# #2) Spot too high accuracy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# nested_modeltime_tbl |&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     extract_nested_test_accuracy() |&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     table_modeltime_accuracy()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# #3) Investigate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# nested_modeltime_tbl|&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     filter(parent_entity == &amp;#34;Lukoil&amp;#34;) |&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     extract_nested_train_split()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# nested_modeltime_tbl|&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     extract_nested_test_forecast() |&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     filter(parent_entity == &amp;#34;Former Soviet Union&amp;#34;) |&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     group_by(parent_entity) |&amp;gt; &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#     plot_modeltime_forecast(.facet_ncol = 3,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#                             .interactive = FALSE)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#4) remove small time series&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ids_small_timeseries &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Lukoil&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Rosneft&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Glencore&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Surgutneftegas&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Ukraine&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_modeltime_subset_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; nested_modeltime_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;!&lt;/span&gt;parent_entity &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; ids_small_timeseries)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;select-best-models&#34;&gt;Select Best Models
+  &lt;a href=&#34;#select-best-models&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Next, we will select the best models based on the root mean square error (RMSE) metric. We will visualize the best models to compare their performance and identify any anomalies.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; nested_modeltime_subset_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;modeltime_nested_select_best&lt;/span&gt;(metric &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;rmse&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_tbl &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_test_forecast&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(parent_entity &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;CONSOL Energy&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Shell&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Former Soviet Union&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Anglo American&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Chevron&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;BP&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(parent_entity) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;plot_modeltime_forecast&lt;/span&gt;(.facet_ncol &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .legend_show &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .interactive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h3 id=&#34;refit-models&#34;&gt;Refit Models
+  &lt;a href=&#34;#refit-models&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Finally, we will refit the best models on the entire dataset to make predictions for future emissions. We will also review any errors that occurred during the refitting process and visualize the future forecasts for the selected companies.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Refit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; nested_best_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;modeltime_nested_refit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        control &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;control_refit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            verbose   &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            allow_par &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Error last check&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_error_report&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 5 × 4
+  parent_entity                 .model_id .model_desc .error_desc               
+  &amp;lt;chr&amp;gt;                             &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;                     
+1 Alpha Metallurgical Resources        NA NULL        No method for an object o…
+2 CNPC                                 NA NULL        No method for an object o…
+3 Gazprom                              NA NULL        No method for an object o…
+4 Kazakhstan                           NA NULL        No method for an object o…
+5 Russian Federation                   NA NULL        No method for an object o…
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Visualize Future Forecast &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_future_forecast&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(parent_entity &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;CONSOL Energy&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Shell&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Former Soviet Union&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Anglo American&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Chevron&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;BP&amp;#34;&lt;/span&gt;))&lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(parent_entity)&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;plot_modeltime_forecast&lt;/span&gt;(.facet_ncol &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .legend_show &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .interactive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h2 id=&#34;save-preds&#34;&gt;Save preds
+  &lt;a href=&#34;#save-preds&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Finally, we will save the predictions for future emissions to a file for further analysis and visualization.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_future_forecast&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;write_rds&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;data/data_with_pred.rds&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion
+  &lt;a href=&#34;#conclusion&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;In this post, I have shown how to predict carbon emissions over space and time using the Carbon Majors dataset. I have demonstrated how to preprocess the data, create a spatial weights matrix, and train machine learning models to predict future emissions. I have also shown how to evaluate the model&amp;rsquo;s performance and make predictions for future emissions. This is just one example of how machine learning can be used to analyze environmental data and make predictions about future trends. I hope this post has been helpful and informative, and that it has inspired you to explore the Carbon Majors dataset further and apply machine learning techniques to other environmental datasets.&lt;/p&gt;
+&lt;p&gt;&lt;a href = &#34;https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367&#34;&gt; &lt;img src=&#34;petit.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;session-info&#34;&gt;Session Info
+  &lt;a href=&#34;#session-info&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sessionInfo&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;R version 4.4.2 (2024-10-31)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Toronto
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices datasets  utils     methods   base     
+
+other attached packages:
+ [1] jofou.lib_0.0.0.9000 reticulate_1.40.0    tidytuesdayR_1.1.2  
+ [4] tictoc_1.2.1         terra_1.8-10         sf_1.0-19           
+ [7] pins_1.4.0           modeltime_1.3.1      fs_1.6.5            
+[10] timetk_2.9.0         yardstick_1.3.2      workflowsets_1.1.0  
+[13] workflows_1.1.4      tune_1.2.1           rsample_1.2.1       
+[16] parsnip_1.2.1        modeldata_1.4.0      infer_1.0.7         
+[19] dials_1.3.0          scales_1.3.0         broom_1.0.7         
+[22] tidymodels_1.2.0     recipes_1.1.0        doFuture_1.0.1      
+[25] future_1.34.0        foreach_1.5.2        skimr_2.1.5         
+[28] forcats_1.0.0        stringr_1.5.1        dplyr_1.1.4         
+[31] purrr_1.0.2          readr_2.1.5          tidyr_1.3.1         
+[34] tibble_3.2.1         ggplot2_3.5.1        tidyverse_2.0.0     
+[37] lubridate_1.9.4      kableExtra_1.4.0     inspectdf_0.0.12.1  
+[40] openxlsx_4.2.7.1     knitr_1.49          
+
+loaded via a namespace (and not attached):
+ [1] rstudioapi_0.17.1   jsonlite_1.8.9      wk_0.9.4           
+ [4] magrittr_2.0.3      farver_2.1.2        rmarkdown_2.29     
+ [7] vctrs_0.6.5         spdep_1.3-10        base64enc_0.1-3    
+[10] htmltools_0.5.8.1   progress_1.2.3      s2_1.1.7           
+[13] spData_2.3.4        parallelly_1.41.0   StanHeaders_2.32.10
+[16] KernSmooth_2.23-26  zoo_1.8-12          ggfittext_0.10.2   
+[19] lifecycle_1.0.4     iterators_1.0.14    pkgconfig_2.0.3    
+[22] Matrix_1.7-2        R6_2.5.1            fastmap_1.2.0      
+[25] digest_0.6.37       colorspace_2.1-1    furrr_0.3.1        
+[28] labeling_0.4.3      timechange_0.3.0    compiler_4.4.2     
+[31] proxy_0.4-27        doParallel_1.0.17   withr_3.0.2        
+[34] backports_1.5.0     DBI_1.2.3           MASS_7.3-64        
+[37] lava_1.8.1          rappdirs_0.3.3      classInt_0.4-11    
+[40] tools_4.4.2         units_0.8-5         zip_2.3.1          
+[43] future.apply_1.11.3 nnet_7.3-20         anomalize_0.3.0    
+[46] glue_1.8.0          grid_4.4.2          generics_0.1.3     
+[49] gtable_0.3.6        tzdb_0.4.0          class_7.3-23       
+[52] data.table_1.16.4   hms_1.1.3           sp_2.1-4           
+[55] xml2_1.3.6          utf8_1.2.4          pillar_1.10.1      
+[58] splines_4.4.2       lhs_1.2.0           lattice_0.22-6     
+[61] renv_1.0.7          survival_3.8-3      deldir_2.0-4       
+[64] tidyselect_1.2.1    svglite_2.1.3       xfun_0.50          
+[67] hardhat_1.4.0       timeDate_4041.110   stringi_1.8.4      
+[70] DiceDesign_1.10     yaml_2.3.10         boot_1.3-31        
+[73] evaluate_1.0.3      codetools_0.2-20    cli_3.6.3          
+[76] RcppParallel_5.1.10 rpart_4.1.24        systemfonts_1.2.1  
+[79] repr_1.1.7          munsell_0.5.1       Rcpp_1.0.14        
+[82] globals_0.16.3      png_0.1-8           parallel_4.4.2     
+[85] gower_1.0.2         prettyunits_1.2.0   GPfit_1.0-8        
+[88] listenv_0.9.1       viridisLite_0.4.2   ipred_0.9-15       
+[91] xts_0.14.1          prodlim_2024.06.25  e1071_1.7-16       
+[94] crayon_1.5.3        rlang_1.1.5        
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+            <category>rstats</category>
+      
+            <category>tidymodels</category>
+      
+            <category>tidytuesday</category>
+      
+            <category>models</category>
+      
+      
+            <category>rstats</category>
+      
+            <category>tidymodels</category>
+      
+            <category>tidytuesday</category>
+      
+            <category>models</category>
+      
+    </item>
+    
     <item>
       <title>This is the begining of a cheat sheet!</title>
       <link>https://johaniefournier.com/blog/cheat-sheet/</link>
       <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/blog/cheat-sheet/</guid>
-      <description>I will list here all the little snipset of code that I look up all the time.</description>
+      <description>&lt;p&gt;I can spend a ridiculously big amount of time looking for a certain peace of code that I made few months ago that will solve my current coding problem but can&amp;rsquo;t remember how to code&amp;hellip;&lt;/p&gt;
+&lt;p&gt;So instead of loosing my time in my archive files or on Google, I decide to start listing here all the snippet of code that I need on hand.&lt;/p&gt;
+&lt;p&gt;One of this day, I will organize all this into a beautiful cheat sheet, but for now there my little list!&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;geospatial&#34;&gt;Geospatial
+  &lt;a href=&#34;#geospatial&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+
+
+
+
+&lt;h3 id=&#34;crs&#34;&gt;CRS
+  &lt;a href=&#34;#crs&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;I need to remember that in the coordinate reference system (CRS) of Quebec:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WGS84:EPSG4326 is a geographic reference system meaning with longitude and latitude values in degree.&lt;/li&gt;
+&lt;li&gt;NAD83:EPSG3978 is a projected reference system with longitude and latitude values in meter. &lt;strong&gt;Better for any kind of calculation&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+
+
+&lt;h3 id=&#34;transform-datable-to-sf-object&#34;&gt;Transform datable to sf object
+  &lt;a href=&#34;#transform-datable-to-sf-object&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sf&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;st_as_sf&lt;/span&gt;(.) &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  sf&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;st_transform&lt;/span&gt;(., &lt;span style=&#34;color:#40a070&#34;&gt;3978&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sf&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;st_as_sf&lt;/span&gt;(coords &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;longitude&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;latitude&amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;add-a-buffer-distance-around-points&#34;&gt;Add a buffer distance around points
+  &lt;a href=&#34;#add-a-buffer-distance-around-points&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sf&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;st_buffer&lt;/span&gt;(dist&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;20&lt;/span&gt;) 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;get-coordinate-from-a-sf-object&#34;&gt;Get coordinate from a sf object
+  &lt;a href=&#34;#get-coordinate-from-a-sf-object&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(longitude &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; sf&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;st_coordinates&lt;/span&gt;(.)[,&lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        latitude &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; sf&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;st_coordinates&lt;/span&gt;(.)[,&lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;])
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;markdown-in-r&#34;&gt;Markdown in R
+  &lt;a href=&#34;#markdown-in-r&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+
+
+
+
+&lt;h3 id=&#34;header&#34;&gt;Header
+  &lt;a href=&#34;#header&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;date&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;`r format(Sys.time(), &amp;#39;%Y-%m-%d&amp;#39;)`&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;script src&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;https://hypothes.is/embed.js&amp;#34;&lt;/span&gt; async&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;script&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;setup&#34;&gt;Setup
+  &lt;a href=&#34;#setup&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;knitr&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;opts_chunk&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;set&lt;/span&gt;(include&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;, &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#TRUE = run and include the chunk in document&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      echo   &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;, &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#FALSE = not display the code&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      eval   &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;, &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#FALSE = not run the code in all chunk&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      comment&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      message&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      warning&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;theme-map&#34;&gt;Theme Map
+  &lt;a href=&#34;#theme-map&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;theme_map &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;function&lt;/span&gt;(base_size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;9&lt;/span&gt;, base_family&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;) { &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# 3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#06287e&#34;&gt;require&lt;/span&gt;(grid)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#06287e&#34;&gt;theme_bw&lt;/span&gt;(base_size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;base_size, base_family&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;base_family) &lt;span style=&#34;color:#666&#34;&gt;%+replace%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		&lt;span style=&#34;color:#06287e&#34;&gt;theme&lt;/span&gt;(axis.line&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  axis.text&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  axis.ticks&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  axis.title&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  panel.background&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  panel.border&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  panel.grid&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  panel.spacing&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;unit&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;lines&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  plot.background&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;element_blank&lt;/span&gt;(),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  legend.justification &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  legend.position &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;			  plot.title&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;element_text&lt;/span&gt;(size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;20&lt;/span&gt;, hjust&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, color&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;black&amp;#34;&lt;/span&gt;, face&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;emoji&#34;&gt;emo::ji!
+  &lt;a href=&#34;#emoji&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;collision&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;popper&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;bomb&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;bug&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;chart&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;cry&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;disaster&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;fear&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;chart&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;flowers&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;`r emo::ji(&amp;#34;laugh&amp;#34;)`
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;parallel-processing&#34;&gt;Parallel Processing
+  &lt;a href=&#34;#parallel-processing&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+
+
+
+
+&lt;h3 id=&#34;start&#34;&gt;Start
+  &lt;a href=&#34;#start&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;doFuture&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;registerDoFuture&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;n_cores&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;parallel&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;detectCores&lt;/span&gt;()&lt;span style=&#34;color:#40a070&#34;&gt;-1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;future&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;plan&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  strategy&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;future&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;cluster,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  workers&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;parallel&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;makeCluster&lt;/span&gt;(n_cores)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;stop&#34;&gt;Stop
+  &lt;a href=&#34;#stop&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;future&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;plan&lt;/span&gt;(future&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;sequential)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;tidyverse-data-manipulation&#34;&gt;Tidyverse data manipulation
+  &lt;a href=&#34;#tidyverse-data-manipulation&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+
+
+
+
+&lt;h3 id=&#34;replace-inf-with-na&#34;&gt;Replace Inf with NA
+  &lt;a href=&#34;#replace-inf-with-na&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate_if&lt;/span&gt;(is.numeric, &lt;span style=&#34;color:#06287e&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;na_if&lt;/span&gt;(., &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;Inf&lt;/span&gt;))) &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate_if&lt;/span&gt;(is.numeric, &lt;span style=&#34;color:#06287e&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;na_if&lt;/span&gt;(., &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;Inf&lt;/span&gt;)))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;mutate_at&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;vars&lt;/span&gt;(auc_evi), &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;na_if&lt;/span&gt;(., &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;Inf&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;rename-in-a-loop&#34;&gt;Rename in a loop
+  &lt;a href=&#34;#rename-in-a-loop&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lookup&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;c &lt;/span&gt;(new_name&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;old_name&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;rename&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;any_of&lt;/span&gt;(lookup))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;remove-cap-and-accent&#34;&gt;Remove cap and accent
+  &lt;a href=&#34;#remove-cap-and-accent&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(new_name&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;tolower&lt;/span&gt;(stringi&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;stri_trans_general&lt;/span&gt;(old_name, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Latin-ASCII&amp;#34;&lt;/span&gt;)))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;remove-quote-in-dataframe&#34;&gt;Remove quote in dataframe
+  &lt;a href=&#34;#remove-quote-in-dataframe&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(new_colum&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;gsub&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;\&amp;#34;&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;, old_colum))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;read-all-rds-file-in-folder&#34;&gt;Read all rds file in folder
+  &lt;a href=&#34;#read-all-rds-file-in-folder&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;list.files&lt;/span&gt;(path&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;path_to_files&amp;#34;&lt;/span&gt;, pattern &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;.rds&amp;#34;&lt;/span&gt;, full.names&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;T) &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;map_dfr&lt;/span&gt;(readRDS) &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;bind_rows&lt;/span&gt;() 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;corrrelation-funnel&#34;&gt;Corrrelation Funnel
+  &lt;a href=&#34;#corrrelation-funnel&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;library&lt;/span&gt;(correlationfunnel)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;var&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;name_of_interest_variable&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;var_select &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;tbl_prep &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(var) &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;binarize&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;starts_with&lt;/span&gt;(var) &lt;span style=&#34;color:#666&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;ends_with&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;_Inf&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;names&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  tbl_prep &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;binarize&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;correlate&lt;/span&gt;(var_select) &lt;span style=&#34;color:#666&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;plot_correlation_funnel&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;labs&lt;/span&gt;(title&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;paste0&lt;/span&gt;(label, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34; - Correlation Funnel&amp;#34;&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h1 id=&#34;ressources&#34;&gt;Ressources
+  &lt;a href=&#34;#ressources&#34;&gt;&lt;/a&gt;
+&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.r-bloggers.com&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.r-bloggers.com&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.business-science.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.business-science.io/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://juliasilge.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://juliasilge.com/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+            <category>rstats</category>
+      
+            <category>viz</category>
+      
+            <category>eda</category>
+      
+            <category>models</category>
+      
+      
+            <category>rstats</category>
+      
+            <category>viz</category>
+      
+            <category>eda</category>
+      
+            <category>models</category>
+      
     </item>
     
   </channel>
