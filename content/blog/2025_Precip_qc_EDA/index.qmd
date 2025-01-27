@@ -143,7 +143,7 @@ The primary objective of this analysis is to explore 30 years of precipitation d
 * Visualize yearly precipitation patterns to highlight trends and deviations over time.
 * Provide data-driven insights into how precipitation has evolved and its potential implications for climate research, agriculture, and water resource management.
 
-This analysis will help uncover climate patterns, extreme weather events, and precipitation shifts over the past tree decades in Quebec
+This analysis will help uncover climate patterns, extreme weather events, and precipitation shifts over the past tree decades in for the agricultural land of Quebec
 
 ## Get the data
 
