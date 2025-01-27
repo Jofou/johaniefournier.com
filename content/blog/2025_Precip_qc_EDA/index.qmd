@@ -71,6 +71,11 @@ library(tidytuesdayR)
 #devtools::install_github("jofou/jofou.lib")
 library(jofou.lib)
 
+#Python
+library(reticulate)
+#renv::use_python()
+Sys.setenv(RETICULATE_PYTHON = "~/Library/Mobile Documents/com~apple~CloudDocs/ADV/johaniefournier.com/renv/python/virtualenvs/renv-python-3.9/bin/python")
+
 #Theme_map
 theme_map <- function(base_size=9, base_family="") { # 3
 	require(grid)
