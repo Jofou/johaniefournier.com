@@ -198,7 +198,7 @@ coords <- data_final |>
   select(lon, lat)
 
 # Create k-nearest neighbors spatial weights matrix (example with k = 4)
-knn <- spdep::knearneigh(coords, k = 4)
+knn <- spdep::knearneigh(coords, k = 4, longlat = TRUE)
 nb <- spdep::knn2nb(knn)
 listw_knn <- spdep::nb2listw(nb, style = "W")
 
