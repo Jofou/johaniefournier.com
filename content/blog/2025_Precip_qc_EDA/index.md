@@ -151,6 +151,8 @@ precipitation_sf <- as.data.frame(
 
 ## General trend
 
+Let's start by exploring the precipitation data to understand its distribution and general trends.
+
 ``` r
 skimr::skim(precipitation_dt)
 ```

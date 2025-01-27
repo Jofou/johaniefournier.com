@@ -204,6 +204,7 @@ precipitation_raw<-rast("Data/precipitation_raw.nc")
 
 ### Data preperation
 
+
 ```{r}
 #| eval: FALSE
 # Change layer names
@@ -252,6 +253,8 @@ precipitation_dt<-readRDS("Data/precipitation_dt.rds")
 ```
 
 ## General trend
+
+Let's start by exploring the precipitation data to understand its distribution and general trends.
 
 ```{r}
 skimr::skim(precipitation_dt)
