@@ -46,7 +46,7 @@
   <meta itemprop="name" content="St. Lawrence Lowlands Precipitation Data: 30-Year Trends &amp; Anomalies">
 <meta itemprop="description" content="Understanding long-term precipitation patterns is essential for climate research, agriculture, and water resource management. In this post, we analyze 30 years of precipitation data from the AgERA5 dataset for St. Lawrence Lowlands, using exploratory data analysis (EDA) techniques to uncover trends, seasonal variations, and anomalies."><meta itemprop="datePublished" content="2025-01-27T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2025-01-27T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2012"><meta itemprop="image" content="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/featured.png">
+<meta itemprop="wordCount" content="2034"><meta itemprop="image" content="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/featured.png">
 <meta itemprop="keywords" content="eda,rstats,tidymodels,tidytuesday,viz," />
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
@@ -265,6 +265,7 @@ First 10 features:
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
+<p>We will convert the raster data to a dataframe and extract the precipitation values for the region of interest.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Change layer names</span>
 </span></span><span style="display:flex;"><span>months_vector <span style="color:#666">&lt;-</span> <span style="color:#06287e">seq</span>(
 </span></span><span style="display:flex;"><span>    from <span style="color:#666">=</span> <span style="color:#06287e">as.Date</span>(start_date),
@@ -480,7 +481,7 @@ First 10 features:
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Is there a general trend over space?</p>
+<p>Is there a general trend over space? Let&rsquo;s find out!</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>precipitation_dt_site<span style="color:#666">&lt;-</span>precipitation_dt  <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(shapeName) <span style="color:#666">|&gt;</span>  
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(sum<span style="color:#666">=</span><span style="color:#06287e">sum</span>(mean)<span style="color:#40a070">-102494.3</span>) <span style="color:#666">|&gt;</span>  
@@ -977,7 +978,7 @@ loaded via a namespace (and not attached):
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">10 minute read, 2012 words</dd>
+    <dd class="fw5 ml0">10 minute read, 2034 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

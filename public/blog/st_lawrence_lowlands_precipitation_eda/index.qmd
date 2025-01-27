@@ -209,6 +209,7 @@ precipitation_raw<-rast("Data/precipitation_raw.nc")
 
 ### Data preperation
 
+We will convert the raster data to a dataframe and extract the precipitation values for the region of interest.
 
 ```{r}
 #| eval: FALSE
@@ -267,7 +268,7 @@ skimr::skim(precipitation_dt)
 
 ## Trend over time
 
-Is there a general trend over time? Let's find out!
+Is there a general trend over time? Let's find out! 
 
 ```{r}
 precipitation_dt_year<-precipitation_dt |> 
@@ -279,11 +280,11 @@ ggplot(data=precipitation_dt_year, aes(x=year, y=sum))+
   geom_line()
 ```
 
-Precipitation has increased over time.
+Precipitation has increased over time. 
 
 ## Space trend
 
-Is there a general trend over space?
+Is there a general trend over space? Let's find out!
 
 ```{r}
 precipitation_dt_site<-precipitation_dt  |> 
