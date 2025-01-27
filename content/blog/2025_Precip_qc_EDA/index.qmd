@@ -149,7 +149,7 @@ This analysis will help uncover climate patterns, extreme weather events, and pr
 
 ### Country borders
 
-We need the polygon of the region of interest. 
+We need the polygon of the region of interest. We will use the `rgeoboundaries` package to extract the polygon of Quebec.
 
 ```{r}
 qc_sf <- rgeoboundaries::gb_adm2(country = "CAN") |>
