@@ -94,8 +94,8 @@ theme_map <- function(base_size=9, base_family="") { # 3
 
 #Graph theme
 theme_set(theme_minimal() +
-          theme(axis.line = element_line(linetype="solid", size=.3, color="black"),
-                axis.ticks = element_line(linetype="solid", size=.5, color="black"),
+          theme(axis.line = element_line(linetype="solid", linewidth=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", linewidth=.5, color="black"),
                 panel.grid.major.y = element_blank(),
                 panel.grid.major.x = element_blank(),
                 panel.grid.minor = element_blank(),
@@ -120,6 +120,7 @@ This is my latest contribution to the [`#TidyTuesday` dataset](https://github.co
 In the [firs part](https://www.johaniefournier.com/blog/tyt2024w21_eda/), the goal was to do some Exploratory Data Analysis (EDA). To do so, I looked at the data structure, anomalies, outliers and relationships to ensure I have everithing I need for this second part. 
 
 In this second part, I will be predicting carbon emissions over space and time. I will be using machine learning techniques to predict future emissions based on historical data. I will be using the `spdep` package to create a spatial weights matrix, and the `modeltime` package to train machine learning models and make predictions for future emissions. Let's get started!
+
 
 ```{r}
 #| echo: false
@@ -151,6 +152,7 @@ DT::datatable(parent_entity)
 
 
 ```{python}
+#| eval: FALSE
 import pandas as pd
 import requests
 
@@ -198,6 +200,7 @@ data['headquarters'] = data['parent_entity'].apply(get_wikidata_headquarters)
 data.head()
 ```
 ```{r}
+#| eval: FALSE
 # Complete missing headquarters
 headquarters<-py$data |> 
   mutate(headquarters=case_when(

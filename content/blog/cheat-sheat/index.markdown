@@ -109,7 +109,7 @@ theme_map <- function(base_size=9, base_family="") { # 3
 ### emo::ji!
 
 
-```r
+``` r
 `r emo::ji("collision")`
 
 `r emo::ji("popper")`
@@ -137,7 +137,7 @@ theme_map <- function(base_size=9, base_family="") { # 3
 
 ### Start
 
-```r
+``` r
 doFuture::registerDoFuture()
 n_cores<-parallel::detectCores()-1
 future::plan(
@@ -148,7 +148,7 @@ future::plan(
 
 ### Stop
 
-```r
+``` r
 future::plan(future::sequential)
 ```
 
@@ -157,21 +157,21 @@ future::plan(future::sequential)
 
 ### Replace Inf with NA
 
-```r
+``` r
 df %>% 
   mutate_if(is.numeric, list(~na_if(., Inf))) %>% 
   mutate_if(is.numeric, list(~na_if(., -Inf)))
 ```
 
 
-```r
+``` r
 df %>% 
 mutate_at(vars(auc_evi), ~na_if(., Inf))
 ```
 
 ### Rename in a loop
 
-```r
+``` r
 lookup<-c (new_name="old_name")
 
 df %>% 
@@ -180,7 +180,7 @@ df %>%
 
 ### Remove cap and accent
 
-```r
+``` r
 df %>% 
 mutate(new_name=tolower(stringi::stri_trans_general(old_name, "Latin-ASCII")))
 ```
@@ -188,14 +188,14 @@ mutate(new_name=tolower(stringi::stri_trans_general(old_name, "Latin-ASCII")))
 
 ### Remove quote in dataframe
 
-```r
+``` r
 df %>%
   mutate(new_colum=gsub("\"", "", old_colum))
 ```
 
 ### Read all rds file in folder
 
-```r
+``` r
 data<-list.files(path="path_to_files", pattern = ".rds", full.names=T) %>%
   map_dfr(readRDS) %>% 
   bind_rows() 

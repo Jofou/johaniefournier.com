@@ -18,15 +18,16 @@ editor_options:
   chunk_output_type: inline
 ---
 
-<script src="index_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="index_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="index_files/libs/datatables-binding-0.19/datatables.js"></script>
+<script src="index_files/libs/datatables-binding-0.33/datatables.js"></script>
 <script src="index_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="index_files/libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="index_files/libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="index_files/libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="index_files/libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="index_files/libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="index_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 
 
 This is my latest contribution to the [`#TidyTuesday` dataset](https://github.com/rfordatascience/tidytuesday) project, featuring a recent dataset on carbon major emissions.
@@ -68,8 +69,8 @@ parent_entity<-data|>
 DT::datatable(parent_entity)
 ```
 
-<div id="htmlwidget-01d78cbf3971deab4dad" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-01d78cbf3971deab4dad">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["Abu Dhabi National Oil Company","Alpha Metallurgical Resources","Anglo American","Arch Resources","BHP","BP","British Coal Corporation","Chevron","China (Cement)","China (Coal)","CNPC","Coal India","ConocoPhillips","CONSOL Energy","Czechoslovakia","Eni","Equinor","ExxonMobil","Former Soviet Union","Gazprom","Glencore","Iraq National Oil Company","Kazakhstan","Kuwait Petroleum Corp.","Libya National Oil Corp.","Lukoil","National Iranian Oil Co.","Nigerian National Petroleum Corp.","Occidental Petroleum","ONGC India","Peabody Coal Group","Pemex","Pertamina","Petrobras","Petroleos de Venezuela","Petronas","Poland","QatarEnergy","Repsol","Rio Tinto","Rosneft","Russian Federation","RWE","Sasol","Saudi Aramco","Shell","Sonatrach","Surgutneftegas","TotalEnergies","Ukraine"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parent_entity<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-0be696abd135366757ed" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0be696abd135366757ed">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["Abu Dhabi National Oil Company","Alpha Metallurgical Resources","Anglo American","Arch Resources","BHP","BP","British Coal Corporation","Chevron","China (Cement)","China (Coal)","CNPC","Coal India","ConocoPhillips","CONSOL Energy","Czechoslovakia","Eni","Equinor","ExxonMobil","Former Soviet Union","Gazprom","Glencore","Iraq National Oil Company","Kazakhstan","Kuwait Petroleum Corp.","Libya National Oil Corp.","Lukoil","National Iranian Oil Co.","Nigerian National Petroleum Corp.","Occidental Petroleum","ONGC India","Peabody Coal Group","Pemex","Pertamina","Petrobras","Petroleos de Venezuela","Petronas","Poland","QatarEnergy","Repsol","Rio Tinto","Rosneft","Russian Federation","RWE","Sasol","Saudi Aramco","Shell","Sonatrach","Surgutneftegas","TotalEnergies","Ukraine"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parent_entity<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"parent_entity","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 
 ``` python
 import pandas as pd
@@ -118,13 +119,6 @@ data['headquarters'] = data['parent_entity'].apply(get_wikidata_headquarters)
 # Display the updated dataframe
 data.head()
 ```
-
-                        parent_entity            headquarters
-    0  Abu Dhabi National Oil Company               Abu Dhabi
-    1   Alpha Metallurgical Resources  Headquarters not found
-    2                  Anglo American                  London
-    3                  Arch Resources               St. Louis
-    4                             BHP  Headquarters not found
 
 ``` r
 # Complete missing headquarters
@@ -232,7 +226,7 @@ data_spatial |>
                      .interactive = FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="1260" />
 
 ## Modeling
 
@@ -354,7 +348,7 @@ nested_best_tbl |>
                             .interactive = FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="1260" />
 
 ### Refit Models
 
@@ -374,9 +368,14 @@ nested_best_refit_tbl <- nested_best_tbl|>
 nested_best_refit_tbl|>  extract_nested_error_report()
 ```
 
-    # A tibble: 0 × 4
-    # ℹ 4 variables: parent_entity <chr>, .model_id <int>, .model_desc <chr>,
-    #   .error_desc <chr>
+    # A tibble: 5 × 4
+      parent_entity                 .model_id .model_desc .error_desc               
+      <chr>                             <int> <chr>       <chr>                     
+    1 Alpha Metallurgical Resources        NA NULL        No method for an object o…
+    2 CNPC                                 NA NULL        No method for an object o…
+    3 Gazprom                              NA NULL        No method for an object o…
+    4 Kazakhstan                           NA NULL        No method for an object o…
+    5 Russian Federation                   NA NULL        No method for an object o…
 
 ``` r
 # Visualize Future Forecast 
@@ -389,7 +388,7 @@ nested_best_refit_tbl|>
                             .interactive = FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-30-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="1260" />
 
 ## Save preds
 
@@ -413,72 +412,69 @@ In this post, I have shown how to predict carbon emissions over space and time u
 sessionInfo()
 ```
 
-    R version 4.1.1 (2021-08-10)
-    Platform: x86_64-apple-darwin17.0 (64-bit)
-    Running under: macOS Big Sur 10.16
+    R version 4.4.2 (2024-10-31)
+    Platform: aarch64-apple-darwin20
+    Running under: macOS Sequoia 15.2
 
     Matrix products: default
-    BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-    LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+    BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+    LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
     locale:
     [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+    time zone: America/Toronto
+    tzcode source: internal
 
     attached base packages:
     [1] stats     graphics  grDevices datasets  utils     methods   base     
 
     other attached packages:
-     [1] jofou.lib_0.0.0.9000  reticulate_1.37.0     tidytuesdayR_1.0.2   
-     [4] tictoc_1.2.1          terra_1.6-17          sf_1.0-5             
-     [7] pins_1.0.1.9000       modeltime_1.0.0       fs_1.5.2             
-    [10] timetk_2.6.1          yardstick_1.2.0       workflowsets_0.1.0   
-    [13] workflows_0.2.4       tune_0.1.6            rsample_0.1.0        
-    [16] parsnip_1.1.1         modeldata_0.1.1       infer_1.0.0          
-    [19] dials_0.0.10          scales_1.3.0          broom_1.0.4          
-    [22] tidymodels_0.1.4      recipes_0.1.17        doFuture_0.12.0      
-    [25] future_1.22.1         foreach_1.5.1         skimr_2.1.5          
-    [28] forcats_1.0.0         stringr_1.5.0         dplyr_1.1.2          
-    [31] purrr_1.0.1           readr_2.1.4           tidyr_1.3.0          
-    [34] tibble_3.2.1          ggplot2_3.5.1         tidyverse_2.0.0      
-    [37] lubridate_1.9.2       kableExtra_1.3.4.9000 inspectdf_0.0.11     
-    [40] openxlsx_4.2.4        knitr_1.36           
+     [1] jofou.lib_0.0.0.9000 reticulate_1.40.0    tidytuesdayR_1.1.2  
+     [4] tictoc_1.2.1         terra_1.8-10         sf_1.0-19           
+     [7] pins_1.4.0           modeltime_1.3.1      fs_1.6.5            
+    [10] timetk_2.9.0         yardstick_1.3.2      workflowsets_1.1.0  
+    [13] workflows_1.1.4      tune_1.2.1           rsample_1.2.1       
+    [16] parsnip_1.2.1        modeldata_1.4.0      infer_1.0.7         
+    [19] dials_1.3.0          scales_1.3.0         broom_1.0.7         
+    [22] tidymodels_1.2.0     recipes_1.1.0        doFuture_1.0.1      
+    [25] future_1.34.0        foreach_1.5.2        skimr_2.1.5         
+    [28] forcats_1.0.0        stringr_1.5.1        dplyr_1.1.4         
+    [31] purrr_1.0.2          readr_2.1.5          tidyr_1.3.1         
+    [34] tibble_3.2.1         ggplot2_3.5.1        tidyverse_2.0.0     
+    [37] lubridate_1.9.4      kableExtra_1.4.0     inspectdf_0.0.12.1  
+    [40] openxlsx_4.2.7.1     knitr_1.49          
 
     loaded via a namespace (and not attached):
-      [1] readxl_1.4.2         backports_1.4.1      systemfonts_1.0.3   
-      [4] repr_1.1.7           sp_1.4-5             splines_4.1.1       
-      [7] crosstalk_1.1.1      listenv_0.8.0        usethis_2.0.1       
-     [10] digest_0.6.29        htmltools_0.5.8.1    fansi_0.5.0         
-     [13] magrittr_2.0.3       doParallel_1.0.16    tzdb_0.1.2          
-     [16] globals_0.14.0       ggfittext_0.9.1      gower_0.2.2         
-     [19] RcppParallel_5.1.4   xts_0.12.1           svglite_2.0.0       
-     [22] hardhat_1.3.0        timechange_0.1.1     prettyunits_1.1.1   
-     [25] colorspace_2.0-2     rvest_1.0.3          rappdirs_0.3.3      
-     [28] xfun_0.39            crayon_1.4.2         jsonlite_1.8.4      
-     [31] survival_3.2-11      zoo_1.8-12           iterators_1.0.13    
-     [34] glue_1.6.2           gtable_0.3.0         ipred_0.9-12        
-     [37] webshot_0.5.2        future.apply_1.8.1   DBI_1.1.1           
-     [40] Rcpp_1.0.13          spData_2.3.1         viridisLite_0.4.0   
-     [43] progress_1.2.2       units_0.7-2          spdep_1.3-5         
-     [46] GPfit_1.0-8          proxy_0.4-26         DT_0.19             
-     [49] lava_1.6.10          StanHeaders_2.21.0-7 prodlim_2019.11.13  
-     [52] htmlwidgets_1.5.4    httr_1.4.6           ellipsis_0.3.2      
-     [55] wk_0.6.0             farver_2.1.0         pkgconfig_2.0.3     
-     [58] deldir_2.0-4         sass_0.4.0           nnet_7.3-16         
-     [61] utf8_1.2.2           labeling_0.4.2       tidyselect_1.2.0    
-     [64] rlang_1.1.1          DiceDesign_1.9       munsell_0.5.0       
-     [67] cellranger_1.1.0     tools_4.1.1          xgboost_1.4.1.1     
-     [70] cli_3.6.1            generics_0.1.3       evaluate_0.14       
-     [73] fastmap_1.2.0        yaml_2.2.1           zip_2.2.0           
-     [76] s2_1.0.7             xml2_1.3.4           compiler_4.1.1      
-     [79] rstudioapi_0.14      curl_5.2.3           png_0.1-7           
-     [82] e1071_1.7-9          lhs_1.1.3            bslib_0.3.1         
-     [85] stringi_1.7.5        blogdown_1.9.4       lattice_0.20-44     
-     [88] Matrix_1.3-4         classInt_0.4-3       vctrs_0.6.5         
-     [91] pillar_1.9.0         lifecycle_1.0.3      furrr_0.2.3         
-     [94] jquerylib_0.1.4      data.table_1.14.2    R6_2.5.1            
-     [97] renv_1.0.7           KernSmooth_2.23-20   parallelly_1.28.1   
-    [100] codetools_0.2-18     boot_1.3-28          MASS_7.3-54         
-    [103] anomalize_0.3.0      withr_2.5.0          parallel_4.1.1      
-    [106] hms_1.1.3            grid_4.1.1           rpart_4.1-15        
-    [109] timeDate_3043.102    class_7.3-19         rmarkdown_2.25      
-    [112] base64enc_0.1-3     
+     [1] rstudioapi_0.17.1   jsonlite_1.8.9      wk_0.9.4           
+     [4] magrittr_2.0.3      farver_2.1.2        rmarkdown_2.29     
+     [7] vctrs_0.6.5         spdep_1.3-10        base64enc_0.1-3    
+    [10] htmltools_0.5.8.1   progress_1.2.3      s2_1.1.7           
+    [13] spData_2.3.4        parallelly_1.41.0   StanHeaders_2.32.10
+    [16] KernSmooth_2.23-26  zoo_1.8-12          ggfittext_0.10.2   
+    [19] lifecycle_1.0.4     iterators_1.0.14    pkgconfig_2.0.3    
+    [22] Matrix_1.7-2        R6_2.5.1            fastmap_1.2.0      
+    [25] digest_0.6.37       colorspace_2.1-1    furrr_0.3.1        
+    [28] labeling_0.4.3      timechange_0.3.0    compiler_4.4.2     
+    [31] proxy_0.4-27        doParallel_1.0.17   withr_3.0.2        
+    [34] backports_1.5.0     DBI_1.2.3           MASS_7.3-64        
+    [37] lava_1.8.1          rappdirs_0.3.3      classInt_0.4-11    
+    [40] tools_4.4.2         units_0.8-5         zip_2.3.1          
+    [43] future.apply_1.11.3 nnet_7.3-20         anomalize_0.3.0    
+    [46] glue_1.8.0          grid_4.4.2          generics_0.1.3     
+    [49] gtable_0.3.6        tzdb_0.4.0          class_7.3-23       
+    [52] data.table_1.16.4   hms_1.1.3           sp_2.1-4           
+    [55] xml2_1.3.6          utf8_1.2.4          pillar_1.10.1      
+    [58] splines_4.4.2       lhs_1.2.0           lattice_0.22-6     
+    [61] renv_1.0.7          survival_3.8-3      deldir_2.0-4       
+    [64] tidyselect_1.2.1    svglite_2.1.3       xfun_0.50          
+    [67] hardhat_1.4.0       timeDate_4041.110   stringi_1.8.4      
+    [70] DiceDesign_1.10     yaml_2.3.10         boot_1.3-31        
+    [73] evaluate_1.0.3      codetools_0.2-20    cli_3.6.3          
+    [76] RcppParallel_5.1.10 rpart_4.1.24        systemfonts_1.2.1  
+    [79] repr_1.1.7          munsell_0.5.1       Rcpp_1.0.14        
+    [82] globals_0.16.3      png_0.1-8           parallel_4.4.2     
+    [85] gower_1.0.2         prettyunits_1.2.0   GPfit_1.0-8        
+    [88] listenv_0.9.1       viridisLite_0.4.2   ipred_0.9-15       
+    [91] xts_0.14.1          prodlim_2024.06.25  e1071_1.7-16       
+    [94] crayon_1.5.3        rlang_1.1.5        
