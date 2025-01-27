@@ -68,6 +68,9 @@ library(tidytuesdayR)
 library(reticulate)
 #renv::use_python()
 Sys.setenv(RETICULATE_PYTHON = "~/Library/Mobile Documents/com~apple~CloudDocs/ADV/johaniefournier.com/renv/python/virtualenvs/renv-python-3.9/bin/python")
+#py_install("pandas")
+#py_install("requests")
+
 
 #Mes fonctions
 #devtools::install_github("jofou/jofou.lib")
