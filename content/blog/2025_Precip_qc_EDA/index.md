@@ -106,7 +106,7 @@ plot(qc_sf$geometry)
 
 ### Precipitation data
 
-We will extract precipitation data from the AgERA5 dataset using the KrigR package.
+We will extract precipitation data from the AgERA5 dataset using the KrigR package. The AgERA5 dataset provides high-resolution climate data, including precipitation, temperature, and wind speed, for global climate research.
 
 <img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="800" />
 
