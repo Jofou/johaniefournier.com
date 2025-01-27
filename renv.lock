@@ -149,38 +149,6 @@
       ],
       "Hash": "2fb39782c07b5ad422b0448ae83f64c4"
     },
-    "KrigR": {
-      "Package": "KrigR",
-      "Version": "0.9.4",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "KrigR",
-      "RemoteUsername": "ErikKusch",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "03d98ce01c975befca15a44487cd2cf4cb5bf029",
-      "Requirements": [
-        "R",
-        "automap",
-        "cowplot",
-        "doSNOW",
-        "ecmwfr",
-        "foreach",
-        "ggplot2",
-        "httr",
-        "lubridate",
-        "ncdf4",
-        "pbapply",
-        "progress",
-        "sf",
-        "stringr",
-        "terra",
-        "tidyr",
-        "tools",
-        "viridis"
-      ],
-      "Hash": "c4ef6931f7330fdd8d1128c364e3bd62"
-    },
     "MASS": {
       "Package": "MASS",
       "Version": "7.3-64",
@@ -555,25 +523,6 @@
         "tools"
       ],
       "Hash": "50c838a310445e954bc13f26f26a6ecf"
-    },
-    "automap": {
-      "Package": "automap",
-      "Version": "1.1-12",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "ggplot2",
-        "graphics",
-        "gstat",
-        "lattice",
-        "methods",
-        "reshape",
-        "sf",
-        "sp",
-        "stars"
-      ],
-      "Hash": "559bb84c2a91737dd5f6f3ee2e6969bf"
     },
     "backports": {
       "Package": "backports",
@@ -1301,20 +1250,6 @@
       ],
       "Hash": "451e5edf411987991ab6a5410c45011f"
     },
-    "doSNOW": {
-      "Package": "doSNOW",
-      "Version": "1.0.20",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "foreach",
-        "iterators",
-        "snow",
-        "utils"
-      ],
-      "Hash": "4bf4423d2c8b68c93b47e32ec554c2f1"
-    },
     "dplyr": {
       "Package": "dplyr",
       "Version": "1.1.4",
@@ -1400,21 +1335,6 @@
         "utils"
       ],
       "Hash": "27a09ca40266a1066d62ef5402dd51d6"
-    },
-    "ecmwfr": {
-      "Package": "ecmwfr",
-      "Version": "2.0.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "R6",
-        "getPass",
-        "httr",
-        "keyring",
-        "memoise"
-      ],
-      "Hash": "83dca0f4fcaf5ad42d514819511a6884"
     },
     "ellipse": {
       "Package": "ellipse",
@@ -1597,16 +1517,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "aa5e1cd11c2d15497494c5292d7ffcc8"
-    },
-    "filelock": {
-      "Package": "filelock",
-      "Version": "1.0.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R"
-      ],
-      "Hash": "192053c276525c8495ccfd523aa8f2d1"
     },
     "flashClust": {
       "Package": "flashClust",
@@ -1824,18 +1734,6 @@
         "zip"
       ],
       "Hash": "ae855ad6d7be20dd7b05d43d25700398"
-    },
-    "getPass": {
-      "Package": "getPass",
-      "Version": "0.2-4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "rstudioapi",
-        "utils"
-      ],
-      "Hash": "281e56bcab06202f51be7b50254f2fce"
     },
     "gganimate": {
       "Package": "gganimate",
@@ -2197,28 +2095,6 @@
       ],
       "Hash": "05e4f5fffb1eecfeaac9ea0b7f255fef"
     },
-    "gstat": {
-      "Package": "gstat",
-      "Version": "2.1-2",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "FNN",
-        "R",
-        "graphics",
-        "lattice",
-        "methods",
-        "sf",
-        "sftime",
-        "sp",
-        "spacetime",
-        "stars",
-        "stats",
-        "utils",
-        "zoo"
-      ],
-      "Hash": "e2f6290a803ace76e527297375c712ba"
-    },
     "gt": {
       "Package": "gt",
       "Version": "0.11.1",
@@ -2515,19 +2391,6 @@
       ],
       "Hash": "9feec22ac102e2a37b32475b372030e7"
     },
-    "intervals": {
-      "Package": "intervals",
-      "Version": "0.15.5",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "graphics",
-        "methods",
-        "utils"
-      ],
-      "Hash": "da1fd6a5634e370ad0ef99a1aa2b17cb"
-    },
     "ipred": {
       "Package": "ipred",
       "Version": "0.9-15",
@@ -2711,26 +2574,6 @@
         "xml2"
       ],
       "Hash": "532d16304274c23c8563f94b79351c86"
-    },
-    "keyring": {
-      "Package": "keyring",
-      "Version": "1.3.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "R6",
-        "askpass",
-        "assertthat",
-        "filelock",
-        "openssl",
-        "rappdirs",
-        "sodium",
-        "tools",
-        "utils",
-        "yaml"
-      ],
-      "Hash": "5cd8cfb2e90c57110b7dd1785c599aba"
     },
     "knitr": {
       "Package": "knitr",
@@ -3421,17 +3264,6 @@
       ],
       "Hash": "e23fb9ecb1258207bcb763d78d513439"
     },
-    "pbapply": {
-      "Package": "pbapply",
-      "Version": "1.7-2",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "parallel"
-      ],
-      "Hash": "68a2d681e10cf72f0afa1d84d45380e5"
-    },
     "pbkrtest": {
       "Package": "pbkrtest",
       "Version": "0.5.3",
@@ -4047,17 +3879,6 @@
       ],
       "Hash": "97b1d5361a24d9fb588db7afe3e5bcbf"
     },
-    "reshape": {
-      "Package": "reshape",
-      "Version": "0.8.9",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "plyr"
-      ],
-      "Hash": "603d56041d7d4fa3ceb1864b3f6ee6b1"
-    },
     "reshape2": {
       "Package": "reshape2",
       "Version": "1.4.4",
@@ -4483,17 +4304,6 @@
       ],
       "Hash": "d63e904c63deda45f3f9149c7dcf8703"
     },
-    "sftime": {
-      "Package": "sftime",
-      "Version": "0.3.0",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "methods",
-        "sf"
-      ],
-      "Hash": "627ee68a5187625b8f042a305bbbb2cc"
-    },
     "shades": {
       "Package": "shades",
       "Version": "1.4.0",
@@ -4575,24 +4385,6 @@
       ],
       "Hash": "58767e44739b76965332e8a4fe3f91f1"
     },
-    "snow": {
-      "Package": "snow",
-      "Version": "0.4-4",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "utils"
-      ],
-      "Hash": "40b74690debd20c57d93d8c246b305d4"
-    },
-    "sodium": {
-      "Package": "sodium",
-      "Version": "1.4.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "ae00d33a499e429a04409bc1167c4995"
-    },
     "sp": {
       "Package": "sp",
       "Version": "2.1-4",
@@ -4620,25 +4412,6 @@
         "sp"
       ],
       "Hash": "0ca3db75e1dcb69b2de1cf5a8097e822"
-    },
-    "spacetime": {
-      "Package": "spacetime",
-      "Version": "1.3-2",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "graphics",
-        "intervals",
-        "lattice",
-        "methods",
-        "sp",
-        "stats",
-        "utils",
-        "xts",
-        "zoo"
-      ],
-      "Hash": "a8ac9c0b373f7d477d885112092f82df"
     },
     "spdep": {
       "Package": "spdep",
@@ -4673,23 +4446,6 @@
         "methods"
       ],
       "Hash": "51f4ca9989e0de9782037e426298bee6"
-    },
-    "stars": {
-      "Package": "stars",
-      "Version": "0.6-7",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "abind",
-        "classInt",
-        "methods",
-        "parallel",
-        "rlang",
-        "sf",
-        "units"
-      ],
-      "Hash": "0df88c47fce8cda8cfe84ce05cc4c5a1"
     },
     "stringi": {
       "Package": "stringi",
