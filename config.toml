@@ -135,18 +135,6 @@ enableEmoji = true
     url = "/categories/models/"
     weight = 5
 
-   [[menu.header]]
-    name = "Cheat Sheet"
-    title = "cheat_sheet"
-    url = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"
-    weight = 6
-
-   [[menu.header]]
-    name = "Tutorials"
-    title = "tutorials"
-    url = "https://johanie-fournier-s-school.teachable.com/p/geos-data-analysis-tutorials"
-    weight = 7
-
   # Configure footer
   [[menu.footer]]
     name = "License"
