@@ -1,5 +1,5 @@
 ---
-title: 'St. Lawrence Lowlands Precipitation Data: 30-Year Trends Preduction'
+title: 'St. Lawrence Lowlands Precipitation Data: 30-Year Trends Prediction'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-01-28"
 slug: st_lawrence_lowlands_precipitation_ML
@@ -32,14 +32,14 @@ editor_options:
 <script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 
 
-Understanding precipitation patterns in the St. Lawrence Lowlands is essential for climate analysis, agriculture, and water resource management. In the previous blog post, we conducted an exploratory data analysis (EDA) to uncover key trends, spatial distributions, and relationships within the dataset. This provided valuable insights into precipitation variability and guided feature selection for modeling.
-
-Building on that foundation, this post explores machine learning approaches to predict precipitation using historical climate data. We will evaluate three models ---Random Forest (RF), XGBoost, and and Mars- to determine their effectiveness in capturing complex climate patterns. Using cross-validation and standard regression metrics, we will compare model performance and identify the most suitable approach for precipitation prediction in this region.
-
 <a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
 </a>
 
 <br>
+
+Understanding precipitation patterns in the St. Lawrence Lowlands is essential for climate analysis, agriculture, and water resource management. In the previous blog post, we conducted an exploratory data analysis (EDA) to uncover key trends, spatial distributions, and relationships within the dataset. This provided valuable insights into precipitation variability and guided feature selection for modeling.
+
+Building on that foundation, this post explores machine learning approaches to predict precipitation using historical climate data. We will evaluate three models ---Random Forest (RF), XGBoost, and and Mars- to determine their effectiveness in capturing complex climate patterns. Using cross-validation and standard regression metrics, we will compare model performance and identify the most suitable approach for precipitation prediction in this region.
 
 ## Data Preprocessing
 
