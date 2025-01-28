@@ -5,10 +5,773 @@
     <description>Recent content in viz on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 27 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jan 2025 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://johaniefournier.com/categories/viz/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends Preduction</title>
+      <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/</link>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/</guid>
+      <description>&lt;link href=&#34;index_files/libs/htmltools-fill-0.5.8.1/fill.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;index_files/libs/datatables-css-0.0.0/datatables-crosstalk.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/datatables-binding-0.33/datatables.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;index_files/libs/jquery-3.6.0/jquery-3.6.0.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;index_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;link href=&#34;index_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
+&lt;p&gt;Understanding precipitation patterns in the St. Lawrence Lowlands is essential for climate analysis, agriculture, and water resource management. In the previous blog post, we conducted an exploratory data analysis (EDA) to uncover key trends, spatial distributions, and relationships within the dataset. This provided valuable insights into precipitation variability and guided feature selection for modeling.&lt;/p&gt;
+&lt;p&gt;Building on that foundation, this post explores machine learning approaches to predict precipitation using historical climate data. We will evaluate three models &amp;mdash;Random Forest (RF), XGBoost, and and Mars- to determine their effectiveness in capturing complex climate patterns. Using cross-validation and standard regression metrics, we will compare model performance and identify the most suitable approach for precipitation prediction in this region.&lt;/p&gt;
+&lt;p&gt;&lt;a href = &#34;https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367&#34;&gt; &lt;img src=&#34;petit.png&#34; alt=&#34;&#34;&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;br&gt;
+
+
+
+
+&lt;h2 id=&#34;data-preprocessing&#34;&gt;Data Preprocessing
+  &lt;a href=&#34;#data-preprocessing&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;The first step here is to load the data and preprocess it for modeling. We will extract relevant features and create a spatial weights matrix.&lt;/p&gt;
+
+
+
+
+&lt;h3 id=&#34;load-the-data&#34;&gt;Load the data
+  &lt;a href=&#34;#load-the-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_data &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;readRDS&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Data/precipitation_dt.rds&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(shapeName, date, mean)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;head&lt;/span&gt;(precipitation_data)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 6 × 3
+  shapeName             date        mean
+  &amp;lt;chr&amp;gt;                 &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
+1 Abitibi-Témiscamingue 1993-01-01  258.
+2 Abitibi-Témiscamingue 1993-02-01  255.
+3 Abitibi-Témiscamingue 1993-03-01  266.
+4 Abitibi-Témiscamingue 1993-04-01  275.
+5 Abitibi-Témiscamingue 1993-05-01  283.
+6 Abitibi-Témiscamingue 1993-06-01  287.
+&lt;/code&gt;&lt;/pre&gt;
+
+
+
+
+&lt;h3 id=&#34;create-a-spatial-weights-matrix&#34;&gt;Create a Spatial Weights Matrix
+  &lt;a href=&#34;#create-a-spatial-weights-matrix&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;We need some spatial information extracted from the coordinate to put into the temporal model. We will use the GPS coordinates to create a k-nearest neighbors spatial weights matrix. This matrix will be used as spatial information of the observed emissions, which will be used as a predictor in the machine learning models.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qc_sf &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; rgeoboundaries&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;gb_adm2&lt;/span&gt;(country &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;CAN&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(shapeName &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Bas-Saint-Laurent&amp;#34;&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Gaspésie--Îles-de-la-Madelei&amp;#34;&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Capitale-Nationale&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Chaudière-Appalaches&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Estrie&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Centre-du-Québec&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Montérégie&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Montréal&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Laval&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Outaouais&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Abitibi-Témiscamingue&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Lanaudière&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Laurentides&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                          &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Mauricie&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(shapeName, geometry) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;st_centroid&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_mrc_data&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;precipitation_data &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;left_join&lt;/span&gt;(qc_sf, by &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;shapeName&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(lon &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;st_coordinates&lt;/span&gt;(geometry)[,&lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         lat &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;st_coordinates&lt;/span&gt;(geometry)[,&lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         date&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;as.Date&lt;/span&gt;(date)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;as.data.frame&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;geometry)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Extract coordinates&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;coords &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; precipitation_mrc_data &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(lon, lat)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Create k-nearest neighbors spatial weights matrix (example with k = 4)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;knn &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;knearneigh&lt;/span&gt;(coords, k &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;4&lt;/span&gt;, longlat &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nb &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;knn2nb&lt;/span&gt;(knn)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;listw_knn &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;nb2listw&lt;/span&gt;(nb, style &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;W&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Compute spatial lag using the weights matrix&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;spatial_lag &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; spdep&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;lag.listw&lt;/span&gt;(listw_knn, precipitation_mrc_data&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;mean)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Add the spatial lag&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data_spatial &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; precipitation_mrc_data &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(spatial_lag &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; spatial_lag) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;lon, &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;lat)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;top6_entity&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;data_spatial &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;unique&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;top_n&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;6&lt;/span&gt;) 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data_spatial &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(shapeName &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; top6_entity&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;plot_time_series&lt;/span&gt;(date, mean,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     .facet_ncol &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     .smooth &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                     .interactive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h2 id=&#34;modeling&#34;&gt;Modeling
+  &lt;a href=&#34;#modeling&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Now that we have the spatial information, we can start training machine learning models to predict future emissions. We will use the &lt;code&gt;modeltime&lt;/code&gt; package to train and evaluate the models.&lt;/p&gt;
+
+
+
+
+&lt;h3 id=&#34;extend-nesting-and-splitting-data&#34;&gt;Extend, Nesting and Splitting Data
+  &lt;a href=&#34;#extend-nesting-and-splitting-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;First, we need to extend the time series data to include future observations for the next 20 years, then nest the data by the parent entity, and finally split the data into training and testing sets.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_data_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; data_spatial&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName)&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Extend&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extend_timeseries&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .id_var &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; shapeName,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .date_var &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; date,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .length_future &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;60&lt;/span&gt; &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#predict 5 years&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Nest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;nest_timeseries&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .id_var &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; shapeName,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .length_future &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;60&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#Split&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;split_nested_timeseries&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        .length_test &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;60&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;model-training&#34;&gt;Model Training
+  &lt;a href=&#34;#model-training&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Next, we will train machine learning models to predict future emissions. We will train three models -Random Forest, XGBoost, and ARIMA- and evaluate their performance using the root mean square error (RMSE) metric.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Recipe&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rec &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;recipe&lt;/span&gt;(mean &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt; ., &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_train_split&lt;/span&gt;(nested_data_tbl)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_timeseries_signature&lt;/span&gt;(date) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_rm&lt;/span&gt;(date) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_zv&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;all_predictors&lt;/span&gt;()) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;step_dummy&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;all_nominal_predictors&lt;/span&gt;(), one_hot &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Models &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wflw_rf &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;workflow&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_model&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;rand_forest&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;regression&amp;#34;&lt;/span&gt;, mtry&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;25&lt;/span&gt;, trees &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;1000&lt;/span&gt;, min_n&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;25&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;set_engine&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;randomForest&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;              &lt;span style=&#34;color:#06287e&#34;&gt;add_recipe&lt;/span&gt;(rec)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wflw_xgb &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;workflow&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_model&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;boost_tree&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;regression&amp;#34;&lt;/span&gt;, learn_rate &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0.5&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;set_engine&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;xgboost&amp;#34;&lt;/span&gt;))&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_recipe&lt;/span&gt;(rec)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wflw_mars &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;workflow&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_model&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;mars&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;regression&amp;#34;&lt;/span&gt;, num_terms &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;10&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;set_engine&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;earth&amp;#34;&lt;/span&gt;, endspan&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;200&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;add_recipe&lt;/span&gt;(rec)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Nested Modeling&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;parallel_start&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;6&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_modeltime_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; nested_data_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;modeltime_nested_fit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        model_list &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;list&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wflw_rf,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wflw_xgb,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            wflw_mars
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        control &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;control_nested_fit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            verbose   &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            allow_par &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;review-errors&#34;&gt;Review Errors
+  &lt;a href=&#34;#review-errors&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Before selecting the best model, we need to review any errors that occurred during the training process. We will also check the accuracy of the models and investigate any anomalies.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# #1) list errors&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;errors&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;nested_modeltime_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_error_report&lt;/span&gt;() &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#install all missing packages&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#2) Spot too high accuracy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_modeltime_tbl &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_test_accuracy&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;table_modeltime_accuracy&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#3) Investigate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_modeltime_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(shapeName &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Abitibi-Témiscamingue&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_train_split&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_modeltime_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_test_forecast&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(shapeName &lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Abitibi-Témiscamingue&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;plot_modeltime_forecast&lt;/span&gt;(.facet_ncol &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;3&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .interactive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;) 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h3 id=&#34;select-best-models&#34;&gt;Select Best Models
+  &lt;a href=&#34;#select-best-models&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Next, we will select the best models based on the root mean square error (RMSE) metric. We will visualize the best models to compare their performance and identify any anomalies.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; nested_modeltime_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;modeltime_nested_select_best&lt;/span&gt;(metric &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;rsq&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_tbl &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_test_forecast&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(shapeName &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; top6_entity&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;plot_modeltime_forecast&lt;/span&gt;(.facet_ncol &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .legend_show &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .interactive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h3 id=&#34;refit-models&#34;&gt;Refit Models
+  &lt;a href=&#34;#refit-models&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Finally, we will refit the best models on the entire dataset to make predictions for future emissions. We will also review any errors that occurred during the refitting process and visualize the future forecasts for the selected companies.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Refit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; nested_best_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;modeltime_nested_refit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        control &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;control_refit&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            verbose   &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            allow_par &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Error last check&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_error_report&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;# A tibble: 0 × 4
+# ℹ 4 variables: shapeName &amp;lt;chr&amp;gt;, .model_id &amp;lt;int&amp;gt;, .model_desc &amp;lt;chr&amp;gt;,
+#   .error_desc &amp;lt;chr&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Visualize Future Forecast &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_future_forecast&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(shapeName &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; top6_entity&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;plot_modeltime_forecast&lt;/span&gt;(.facet_ncol &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .legend_show &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            .interactive &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h3 id=&#34;save-preds&#34;&gt;Save Preds
+  &lt;a href=&#34;#save-preds&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;Finally, we will save the predictions for future emissions to a file for further analysis and visualization.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nested_best_refit_tbl &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;extract_nested_future_forecast&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#06287e&#34;&gt;write_rds&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Data/data_with_pred.rds&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;animated-visual&#34;&gt;Animated visual
+  &lt;a href=&#34;#animated-visual&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;We can create an animated visualization of the future emissions predictions to better understand the trends and anomalies in the data.&lt;/p&gt;
+
+
+
+
+&lt;h3 id=&#34;load-the-predicted-data&#34;&gt;Load the Predicted Data
+  &lt;a href=&#34;#load-the-predicted-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;library&lt;/span&gt;(ggthemes)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;library&lt;/span&gt;(gganimate)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# load the predicted data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_dt&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;readRDS&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Data/data_with_pred.rds&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;rename&lt;/span&gt;(date&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;.index, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         mean&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;.value) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(date&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;as.Date&lt;/span&gt;(date),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         year&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;year&lt;/span&gt;(date),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         month&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;month&lt;/span&gt;(date),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         month_name_abb &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;month&lt;/span&gt;(date, label &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(shapeName, date, mean, year, month, month_name_abb)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;estimating-anomalies&#34;&gt;Estimating Anomalies
+  &lt;a href=&#34;#estimating-anomalies&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# estimating anomalies&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ref &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; precipitation_dt &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName, month) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;summarise&lt;/span&gt;(ref &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;mean&lt;/span&gt;(mean))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;monthly_anomalies &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; precipitation_dt &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;left_join&lt;/span&gt;(ref, by &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;shapeName&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;month&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(anomalie &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; (mean &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;100&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;/&lt;/span&gt; ref) &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;100&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  sign &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;ifelse&lt;/span&gt;(anomalie &lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;pos&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;neg&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;factor&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;pos&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;neg&amp;#34;&lt;/span&gt;)),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  date&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;as.Date&lt;/span&gt;(date),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  month_name_abb &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;month&lt;/span&gt;(date, label &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;statistical-metrics&#34;&gt;Statistical Metrics
+  &lt;a href=&#34;#statistical-metrics&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data_norm &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(monthly_anomalies, month_name_abb) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#06287e&#34;&gt;summarise&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                  mx &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;max&lt;/span&gt;(anomalie),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                  min &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;min&lt;/span&gt;(anomalie),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                  q25 &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; stats&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;quantile&lt;/span&gt;(anomalie, &lt;span style=&#34;color:#40a070&#34;&gt;.25&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                  q75 &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; stats&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;quantile&lt;/span&gt;(anomalie, &lt;span style=&#34;color:#40a070&#34;&gt;.75&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                  iqr &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; q75 &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt; q25
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DT&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;datatable&lt;/span&gt;(data_norm) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  DT&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;formatRound&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;mx&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;min&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;q25&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;q75&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;iqr&amp;#34;&lt;/span&gt;), digits&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;datatables html-widget html-fill-item&#34; id=&#34;htmlwidget-e28134a0064ebe34e05a&#34; style=&#34;width:100%;height:auto;&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-e28134a0064ebe34e05a&#34;&gt;{&#34;x&#34;:{&#34;filter&#34;:&#34;none&#34;,&#34;vertical&#34;:false,&#34;data&#34;:[[&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;4&#34;,&#34;5&#34;,&#34;6&#34;,&#34;7&#34;,&#34;8&#34;,&#34;9&#34;,&#34;10&#34;,&#34;11&#34;,&#34;12&#34;],[&#34;Jan&#34;,&#34;Feb&#34;,&#34;Mar&#34;,&#34;Apr&#34;,&#34;May&#34;,&#34;Jun&#34;,&#34;Jul&#34;,&#34;Aug&#34;,&#34;Sep&#34;,&#34;Oct&#34;,&#34;Nov&#34;,&#34;Dec&#34;],[1.935951027601007,2.314933127441435,2.015677982321733,1.501609603484582,1.566526815286693,0.9565469016346526,0.9143693614659583,0.8779345476604306,0.9492889428496767,1.548441977321758,1.217108707049377,2.341365571777828],[-3.7376527466906,-3.121793923963352,-2.068808156667259,-1.457172630972465,-1.697452660540009,-0.9858905896576857,-0.8994214107670331,-0.8304236680279047,-1.023017264077055,-1.38005776178835,-1.483540680301715,-2.298547887550427],[-0.6878261489265149,-0.3241954572890862,-0.5224098300452766,-0.3477106812858857,-0.3829218309301439,-0.2617484028834554,-0.2752262244819619,-0.2704297741002328,-0.3320392769011633,-0.5210700110215072,-0.4435624469487891,-0.6670970446522162],[0.8593569580412996,0.5709910343208549,0.5118821026981699,0.3803797947384098,0.3984437312175579,0.2846591171818815,0.2915506658724887,0.2340116048643068,0.330077380172181,0.4084774206591426,0.5378935144745363,0.759233915241694],[1.547183106967815,0.895186491609941,1.034291932743447,0.7280904760242954,0.7813655621477018,0.5464075200653369,0.5667768903544506,0.5044413789645397,0.6621166570733443,0.9295474316806498,0.9814559614233254,1.42633095989391]],&#34;container&#34;:&#34;&lt;table class=\&#34;display\&#34;&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;\n      &lt;th&gt; &lt;\/th&gt;\n      &lt;th&gt;month_name_abb&lt;\/th&gt;\n      &lt;th&gt;mx&lt;\/th&gt;\n      &lt;th&gt;min&lt;\/th&gt;\n      &lt;th&gt;q25&lt;\/th&gt;\n      &lt;th&gt;q75&lt;\/th&gt;\n      &lt;th&gt;iqr&lt;\/th&gt;\n    &lt;\/tr&gt;\n  &lt;\/thead&gt;\n&lt;\/table&gt;&#34;,&#34;options&#34;:{&#34;columnDefs&#34;:[{&#34;targets&#34;:2,&#34;render&#34;:&#34;function(data, type, row, meta) {\n    return type !== &#39;display&#39; ? data : DTWidget.formatRound(data, 1, 3, \&#34;,\&#34;, \&#34;.\&#34;, null);\n  }&#34;},{&#34;targets&#34;:3,&#34;render&#34;:&#34;function(data, type, row, meta) {\n    return type !== &#39;display&#39; ? data : DTWidget.formatRound(data, 1, 3, \&#34;,\&#34;, \&#34;.\&#34;, null);\n  }&#34;},{&#34;targets&#34;:4,&#34;render&#34;:&#34;function(data, type, row, meta) {\n    return type !== &#39;display&#39; ? data : DTWidget.formatRound(data, 1, 3, \&#34;,\&#34;, \&#34;.\&#34;, null);\n  }&#34;},{&#34;targets&#34;:5,&#34;render&#34;:&#34;function(data, type, row, meta) {\n    return type !== &#39;display&#39; ? data : DTWidget.formatRound(data, 1, 3, \&#34;,\&#34;, \&#34;.\&#34;, null);\n  }&#34;},{&#34;targets&#34;:6,&#34;render&#34;:&#34;function(data, type, row, meta) {\n    return type !== &#39;display&#39; ? data : DTWidget.formatRound(data, 1, 3, \&#34;,\&#34;, \&#34;.\&#34;, null);\n  }&#34;},{&#34;className&#34;:&#34;dt-right&#34;,&#34;targets&#34;:[2,3,4,5,6]},{&#34;orderable&#34;:false,&#34;targets&#34;:0},{&#34;name&#34;:&#34; &#34;,&#34;targets&#34;:0},{&#34;name&#34;:&#34;month_name_abb&#34;,&#34;targets&#34;:1},{&#34;name&#34;:&#34;mx&#34;,&#34;targets&#34;:2},{&#34;name&#34;:&#34;min&#34;,&#34;targets&#34;:3},{&#34;name&#34;:&#34;q25&#34;,&#34;targets&#34;:4},{&#34;name&#34;:&#34;q75&#34;,&#34;targets&#34;:5},{&#34;name&#34;:&#34;iqr&#34;,&#34;targets&#34;:6}],&#34;order&#34;:[],&#34;autoWidth&#34;:false,&#34;orderClasses&#34;:false}},&#34;evals&#34;:[&#34;options.columnDefs.0.render&#34;,&#34;options.columnDefs.1.render&#34;,&#34;options.columnDefs.2.render&#34;,&#34;options.columnDefs.3.render&#34;,&#34;options.columnDefs.4.render&#34;],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;library&lt;/span&gt;(ggthemes)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;library&lt;/span&gt;(gganimate)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gg &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;ggplot&lt;/span&gt;(data_norm) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_crossbar&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;aes&lt;/span&gt;(x &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; month_name_abb, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    y &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    ymin &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; min, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    ymax &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; mx),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    fatten &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, fill &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;grey90&amp;#34;&lt;/span&gt;, colour &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;NA&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_crossbar&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;aes&lt;/span&gt;(x &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; month_name_abb, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    y &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    ymin &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; q25, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                    ymax &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; q75),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  fatten &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, fill &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;grey70&amp;#34;&lt;/span&gt;)  &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_crossbar&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  data &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(monthly_anomalies, shapeName&lt;span style=&#34;color:#666&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Chaudière-Appalaches&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;aes&lt;/span&gt;(x &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; month_name_abb, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      y &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ymin &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      ymax &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; anomalie, 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      group&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; year,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      fill &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; sign),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  fatten &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, width &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0.7&lt;/span&gt;, alpha &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;.7&lt;/span&gt;, colour &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;NA&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  show.legend &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;transition_time&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;as.integer&lt;/span&gt;(year)) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;ggtitle&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#39;Precipitation anomaly in Chaudière-Appalaches {frame_time}&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;shadow_mark&lt;/span&gt;(past&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_hline&lt;/span&gt;(yintercept &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;scale_fill_manual&lt;/span&gt;(values &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;#99000d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;#034e7b&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;scale_y_continuous&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Precipitation anomaly (%)&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    breaks &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;seq&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;-5&lt;/span&gt;, &lt;span style=&#34;color:#40a070&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;labs&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    x &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    caption &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Data: AgERA5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  ) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;theme_hc&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;num_years &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;max&lt;/span&gt;(monthly_anomalies&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;year) &lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;min&lt;/span&gt;(monthly_anomalies&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;year) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Save the animation as a GIF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;gganimate&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;animate&lt;/span&gt;(gg, duration &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;30&lt;/span&gt;, fps &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;4&lt;/span&gt;, width &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;500&lt;/span&gt;, height &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;300&lt;/span&gt;, renderer &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;gifski_renderer&lt;/span&gt;())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;anim_save&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;gif/output.gif&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Read and display the saved GIF animation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;animation &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; magick&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;image_read&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;gif/output.gif&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;print&lt;/span&gt;(animation, info &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;FALSE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion
+  &lt;a href=&#34;#conclusion&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;In this analysis, we explored machine learning approaches to predict future emissions in the St. Lawrence Lowlands. We trained three models -Random Forest, XGBoost, and ARIMA- and evaluated their performance using the root mean square error (RMSE) metric. The Random Forest model outperformed the other models, capturing complex climate patterns and providing accurate predictions for future emissions. This model can be used to guide climate analysis, agriculture, and water resource management in the region.&lt;/p&gt;
+&lt;!-- AWeber Web Form Generator 3.0.1 --&gt;
+&lt;style type=&#34;text/css&#34;&gt;
+#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
+#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
+#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
+#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
+#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url(&#34;https://awas.aweber-static.com/images/forms/journey/basic/background.png&#34;);background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
+#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
+#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
+#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
+#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
+#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
+#af-form-88198013 .buttonContainer{text-align:center;}
+#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
+#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
+#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
+#af-form-88198013.af-quirksMode{overflow-x:hidden;}
+#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
+#af-form-88198013{overflow:hidden;}
+#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
+#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
+#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
+#af-form-88198013 .buttonContainer input.submit {width:auto;}
+#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
+#af-form-88198013 div {margin:0;}
+#af-form-88198013 {display:block;}
+#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
+#af-form-88198013 p { color:inherit;}
+#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
+#af-form-88198013 .bodyText p {margin:1em 0;}
+#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
+#af-form-88198013 fieldset {border:0;}
+.af-clear{clear:both;}
+.af-form{box-sizing:border-box; margin:auto; text-align:left;}
+.af-element{padding-bottom:5px; padding-top:5px;}
+.af-form-wrapper{text-indent: 0;}
+.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
+.af-body input.submit{white-space: inherit;}
+.af-body input.text{width:100%; padding:2px!important;}
+.af-body .af-textWrap{text-align:left;}
+.af-element label{float:left; text-align:left;}
+.lbl-right .af-element label{text-align:right;}
+.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
+.af-body.af-standards input.submit{padding:4px 12px;}
+.af-body input.image{border:none!important;}
+.af-body input.text{float:none;}
+.af-element label{display:block; float:left;}
+.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
+body {
+}
+
+#af-form-88198013 .af-body .af-textWrap {
+  width: 100% !important;
+}
+
+#af-form-88198013 .af-body .af-element {
+  padding-top: 0px!important;
+  padding-bottom: 0.5rem!important;
+}
+#af-form-88198013 .af-body .af-element:first-child {
+  margin-top: 0 !important;
+}
+#af-form-88198013 .af-body input.text,
+#af-form-88198013 .af-body textarea {
+  box-sizing: border-box !important;
+  border-radius:2px;
+  margin-bottom: 0.75rem !important;
+  padding: 8px 12px !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+#af-form-88198013 .af-body select {
+  width: 100%;
+}
+#af-form-88198013 .choiceList-radio-stacked {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+#af-form-88198013 .af-element-radio {
+  margin: 0 !important;
+}
+#af-form-88198013 .af-element-radio input.radio {
+  display: inline;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label {
+  font-weight: 700 !important;
+}
+#af-form-88198013 .af-element-radio input.radio:focus ~ label {
+  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
+  background-color: #777777;
+  border-color: #d6dee3;
+}
+#af-form-88198013 .af-element-radio label.choice {
+  display: block !important;
+  font-weight: 300 !important;
+  margin: 0rem 0rem 0.5rem 1rem !important;
+  padding: 0.25rem 1rem !important;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-element-radio label.choice:before {
+  background-color: #FFF;
+  border: 1px solid #d6dee3;
+  border-radius: 50%;
+  content: &#39;&#39;;
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: -1.3rem;
+  position: absolute;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  width: 0.75rem;
+}
+#af-form-88198013 .af-selectWrap, 
+#af-form-88198013 .af-dateWrap {
+  width:100% !important;
+  margin: 0.5rem 0rem 0.5rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-selectWrap select {
+  padding: 0.5rem !important;
+  height: 2.5rem;
+}
+#af-form-88198013 .af-dateWrap select {
+  width: 32% !important;
+  height: 2.5rem;
+  padding: 0.5rem !important;
+  margin: 0rem 0rem 0.75rem 0rem !important;
+}
+#af-form-88198013 .af-checkWrap {
+  padding: 0.5rem 0.5rem 0.75rem !important;
+}
+#af-form-88198013 .buttonContainer {
+  box-sizing: border-box !important;
+}
+#af-form-88198013 .af-footer {
+  box-sizing: border-box !important;
+}
+
+#af-form-88198013 .af-footer p {
+  margin: 0 !important;
+}
+#af-form-88198013 input.submit,
+#af-form-88198013 #webFormSubmitButton {
+  border: none;
+  border-radius:2px;
+  font-weight: bold;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !Important;
+  padding: 0.75rem 2rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  }
+#af-form-88198013 input.submit:hover,
+#af-form-88198013 #webFormSubmitButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+#af-form-88198013 input.text:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.poweredBy a,
+.privacyPolicy p {
+  color: #333333 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0rem !important;
+}
+&lt;/style&gt;
+&lt;form method=&#34;post&#34; class=&#34;af-form-wrapper&#34; accept-charset=&#34;UTF-8&#34; action=&#34;https://www.aweber.com/scripts/addlead.pl&#34;&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_web_form_id&#34; value=&#34;88198013&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_split_id&#34; value=&#34;&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;listname&#34; value=&#34;awlist6634098&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;redirect&#34; value=&#34;https://www.aweber.com/thankyou-coi.htm?m=text&#34; id=&#34;redirect_54bc847594a3cbc94af88c076598c2e4&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_adtracking&#34; value=&#34;Sign_Up_Form&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_message&#34; value=&#34;1&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_required&#34; value=&#34;name,email&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_tooltip&#34; value=&#34;&#34; /&gt;
+&lt;h5&gt;
+&lt;br&gt;&lt;span style=&#34;font-size:36px;&#34;&gt;&lt;strong&gt;WANT MORE?&lt;/strong&gt;&lt;/span&gt;
+&lt;/h5&gt;
+&lt;p&gt;
+Sign up for exclusive content, emails &amp; things I doesn&#39;t share anywhere else.
+&lt;/p&gt;
+&lt;p&gt;&lt;label class=&#34;previewLabel&#34; for=&#34;awf_field-117870704&#34;&gt;Name:&lt;/label&gt;&lt;/p&gt;
+&lt;input id=&#34;awf_field-117870704&#34; type=&#34;text&#34; name=&#34;name&#34; class=&#34;text&#34; value=&#34;&#34; onfocus=&#34; if (this.value == &#39;&#39;) { this.value = &#39;&#39;; }&#34; onblur=&#34;if (this.value == &#39;&#39;) { this.value=&#39;&#39;;} &#34; tabindex=&#34;500&#34; /&gt;
+&lt;p&gt;&lt;label class=&#34;previewLabel&#34; for=&#34;awf_field-117870705&#34;&gt;Email:&lt;/label&gt;&lt;/p&gt;
+&lt;input class=&#34;text&#34; id=&#34;awf_field-117870705&#34; type=&#34;email&#34; name=&#34;email&#34; value=&#34;&#34; tabindex=&#34;501&#34; onfocus=&#34; if (this.value == &#39;&#39;) { this.value = &#39;&#39;; }&#34; onblur=&#34;if (this.value == &#39;&#39;) { this.value=&#39;&#39;;}&#34; /&gt;
+&lt;input name=&#34;submit&#34; class=&#34;submit&#34; type=&#34;submit&#34; value=&#34;Let&amp;#x27;s do it!&#34; tabindex=&#34;502&#34; /&gt;
+&lt;p&gt;
+We respect your &lt;a title=&#34;Privacy Policy&#34; href=&#34;https://www.aweber.com/permission.htm&#34; target=&#34;_blank&#34; rel=&#34;nofollow&#34;&gt;email privacy&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://www.aweber.com&#34; title=&#34;AWeber Email Marketing&#34; target=&#34;_blank&#34; rel=&#34;nofollow&#34;&gt;Powered by AWeber Email Marketing&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+ 
+&lt;/p&gt;
+&lt;img src=&#34;https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=&#34; alt=&#34;&#34; /&gt;
+&lt;/form&gt;
+&lt;!-- /AWeber Web Form Generator 3.0.1 --&gt;
+
+
+
+
+&lt;h2 id=&#34;session-info&#34;&gt;Session Info
+  &lt;a href=&#34;#session-info&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sessionInfo&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;R version 4.4.2 (2024-10-31)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Toronto
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices datasets  utils     methods   base     
+
+other attached packages:
+ [1] gganimate_1.0.9      ggthemes_5.1.0       jofou.lib_0.0.0.9000
+ [4] reticulate_1.40.0    tidytuesdayR_1.1.2   tictoc_1.2.1        
+ [7] terra_1.8-10         sf_1.0-19            pins_1.4.0          
+[10] modeltime_1.3.1      fs_1.6.5             timetk_2.9.0        
+[13] yardstick_1.3.2      workflowsets_1.1.0   workflows_1.1.4     
+[16] tune_1.2.1           rsample_1.2.1        parsnip_1.2.1       
+[19] modeldata_1.4.0      infer_1.0.7          dials_1.3.0         
+[22] scales_1.3.0         broom_1.0.7          tidymodels_1.2.0    
+[25] recipes_1.1.0        doFuture_1.0.1       future_1.34.0       
+[28] foreach_1.5.2        skimr_2.1.5          forcats_1.0.0       
+[31] stringr_1.5.1        dplyr_1.1.4          purrr_1.0.2         
+[34] readr_2.1.5          tidyr_1.3.1          tibble_3.2.1        
+[37] ggplot2_3.5.1        tidyverse_2.0.0      lubridate_1.9.4     
+[40] kableExtra_1.4.0     inspectdf_0.0.12.1   openxlsx_4.2.7.1    
+[43] knitr_1.49          
+
+loaded via a namespace (and not attached):
+  [1] wk_0.9.4             rstudioapi_0.17.1    jsonlite_1.8.9      
+  [4] magrittr_2.0.3       magick_2.8.5         farver_2.1.2        
+  [7] rmarkdown_2.29       vctrs_0.6.5          spdep_1.3-10        
+ [10] memoise_2.0.1        hoardr_0.5.5         base64enc_0.1-3     
+ [13] htmltools_0.5.8.1    progress_1.2.3       curl_6.1.0          
+ [16] xgboost_1.7.8.1      s2_1.1.7             sass_0.4.9          
+ [19] spData_2.3.4         parallelly_1.41.0    StanHeaders_2.32.10 
+ [22] bslib_0.8.0          KernSmooth_2.23-26   htmlwidgets_1.6.4   
+ [25] zoo_1.8-12           cachem_1.1.0         ggfittext_0.10.2    
+ [28] igraph_2.1.4         mime_0.12            lifecycle_1.0.4     
+ [31] iterators_1.0.14     pkgconfig_2.0.3      Matrix_1.7-2        
+ [34] R6_2.5.1             fastmap_1.2.0        digest_0.6.37       
+ [37] colorspace_2.1-1     furrr_0.3.1          crosstalk_1.2.1     
+ [40] labeling_0.4.3       urltools_1.7.3       timechange_0.3.0    
+ [43] compiler_4.4.2       proxy_0.4-27         doParallel_1.0.17   
+ [46] withr_3.0.2          backports_1.5.0      DBI_1.2.3           
+ [49] rgeoboundaries_1.3.1 MASS_7.3-64          lava_1.8.1          
+ [52] rappdirs_0.3.3       classInt_0.4-11      tools_4.4.2         
+ [55] units_0.8-5          zip_2.3.1            future.apply_1.11.3 
+ [58] nnet_7.3-20          glue_1.8.0           grid_4.4.2          
+ [61] generics_0.1.3       gtable_0.3.6         countrycode_1.6.0   
+ [64] tzdb_0.4.0           class_7.3-23         data.table_1.16.4   
+ [67] hms_1.1.3            sp_2.1-4             xml2_1.3.6          
+ [70] utf8_1.2.4           pillar_1.10.1        splines_4.4.2       
+ [73] lhs_1.2.0            tweenr_2.0.3         lattice_0.22-6      
+ [76] deldir_2.0-4         renv_1.0.7           survival_3.8-3      
+ [79] tidyselect_1.2.1     svglite_2.1.3        crul_1.5.0          
+ [82] xfun_0.50            hardhat_1.4.0        timeDate_4041.110   
+ [85] DT_0.33              stringi_1.8.4        boot_1.3-31         
+ [88] DiceDesign_1.10      yaml_2.3.10          evaluate_1.0.3      
+ [91] codetools_0.2-20     httpcode_0.3.0       cli_3.6.3           
+ [94] RcppParallel_5.1.10  rpart_4.1.24         systemfonts_1.2.1   
+ [97] jquerylib_0.1.4      repr_1.1.7           munsell_0.5.1       
+[100] Rcpp_1.0.14          globals_0.16.3       triebeard_0.4.1     
+[103] png_0.1-8            parallel_4.4.2       gower_1.0.2         
+[106] prettyunits_1.2.0    GPfit_1.0-8          listenv_0.9.1       
+[109] viridisLite_0.4.2    ipred_0.9-15         xts_0.14.1          
+[112] prodlim_2024.06.25   e1071_1.7-16         crayon_1.5.3        
+[115] rlang_1.1.5         
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+            <category>rstats</category>
+      
+            <category>tidymodels</category>
+      
+            <category>tidytuesday</category>
+      
+            <category>models</category>
+      
+            <category>viz</category>
+      
+      
+            <category>rstats</category>
+      
+            <category>tidymodels</category>
+      
+            <category>tidytuesday</category>
+      
+            <category>models</category>
+      
+            <category>viz</category>
+      
+    </item>
     
     <item>
       <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends &amp; Anomalies</title>

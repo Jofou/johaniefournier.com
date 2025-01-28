@@ -6,7 +6,16 @@
     <description>Recent content on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 27 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends Preduction</title>
+      <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/</link>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/</guid>
+      <description>In this phase of the analysis, we aim to model precipitation patterns in the St. Lawrence Lowlands using machine learning techniques, leveraging historical climate and environmental data. We will compare Random Forest, XGBoost, and Mars models to assess their ability to capture complex relationships and predict precipitation trends. Model performance will be evaluated using cross-validation and regression metrics to determine the most effective approach.</description>
+    </item>
+    
     <item>
       <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends &amp; Anomalies</title>
       <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/</link>
