@@ -116,6 +116,8 @@ We will extract precipitation data from the AgERA5 dataset using the KrigR packa
 
 ### Data preperation
 
+We will convert the raster data to a dataframe and extract the precipitation values for the region of interest.
+
 ``` r
 # Change layer names
 months_vector <- seq(
@@ -206,7 +208,7 @@ Precipitation has increased over time.
 
 ## Space trend
 
-Is there a general trend over space?
+Is there a general trend over space? Let's find out!
 
 ``` r
 precipitation_dt_site<-precipitation_dt  |> 

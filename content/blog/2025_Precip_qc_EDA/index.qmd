@@ -300,7 +300,7 @@ ggplot(data=precipitation_dt_site,
   ylab("Precipitation for 30 years (m) over Capitale-Nationale")
 ```
 
-The total precipitation for 30 years is different for each *shapeName*.
+The total precipitation for 30 years is different for each *shapeName*. 
 
 ## Spatio-temporal trend
 
@@ -322,13 +322,15 @@ precipitation_dt |>
     )
 ```
 
-The trend looks similar for all the *shapeName* but the values are different.
+The trend looks similar for all the *shapeName* but the values are different. 
 
 ## Anomalies and outliers
 
 Are there any anomalies or outliers in the precipitation data? Let's investigate!
 
 ### Time serie anomalies
+
+What are the yearly precipitation anomalies?
 
 ```{r}
 library(anomalize)

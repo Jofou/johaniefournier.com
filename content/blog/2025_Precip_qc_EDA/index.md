@@ -258,6 +258,8 @@ Are there any anomalies or outliers in the precipitation data? Let's investigate
 
 ### Time serie anomalies
 
+What are the yearly precipitation anomalies?
+
 ``` r
 library(anomalize)
 
