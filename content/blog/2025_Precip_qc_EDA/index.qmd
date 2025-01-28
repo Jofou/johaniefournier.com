@@ -330,7 +330,7 @@ Are there any anomalies or outliers in the precipitation data? Let's investigate
 
 ### Time serie anomalies
 
-What are the yearly precipitation anomalies?
+What are the yearly precipitation anomalies? 
 
 ```{r}
 library(anomalize)
@@ -349,7 +349,7 @@ precipitation_dt |>
 
 ### Weather anomalies
 
-What are monthly precipitation anomalies?
+What are monthly precipitation anomalies? 
 
 #### Reference group
 
@@ -368,6 +368,8 @@ monthly_anomalies <- precipitation_dt |>
 ```
 
 #### Statistical Metrics
+
+
 
 ```{r}
 data_norm <- group_by(monthly_anomalies, month_name_abb) |>
