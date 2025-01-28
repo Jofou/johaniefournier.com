@@ -46,7 +46,7 @@
   <meta itemprop="name" content="TyT2024W21 - ML:Carbon Majors Emissions Data">
 <meta itemprop="description" content="This week we&rsquo;re exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this second part, I&rsquo;m predicting carbon emission over space and time."><meta itemprop="datePublished" content="2024-10-25T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2024-10-25T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1712"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2024w21_ml/featured.png">
+<meta itemprop="wordCount" content="1714"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2024w21_ml/featured.png">
 <meta itemprop="keywords" content="rstats,tidymodels,tidytuesday,models," />
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
@@ -256,6 +256,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>data<span style="color:#666">.</span>head()
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Complete missing headquarters</span>
 </span></span><span style="display:flex;"><span>headquarters<span style="color:#666">&lt;-</span>py<span style="color:#666">$</span>data <span style="color:#666">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">as.data.frame</span>() <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(headquarters<span style="color:#666">=</span><span style="color:#06287e">case_when</span>(
 </span></span><span style="display:flex;"><span>    parent_entity<span style="color:#666">==</span><span style="color:#4070a0">&#34;Alpha Metallurgical Resources&#34;</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;Bristol, Tennessee, États-Unis&#34;</span>,
 </span></span><span style="display:flex;"><span>    parent_entity<span style="color:#666">==</span><span style="color:#4070a0">&#34;BHP&#34;</span> <span style="color:#666">~</span> <span style="color:#4070a0">&#34;Melbourne, Ausralie&#34;</span>,
@@ -653,7 +654,7 @@ loaded via a namespace (and not attached):
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">9 minute read, 1712 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1714 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

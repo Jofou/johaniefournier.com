@@ -202,10 +202,12 @@ data['headquarters'] = data['parent_entity'].apply(get_wikidata_headquarters)
 # Display the updated dataframe
 data.head()
 ```
+
 ```{r}
 #| eval: FALSE
 # Complete missing headquarters
 headquarters<-py$data |> 
+  as.data.frame() |>
   mutate(headquarters=case_when(
     parent_entity=="Alpha Metallurgical Resources" ~ "Bristol, Tennessee, États-Unis",
     parent_entity=="BHP" ~ "Melbourne, Ausralie",

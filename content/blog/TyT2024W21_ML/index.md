@@ -123,6 +123,7 @@ data.head()
 ``` r
 # Complete missing headquarters
 headquarters<-py$data |> 
+  as.data.frame() |>
   mutate(headquarters=case_when(
     parent_entity=="Alpha Metallurgical Resources" ~ "Bristol, Tennessee, États-Unis",
     parent_entity=="BHP" ~ "Melbourne, Ausralie",
