@@ -121,6 +121,7 @@ update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
 #NAD83:"EPSG3978"
 ```
 
+
 <a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
 </a>
 

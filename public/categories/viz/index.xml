@@ -11,7 +11,7 @@
     
     
     <item>
-      <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends Preduction</title>
+      <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends Prediction</title>
       <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/</link>
       <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
       
@@ -26,11 +26,11 @@
 &lt;script src=&#34;index_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js&#34;&gt;&lt;/script&gt;
 &lt;link href=&#34;index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
 &lt;script src=&#34;index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
-&lt;p&gt;Understanding precipitation patterns in the St. Lawrence Lowlands is essential for climate analysis, agriculture, and water resource management. In the previous blog post, we conducted an exploratory data analysis (EDA) to uncover key trends, spatial distributions, and relationships within the dataset. This provided valuable insights into precipitation variability and guided feature selection for modeling.&lt;/p&gt;
-&lt;p&gt;Building on that foundation, this post explores machine learning approaches to predict precipitation using historical climate data. We will evaluate three models &amp;mdash;Random Forest (RF), XGBoost, and and Mars- to determine their effectiveness in capturing complex climate patterns. Using cross-validation and standard regression metrics, we will compare model performance and identify the most suitable approach for precipitation prediction in this region.&lt;/p&gt;
 &lt;p&gt;&lt;a href = &#34;https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367&#34;&gt; &lt;img src=&#34;petit.png&#34; alt=&#34;&#34;&gt;
 &lt;/a&gt;&lt;/p&gt;
 &lt;br&gt;
+&lt;p&gt;Understanding precipitation patterns in the St. Lawrence Lowlands is essential for climate analysis, agriculture, and water resource management. In the previous blog post, we conducted an exploratory data analysis (EDA) to uncover key trends, spatial distributions, and relationships within the dataset. This provided valuable insights into precipitation variability and guided feature selection for modeling.&lt;/p&gt;
+&lt;p&gt;Building on that foundation, this post explores machine learning approaches to predict precipitation using historical climate data. We will evaluate three models &amp;mdash;Random Forest (RF), XGBoost, and and Mars- to determine their effectiveness in capturing complex climate patterns. Using cross-validation and standard regression metrics, we will compare model performance and identify the most suitable approach for precipitation prediction in this region.&lt;/p&gt;
 
 
 
