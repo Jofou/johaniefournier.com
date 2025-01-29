@@ -208,7 +208,7 @@ end_date <- "2023-12-31 24:00"
 
 precipitation_raw <- KrigR::CDownloadS(
     Type = "monthly_averaged_reanalysis",
-    Variable = "2m_temperature",
+    Variable = "total_precipitation",
     DataSet = "reanalysis-era5-land-monthly-means",
     DateStart = start_date,
     DateStop = end_date,
