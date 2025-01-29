@@ -6,7 +6,16 @@
     <description>Recent content in tidymodels on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 28 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>30 Years of Precipitation for Centre-du-Québec: Trends, Patterns &amp; Anomalies</title>
+      <link>https://johaniefournier.com/blog/cdq_precipitation_eda/</link>
+      <pubDate>Wed, 29 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/cdq_precipitation_eda/</guid>
+      <description>Understanding long-term precipitation patterns is crucial for climate research, agriculture, and water resource management. In this post, we analyze 30 years of high-resolution precipitation data from the AgERA5 dataset, focusing on a single administrative region in Quebec. Using exploratory data analysis (EDA) techniques, we uncover trends, seasonal variations, and anomalies to gain deeper insights into precipitation dynamics</description>
+    </item>
+    
     <item>
       <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends Prediction</title>
       <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/</link>

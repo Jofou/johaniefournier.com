@@ -5,10 +5,805 @@
     <description>Recent content in rstats on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 28 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jan 2025 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://johaniefournier.com/categories/rstats/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>30 Years of Precipitation for Centre-du-Québec: Trends, Patterns &amp; Anomalies</title>
+      <link>https://johaniefournier.com/blog/cdq_precipitation_eda/</link>
+      <pubDate>Wed, 29 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/cdq_precipitation_eda/</guid>
+      <description>&lt;p&gt;&lt;a href = &#34;https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367&#34;&gt; &lt;img src=&#34;petit.png&#34; alt=&#34;&#34;&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;br&gt;
+&lt;p&gt;Precipitation plays a crucial role in Quebec&amp;rsquo;s climate, influencing everything from agriculture to hydrology and urban planning. Understanding long-term rainfall patterns is essential for assessing climate variability, detecting anomalies, and making informed environmental decisions.&lt;/p&gt;
+&lt;p&gt;Building on my previous series exploring precipitation patterns across the St. Lawrence Lowlands, this post shifts focus to a much smaller scale, allowing for a more in-depth analysis. By examining 30 years of high-resolution precipitation data from the AgERA5 dataset for a single region &amp;mdash;Centre-du-Québec&amp;mdash; I aim to uncover localized trends, seasonal variations, and anomalies that might be overlooked in broader regional studies.&lt;/p&gt;
+&lt;p&gt;This detailed approach provides valuable insights into long-term precipitation dynamics, which are essential for climate research, agriculture, and water resource management.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;goal&#34;&gt;Goal
+  &lt;a href=&#34;#goal&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;In this study, I aim to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Explore Long-Term Trends&lt;/strong&gt; &amp;ndash; Identify how precipitation patterns have evolved over the past 30 years, detecting any significant increases, decreases, or shifts.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analyze Seasonal Variations&lt;/strong&gt; &amp;ndash; Examine how precipitation levels fluctuate throughout the year and determine whether seasonality has changed over time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Detect Anomalies &amp;amp; Extreme Events&lt;/strong&gt; &amp;ndash; Identify unusual precipitation events, such as extreme rainfall periods or prolonged dry spells, and assess their frequency and intensity.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+
+
+&lt;h2 id=&#34;get-the-data&#34;&gt;Get the data
+  &lt;a href=&#34;#get-the-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+
+
+
+
+&lt;h3 id=&#34;municipality-borders&#34;&gt;Municipality borders
+  &lt;a href=&#34;#municipality-borders&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;We need the polygon of the region of interest. We will use the &lt;code&gt;rgeoboundaries&lt;/code&gt; package to extract the polygon of Quebec.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qc_sf &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; rgeoboundaries&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;gb_adm2&lt;/span&gt;(country &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;CAN&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;filter&lt;/span&gt;(shapeName &lt;span style=&#34;color:#666&#34;&gt;%in%&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Centre-du-Québec&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(shapeName, geometry) 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;qc_sf &lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#geographic coordinate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Simple feature collection with 1 feature and 1 field
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -72.97097 ymin: 45.58932 xmax: -71.37237 ymax: 46.561
+Geodetic CRS:  WGS84
+         shapeName                       geometry
+1 Centre-du-Québec MULTIPOLYGON (((-72.03755 4...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;plot&lt;/span&gt;(qc_sf&lt;span style=&#34;color:#666&#34;&gt;$&lt;/span&gt;geometry)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png&#34; width=&#34;1260&#34; /&gt;
+
+
+
+
+&lt;h3 id=&#34;precipitation-data&#34;&gt;Precipitation data
+  &lt;a href=&#34;#precipitation-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;We will extract precipitation data from the AgERA5 dataset using the KrigR package. The AgERA5 dataset provides high-resolution climate data, including precipitation, temperature, and wind speed, for global climate research.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Load the KrigR package&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#api_user &amp;lt;- &amp;#34;*******************************&amp;#34; # PLEASE INSERT YOUR USER NUMBER&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#api_key &amp;lt;- &amp;#34;********************************&amp;#34; # PLEASE INSERT YOUR API TOKEN&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# List of available dataset&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;KrigR&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;Meta.List&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Dataset description&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;KrigR&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;Meta.QuickFacts&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;reanalysis-era5-land-monthly-means&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# List of available variables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;vars_df &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; KrigR&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;Meta.Variables&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;reanalysis-era5-land&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;#extract precipitation data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;start_date &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;1993-01-01 00:00&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;end_date &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;2023-12-31 24:00&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_raw &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; KrigR&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;CDownloadS&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Type &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;monthly_averaged_reanalysis&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Variable &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;total_precipitation&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DataSet &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;reanalysis-era5-land-monthly-means&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DateStart &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; start_date,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DateStop &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; end_date,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    TZone &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;CET&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    FUN &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;mean&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    TResolution &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;month&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    TStep &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Dir &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; Dir.Data,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    FileName &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;precipitation_raw&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Extent &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;as&lt;/span&gt;(qc_sf, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Spatial&amp;#34;&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    API_User &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_user,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    API_Key &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; api_key,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    closeConnections &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h3 id=&#34;data-preperation&#34;&gt;Data preperation
+  &lt;a href=&#34;#data-preperation&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;We will convert the raster data to a dataframe and extract the precipitation values for the region of interest.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Change layer names&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;months_vector &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;seq&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    from &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;as.Date&lt;/span&gt;(start_date),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    to &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;as.Date&lt;/span&gt;(end_date),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    by &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;month&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;names&lt;/span&gt;(precipitation_raw) &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; months_vector
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#60a0b0;font-style:italic&#34;&gt;# Raster to dataframe&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_sf &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; precipitation_raw &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;as.data.frame&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    precipitation_raw,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    xy &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;, na.rm &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    tidyr&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;pivot_longer&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#666&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(x, y),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        names_to &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;date&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        values_to &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    ) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(year&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;year&lt;/span&gt;(date), 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         month&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;month&lt;/span&gt;(date)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(x, y, date, year, month, value) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;st_as_sf&lt;/span&gt;(coords&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;x&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;st_set_crs&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;WGS84&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;st_intersection&lt;/span&gt;(qc_sf) 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; precipitation_dt&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;precipitation_sf &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;as_tibble&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;geometry) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName, date, year, month) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;summarise&lt;/span&gt;(mean&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;mean&lt;/span&gt;(value, na.rm&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;ungroup&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;h2 id=&#34;general-trend&#34;&gt;General trend
+  &lt;a href=&#34;#general-trend&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s start by exploring the precipitation data to understand its distribution and general trends.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;skimr&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;skim&lt;/span&gt;(precipitation_dt)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;&lt;/th&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Name&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;precipitation_dt&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Number of rows&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;372&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Number of columns&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;_______________________&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Column type frequency:&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;character&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;numeric&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;________________________&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;Group variables&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Data summary&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Variable type: character&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;skim_variable&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;n_missing&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;complete_rate&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;min&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;max&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;empty&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;n_unique&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;whitespace&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;shapeName&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;16&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;16&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;date&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;10&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;10&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;372&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Variable type: numeric&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;skim_variable&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;n_missing&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;complete_rate&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;mean&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;sd&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;p0&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;p25&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;p50&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;p75&lt;/th&gt;
+&lt;th style=&#34;text-align:right&#34;&gt;p100&lt;/th&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;hist&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;year&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;2008.0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;8.96&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1993&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;2000.00&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;2008.0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;2016.00&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;2023.00&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;▇▇▇▇▇&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;month&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;6.5&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;3.46&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;3.75&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;6.5&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;9.25&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;12.00&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;▇▅▅▅▇&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;mean&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0.0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0.00&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0.00&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0.0&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0.00&lt;/td&gt;
+&lt;td style=&#34;text-align:right&#34;&gt;0.01&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;▃▇▆▂▁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+
+
+&lt;h2 id=&#34;trend-over-time&#34;&gt;Trend over time
+  &lt;a href=&#34;#trend-over-time&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Is there a general trend over time? Let&amp;rsquo;s find out!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_dt_year&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;precipitation_dt &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(year) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;summarise&lt;/span&gt;(sum&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sum&lt;/span&gt;(mean)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;ungroup&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;ggplot&lt;/span&gt;(data&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;precipitation_dt_year, &lt;span style=&#34;color:#06287e&#34;&gt;aes&lt;/span&gt;(x&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;year, y&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;sum))&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_line&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png&#34; width=&#34;1260&#34; /&gt;
+&lt;p&gt;Precipitation has increased over time.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;space-trend&#34;&gt;Space trend
+  &lt;a href=&#34;#space-trend&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Is there a general trend over space? Let&amp;rsquo;s find out!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sum&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; terra&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;app&lt;/span&gt;(precipitation_raw, fun &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;sum&amp;#34;&lt;/span&gt;, na.rm &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;plot&lt;/span&gt;(sum)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png&#34; width=&#34;1260&#34; /&gt;
+&lt;p&gt;The total precipitation for 30 years is different for each location in the raster, with les precipitation in the western section.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;spatio-temporal-trend&#34;&gt;Spatio-temporal trend
+  &lt;a href=&#34;#spatio-temporal-trend&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Can we link the spatial trend to the temporal trend? Let&amp;rsquo;s find out!&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_sf &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(lon &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;st_coordinates&lt;/span&gt;(geometry)[,&lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         lat &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;st_coordinates&lt;/span&gt;(geometry)[,&lt;span style=&#34;color:#40a070&#34;&gt;2&lt;/span&gt;]) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(year, lon, lat) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;summarise&lt;/span&gt;(sum&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sum&lt;/span&gt;(value, na.rm&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020;font-weight:bold&#34;&gt;TRUE&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;10000&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;ungroup&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;ggplot&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;aes&lt;/span&gt;(x&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;lon, y&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;lat, fill&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;sum))&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_tile&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;facet_wrap&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt;year)&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;theme_map&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;scale_fill_viridis_c&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;labs&lt;/span&gt;(title&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Distribution of Precipitations for Centre-du-Québec&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       fill&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Total (mm)&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;theme&lt;/span&gt;(legend.position &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bottom&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        legend.justification &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;center&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        plot.title &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;element_text&lt;/span&gt;(hjust &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, face &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;, size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;15.5&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png&#34; width=&#34;1260&#34; /&gt;
+&lt;p&gt;This graph shows the spatial distribution of precipitation over time. The color intensity represents the amount of precipitation, with darker colors indicating higher values. This clearly indicates that precipitation levels vary across the region and the years.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;anomalies-and-outliers&#34;&gt;Anomalies and outliers
+  &lt;a href=&#34;#anomalies-and-outliers&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Are there any anomalies or outliers in the precipitation data? Let&amp;rsquo;s investigate!&lt;/p&gt;
+
+
+
+
+&lt;h3 id=&#34;time-serie-anomalies&#34;&gt;Time serie anomalies
+  &lt;a href=&#34;#time-serie-anomalies&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;What are the yearly precipitation anomalies?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;library&lt;/span&gt;(anomalize)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_dt &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName, year) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;summarize&lt;/span&gt;(value_year&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sum&lt;/span&gt;(mean)&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;1000&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(year_date&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;as.Date&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;as.character&lt;/span&gt;(year), &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;%Y&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(&lt;span style=&#34;color:#666&#34;&gt;-&lt;/span&gt;year) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;ungroup&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;time_decompose&lt;/span&gt;(value_year) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;anomalize&lt;/span&gt;(remainder) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;plot_anomalies&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;labs&lt;/span&gt;(title&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Anomalies of Precipitations (mm) for Centre-du-Québec&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;theme&lt;/span&gt;(plot.title &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;element_text&lt;/span&gt;(hjust &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, face &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;, size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;15.5&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png&#34; width=&#34;1260&#34; /&gt;
+&lt;p&gt;This graph shows the yearly precipitation anomalies in Centre-du-Québec over the past 30 years. The blue bars represent positive anomalies, while the red bars represent negative anomalies.&lt;/p&gt;
+
+
+
+
+&lt;h3 id=&#34;weather-anomalies&#34;&gt;Weather anomalies
+  &lt;a href=&#34;#weather-anomalies&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;What are monthly precipitation anomalies?&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;library&lt;/span&gt;(anomalize)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_dt &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(shapeName, date) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;summarize&lt;/span&gt;(value&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sum&lt;/span&gt;(mean)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(date&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;as.Date&lt;/span&gt;(date)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;ungroup&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;time_decompose&lt;/span&gt;(value) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;anomalize&lt;/span&gt;(remainder) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;plot_anomalies&lt;/span&gt;()&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;labs&lt;/span&gt;(title&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Anomalies of Precipitations (mm) for Centre-du-Québec&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;theme&lt;/span&gt;(plot.title &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;element_text&lt;/span&gt;(hjust &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, face &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;, size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;15.5&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png&#34; width=&#34;1260&#34; /&gt;
+&lt;p&gt;This graph does not show any monthly precipitation anomalies and does not show the seasonality of precipitation.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s se I we can do better.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;ggplot&lt;/span&gt;(precipitation_dt, &lt;span style=&#34;color:#06287e&#34;&gt;aes&lt;/span&gt;(x &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; month, y &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; mean&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;1000&lt;/span&gt;, group &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; month)) &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_boxplot&lt;/span&gt;(fill&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;#DBBDC3&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;geom_dotplot&lt;/span&gt;(binaxis &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;, stackdir &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;center&amp;#34;&lt;/span&gt;, dotsize &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0.5&lt;/span&gt;, alpha&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;0.3&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;labs&lt;/span&gt;(title&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Cummulative Monthly Precipitations (mm) for Centre-du-Québec 1993-2023&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       x&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Month&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       y&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;Precipitation (mm)&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;theme&lt;/span&gt;(plot.title &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;element_text&lt;/span&gt;(hjust &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, face &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;, size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;12&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        axis.title.x &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;element_text&lt;/span&gt;(hjust &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;0&lt;/span&gt;, face &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;, size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;8&lt;/span&gt;),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        axis.title.y &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;element_text&lt;/span&gt;(hjust &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;, face &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;, size&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;8&lt;/span&gt;))&lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;scale_x_continuous&lt;/span&gt;(breaks&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;seq&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#40a070&#34;&gt;12&lt;/span&gt;,&lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;), limits&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;0.5&lt;/span&gt;, &lt;span style=&#34;color:#40a070&#34;&gt;12.5&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png&#34; width=&#34;1260&#34; /&gt;
+&lt;p&gt;We can clearly see that the precipitation levels vary across the month of the year, with higher levels during summers months.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion
+  &lt;a href=&#34;#conclusion&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;In this post, we explored 30 years of high-resolution precipitation data for Centre-du-Québec, focusing on trends, patterns, and anomalies. Our analysis revealed several key insights:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;General Trend&lt;/strong&gt; &amp;ndash; Precipitation levels have not significantly increased over the past 30 years. But in 2021-2023, the precipitation decreased.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Spatial Variation&lt;/strong&gt; &amp;ndash; Precipitation levels vary across the region, with higher levels in the western section.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Spatio-Temporal Trend&lt;/strong&gt; &amp;ndash; The spatial distribution of precipitation varies over time, with different patterns emerging each year.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Anomalies &amp;amp; Outliers&lt;/strong&gt; &amp;ndash; We identified yearly and monthly precipitation anomalies, highlighting unusual weather events and extreme precipitation periods.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This detailed analysis provides valuable insights into long-term precipitation dynamics in Centre-du-Québec, offering essential information for climate research, agriculture, and water resource management.&lt;/p&gt;
+&lt;!-- AWeber Web Form Generator 3.0.1 --&gt;
+&lt;style type=&#34;text/css&#34;&gt;
+#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
+#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
+#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
+#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
+#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url(&#34;https://awas.aweber-static.com/images/forms/journey/basic/background.png&#34;);background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
+#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
+#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
+#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
+#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
+#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
+#af-form-88198013 .buttonContainer{text-align:center;}
+#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
+#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
+#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
+#af-form-88198013.af-quirksMode{overflow-x:hidden;}
+#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
+#af-form-88198013{overflow:hidden;}
+#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
+#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
+#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
+#af-form-88198013 .buttonContainer input.submit {width:auto;}
+#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
+#af-form-88198013 div {margin:0;}
+#af-form-88198013 {display:block;}
+#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
+#af-form-88198013 p { color:inherit;}
+#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
+#af-form-88198013 .bodyText p {margin:1em 0;}
+#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
+#af-form-88198013 fieldset {border:0;}
+.af-clear{clear:both;}
+.af-form{box-sizing:border-box; margin:auto; text-align:left;}
+.af-element{padding-bottom:5px; padding-top:5px;}
+.af-form-wrapper{text-indent: 0;}
+.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
+.af-body input.submit{white-space: inherit;}
+.af-body input.text{width:100%; padding:2px!important;}
+.af-body .af-textWrap{text-align:left;}
+.af-element label{float:left; text-align:left;}
+.lbl-right .af-element label{text-align:right;}
+.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
+.af-body.af-standards input.submit{padding:4px 12px;}
+.af-body input.image{border:none!important;}
+.af-body input.text{float:none;}
+.af-element label{display:block; float:left;}
+.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
+body {
+}
+
+#af-form-88198013 .af-body .af-textWrap {
+  width: 100% !important;
+}
+
+#af-form-88198013 .af-body .af-element {
+  padding-top: 0px!important;
+  padding-bottom: 0.5rem!important;
+}
+#af-form-88198013 .af-body .af-element:first-child {
+  margin-top: 0 !important;
+}
+#af-form-88198013 .af-body input.text,
+#af-form-88198013 .af-body textarea {
+  box-sizing: border-box !important;
+  border-radius:2px;
+  margin-bottom: 0.75rem !important;
+  padding: 8px 12px !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+#af-form-88198013 .af-body select {
+  width: 100%;
+}
+#af-form-88198013 .choiceList-radio-stacked {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+#af-form-88198013 .af-element-radio {
+  margin: 0 !important;
+}
+#af-form-88198013 .af-element-radio input.radio {
+  display: inline;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label {
+  font-weight: 700 !important;
+}
+#af-form-88198013 .af-element-radio input.radio:focus ~ label {
+  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
+  background-color: #777777;
+  border-color: #d6dee3;
+}
+#af-form-88198013 .af-element-radio label.choice {
+  display: block !important;
+  font-weight: 300 !important;
+  margin: 0rem 0rem 0.5rem 1rem !important;
+  padding: 0.25rem 1rem !important;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-element-radio label.choice:before {
+  background-color: #FFF;
+  border: 1px solid #d6dee3;
+  border-radius: 50%;
+  content: &#39;&#39;;
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: -1.3rem;
+  position: absolute;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  width: 0.75rem;
+}
+#af-form-88198013 .af-selectWrap, 
+#af-form-88198013 .af-dateWrap {
+  width:100% !important;
+  margin: 0.5rem 0rem 0.5rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-selectWrap select {
+  padding: 0.5rem !important;
+  height: 2.5rem;
+}
+#af-form-88198013 .af-dateWrap select {
+  width: 32% !important;
+  height: 2.5rem;
+  padding: 0.5rem !important;
+  margin: 0rem 0rem 0.75rem 0rem !important;
+}
+#af-form-88198013 .af-checkWrap {
+  padding: 0.5rem 0.5rem 0.75rem !important;
+}
+#af-form-88198013 .buttonContainer {
+  box-sizing: border-box !important;
+}
+#af-form-88198013 .af-footer {
+  box-sizing: border-box !important;
+}
+
+#af-form-88198013 .af-footer p {
+  margin: 0 !important;
+}
+#af-form-88198013 input.submit,
+#af-form-88198013 #webFormSubmitButton {
+  border: none;
+  border-radius:2px;
+  font-weight: bold;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !Important;
+  padding: 0.75rem 2rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  }
+#af-form-88198013 input.submit:hover,
+#af-form-88198013 #webFormSubmitButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+#af-form-88198013 input.text:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.poweredBy a,
+.privacyPolicy p {
+  color: #333333 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0rem !important;
+}
+&lt;/style&gt;
+&lt;form method=&#34;post&#34; class=&#34;af-form-wrapper&#34; accept-charset=&#34;UTF-8&#34; action=&#34;https://www.aweber.com/scripts/addlead.pl&#34;&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_web_form_id&#34; value=&#34;88198013&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_split_id&#34; value=&#34;&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;listname&#34; value=&#34;awlist6634098&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;redirect&#34; value=&#34;https://www.aweber.com/thankyou-coi.htm?m=text&#34; id=&#34;redirect_54bc847594a3cbc94af88c076598c2e4&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_adtracking&#34; value=&#34;Sign_Up_Form&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_message&#34; value=&#34;1&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_required&#34; value=&#34;name,email&#34; /&gt;
+&lt;input type=&#34;hidden&#34; name=&#34;meta_tooltip&#34; value=&#34;&#34; /&gt;
+&lt;h5&gt;
+&lt;br&gt;&lt;span style=&#34;font-size:36px;&#34;&gt;&lt;strong&gt;WANT MORE?&lt;/strong&gt;&lt;/span&gt;
+&lt;/h5&gt;
+&lt;p&gt;
+Sign up for exclusive content, emails &amp; things I doesn&#39;t share anywhere else.
+&lt;/p&gt;
+&lt;p&gt;&lt;label class=&#34;previewLabel&#34; for=&#34;awf_field-117870704&#34;&gt;Name:&lt;/label&gt;&lt;/p&gt;
+&lt;input id=&#34;awf_field-117870704&#34; type=&#34;text&#34; name=&#34;name&#34; class=&#34;text&#34; value=&#34;&#34; onfocus=&#34; if (this.value == &#39;&#39;) { this.value = &#39;&#39;; }&#34; onblur=&#34;if (this.value == &#39;&#39;) { this.value=&#39;&#39;;} &#34; tabindex=&#34;500&#34; /&gt;
+&lt;p&gt;&lt;label class=&#34;previewLabel&#34; for=&#34;awf_field-117870705&#34;&gt;Email:&lt;/label&gt;&lt;/p&gt;
+&lt;input class=&#34;text&#34; id=&#34;awf_field-117870705&#34; type=&#34;email&#34; name=&#34;email&#34; value=&#34;&#34; tabindex=&#34;501&#34; onfocus=&#34; if (this.value == &#39;&#39;) { this.value = &#39;&#39;; }&#34; onblur=&#34;if (this.value == &#39;&#39;) { this.value=&#39;&#39;;}&#34; /&gt;
+&lt;input name=&#34;submit&#34; class=&#34;submit&#34; type=&#34;submit&#34; value=&#34;Let&amp;#x27;s do it!&#34; tabindex=&#34;502&#34; /&gt;
+&lt;p&gt;
+We respect your &lt;a title=&#34;Privacy Policy&#34; href=&#34;https://www.aweber.com/permission.htm&#34; target=&#34;_blank&#34; rel=&#34;nofollow&#34;&gt;email privacy&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://www.aweber.com&#34; title=&#34;AWeber Email Marketing&#34; target=&#34;_blank&#34; rel=&#34;nofollow&#34;&gt;Powered by AWeber Email Marketing&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+ 
+&lt;/p&gt;
+&lt;img src=&#34;https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=&#34; alt=&#34;&#34; /&gt;
+&lt;/form&gt;
+&lt;!-- /AWeber Web Form Generator 3.0.1 --&gt;
+
+
+
+
+&lt;h2 id=&#34;session-info&#34;&gt;Session Info
+  &lt;a href=&#34;#session-info&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sessionInfo&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;R version 4.4.2 (2024-10-31)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Toronto
+tzcode source: internal
+
+attached base packages:
+[1] grid      stats     graphics  grDevices datasets  utils     methods  
+[8] base     
+
+other attached packages:
+ [1] anomalize_0.3.0      reticulate_1.40.0    jofou.lib_0.0.0.9000
+ [4] tidytuesdayR_1.1.2   tictoc_1.2.1         rgeoboundaries_1.3.1
+ [7] terra_1.8-10         sf_1.0-19            pins_1.4.0          
+[10] fs_1.6.5             timetk_2.9.0         yardstick_1.3.2     
+[13] workflowsets_1.1.0   workflows_1.1.4      tune_1.2.1          
+[16] rsample_1.2.1        parsnip_1.2.1        modeldata_1.4.0     
+[19] infer_1.0.7          dials_1.3.0          scales_1.3.0        
+[22] broom_1.0.7          tidymodels_1.2.0     recipes_1.1.0       
+[25] doFuture_1.0.1       future_1.34.0        foreach_1.5.2       
+[28] skimr_2.1.5          gganimate_1.0.9      forcats_1.0.0       
+[31] stringr_1.5.1        dplyr_1.1.4          purrr_1.0.2         
+[34] readr_2.1.5          tidyr_1.3.1          tibble_3.2.1        
+[37] ggplot2_3.5.1        tidyverse_2.0.0      lubridate_1.9.4     
+[40] kableExtra_1.4.0     inspectdf_0.0.12.1   openxlsx_4.2.7.1    
+[43] knitr_1.49          
+
+loaded via a namespace (and not attached):
+  [1] rstudioapi_0.17.1   jsonlite_1.8.9      wk_0.9.4           
+  [4] magrittr_2.0.3      magick_2.8.5        farver_2.1.2       
+  [7] rmarkdown_2.29      vctrs_0.6.5         memoise_2.0.1      
+ [10] hoardr_0.5.5        base64enc_0.1-3     htmltools_0.5.8.1  
+ [13] progress_1.2.3      curl_6.1.0          s2_1.1.7           
+ [16] TTR_0.24.4          parallelly_1.41.0   KernSmooth_2.23-26 
+ [19] zoo_1.8-12          cachem_1.1.0        ggfittext_0.10.2   
+ [22] lifecycle_1.0.4     iterators_1.0.14    pkgconfig_2.0.3    
+ [25] Matrix_1.7-2        R6_2.5.1            fastmap_1.2.0      
+ [28] digest_0.6.37       colorspace_2.1-1    furrr_0.3.1        
+ [31] labeling_0.4.3      timechange_0.3.0    compiler_4.4.2     
+ [34] proxy_0.4-27        withr_3.0.2         tseries_0.10-58    
+ [37] backports_1.5.0     DBI_1.2.3           MASS_7.3-64        
+ [40] lava_1.8.1          rappdirs_0.3.3      classInt_0.4-11    
+ [43] tibbletime_0.1.9    tools_4.4.2         units_0.8-5        
+ [46] lmtest_0.9-40       quantmod_0.4.26     zip_2.3.1          
+ [49] future.apply_1.11.3 nnet_7.3-20         quadprog_1.5-8     
+ [52] glue_1.8.0          nlme_3.1-166        generics_0.1.3     
+ [55] gtable_0.3.6        countrycode_1.6.0   tzdb_0.4.0         
+ [58] class_7.3-23        data.table_1.16.4   hms_1.1.3          
+ [61] xml2_1.3.6          pillar_1.10.1       splines_4.4.2      
+ [64] lhs_1.2.0           tweenr_2.0.3        lattice_0.22-6     
+ [67] renv_1.0.7          survival_3.8-3      tidyselect_1.2.1   
+ [70] urca_1.3-4          svglite_2.1.3       forecast_8.23.0    
+ [73] crul_1.5.0          xfun_0.50           hardhat_1.4.0      
+ [76] timeDate_4041.110   stringi_1.8.4       DiceDesign_1.10    
+ [79] yaml_2.3.10         evaluate_1.0.3      codetools_0.2-20   
+ [82] httpcode_0.3.0      cli_3.6.3           rpart_4.1.24       
+ [85] systemfonts_1.2.1   repr_1.1.7          munsell_0.5.1      
+ [88] Rcpp_1.0.14         globals_0.16.3      png_0.1-8          
+ [91] parallel_4.4.2      fracdiff_1.5-3      assertthat_0.2.1   
+ [94] gower_1.0.2         prettyunits_1.2.0   sweep_0.2.5        
+ [97] GPfit_1.0-8         listenv_0.9.1       viridisLite_0.4.2  
+[100] ipred_0.9-15        xts_0.14.1          prodlim_2024.06.25 
+[103] e1071_1.7-16        crayon_1.5.3        rlang_1.1.5        
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+            <category>eda</category>
+      
+            <category>rstats</category>
+      
+            <category>tidymodels</category>
+      
+            <category>tidytuesday</category>
+      
+            <category>viz</category>
+      
+      
+            <category>rstats</category>
+      
+            <category>tidymodels</category>
+      
+            <category>tidytuesday</category>
+      
+            <category>eda</category>
+      
+            <category>viz</category>
+      
+    </item>
     
     <item>
       <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends Prediction</title>
@@ -904,7 +1699,7 @@ First 10 features:
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;precipitation_raw &lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt; KrigR&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;CDownloadS&lt;/span&gt;(
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Type &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;monthly_averaged_reanalysis&amp;#34;&lt;/span&gt;,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Variable &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;2m_temperature&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Variable &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;total_precipitation&amp;#34;&lt;/span&gt;,
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DataSet &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;reanalysis-era5-land-monthly-means&amp;#34;&lt;/span&gt;,
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DateStart &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; start_date,
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    DateStop &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; end_date,
