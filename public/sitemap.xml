@@ -2,13 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://johaniefournier.com/blog/cdq_precipitation_eda/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://johaniefournier.com/blog/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/categories/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/blog/cdq_precipitation_ml/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/tag/models/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/categories/models/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/tag/rstats/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/categories/rstats/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/tags/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/tag/tidymodels/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/categories/tidymodels/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/tag/viz/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/categories/viz/</loc>
+    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/blog/cdq_precipitation_eda/</loc>
     <lastmod>2025-01-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/tag/eda/</loc>
@@ -17,41 +50,11 @@
     <loc>https://johaniefournier.com/categories/eda/</loc>
     <lastmod>2025-01-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://johaniefournier.com/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/tag/rstats/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/categories/rstats/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/tags/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/tag/tidymodels/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/categories/tidymodels/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://johaniefournier.com/tag/tidytuesday/</loc>
     <lastmod>2025-01-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/categories/tidytuesday/</loc>
     <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/tag/viz/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/categories/viz/</loc>
-    <lastmod>2025-01-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/tag/models/</loc>
-    <lastmod>2025-01-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/categories/models/</loc>
-    <lastmod>2025-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/</loc>
     <lastmod>2025-01-28T00:00:00+00:00</lastmod>

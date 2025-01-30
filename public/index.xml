@@ -6,7 +6,16 @@
     <description>Recent content on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 30 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>From Trends to Predictions: Machine Learning Forecasts for Centre-du-Québec’s Precipitation</title>
+      <link>https://johaniefournier.com/blog/cdq_precipitation_ml/</link>
+      <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/cdq_precipitation_ml/</guid>
+      <description>In this phase of the analysis, we aim to model precipitation patterns in Centre-du-Québec using machine learning techniques, leveraging historical climate and environmental data. We will train an XGBoost models and predict precipitation trends. Model performance will be evaluated using cross-validation and regression metrics to determine the most effective approach.</description>
+    </item>
+    
     <item>
       <title>30 Years of Precipitation for Centre-du-Québec: Trends, Patterns &amp; Anomalies</title>
       <link>https://johaniefournier.com/blog/cdq_precipitation_eda/</link>
