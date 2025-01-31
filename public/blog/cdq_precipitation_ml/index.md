@@ -134,7 +134,7 @@ spec <-boost_tree(mtry = tune(), min_n = tune(), trees = 1000) |>
   set_engine("xgboost")
 
 #Grid
-grid <- grid_latin_hypercube(
+grid <- grid_space_filling(
   min_n(),
   finalize(mtry(), data_train),
   size = 10
@@ -312,11 +312,8 @@ data_futur_with_pred<-data_futur |>
 ```
 
 ``` r
-precipitation_data_futur<-precipitation_data |> 
-  mutate(lon = st_coordinates(precipitation_data)[,1],
-         lat = st_coordinates(precipitation_data)[,2]) |>
-  as.data.frame() |> 
-  select(-geometry) |>
+precipitation_data_futur<-data |> 
+  select(year, value, lon, lat) |>
   bind_rows(data_futur_with_pred) |> 
   st_as_sf(coords = c("lon", "lat")) |>
   st_set_crs(4326)

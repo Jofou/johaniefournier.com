@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.98.0" />
+<title>Aminated Visualisation for Centre-du-Québec’s Precipitation | Johanie Fournier</title>
+
+
+<meta property="twitter:site" content="@fournierjohanie">
+<meta property="twitter:creator" content="@fournierjohanie">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Freelance Agronomist Doing Data Analysis">
+
+
+<meta property="og:site_name" content="Johanie Fournier">
+<meta property="og:title" content="Aminated Visualisation for Centre-du-Québec’s Precipitation | Johanie Fournier">
+<meta property="og:description" content="Freelance Agronomist Doing Data Analysis" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://johaniefournier.com/blog/cdq_precipitation_viz/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://johaniefournier.com/blog/cdq_precipitation_viz/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://johaniefournier.com/blog/cdq_precipitation_viz/featured.png" >
+    
+    
+  <meta itemprop="name" content="Aminated Visualisation for Centre-du-Québec’s Precipitation">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2025-01-31T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2025-01-31T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1505"><meta itemprop="image" content="https://johaniefournier.com/blog/cdq_precipitation_viz/featured.png">
+<meta itemprop="keywords" content="rstats,tidymodels,viz," />
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
+<script>
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-K3765H3YGW', { 'anonymize_ip': true });
+}
+</script>
+
+  
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K3765H3YGW', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.934ab0c39d760cb2a3d6c2d9f252dada805049003f570a926d19dea3b61aacfc.css" integrity="sha256-k0qww512DLKj1sLZ8lLa2oBQSQA/VwqSbRneo7YarPw=" media="screen">
+  
+  
+  <script src="/panelset.min.8f4cba0107356728f266d94a12a4d18ef504eda8a9a284cda73675bae7884a68.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.5c2a34ae6659865a008a6856c3d0035205be131e5a950ccb863e57f6a76d4b1c.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://johaniefournier.com/" title="Home">
+      <img src="/img/icon.png" class="dib db-l h2 w-auto" alt="Johanie Fournier">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/eda/" title="eda">eda</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/viz/" title="viz">viz</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/models/" title="models">models</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Aminated Visualisation for Centre-du-Québec’s Precipitation</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr., M.Sc. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidymodels">tidymodels</a>  <a href="https://johaniefournier.com/categories/viz">viz</a> </p>
+        <p class="f7 db mv0 ttu">January 31, 2025</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p><a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> <img src="petit.png" alt="">
+</a></p>
+<br>
+<p>Understanding precipitation patterns is essential for climate analysis, agriculture, and water resource management. In previous blog posts, we conducted an exploratory data analysis (EDA) to uncover key trends, spatial distributions, and relationships within the dataset. Then build an XGBoost model to predict precipitation using historical climate data. In this post, we will create an animated visualization of future precipitation predictions to better understand the trends and anomalies in the data.</p>
+
+
+
+
+<h1 id="get-the-data">Get the Data
+  <a href="#get-the-data"></a>
+</h1>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Create raster from predicted data</span>
+</span></span><span style="display:flex;"><span>year<span style="color:#666">=</span><span style="color:#40a070">1993</span><span style="color:#666">:</span><span style="color:#40a070">2023</span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">for </span>(y in year){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data<span style="color:#666">&lt;-</span><span style="color:#06287e">readRDS</span>(<span style="color:#4070a0">&#34;Data/data_spatial.rds&#34;</span>) <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(year <span style="color:#666">%in%</span> y) <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>year) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>raster<span style="color:#666">&lt;-</span>data<span style="color:#666">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  terra<span style="color:#666">::</span><span style="color:#06287e">vect</span>() <span style="color:#666">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  terra<span style="color:#666">::</span><span style="color:#06287e">rast</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>terra<span style="color:#666">::</span><span style="color:#06287e">values</span>(raster) <span style="color:#666">&lt;-</span> data<span style="color:#666">$</span>value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">writeRaster</span>(raster, <span style="color:#06287e">paste0</span>(<span style="color:#4070a0">&#34;Data/precipitation_&#34;</span>,y,<span style="color:#4070a0">&#34;.tif&#34;</span>), overwrite<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Create a raster stack</span>
+</span></span><span style="display:flex;"><span>rastlist <span style="color:#666">&lt;-</span> <span style="color:#06287e">list.files</span>(path <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Data/&#34;</span>, pattern<span style="color:#666">=</span><span style="color:#4070a0">&#39;.tif&#39;</span>, 
+</span></span><span style="display:flex;"><span>all.files<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">TRUE</span>, full.names<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>allrasters <span style="color:#666">&lt;-</span> <span style="color:#06287e">rast</span>(rastlist) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#Changes name</span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">names</span>(allrasters)<span style="color:#666">&lt;-</span><span style="color:#06287e">as.character</span>(year)
+</span></span></code></pre></div>
+
+
+
+<h1 id="disaggregate-the-data">Disaggregate the data
+  <a href="#disaggregate-the-data"></a>
+</h1>
+<p>To augment the resolution of the data, we will disaggregate the data to a daily level. This will allow us to better understand the trends and patterns in the data.</p>
+
+
+
+
+<h3 id="extraction-the-covariate">Extraction the covariate
+  <a href="#extraction-the-covariate"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(KrigR)
+</span></span><span style="display:flex;"><span>CDQ_rast <span style="color:#666">&lt;-</span> terra<span style="color:#666">::</span><span style="color:#06287e">rast</span>(<span style="color:#4070a0">&#34;Data/precipitation_raster.tif&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Covsls <span style="color:#666">&lt;-</span> <span style="color:#06287e">CovariateSetup</span>(
+</span></span><span style="display:flex;"><span>  Training <span style="color:#666">=</span> CDQ_rast,
+</span></span><span style="display:flex;"><span>  Target <span style="color:#666">=</span> <span style="color:#40a070">.009</span>,
+</span></span><span style="display:flex;"><span>  Dir <span style="color:#666">=</span> Dir.Covariates,
+</span></span><span style="display:flex;"><span>  Keep_Global <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div>
+
+
+
+<h2 id="krigging">Krigging
+  <a href="#krigging"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>QuickStart_Krig <span style="color:#666">&lt;-</span> <span style="color:#06287e">Kriging</span>(
+</span></span><span style="display:flex;"><span>  Data <span style="color:#666">=</span> CDQ_rast, <span style="color:#60a0b0;font-style:italic"># data we want to krig as a raster object</span>
+</span></span><span style="display:flex;"><span>  Covariates_training <span style="color:#666">=</span> Covs_ls[[1]], <span style="color:#60a0b0;font-style:italic"># training covariate as a raster object</span>
+</span></span><span style="display:flex;"><span>  Covariates_target <span style="color:#666">=</span> Covs_ls[[2]], <span style="color:#60a0b0;font-style:italic"># target covariate as a raster object</span>
+</span></span><span style="display:flex;"><span>  Equation <span style="color:#666">=</span> <span style="color:#4070a0">&#34;GMTED2010&#34;</span>, <span style="color:#60a0b0;font-style:italic"># the covariate(s) we want to use</span>
+</span></span><span style="display:flex;"><span>  nmax <span style="color:#666">=</span> <span style="color:#40a070">40</span>, <span style="color:#60a0b0;font-style:italic"># degree of localisation</span>
+</span></span><span style="display:flex;"><span>  Cores <span style="color:#666">=</span> <span style="color:#40a070">3</span>, <span style="color:#60a0b0;font-style:italic"># we want to krig using three cores to speed this process up</span>
+</span></span><span style="display:flex;"><span>  FileName <span style="color:#666">=</span> <span style="color:#4070a0">&#34;QuickStart_Krig&#34;</span>, <span style="color:#60a0b0;font-style:italic"># the file name for our full kriging output</span>
+</span></span><span style="display:flex;"><span>  Dir <span style="color:#666">=</span> Dir.Exports <span style="color:#60a0b0;font-style:italic"># which directory to save our final input in</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>precipitation_krigged <span style="color:#666">&lt;-</span> terra<span style="color:#666">::</span><span style="color:#06287e">rast</span>(<span style="color:#4070a0">&#34;Exports/QuickStart_Krig_Kriged.nc&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>qc_sf <span style="color:#666">&lt;-</span> rgeoboundaries<span style="color:#666">::</span><span style="color:#06287e">gb_adm2</span>(country <span style="color:#666">=</span> <span style="color:#4070a0">&#34;CAN&#34;</span>) <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(shapeName <span style="color:#666">%in%</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;Centre-du-Québec&#34;</span>)) <span style="color:#666">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(shapeName, geometry) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>precip_predicted <span style="color:#666">&lt;-</span> precipitation_krigged <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>    terra<span style="color:#666">::</span><span style="color:#06287e">crop</span>(
+</span></span><span style="display:flex;"><span>        qc_sf,
+</span></span><span style="display:flex;"><span>        snap <span style="color:#666">=</span> <span style="color:#4070a0">&#34;in&#34;</span>,
+</span></span><span style="display:flex;"><span>        mask <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>    ) <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>    terra<span style="color:#666">::</span><span style="color:#06287e">project</span>(<span style="color:#4070a0">&#34;EPSG:3978&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>terra<span style="color:#666">::</span><span style="color:#06287e">plot</span>(precip_predicted[[1]])
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="1260" />
+
+
+
+
+<h1 id="animated-map">Animated Map
+  <a href="#animated-map"></a>
+</h1>
+
+
+
+
+<h2 id="prepare-the-data">Prepare the data
+  <a href="#prepare-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#Change layer name</span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">names</span>(precip_predicted)<span style="color:#666">&lt;-</span><span style="color:#06287e">as.character</span>(year)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># convert into a data frame</span>
+</span></span><span style="display:flex;"><span>precip_predicted_df <span style="color:#666">&lt;-</span> <span style="color:#06287e">as.data.frame</span>(
+</span></span><span style="display:flex;"><span>    precip_predicted,
+</span></span><span style="display:flex;"><span>    xy <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>, na.rm <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>precip_predicted_long <span style="color:#666">&lt;-</span> precip_predicted_df <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>    tidyr<span style="color:#666">::</span><span style="color:#06287e">pivot_longer</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#666">!</span><span style="color:#06287e">c</span>(x, y),
+</span></span><span style="display:flex;"><span>        names_to <span style="color:#666">=</span> <span style="color:#4070a0">&#34;year&#34;</span>,
+</span></span><span style="display:flex;"><span>        values_to <span style="color:#666">=</span> <span style="color:#4070a0">&#34;value&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># year ton integer and m to mm</span>
+</span></span><span style="display:flex;"><span>precip_predicted_long<span style="color:#666">&lt;-</span>precip_predicted_long <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(year<span style="color:#666">=</span><span style="color:#06287e">as.integer</span>(year),
+</span></span><span style="display:flex;"><span>         precip<span style="color:#666">=</span>value<span style="color:#666">*</span><span style="color:#40a070">1000</span>) <span style="color:#666">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>value)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># create breaks</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vmin <span style="color:#666">&lt;-</span> <span style="color:#06287e">min</span>(precip_predicted_long<span style="color:#666">$</span>precip)
+</span></span><span style="display:flex;"><span>vmax <span style="color:#666">&lt;-</span> <span style="color:#06287e">max</span>(precip_predicted_long<span style="color:#666">$</span>precip)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>breaks <span style="color:#666">&lt;-</span> classInt<span style="color:#666">::</span><span style="color:#06287e">classIntervals</span>(
+</span></span><span style="display:flex;"><span>    precip_predicted_long<span style="color:#666">$</span>precip,
+</span></span><span style="display:flex;"><span>    n <span style="color:#666">=</span> <span style="color:#40a070">14</span>,
+</span></span><span style="display:flex;"><span>    style <span style="color:#666">=</span> <span style="color:#4070a0">&#34;equal&#34;</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#666">$</span>brks
+</span></span></code></pre></div>
+
+
+
+<h2 id="create-the-visual">Create the visual
+  <a href="#create-the-visual"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#color</span>
+</span></span><span style="display:flex;"><span>cols <span style="color:#666">&lt;-</span> <span style="color:#06287e">hcl.colors</span>(
+</span></span><span style="display:flex;"><span>    n <span style="color:#666">=</span> <span style="color:#06287e">length</span>(breaks),
+</span></span><span style="display:flex;"><span>    palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Spectral&#34;</span>,
+</span></span><span style="display:flex;"><span>    rev <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#theme</span>
+</span></span><span style="display:flex;"><span>theme_for_the_win <span style="color:#666">&lt;-</span> <span style="color:#06287e">function</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">theme_void</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">theme</span>(
+</span></span><span style="display:flex;"><span>        legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>,
+</span></span><span style="display:flex;"><span>        legend.title <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(
+</span></span><span style="display:flex;"><span>            size <span style="color:#666">=</span> <span style="color:#40a070">50</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;grey10&#34;</span>
+</span></span><span style="display:flex;"><span>        ),
+</span></span><span style="display:flex;"><span>        legend.text <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(
+</span></span><span style="display:flex;"><span>            size <span style="color:#666">=</span> <span style="color:#40a070">30</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;grey10&#34;</span>
+</span></span><span style="display:flex;"><span>        ),
+</span></span><span style="display:flex;"><span>        plot.title <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(
+</span></span><span style="display:flex;"><span>            size <span style="color:#666">=</span> <span style="color:#40a070">60</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;grey10&#34;</span>,
+</span></span><span style="display:flex;"><span>            hjust <span style="color:#666">=</span> <span style="color:#40a070">.5</span>, vjust <span style="color:#666">=</span> <span style="color:#40a070">-1</span>
+</span></span><span style="display:flex;"><span>        ),
+</span></span><span style="display:flex;"><span>        plot.subtitle <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(
+</span></span><span style="display:flex;"><span>            size <span style="color:#666">=</span> <span style="color:#40a070">70</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#c43c4e&#34;</span>,
+</span></span><span style="display:flex;"><span>            hjust <span style="color:#666">=</span> <span style="color:#40a070">.5</span>, vjust <span style="color:#666">=</span> <span style="color:#40a070">-1</span>
+</span></span><span style="display:flex;"><span>        ), <span style="color:#60a0b0;font-style:italic"># plot.subtitle</span>
+</span></span><span style="display:flex;"><span>        plot.margin <span style="color:#666">=</span> <span style="color:#06287e">unit</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#06287e">c</span>(
+</span></span><span style="display:flex;"><span>                t <span style="color:#666">=</span> <span style="color:#40a070">0</span>, r <span style="color:#666">=</span> <span style="color:#40a070">0</span>,
+</span></span><span style="display:flex;"><span>                l <span style="color:#666">=</span> <span style="color:#40a070">0</span>, b <span style="color:#666">=</span> <span style="color:#40a070">0</span>
+</span></span><span style="display:flex;"><span>            ), <span style="color:#4070a0">&#34;lines&#34;</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    )    
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>temp_map <span style="color:#666">&lt;-</span> <span style="color:#06287e">ggplot</span>() <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">geom_raster</span>(
+</span></span><span style="display:flex;"><span>        data <span style="color:#666">=</span> precip_predicted_long,
+</span></span><span style="display:flex;"><span>        <span style="color:#06287e">aes</span>(
+</span></span><span style="display:flex;"><span>            x <span style="color:#666">=</span> x, y <span style="color:#666">=</span> y,
+</span></span><span style="display:flex;"><span>            fill <span style="color:#666">=</span> precip
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">scale_fill_gradientn</span>(
+</span></span><span style="display:flex;"><span>        name <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Precipitation (mm)&#34;</span>,
+</span></span><span style="display:flex;"><span>        colors <span style="color:#666">=</span> cols,
+</span></span><span style="display:flex;"><span>        limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(vmin, vmax),
+</span></span><span style="display:flex;"><span>        breaks <span style="color:#666">=</span> breaks,
+</span></span><span style="display:flex;"><span>        labels <span style="color:#666">=</span> <span style="color:#06287e">round</span>(
+</span></span><span style="display:flex;"><span>            breaks, <span style="color:#40a070">0</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">guides</span>(
+</span></span><span style="display:flex;"><span>        fill <span style="color:#666">=</span> <span style="color:#06287e">guide_colorbar</span>(
+</span></span><span style="display:flex;"><span>            direction <span style="color:#666">=</span> <span style="color:#4070a0">&#34;horizontal&#34;</span>,
+</span></span><span style="display:flex;"><span>            barheight <span style="color:#666">=</span> <span style="color:#06287e">unit</span>(
+</span></span><span style="display:flex;"><span>                <span style="color:#40a070">1</span>,
+</span></span><span style="display:flex;"><span>                units <span style="color:#666">=</span> <span style="color:#4070a0">&#34;cm&#34;</span>
+</span></span><span style="display:flex;"><span>            ),
+</span></span><span style="display:flex;"><span>            barwidth <span style="color:#666">=</span> <span style="color:#06287e">unit</span>(
+</span></span><span style="display:flex;"><span>                <span style="color:#40a070">50</span>,
+</span></span><span style="display:flex;"><span>                units <span style="color:#666">=</span> <span style="color:#4070a0">&#34;cm&#34;</span>
+</span></span><span style="display:flex;"><span>            ),
+</span></span><span style="display:flex;"><span>            title.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;top&#34;</span>,
+</span></span><span style="display:flex;"><span>            label.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;bottom&#34;</span>,
+</span></span><span style="display:flex;"><span>            title.hjust <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
+</span></span><span style="display:flex;"><span>            label.hjust <span style="color:#666">=</span> <span style="color:#40a070">.5</span>,
+</span></span><span style="display:flex;"><span>            nrow <span style="color:#666">=</span> <span style="color:#40a070">1</span>,
+</span></span><span style="display:flex;"><span>            byrow <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>    ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">coord_sf</span>(crs <span style="color:#666">=</span> <span style="color:#4070a0">&#34;EPSG:3978&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">labs</span>(
+</span></span><span style="display:flex;"><span>        title <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Centre-du-Québec (1993-2023)&#34;</span>,
+</span></span><span style="display:flex;"><span>        subtitle <span style="color:#666">=</span> <span style="color:#4070a0">&#34;{round(as.integer(frame_time), 0)}&#34;</span>
+</span></span><span style="display:flex;"><span>    ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06287e">theme_for_the_win</span>()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>timelapse_map <span style="color:#666">&lt;-</span> temp_map <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    gganimate<span style="color:#666">::</span><span style="color:#06287e">transition_time</span>(
+</span></span><span style="display:flex;"><span>        year
+</span></span><span style="display:flex;"><span>    ) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>    gganimate<span style="color:#666">::</span><span style="color:#06287e">ease_aes</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#4070a0">&#34;linear&#34;</span>,
+</span></span><span style="display:flex;"><span>        interval <span style="color:#666">=</span> <span style="color:#40a070">.1</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span></code></pre></div>
+
+
+
+<h2 id="animate">Animate
+  <a href="#animate"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>animated_map <span style="color:#666">&lt;-</span> gganimate<span style="color:#666">::</span><span style="color:#06287e">animate</span>(
+</span></span><span style="display:flex;"><span>    timelapse_map,
+</span></span><span style="display:flex;"><span>    nframes <span style="color:#666">=</span> <span style="color:#40a070">100</span>,
+</span></span><span style="display:flex;"><span>    duration <span style="color:#666">=</span> <span style="color:#40a070">20</span>,
+</span></span><span style="display:flex;"><span>    start_pause <span style="color:#666">=</span> <span style="color:#40a070">3</span>,
+</span></span><span style="display:flex;"><span>    end_pause <span style="color:#666">=</span> <span style="color:#40a070">30</span>,
+</span></span><span style="display:flex;"><span>    height <span style="color:#666">=</span> <span style="color:#40a070">1200</span>,
+</span></span><span style="display:flex;"><span>    width <span style="color:#666">=</span> <span style="color:#40a070">1200</span>,
+</span></span><span style="display:flex;"><span>    units <span style="color:#666">=</span> <span style="color:#4070a0">&#34;px&#34;</span>,
+</span></span><span style="display:flex;"><span>    renderer <span style="color:#666">=</span> gganimate<span style="color:#666">::</span><span style="color:#06287e">gifski_renderer</span>(
+</span></span><span style="display:flex;"><span>        loop <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gganimate<span style="color:#666">::</span><span style="color:#06287e">anim_save</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#4070a0">&#34;precip CDQ animated.gif&#34;</span>,
+</span></span><span style="display:flex;"><span>    animated_map
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Read and display the saved GIF animation</span>
+</span></span><span style="display:flex;"><span>animation <span style="color:#666">&lt;-</span> magick<span style="color:#666">::</span><span style="color:#06287e">image_read</span>(<span style="color:#4070a0">&#34;precip CDQ animated.gif&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#06287e">print</span>(animation, info <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>)
+</span></span></code></pre></div><p><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.gif" alt=""></p>
+
+
+
+
+<h1 id="conclusion">Conclusion
+  <a href="#conclusion"></a>
+</h1>
+<p>In this post, we created an animated visualization of future precipitation predictions for Centre-du-Québec. This visualization allows us to better understand the trends and anomalies in the data, which can help inform decision-making in agriculture, water resource management, and climate analysis. By disaggregating the data to a daily level and krigging the data, we were able to create a more detailed and accurate visualization of future precipitation patterns. This visualization can be used to identify areas of high and low precipitation, as well as trends over time. Overall, this animated visualization provides valuable insights into future precipitation patterns in Centre-du-Québec.</p>
+<!-- AWeber Web Form Generator 3.0.1 -->
+<style type="text/css">
+#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
+#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
+#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
+#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
+#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url("https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
+#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
+#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
+#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
+#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
+#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
+#af-form-88198013 .buttonContainer{text-align:center;}
+#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
+#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
+#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
+#af-form-88198013.af-quirksMode{overflow-x:hidden;}
+#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
+#af-form-88198013{overflow:hidden;}
+#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
+#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
+#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
+#af-form-88198013 .buttonContainer input.submit {width:auto;}
+#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
+#af-form-88198013 div {margin:0;}
+#af-form-88198013 {display:block;}
+#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
+#af-form-88198013 p { color:inherit;}
+#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
+#af-form-88198013 .bodyText p {margin:1em 0;}
+#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
+#af-form-88198013 fieldset {border:0;}
+.af-clear{clear:both;}
+.af-form{box-sizing:border-box; margin:auto; text-align:left;}
+.af-element{padding-bottom:5px; padding-top:5px;}
+.af-form-wrapper{text-indent: 0;}
+.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
+.af-body input.submit{white-space: inherit;}
+.af-body input.text{width:100%; padding:2px!important;}
+.af-body .af-textWrap{text-align:left;}
+.af-element label{float:left; text-align:left;}
+.lbl-right .af-element label{text-align:right;}
+.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
+.af-body.af-standards input.submit{padding:4px 12px;}
+.af-body input.image{border:none!important;}
+.af-body input.text{float:none;}
+.af-element label{display:block; float:left;}
+.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
+body {
+}
+
+#af-form-88198013 .af-body .af-textWrap {
+  width: 100% !important;
+}
+
+#af-form-88198013 .af-body .af-element {
+  padding-top: 0px!important;
+  padding-bottom: 0.5rem!important;
+}
+#af-form-88198013 .af-body .af-element:first-child {
+  margin-top: 0 !important;
+}
+#af-form-88198013 .af-body input.text,
+#af-form-88198013 .af-body textarea {
+  box-sizing: border-box !important;
+  border-radius:2px;
+  margin-bottom: 0.75rem !important;
+  padding: 8px 12px !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+#af-form-88198013 .af-body select {
+  width: 100%;
+}
+#af-form-88198013 .choiceList-radio-stacked {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+#af-form-88198013 .af-element-radio {
+  margin: 0 !important;
+}
+#af-form-88198013 .af-element-radio input.radio {
+  display: inline;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label {
+  font-weight: 700 !important;
+}
+#af-form-88198013 .af-element-radio input.radio:focus ~ label {
+  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
+  background-color: #777777;
+  border-color: #d6dee3;
+}
+#af-form-88198013 .af-element-radio label.choice {
+  display: block !important;
+  font-weight: 300 !important;
+  margin: 0rem 0rem 0.5rem 1rem !important;
+  padding: 0.25rem 1rem !important;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-element-radio label.choice:before {
+  background-color: #FFF;
+  border: 1px solid #d6dee3;
+  border-radius: 50%;
+  content: '';
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: -1.3rem;
+  position: absolute;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  width: 0.75rem;
+}
+#af-form-88198013 .af-selectWrap, 
+#af-form-88198013 .af-dateWrap {
+  width:100% !important;
+  margin: 0.5rem 0rem 0.5rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-selectWrap select {
+  padding: 0.5rem !important;
+  height: 2.5rem;
+}
+#af-form-88198013 .af-dateWrap select {
+  width: 32% !important;
+  height: 2.5rem;
+  padding: 0.5rem !important;
+  margin: 0rem 0rem 0.75rem 0rem !important;
+}
+#af-form-88198013 .af-checkWrap {
+  padding: 0.5rem 0.5rem 0.75rem !important;
+}
+#af-form-88198013 .buttonContainer {
+  box-sizing: border-box !important;
+}
+#af-form-88198013 .af-footer {
+  box-sizing: border-box !important;
+}
+
+#af-form-88198013 .af-footer p {
+  margin: 0 !important;
+}
+#af-form-88198013 input.submit,
+#af-form-88198013 #webFormSubmitButton {
+  border: none;
+  border-radius:2px;
+  font-weight: bold;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !Important;
+  padding: 0.75rem 2rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  }
+#af-form-88198013 input.submit:hover,
+#af-form-88198013 #webFormSubmitButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+#af-form-88198013 input.text:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.poweredBy a,
+.privacyPolicy p {
+  color: #333333 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0rem !important;
+}
+</style>
+<form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl">
+<input type="hidden" name="meta_web_form_id" value="88198013" />
+<input type="hidden" name="meta_split_id" value="" />
+<input type="hidden" name="listname" value="awlist6634098" />
+<input type="hidden" name="redirect" value="https://www.aweber.com/thankyou-coi.htm?m=text" id="redirect_54bc847594a3cbc94af88c076598c2e4" />
+<input type="hidden" name="meta_adtracking" value="Sign_Up_Form" />
+<input type="hidden" name="meta_message" value="1" />
+<input type="hidden" name="meta_required" value="name,email" />
+<input type="hidden" name="meta_tooltip" value="" />
+<h5>
+<br><span style="font-size:36px;"><strong>WANT MORE?</strong></span>
+</h5>
+<p>
+Sign up for exclusive content, emails & things I doesn't share anywhere else.
+</p>
+<p><label class="previewLabel" for="awf_field-117870704">Name:</label></p>
+<input id="awf_field-117870704" type="text" name="name" class="text" value="" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';} " tabindex="500" />
+<p><label class="previewLabel" for="awf_field-117870705">Email:</label></p>
+<input class="text" id="awf_field-117870705" type="email" name="email" value="" tabindex="501" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';}" />
+<input name="submit" class="submit" type="submit" value="Let&#x27;s do it!" tabindex="502" />
+<p>
+We respect your <a title="Privacy Policy" href="https://www.aweber.com/permission.htm" target="_blank" rel="nofollow">email privacy</a>
+</p>
+<p>
+<a href="https://www.aweber.com" title="AWeber Email Marketing" target="_blank" rel="nofollow">Powered by AWeber Email Marketing</a>
+</p>
+<p>
+ 
+</p>
+<img src="https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=" alt="" />
+</form>
+<!-- /AWeber Web Form Generator 3.0.1 -->
+
+
+
+
+<h2 id="session-info">Session Info
+  <a href="#session-info"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">sessionInfo</span>()
+</span></span></code></pre></div><pre><code>R version 4.4.2 (2024-10-31)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Toronto
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices datasets  utils     methods   base     
+
+other attached packages:
+ [1] jofou.lib_0.0.0.9000 reticulate_1.40.0    tidytuesdayR_1.1.2  
+ [4] tictoc_1.2.1         terra_1.8-10         sf_1.0-19           
+ [7] pins_1.4.0           modeltime_1.3.1      fs_1.6.5            
+[10] timetk_2.9.0         yardstick_1.3.2      workflowsets_1.1.0  
+[13] workflows_1.1.4      tune_1.2.1           rsample_1.2.1       
+[16] parsnip_1.2.1        modeldata_1.4.0      infer_1.0.7         
+[19] dials_1.3.0          scales_1.3.0         broom_1.0.7         
+[22] tidymodels_1.2.0     recipes_1.1.0        doFuture_1.0.1      
+[25] future_1.34.0        foreach_1.5.2        skimr_2.1.5         
+[28] forcats_1.0.0        stringr_1.5.1        dplyr_1.1.4         
+[31] purrr_1.0.2          readr_2.1.5          tidyr_1.3.1         
+[34] tibble_3.2.1         ggplot2_3.5.1        tidyverse_2.0.0     
+[37] lubridate_1.9.4      kableExtra_1.4.0     inspectdf_0.0.12.1  
+[40] openxlsx_4.2.7.1     knitr_1.49          
+
+loaded via a namespace (and not attached):
+ [1] DBI_1.2.3           rlang_1.1.5         magrittr_2.0.3     
+ [4] furrr_0.3.1         e1071_1.7-16        compiler_4.4.2     
+ [7] png_0.1-8           systemfonts_1.2.1   vctrs_0.6.5        
+[10] lhs_1.2.0           pkgconfig_2.0.3     crayon_1.5.3       
+[13] fastmap_1.2.0       magick_2.8.5        backports_1.5.0    
+[16] rmarkdown_2.29      prodlim_2024.06.25  ggfittext_0.10.2   
+[19] tzdb_0.4.0          xfun_0.50           jsonlite_1.8.9     
+[22] progress_1.2.3      parallel_4.4.2      prettyunits_1.2.0  
+[25] R6_2.5.1            StanHeaders_2.32.10 stringi_1.8.4      
+[28] parallelly_1.41.0   rpart_4.1.24        Rcpp_1.0.14        
+[31] iterators_1.0.14    future.apply_1.11.3 zoo_1.8-12         
+[34] base64enc_0.1-3     Matrix_1.7-2        splines_4.4.2      
+[37] nnet_7.3-20         timechange_0.3.0    tidyselect_1.2.1   
+[40] rstudioapi_0.17.1   yaml_2.3.10         timeDate_4041.110  
+[43] codetools_0.2-20    listenv_0.9.1       lattice_0.22-6     
+[46] withr_3.0.2         evaluate_1.0.3      survival_3.8-3     
+[49] units_0.8-5         proxy_0.4-27        RcppParallel_5.1.10
+[52] zip_2.3.1           xts_0.14.1          xml2_1.3.6         
+[55] pillar_1.10.1       KernSmooth_2.23-26  renv_1.0.7         
+[58] generics_0.1.3      hms_1.1.3           munsell_0.5.1      
+[61] globals_0.16.3      class_7.3-23        glue_1.8.0         
+[64] tools_4.4.2         data.table_1.16.4   gower_1.0.2        
+[67] grid_4.4.2          ipred_0.9-15        colorspace_2.1-1   
+[70] repr_1.1.7          cli_3.6.3           DiceDesign_1.10    
+[73] rappdirs_0.3.3      viridisLite_0.4.2   svglite_2.1.3      
+[76] lava_1.8.1          gtable_0.3.6        GPfit_1.0-8        
+[79] digest_0.6.37       classInt_0.4-11     htmltools_0.5.8.1  
+[82] lifecycle_1.0.4     hardhat_1.4.0       MASS_7.3-64        
+</code></pre>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">January 31, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">8 minute read, 1505 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidymodels">tidymodels</a>  <a href="https://johaniefournier.com/categories/viz">viz</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidymodels">tidymodels</a>  <a href="https://johaniefournier.com/tags/viz">viz</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/cdq_precipitation_ml/">From Trends to Predictions: Machine Learning Forecasts for Centre-du-Québec’s Precipitation</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/cdq_precipitation_eda/">30 Years of Precipitation for Centre-du-Québec: Trends, Patterns &amp; Anomalies</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/st_lawrence_lowlands_precipitation_ml/">St. Lawrence Lowlands Precipitation Data: 30-Year Trends Prediction</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://johaniefournier.com/blog/cdq_precipitation_ml/">From Trends to Predictions: Machine Learning Forecasts for Centre-du-Québec’s Precipitation &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+  
+  <script src="https://utteranc.es/client.js"
+          repo="jofou/johaniefournier.com"
+          issue-term="title"
+          theme="github-light"
+          label="comments :speech_balloon:"
+          crossorigin="anonymous"
+          async
+          type="text/javascript">
+  </script>
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Johanie Fournier
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="License">License</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#2D2D39"
+    },
+    "button": {
+      "background": "#14a7d0"
+    }
+  },
+  "theme": "edgeless",
+  "position": "bottom-right",
+  "content": {
+      "message": "This website uses cookies for Google Analytics so that I know how many people are reading the blog and which blogposts are the most popular. The website does not collect any personal data.",
+  "href": "https://www.cookiesandyou.com/"
+  }
+});
+</script>
+
+      </div>
+    </body>
+</html>

@@ -6,7 +6,16 @@
     <description>Recent content in rstats on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 30 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/rstats/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 31 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/rstats/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Aminated Visualisation for Centre-du-Québec’s Precipitation</title>
+      <link>https://johaniefournier.com/blog/cdq_precipitation_viz/</link>
+      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/cdq_precipitation_viz/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>From Trends to Predictions: Machine Learning Forecasts for Centre-du-Québec’s Precipitation</title>
       <link>https://johaniefournier.com/blog/cdq_precipitation_ml/</link>

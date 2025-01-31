@@ -6,20 +6,11 @@
     <description>Recent content in Tags on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 30 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>models</title>
-      <link>https://johaniefournier.com/tag/models/</link>
-      <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/tag/models/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Fri, 31 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>rstats</title>
       <link>https://johaniefournier.com/tag/rstats/</link>
-      <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/tag/rstats/</guid>
       <description></description>
@@ -28,7 +19,7 @@
     <item>
       <title>tidymodels</title>
       <link>https://johaniefournier.com/tag/tidymodels/</link>
-      <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/tag/tidymodels/</guid>
       <description></description>
@@ -37,9 +28,18 @@
     <item>
       <title>viz</title>
       <link>https://johaniefournier.com/tag/viz/</link>
-      <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/tag/viz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>models</title>
+      <link>https://johaniefournier.com/tag/models/</link>
+      <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/tag/models/</guid>
       <description></description>
     </item>
     
