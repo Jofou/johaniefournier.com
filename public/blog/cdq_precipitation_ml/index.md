@@ -134,7 +134,7 @@ spec <-boost_tree(mtry = tune(), min_n = tune(), trees = 1000) |>
   set_engine("xgboost")
 
 #Grid
-grid <- grid_space_filling(
+grid <- grid_latin_hypercube(
   min_n(),
   finalize(mtry(), data_train),
   size = 10
@@ -221,8 +221,8 @@ DT::datatable(rsq) |>
   DT::formatRound(c(".estimate"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-048352464cbf240a6d9e" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-048352464cbf240a6d9e">{"x":{"filter":"none","vertical":false,"data":[["1"],["rsq"],["standard"],[0.9856713133646924]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.metric<\/th>\n      <th>.estimator<\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".metric","targets":1},{"name":".estimator","targets":2},{"name":".estimate","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-02009635d4d5d916b6b2" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-02009635d4d5d916b6b2">{"x":{"filter":"none","vertical":false,"data":[["1"],["rsq"],["standard"],[0.9856713133646924]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.metric<\/th>\n      <th>.estimator<\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".metric","targets":1},{"name":".estimator","targets":2},{"name":".estimate","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 #### RMSE
 
@@ -234,8 +234,8 @@ DT::datatable(rmse)|>
   DT::formatRound(c(".estimate"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-614a5c3e28bfba2dc9a9" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-614a5c3e28bfba2dc9a9">{"x":{"filter":"none","vertical":false,"data":[["1"],[0.6850784245411075]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-2a10331000524c0610f5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2a10331000524c0610f5">{"x":{"filter":"none","vertical":false,"data":[["1"],[0.6850784245411075]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 #### MAPE
 
@@ -246,8 +246,8 @@ DT::datatable(mape)|>
   DT::formatRound(c(".estimate"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-4c7ecd12dd0351ee94be" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4c7ecd12dd0351ee94be">{"x":{"filter":"none","vertical":false,"data":[["1"],[1.667112015162908]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-2882509b125aabe23a8c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2882509b125aabe23a8c">{"x":{"filter":"none","vertical":false,"data":[["1"],[1.667112015162908]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 #### Visualize the Predictions
 
@@ -312,8 +312,11 @@ data_futur_with_pred<-data_futur |>
 ```
 
 ``` r
-precipitation_data_futur<-data |> 
-  select(year, value, lon, lat) |>
+precipitation_data_futur<-precipitation_data |> 
+  mutate(lon = st_coordinates(precipitation_data)[,1],
+         lat = st_coordinates(precipitation_data)[,2]) |>
+  as.data.frame() |> 
+  select(-geometry) |>
   bind_rows(data_futur_with_pred) |> 
   st_as_sf(coords = c("lon", "lat")) |>
   st_set_crs(4326)
@@ -592,35 +595,35 @@ sessionInfo()
     [40] openxlsx_4.2.7.1     knitr_1.49          
 
     loaded via a namespace (and not attached):
-     [1] rstudioapi_0.17.1   jsonlite_1.8.9      magrittr_2.0.3     
-     [4] farver_2.1.2        rmarkdown_2.29      vctrs_0.6.5        
-     [7] base64enc_0.1-3     htmltools_0.5.8.1   progress_1.2.3     
-    [10] sass_0.4.9          parallelly_1.41.0   StanHeaders_2.32.10
-    [13] KernSmooth_2.23-26  bslib_0.8.0         htmlwidgets_1.6.4  
-    [16] zoo_1.8-12          cachem_1.1.0        ggfittext_0.10.2   
-    [19] lifecycle_1.0.4     iterators_1.0.14    pkgconfig_2.0.3    
-    [22] Matrix_1.7-2        R6_2.5.1            fastmap_1.2.0      
-    [25] digest_0.6.37       colorspace_2.1-1    furrr_0.3.1        
-    [28] crosstalk_1.2.1     labeling_0.4.3      timechange_0.3.0   
-    [31] mgcv_1.9-1          compiler_4.4.2      proxy_0.4-27       
-    [34] withr_3.0.2         backports_1.5.0     DBI_1.2.3          
-    [37] MASS_7.3-64         lava_1.8.1          rappdirs_0.3.3     
-    [40] classInt_0.4-11     tools_4.4.2         units_0.8-5        
-    [43] zip_2.3.1           future.apply_1.11.3 nnet_7.3-20        
-    [46] glue_1.8.0          nlme_3.1-166        grid_4.4.2         
-    [49] generics_0.1.3      gtable_0.3.6        tzdb_0.4.0         
-    [52] class_7.3-23        data.table_1.16.4   hms_1.1.3          
-    [55] xml2_1.3.6          pillar_1.10.1       splines_4.4.2      
-    [58] lhs_1.2.0           lattice_0.22-6      renv_1.0.7         
-    [61] survival_3.8-3      tidyselect_1.2.1    svglite_2.1.3      
-    [64] xfun_0.50           hardhat_1.4.0       timeDate_4041.110  
-    [67] DT_0.33             stringi_1.8.4       DiceDesign_1.10    
-    [70] yaml_2.3.10         evaluate_1.0.3      codetools_0.2-20   
-    [73] cli_3.6.3           RcppParallel_5.1.10 rpart_4.1.24       
-    [76] systemfonts_1.2.1   repr_1.1.7          munsell_0.5.1      
-    [79] jquerylib_0.1.4     Rcpp_1.0.14         globals_0.16.3     
-    [82] png_0.1-8           parallel_4.4.2      gower_1.0.2        
-    [85] prettyunits_1.2.0   GPfit_1.0-8         listenv_0.9.1      
-    [88] viridisLite_0.4.2   ipred_0.9-15        xts_0.14.1         
-    [91] prodlim_2024.06.25  e1071_1.7-16        crayon_1.5.3       
-    [94] rlang_1.1.5        
+     [1] rstudioapi_0.17.1   jsonlite_1.8.9      wk_0.9.4           
+     [4] magrittr_2.0.3      farver_2.1.2        rmarkdown_2.29     
+     [7] vctrs_0.6.5         base64enc_0.1-3     htmltools_0.5.8.1  
+    [10] progress_1.2.3      s2_1.1.7            sass_0.4.9         
+    [13] parallelly_1.41.0   StanHeaders_2.32.10 KernSmooth_2.23-26 
+    [16] bslib_0.8.0         htmlwidgets_1.6.4   zoo_1.8-12         
+    [19] cachem_1.1.0        ggfittext_0.10.2    lifecycle_1.0.4    
+    [22] iterators_1.0.14    pkgconfig_2.0.3     Matrix_1.7-2       
+    [25] R6_2.5.1            fastmap_1.2.0       digest_0.6.37      
+    [28] colorspace_2.1-1    furrr_0.3.1         crosstalk_1.2.1    
+    [31] labeling_0.4.3      timechange_0.3.0    mgcv_1.9-1         
+    [34] compiler_4.4.2      proxy_0.4-27        withr_3.0.2        
+    [37] backports_1.5.0     DBI_1.2.3           MASS_7.3-64        
+    [40] lava_1.8.1          rappdirs_0.3.3      classInt_0.4-11    
+    [43] tools_4.4.2         units_0.8-5         zip_2.3.1          
+    [46] future.apply_1.11.3 nnet_7.3-20         glue_1.8.0         
+    [49] nlme_3.1-166        grid_4.4.2          generics_0.1.3     
+    [52] gtable_0.3.6        tzdb_0.4.0          class_7.3-23       
+    [55] data.table_1.16.4   hms_1.1.3           xml2_1.3.6         
+    [58] pillar_1.10.1       splines_4.4.2       lhs_1.2.0          
+    [61] lattice_0.22-6      renv_1.0.7          survival_3.8-3     
+    [64] tidyselect_1.2.1    svglite_2.1.3       xfun_0.50          
+    [67] hardhat_1.4.0       timeDate_4041.110   DT_0.33            
+    [70] stringi_1.8.4       DiceDesign_1.10     yaml_2.3.10        
+    [73] evaluate_1.0.3      codetools_0.2-20    cli_3.6.3          
+    [76] RcppParallel_5.1.10 rpart_4.1.24        systemfonts_1.2.1  
+    [79] repr_1.1.7          munsell_0.5.1       jquerylib_0.1.4    
+    [82] Rcpp_1.0.14         globals_0.16.3      png_0.1-8          
+    [85] parallel_4.4.2      gower_1.0.2         prettyunits_1.2.0  
+    [88] GPfit_1.0-8         listenv_0.9.1       viridisLite_0.4.2  
+    [91] ipred_0.9-15        xts_0.14.1          prodlim_2024.06.25 
+    [94] e1071_1.7-16        crayon_1.5.3        rlang_1.1.5        
