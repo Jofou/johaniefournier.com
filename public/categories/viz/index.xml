@@ -959,7 +959,19 @@ Geodetic CRS:  WGS 84
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;bind_rows&lt;/span&gt;(data_futur_with_pred) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;st_as_sf&lt;/span&gt;(coords &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#06287e&#34;&gt;c&lt;/span&gt;(&lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;lon&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#4070a0&#34;&gt;&amp;#34;lat&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;st_set_crs&lt;/span&gt;(&lt;span style=&#34;color:#40a070&#34;&gt;4326&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s take a look at the predicted precipitation values for 2024 to 2030.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;valid&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;-&lt;/span&gt;precipitation_data_futur &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;as.data.frame&lt;/span&gt;() &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;select&lt;/span&gt;(year, value) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;mutate&lt;/span&gt;(value&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;value&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#40a070&#34;&gt;1000&lt;/span&gt;) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;group_by&lt;/span&gt;(year) &lt;span style=&#34;color:#666&#34;&gt;|&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#06287e&#34;&gt;summarise&lt;/span&gt;(mean&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;round&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;mean&lt;/span&gt;(value), digits &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;), sd&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;round&lt;/span&gt;(&lt;span style=&#34;color:#06287e&#34;&gt;sd&lt;/span&gt;(value), digits &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#40a070&#34;&gt;1&lt;/span&gt;)) 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DT&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;datatable&lt;/span&gt;(valid) 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;datatables html-widget html-fill-item&#34; id=&#34;htmlwidget-048352464cbf240a6d9e&#34; style=&#34;width:100%;height:auto;&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-048352464cbf240a6d9e&#34;&gt;{&#34;x&#34;:{&#34;filter&#34;:&#34;none&#34;,&#34;vertical&#34;:false,&#34;data&#34;:[[&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;4&#34;,&#34;5&#34;,&#34;6&#34;,&#34;7&#34;,&#34;8&#34;,&#34;9&#34;,&#34;10&#34;,&#34;11&#34;,&#34;12&#34;,&#34;13&#34;,&#34;14&#34;,&#34;15&#34;,&#34;16&#34;,&#34;17&#34;,&#34;18&#34;,&#34;19&#34;,&#34;20&#34;,&#34;21&#34;,&#34;22&#34;,&#34;23&#34;,&#34;24&#34;,&#34;25&#34;,&#34;26&#34;,&#34;27&#34;,&#34;28&#34;,&#34;29&#34;,&#34;30&#34;,&#34;31&#34;,&#34;32&#34;,&#34;33&#34;,&#34;34&#34;,&#34;35&#34;,&#34;36&#34;,&#34;37&#34;,&#34;38&#34;],[1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[3.6,3.5,3.3,3.7,3.3,3.4,3.3,3.4,2.8,3.1,3.5,3,3.6,3.8,3.4,3.8,3.3,3.5,4.2,3.1,3.3,3.2,3.3,3.8,3.9,3.7,4,3.5,2.8,3.5,2,23.8,23.8,23.8,23.8,23.8,23.8,23.8],[0.9,1.7,1.2,1.4,0.9,1.2,1.4,1.1,1.1,1.1,1.4,1.2,1.4,1.2,0.9,1.3,1.1,1.4,1.7,1.2,1.2,0.8,1.2,1.3,1.1,1,1,1.3,1,1.5,0.9,0.8,0.8,0.8,0.8,0.8,0.8,0.8]],&#34;container&#34;:&#34;&lt;table class=\&#34;display\&#34;&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;\n      &lt;th&gt; &lt;\/th&gt;\n      &lt;th&gt;year&lt;\/th&gt;\n      &lt;th&gt;mean&lt;\/th&gt;\n      &lt;th&gt;sd&lt;\/th&gt;\n    &lt;\/tr&gt;\n  &lt;\/thead&gt;\n&lt;\/table&gt;&#34;,&#34;options&#34;:{&#34;columnDefs&#34;:[{&#34;className&#34;:&#34;dt-right&#34;,&#34;targets&#34;:[1,2,3]},{&#34;orderable&#34;:false,&#34;targets&#34;:0},{&#34;name&#34;:&#34; &#34;,&#34;targets&#34;:0},{&#34;name&#34;:&#34;year&#34;,&#34;targets&#34;:1},{&#34;name&#34;:&#34;mean&#34;,&#34;targets&#34;:2},{&#34;name&#34;:&#34;sd&#34;,&#34;targets&#34;:3}],&#34;order&#34;:[],&#34;autoWidth&#34;:false,&#34;orderClasses&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.&lt;/p&gt;
+
 
 
 
@@ -969,7 +981,7 @@ Geodetic CRS:  WGS 84
       &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
     &lt;/svg&gt;&lt;/a&gt;
 &lt;/h2&gt;
-&lt;p&gt;In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, capturing complex climate patterns and providing accurate predictions for future emissions. By evaluating the model&amp;rsquo;s performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.&lt;/p&gt;
+&lt;p&gt;In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, but can&amp;rsquo;t really capture complex climate patterns. By evaluating the model&amp;rsquo;s performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.&lt;/p&gt;
 &lt;!-- AWeber Web Form Generator 3.0.1 --&gt;
 &lt;style type=&#34;text/css&#34;&gt;
 #af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
@@ -1229,38 +1241,36 @@ other attached packages:
 [40] openxlsx_4.2.7.1     knitr_1.49          
 
 loaded via a namespace (and not attached):
- [1] rstudioapi_0.17.1   jsonlite_1.8.9      magrittr_2.0.3     
- [4] farver_2.1.2        rmarkdown_2.29      vctrs_0.6.5        
- [7] base64enc_0.1-3     htmltools_0.5.8.1   progress_1.2.3     
-[10] sass_0.4.9          parallelly_1.41.0   StanHeaders_2.32.10
-[13] KernSmooth_2.23-26  bslib_0.8.0         htmlwidgets_1.6.4  
-[16] zoo_1.8-12          cachem_1.1.0        ggfittext_0.10.2   
-[19] lifecycle_1.0.4     iterators_1.0.14    pkgconfig_2.0.3    
-[22] Matrix_1.7-2        R6_2.5.1            fastmap_1.2.0      
-[25] digest_0.6.37       colorspace_2.1-1    furrr_0.3.1        
-[28] crosstalk_1.2.1     labeling_0.4.3      timechange_0.3.0   
-[31] mgcv_1.9-1          compiler_4.4.2      proxy_0.4-27       
-[34] withr_3.0.2         backports_1.5.0     DBI_1.2.3          
-[37] MASS_7.3-64         lava_1.8.1          rappdirs_0.3.3     
-[40] classInt_0.4-11     tools_4.4.2         units_0.8-5        
-[43] zip_2.3.1           future.apply_1.11.3 nnet_7.3-20        
-[46] glue_1.8.0          nlme_3.1-166        grid_4.4.2         
-[49] generics_0.1.3      gtable_0.3.6        tzdb_0.4.0         
-[52] class_7.3-23        data.table_1.16.4   hms_1.1.3          
-[55] xml2_1.3.6          pillar_1.10.1       splines_4.4.2      
-[58] lhs_1.2.0           lattice_0.22-6      renv_1.0.7         
-[61] survival_3.8-3      tidyselect_1.2.1    svglite_2.1.3      
-[64] xfun_0.50           hardhat_1.4.0       timeDate_4041.110  
-[67] DT_0.33             stringi_1.8.4       DiceDesign_1.10    
-[70] yaml_2.3.10         evaluate_1.0.3      codetools_0.2-20   
-[73] cli_3.6.3           RcppParallel_5.1.10 rpart_4.1.24       
-[76] systemfonts_1.2.1   repr_1.1.7          munsell_0.5.1      
-[79] jquerylib_0.1.4     Rcpp_1.0.14         globals_0.16.3     
-[82] png_0.1-8           parallel_4.4.2      gower_1.0.2        
-[85] prettyunits_1.2.0   GPfit_1.0-8         listenv_0.9.1      
-[88] viridisLite_0.4.2   ipred_0.9-15        xts_0.14.1         
-[91] prodlim_2024.06.25  e1071_1.7-16        crayon_1.5.3       
-[94] rlang_1.1.5        
+ [1] DBI_1.2.3           rlang_1.1.5         magrittr_2.0.3     
+ [4] furrr_0.3.1         e1071_1.7-16        compiler_4.4.2     
+ [7] png_0.1-8           systemfonts_1.2.1   vctrs_0.6.5        
+[10] lhs_1.2.0           pkgconfig_2.0.3     crayon_1.5.3       
+[13] fastmap_1.2.0       backports_1.5.0     rmarkdown_2.29     
+[16] prodlim_2024.06.25  ggfittext_0.10.2    tzdb_0.4.0         
+[19] xfun_0.50           cachem_1.1.0        jsonlite_1.8.9     
+[22] progress_1.2.3      parallel_4.4.2      prettyunits_1.2.0  
+[25] R6_2.5.1            bslib_0.8.0         StanHeaders_2.32.10
+[28] stringi_1.8.4       parallelly_1.41.0   rpart_4.1.24       
+[31] jquerylib_0.1.4     Rcpp_1.0.14         iterators_1.0.14   
+[34] future.apply_1.11.3 zoo_1.8-12          base64enc_0.1-3    
+[37] Matrix_1.7-2        splines_4.4.2       nnet_7.3-20        
+[40] timechange_0.3.0    tidyselect_1.2.1    rstudioapi_0.17.1  
+[43] yaml_2.3.10         timeDate_4041.110   codetools_0.2-20   
+[46] listenv_0.9.1       lattice_0.22-6      withr_3.0.2        
+[49] evaluate_1.0.3      survival_3.8-3      units_0.8-5        
+[52] proxy_0.4-27        RcppParallel_5.1.10 zip_2.3.1          
+[55] xts_0.14.1          xml2_1.3.6          pillar_1.10.1      
+[58] KernSmooth_2.23-26  DT_0.33             renv_1.0.7         
+[61] generics_0.1.3      hms_1.1.3           munsell_0.5.1      
+[64] globals_0.16.3      class_7.3-23        glue_1.8.0         
+[67] tools_4.4.2         data.table_1.16.4   gower_1.0.2        
+[70] grid_4.4.2          crosstalk_1.2.1     ipred_0.9-15       
+[73] colorspace_2.1-1    repr_1.1.7          cli_3.6.3          
+[76] DiceDesign_1.10     rappdirs_0.3.3      viridisLite_0.4.2  
+[79] svglite_2.1.3       lava_1.8.1          gtable_0.3.6       
+[82] GPfit_1.0-8         sass_0.4.9          digest_0.6.37      
+[85] classInt_0.4-11     htmlwidgets_1.6.4   htmltools_0.5.8.1  
+[88] lifecycle_1.0.4     hardhat_1.4.0       MASS_7.3-64        
 &lt;/code&gt;&lt;/pre&gt;
 </description>
       

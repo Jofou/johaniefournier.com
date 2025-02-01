@@ -11,7 +11,7 @@ tags:
   - rstats
   - tidymodels
   - viz
-summary: " "
+summary: "Building upon previous analyses and predictive modeling, I details the process of creating this visualization, including data preparation, disaggregation to daily levels, and kriging for enhanced spatial resolution. The post culminates in an animated map that illustrates precipitation trends and anomalies over time, providing valuable insights for climate analysis, agriculture, and water resource management."
 editor_options: 
   chunk_output_type: inline
 ---

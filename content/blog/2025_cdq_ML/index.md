@@ -322,13 +322,14 @@ precipitation_data_futur<-data |>
 Let's take a look at the predicted precipitation values for 2024 to 2030.
 
 ``` r
-precipitation_data_futur |> 
+valid<-precipitation_data_futur |> 
   as.data.frame() |> 
   select(year, value) |>
   mutate(value=value*1000) |>
   group_by(year) |>
-  summarise(mean=round(mean(value), digits = 1), sd=round(sd(value), digits = 1)) |> 
-  DT::datatable()
+  summarise(mean=round(mean(value), digits = 1), sd=round(sd(value), digits = 1)) 
+
+DT::datatable(valid) 
 ```
 
 <div class="datatables html-widget html-fill-item" id="htmlwidget-048352464cbf240a6d9e" style="width:100%;height:auto;"></div>
@@ -338,7 +339,7 @@ So, we can clearly see here that even if this model seems to have a good perform
 
 ## Conclusion
 
-In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, capturing complex climate patterns and providing accurate predictions for future emissions. By evaluating the model's performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.
+In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, but can't really capture complex climate patterns. By evaluating the model's performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.
 
 <!-- AWeber Web Form Generator 3.0.1 -->
 <style type="text/css">
