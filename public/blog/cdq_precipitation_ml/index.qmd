@@ -434,14 +434,15 @@ precipitation_data_futur<-readRDS("Data/precipitation_data_futur.rds")
 
 
 ```{r}
-valid<-precipitation_data_futur |> 
+precipitation_data_futur |> 
   as.data.frame() |> 
   select(year, value) |>
   mutate(value=value*1000) |>
   group_by(year) |>
-  summarise(mean=round(mean(value), digits = 1), sd=round(sd(value), digits = 1)) 
-
-DT::datatable(valid) 
+  summarise(mean=mean(value), sd=sd(value)) |> 
+  filter(year>=2020) |> 
+  DT::datatable() |> 
+  DT::formatRound(c("mean", "sd"), digits=2)
 ```
 
 So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.

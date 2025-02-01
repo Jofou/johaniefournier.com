@@ -434,14 +434,14 @@ precipitation_data_futur<-readRDS("Data/precipitation_data_futur.rds")
 
 
 ```{r}
-valid<-precipitation_data_futur |> 
+precipitation_data_futur |> 
   as.data.frame() |> 
   select(year, value) |>
   mutate(value=value*1000) |>
   group_by(year) |>
-  summarise(mean=mean(value), sd=sd(value)) 
-
-DT::datatable(valid) |> 
+  summarise(mean=mean(value), sd=sd(value)) |> 
+  filter(year>=2020) |> 
+  DT::datatable() |> 
   DT::formatRound(c("mean", "sd"), digits=2)
 ```
 
