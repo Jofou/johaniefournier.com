@@ -319,9 +319,27 @@ precipitation_data_futur<-data |>
   st_set_crs(4326)
 ```
 
+Let's take a look at the predicted precipitation values for 2024 to 2030.
+
+``` r
+valid<-precipitation_data_futur |> 
+  as.data.frame() |> 
+  select(year, value) |>
+  mutate(value=value*1000) |>
+  group_by(year) |>
+  summarise(mean=round(mean(value), digits = 1), sd=round(sd(value), digits = 1)) 
+
+DT::datatable(valid) 
+```
+
+<div class="datatables html-widget html-fill-item" id="htmlwidget-02009635d4d5d916b6b2" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-02009635d4d5d916b6b2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38"],[1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[43.3,41.8,39.4,44.7,39.6,40.6,39.9,40.9,33.3,37.5,42,35.9,43.7,46.1,40.8,45.6,39.9,41.8,50.2,37.6,40,38.5,39.7,45.3,46.4,44.2,47.5,41.8,33,41.8,23.8,24,24,24,24,24,24,24],[2.4,1.9,2.1,2,2.2,2.7,2.8,2.1,2.2,2.6,1.8,2.7,2.1,2,3.1,2,2,2.2,2.8,2,3.2,2.2,3.2,2.3,2.2,2.3,2.8,1.7,2.4,2.7,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+
+So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.
+
 ## Conclusion
 
-In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, capturing complex climate patterns and providing accurate predictions for future emissions. By evaluating the model's performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.
+In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, but can't really capture complex climate patterns. By evaluating the model's performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.
 
 <!-- AWeber Web Form Generator 3.0.1 -->
 <style type="text/css">
@@ -592,35 +610,33 @@ sessionInfo()
     [40] openxlsx_4.2.7.1     knitr_1.49          
 
     loaded via a namespace (and not attached):
-     [1] rstudioapi_0.17.1   jsonlite_1.8.9      wk_0.9.4           
-     [4] magrittr_2.0.3      farver_2.1.2        rmarkdown_2.29     
-     [7] vctrs_0.6.5         base64enc_0.1-3     htmltools_0.5.8.1  
-    [10] progress_1.2.3      s2_1.1.7            sass_0.4.9         
-    [13] parallelly_1.41.0   StanHeaders_2.32.10 KernSmooth_2.23-26 
-    [16] bslib_0.8.0         htmlwidgets_1.6.4   zoo_1.8-12         
-    [19] cachem_1.1.0        ggfittext_0.10.2    lifecycle_1.0.4    
-    [22] iterators_1.0.14    pkgconfig_2.0.3     Matrix_1.7-2       
-    [25] R6_2.5.1            fastmap_1.2.0       digest_0.6.37      
-    [28] colorspace_2.1-1    furrr_0.3.1         crosstalk_1.2.1    
-    [31] labeling_0.4.3      timechange_0.3.0    mgcv_1.9-1         
-    [34] compiler_4.4.2      proxy_0.4-27        withr_3.0.2        
-    [37] backports_1.5.0     DBI_1.2.3           MASS_7.3-64        
-    [40] lava_1.8.1          rappdirs_0.3.3      classInt_0.4-11    
-    [43] tools_4.4.2         units_0.8-5         zip_2.3.1          
-    [46] future.apply_1.11.3 nnet_7.3-20         glue_1.8.0         
-    [49] nlme_3.1-166        grid_4.4.2          generics_0.1.3     
-    [52] gtable_0.3.6        tzdb_0.4.0          class_7.3-23       
-    [55] data.table_1.16.4   hms_1.1.3           xml2_1.3.6         
-    [58] pillar_1.10.1       splines_4.4.2       lhs_1.2.0          
-    [61] lattice_0.22-6      renv_1.0.7          survival_3.8-3     
-    [64] tidyselect_1.2.1    svglite_2.1.3       xfun_0.50          
-    [67] hardhat_1.4.0       timeDate_4041.110   DT_0.33            
-    [70] stringi_1.8.4       DiceDesign_1.10     yaml_2.3.10        
-    [73] evaluate_1.0.3      codetools_0.2-20    cli_3.6.3          
-    [76] RcppParallel_5.1.10 rpart_4.1.24        systemfonts_1.2.1  
-    [79] repr_1.1.7          munsell_0.5.1       jquerylib_0.1.4    
-    [82] Rcpp_1.0.14         globals_0.16.3      png_0.1-8          
-    [85] parallel_4.4.2      gower_1.0.2         prettyunits_1.2.0  
-    [88] GPfit_1.0-8         listenv_0.9.1       viridisLite_0.4.2  
-    [91] ipred_0.9-15        xts_0.14.1          prodlim_2024.06.25 
-    [94] e1071_1.7-16        crayon_1.5.3        rlang_1.1.5        
+     [1] DBI_1.2.3           rlang_1.1.5         magrittr_2.0.3     
+     [4] furrr_0.3.1         e1071_1.7-16        compiler_4.4.2     
+     [7] png_0.1-8           systemfonts_1.2.1   vctrs_0.6.5        
+    [10] lhs_1.2.0           pkgconfig_2.0.3     crayon_1.5.3       
+    [13] fastmap_1.2.0       backports_1.5.0     rmarkdown_2.29     
+    [16] prodlim_2024.06.25  ggfittext_0.10.2    tzdb_0.4.0         
+    [19] xfun_0.50           cachem_1.1.0        jsonlite_1.8.9     
+    [22] progress_1.2.3      parallel_4.4.2      prettyunits_1.2.0  
+    [25] R6_2.5.1            bslib_0.8.0         StanHeaders_2.32.10
+    [28] stringi_1.8.4       parallelly_1.41.0   rpart_4.1.24       
+    [31] jquerylib_0.1.4     Rcpp_1.0.14         iterators_1.0.14   
+    [34] future.apply_1.11.3 zoo_1.8-12          base64enc_0.1-3    
+    [37] Matrix_1.7-2        splines_4.4.2       nnet_7.3-20        
+    [40] timechange_0.3.0    tidyselect_1.2.1    rstudioapi_0.17.1  
+    [43] yaml_2.3.10         timeDate_4041.110   codetools_0.2-20   
+    [46] listenv_0.9.1       lattice_0.22-6      withr_3.0.2        
+    [49] evaluate_1.0.3      survival_3.8-3      units_0.8-5        
+    [52] proxy_0.4-27        RcppParallel_5.1.10 zip_2.3.1          
+    [55] xts_0.14.1          xml2_1.3.6          pillar_1.10.1      
+    [58] KernSmooth_2.23-26  DT_0.33             renv_1.0.7         
+    [61] generics_0.1.3      hms_1.1.3           munsell_0.5.1      
+    [64] globals_0.16.3      class_7.3-23        glue_1.8.0         
+    [67] tools_4.4.2         data.table_1.16.4   gower_1.0.2        
+    [70] grid_4.4.2          crosstalk_1.2.1     ipred_0.9-15       
+    [73] colorspace_2.1-1    repr_1.1.7          cli_3.6.3          
+    [76] DiceDesign_1.10     rappdirs_0.3.3      viridisLite_0.4.2  
+    [79] svglite_2.1.3       lava_1.8.1          gtable_0.3.6       
+    [82] GPfit_1.0-8         sass_0.4.9          digest_0.6.37      
+    [85] classInt_0.4-11     htmlwidgets_1.6.4   htmltools_0.5.8.1  
+    [88] lifecycle_1.0.4     hardhat_1.4.0       MASS_7.3-64        
