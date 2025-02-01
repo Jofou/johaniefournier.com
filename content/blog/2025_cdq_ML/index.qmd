@@ -425,6 +425,27 @@ precipitation_data_futur<-data |>
   st_set_crs(4326)
 ```
 
+Let's take a look at the predicted precipitation values for 2024 to 2030.
+
+```{r}
+#| echo: FALSE
+
+precipitation_data_futur<-readRDS("Data/precipitation_data_futur.rds")
+```
+
+
+```{r}
+precipitation_data_futur |> 
+  as.data.frame() |> 
+  select(year, value) |>
+  mutate(value=value*1000) |>
+  group_by(year) |>
+  summarise(mean=round(mean(value), digits = 1), sd=round(sd(value), digits = 1)) |> 
+  DT::datatable()
+```
+
+So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.
+
 ```{r}
 #| eval: FALSE
 #| echo: FALSE
