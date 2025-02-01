@@ -46,7 +46,7 @@
   <meta itemprop="name" content="From Trends to Predictions: Machine Learning Forecasts for Centre-du-Québec’s Precipitation">
 <meta itemprop="description" content="In this phase of the analysis, we aim to model precipitation patterns in Centre-du-Québec using machine learning techniques, leveraging historical climate and environmental data. We will train an XGBoost models and predict precipitation trends. Model performance will be evaluated using cross-validation and regression metrics to determine the most effective approach."><meta itemprop="datePublished" content="2025-01-30T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2025-01-30T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1813"><meta itemprop="image" content="https://johaniefournier.com/blog/cdq_precipitation_ml/featured.png">
+<meta itemprop="wordCount" content="1820"><meta itemprop="image" content="https://johaniefournier.com/blog/cdq_precipitation_ml/featured.png">
 <meta itemprop="keywords" content="rstats,tidymodels,models,viz," />
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
@@ -383,8 +383,8 @@ Geodetic CRS:  WGS 84
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">rsq</span>(truth<span style="color:#666">=</span>value, estimate<span style="color:#666">=</span>.pred)
 </span></span><span style="display:flex;"><span>DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>(rsq) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">formatRound</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;.estimate&#34;</span>), digits<span style="color:#666">=</span><span style="color:#40a070">2</span>)
-</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-048352464cbf240a6d9e" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-048352464cbf240a6d9e">{"x":{"filter":"none","vertical":false,"data":[["1"],["rsq"],["standard"],[0.9856713133646924]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.metric<\/th>\n      <th>.estimator<\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".metric","targets":1},{"name":".estimator","targets":2},{"name":".estimate","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-ef5dc2b9a32fefcbfa5f" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ef5dc2b9a32fefcbfa5f">{"x":{"filter":"none","vertical":false,"data":[["1"],["rsq"],["standard"],[0.9856713133646924]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.metric<\/th>\n      <th>.estimator<\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".metric","targets":1},{"name":".estimator","targets":2},{"name":".estimate","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 
 
@@ -397,8 +397,8 @@ Geodetic CRS:  WGS 84
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">rename</span>(.estimate<span style="color:#666">=</span><span style="color:#4070a0">&#34;sqrt(mean(data_test_pred$residuals^2))&#34;</span>)
 </span></span><span style="display:flex;"><span>DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>(rmse)<span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">formatRound</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;.estimate&#34;</span>), digits<span style="color:#666">=</span><span style="color:#40a070">2</span>)
-</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-614a5c3e28bfba2dc9a9" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-614a5c3e28bfba2dc9a9">{"x":{"filter":"none","vertical":false,"data":[["1"],[0.6850784245411075]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-aa5d1bd10d77c6d001dc" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-aa5d1bd10d77c6d001dc">{"x":{"filter":"none","vertical":false,"data":[["1"],[0.6850784245411075]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 
 
@@ -410,8 +410,8 @@ Geodetic CRS:  WGS 84
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">as.data.frame</span>()
 </span></span><span style="display:flex;"><span>DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>(mape)<span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">formatRound</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;.estimate&#34;</span>), digits<span style="color:#666">=</span><span style="color:#40a070">2</span>)
-</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-4c7ecd12dd0351ee94be" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4c7ecd12dd0351ee94be">{"x":{"filter":"none","vertical":false,"data":[["1"],[1.667112015162908]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-2a2462b6d998fe5b569b" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2a2462b6d998fe5b569b">{"x":{"filter":"none","vertical":false,"data":[["1"],[1.667112015162908]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 
 
@@ -487,17 +487,18 @@ Geodetic CRS:  WGS 84
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">st_as_sf</span>(coords <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;lon&#34;</span>, <span style="color:#4070a0">&#34;lat&#34;</span>)) <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">st_set_crs</span>(<span style="color:#40a070">4326</span>)
 </span></span></code></pre></div><p>Let&rsquo;s take a look at the predicted precipitation values for 2024 to 2030.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>precipitation_data_futur <span style="color:#666">|&gt;</span> 
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>valid<span style="color:#666">&lt;-</span>precipitation_data_futur <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">as.data.frame</span>() <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(year, value) <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(value<span style="color:#666">=</span>value<span style="color:#666">*</span><span style="color:#40a070">1000</span>) <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(year) <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(mean<span style="color:#666">=</span><span style="color:#06287e">mean</span>(value), sd<span style="color:#666">=</span><span style="color:#06287e">sd</span>(value)) <span style="color:#666">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(year<span style="color:#666">&gt;=</span><span style="color:#40a070">2020</span>) <span style="color:#666">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>() <span style="color:#666">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(year<span style="color:#666">&gt;=</span><span style="color:#40a070">2020</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>(valid) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">formatRound</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;mean&#34;</span>, <span style="color:#4070a0">&#34;sd&#34;</span>), digits<span style="color:#666">=</span><span style="color:#40a070">2</span>)
-</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-048352464cbf240a6d9e" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-048352464cbf240a6d9e">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[3.485373512974943,2.750934536521871,3.47978321017617,1.983787679044461,23.8441168618055,23.8441168618055,23.8441168618055,23.8441168618055,23.8441168618055,23.8441168618055,23.8441168618055],[1.275097247483104,0.9522418093351058,1.536585818972496,0.9071699879470428,0.7511021075233302,0.7511021075233302,0.7511021075233302,0.7511021075233302,0.7511021075233302,0.7511021075233302,0.7511021075233302]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
+</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-b7706a1b68e714912bc8" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b7706a1b68e714912bc8">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[41.82448215569933,33.01121443826246,41.75739852211403,23.80545214853353,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392],[1.671617109785621,2.39342419664615,2.709303794028265,0.5720241033171247,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
 <p>So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.</p>
 
 
@@ -769,36 +770,38 @@ other attached packages:
 [40] openxlsx_4.2.7.1     knitr_1.49          
 
 loaded via a namespace (and not attached):
- [1] DBI_1.2.3           rlang_1.1.5         magrittr_2.0.3     
- [4] furrr_0.3.1         e1071_1.7-16        compiler_4.4.2     
- [7] png_0.1-8           systemfonts_1.2.1   vctrs_0.6.5        
-[10] lhs_1.2.0           pkgconfig_2.0.3     crayon_1.5.3       
-[13] fastmap_1.2.0       backports_1.5.0     rmarkdown_2.29     
-[16] prodlim_2024.06.25  ggfittext_0.10.2    tzdb_0.4.0         
-[19] xfun_0.50           cachem_1.1.0        jsonlite_1.8.9     
-[22] progress_1.2.3      parallel_4.4.2      prettyunits_1.2.0  
-[25] R6_2.5.1            bslib_0.8.0         StanHeaders_2.32.10
-[28] stringi_1.8.4       parallelly_1.41.0   rpart_4.1.24       
-[31] jquerylib_0.1.4     Rcpp_1.0.14         iterators_1.0.14   
-[34] future.apply_1.11.3 zoo_1.8-12          base64enc_0.1-3    
-[37] Matrix_1.7-2        splines_4.4.2       nnet_7.3-20        
-[40] timechange_0.3.0    tidyselect_1.2.1    rstudioapi_0.17.1  
-[43] yaml_2.3.10         timeDate_4041.110   codetools_0.2-20   
-[46] listenv_0.9.1       lattice_0.22-6      withr_3.0.2        
-[49] evaluate_1.0.3      survival_3.8-3      units_0.8-5        
-[52] proxy_0.4-27        RcppParallel_5.1.10 zip_2.3.1          
-[55] xts_0.14.1          xml2_1.3.6          pillar_1.10.1      
-[58] KernSmooth_2.23-26  DT_0.33             renv_1.0.7         
-[61] generics_0.1.3      hms_1.1.3           munsell_0.5.1      
-[64] globals_0.16.3      class_7.3-23        glue_1.8.0         
-[67] tools_4.4.2         data.table_1.16.4   gower_1.0.2        
-[70] grid_4.4.2          crosstalk_1.2.1     ipred_0.9-15       
-[73] colorspace_2.1-1    repr_1.1.7          cli_3.6.3          
-[76] DiceDesign_1.10     rappdirs_0.3.3      viridisLite_0.4.2  
-[79] svglite_2.1.3       lava_1.8.1          gtable_0.3.6       
-[82] GPfit_1.0-8         sass_0.4.9          digest_0.6.37      
-[85] classInt_0.4-11     htmlwidgets_1.6.4   htmltools_0.5.8.1  
-[88] lifecycle_1.0.4     hardhat_1.4.0       MASS_7.3-64        
+ [1] rstudioapi_0.17.1   jsonlite_1.8.9      wk_0.9.4           
+ [4] magrittr_2.0.3      farver_2.1.2        rmarkdown_2.29     
+ [7] vctrs_0.6.5         base64enc_0.1-3     htmltools_0.5.8.1  
+[10] progress_1.2.3      s2_1.1.7            sass_0.4.9         
+[13] parallelly_1.41.0   StanHeaders_2.32.10 KernSmooth_2.23-26 
+[16] bslib_0.8.0         htmlwidgets_1.6.4   zoo_1.8-12         
+[19] cachem_1.1.0        ggfittext_0.10.2    lifecycle_1.0.4    
+[22] iterators_1.0.14    pkgconfig_2.0.3     Matrix_1.7-2       
+[25] R6_2.5.1            fastmap_1.2.0       digest_0.6.37      
+[28] colorspace_2.1-1    furrr_0.3.1         crosstalk_1.2.1    
+[31] labeling_0.4.3      timechange_0.3.0    mgcv_1.9-1         
+[34] compiler_4.4.2      proxy_0.4-27        withr_3.0.2        
+[37] backports_1.5.0     DBI_1.2.3           MASS_7.3-64        
+[40] lava_1.8.1          rappdirs_0.3.3      classInt_0.4-11    
+[43] tools_4.4.2         units_0.8-5         zip_2.3.1          
+[46] future.apply_1.11.3 nnet_7.3-20         glue_1.8.0         
+[49] nlme_3.1-166        grid_4.4.2          generics_0.1.3     
+[52] gtable_0.3.6        tzdb_0.4.0          class_7.3-23       
+[55] data.table_1.16.4   hms_1.1.3           xml2_1.3.6         
+[58] pillar_1.10.1       splines_4.4.2       lhs_1.2.0          
+[61] lattice_0.22-6      renv_1.0.7          survival_3.8-3     
+[64] tidyselect_1.2.1    svglite_2.1.3       xfun_0.50          
+[67] hardhat_1.4.0       timeDate_4041.110   DT_0.33            
+[70] stringi_1.8.4       DiceDesign_1.10     yaml_2.3.10        
+[73] evaluate_1.0.3      codetools_0.2-20    cli_3.6.3          
+[76] RcppParallel_5.1.10 rpart_4.1.24        systemfonts_1.2.1  
+[79] repr_1.1.7          munsell_0.5.1       jquerylib_0.1.4    
+[82] Rcpp_1.0.14         globals_0.16.3      png_0.1-8          
+[85] parallel_4.4.2      gower_1.0.2         prettyunits_1.2.0  
+[88] GPfit_1.0-8         listenv_0.9.1       viridisLite_0.4.2  
+[91] ipred_0.9-15        xts_0.14.1          prodlim_2024.06.25 
+[94] e1071_1.7-16        crayon_1.5.3        rlang_1.1.5        
 </code></pre>
 
         
@@ -809,7 +812,7 @@ loaded via a namespace (and not attached):
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">9 minute read, 1813 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1820 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

@@ -322,18 +322,19 @@ precipitation_data_futur<-data |>
 Let's take a look at the predicted precipitation values for 2024 to 2030.
 
 ``` r
-valid<-precipitation_data_futur |> 
+precipitation_data_futur |> 
   as.data.frame() |> 
   select(year, value) |>
   mutate(value=value*1000) |>
   group_by(year) |>
-  summarise(mean=round(mean(value), digits = 1), sd=round(sd(value), digits = 1)) 
-
-DT::datatable(valid) 
+  summarise(mean=mean(value), sd=sd(value)) |> 
+  filter(year>=2020) |> 
+  DT::datatable() |> 
+  DT::formatRound(c("mean", "sd"), digits=2)
 ```
 
 <div class="datatables html-widget html-fill-item" id="htmlwidget-02009635d4d5d916b6b2" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-02009635d4d5d916b6b2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38"],[1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[43.3,41.8,39.4,44.7,39.6,40.6,39.9,40.9,33.3,37.5,42,35.9,43.7,46.1,40.8,45.6,39.9,41.8,50.2,37.6,40,38.5,39.7,45.3,46.4,44.2,47.5,41.8,33,41.8,23.8,24,24,24,24,24,24,24],[2.4,1.9,2.1,2,2.2,2.7,2.8,2.1,2.2,2.6,1.8,2.7,2.1,2,3.1,2,2,2.2,2.8,2,3.2,2.2,3.2,2.3,2.2,2.3,2.8,1.7,2.4,2.7,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-02009635d4d5d916b6b2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[41.82448215569933,33.01121443826246,41.75739852211403,23.80545214853353,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392],[1.671617109785621,2.39342419664615,2.709303794028265,0.5720241033171247,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
 
 So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.
 
