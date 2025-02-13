@@ -6,7 +6,16 @@
     <description>Recent content in tidymodels on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 31 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?</title>
+      <link>https://johaniefournier.com/blog/ca_temperature_eda/</link>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ca_temperature_eda/</guid>
+      <description>How is climate change affecting temperature, Growing Degree Days (GDD), and the vegetation period in Chaudières-Appalaches? This analysis explores 20 years of historical climate data, uncovering trends, anomalies, and shifts in temperature patterns. By examining GDD calculations and vegetation period variations, we highlight the impacts on agriculture, crop cycles, and ecosystem resilience. Using R for data analysis and visualization, this study provides key insights into how climate trends are reshaping growing conditions in the region.</description>
+    </item>
+    
     <item>
       <title>Aminated Visualisation for Centre-du-Québec’s Precipitation</title>
       <link>https://johaniefournier.com/blog/cdq_precipitation_viz/</link>

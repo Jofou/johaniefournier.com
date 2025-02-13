@@ -6,11 +6,20 @@
     <description>Recent content in Tags on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 31 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>eda</title>
+      <link>https://johaniefournier.com/tag/eda/</link>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/tag/eda/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>rstats</title>
       <link>https://johaniefournier.com/tag/rstats/</link>
-      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/tag/rstats/</guid>
       <description></description>
@@ -19,16 +28,25 @@
     <item>
       <title>tidymodels</title>
       <link>https://johaniefournier.com/tag/tidymodels/</link>
-      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/tag/tidymodels/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>tidytuesday</title>
+      <link>https://johaniefournier.com/tag/tidytuesday/</link>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/tag/tidytuesday/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>viz</title>
       <link>https://johaniefournier.com/tag/viz/</link>
-      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/tag/viz/</guid>
       <description></description>
@@ -40,24 +58,6 @@
       <pubDate>Thu, 30 Jan 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/tag/models/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>eda</title>
-      <link>https://johaniefournier.com/tag/eda/</link>
-      <pubDate>Wed, 29 Jan 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/tag/eda/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tidytuesday</title>
-      <link>https://johaniefournier.com/tag/tidytuesday/</link>
-      <pubDate>Wed, 29 Jan 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/tag/tidytuesday/</guid>
       <description></description>
     </item>
     

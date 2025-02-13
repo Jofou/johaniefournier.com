@@ -322,14 +322,15 @@ precipitation_data_futur<-data |>
 Let's take a look at the predicted precipitation values for 2024 to 2030.
 
 ``` r
-precipitation_data_futur |> 
+valid<-precipitation_data_futur |> 
   as.data.frame() |> 
   select(year, value) |>
   mutate(value=value*1000) |>
   group_by(year) |>
   summarise(mean=mean(value), sd=sd(value)) |> 
-  filter(year>=2020) |> 
-  DT::datatable() |> 
+  filter(year>=2020) 
+
+DT::datatable(valid) |> 
   DT::formatRound(c("mean", "sd"), digits=2)
 ```
 
