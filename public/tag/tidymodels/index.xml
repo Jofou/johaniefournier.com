@@ -6,7 +6,16 @@
     <description>Recent content in tidymodels on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 13 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Side by side interactive map with {leaflet} and {leaflet.extras2}</title>
+      <link>https://johaniefournier.com/blog/ca_temperature_viz/</link>
+      <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ca_temperature_viz/</guid>
+      <description>This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using {leaflet} and {leaflet.extras2} R packages.</description>
+    </item>
+    
     <item>
       <title>How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?</title>
       <link>https://johaniefournier.com/blog/ca_temperature_eda/</link>

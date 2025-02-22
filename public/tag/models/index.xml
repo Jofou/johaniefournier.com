@@ -6,7 +6,16 @@
     <description>Recent content in models on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 30 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/models/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/models/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Side by side interactive map with {leaflet} and {leaflet.extras2}</title>
+      <link>https://johaniefournier.com/blog/ca_temperature_viz/</link>
+      <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ca_temperature_viz/</guid>
+      <description>This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using {leaflet} and {leaflet.extras2} R packages.</description>
+    </item>
+    
     <item>
       <title>From Trends to Predictions: Machine Learning Forecasts for Centre-du-Québec’s Precipitation</title>
       <link>https://johaniefournier.com/blog/cdq_precipitation_ml/</link>

@@ -1,5 +1,5 @@
 ---
-title: 'How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches'
+title: 'How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-02-13"
 slug: ca_temperature_EDA
@@ -19,6 +19,11 @@ summary: "How is climate change affecting temperature, Growing Degree Days (GDD)
 editor_options: 
   chunk_output_type: inline
 ---
+
+<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+</a>
+
+<br>
 
 Climate change is reshaping agricultural and ecological landscapes worldwide, and Chaudières-Appalaches is no exception. Over the past 20 years, regional temperature trends, Growing Degree Days (GDD), and vegetation periods have experienced significant shifts, influencing crop productivity, plant phenology, and ecosystem dynamics.
 
@@ -465,8 +470,11 @@ temp_dt |>
 
 This graph does not show any monthly precipitation anomalies and does not show the seasonality of precipitation.
 
-> \[!IMPORTANT\]  
-> How are you doing whit this code? If you're ok, good job, keep reading! If you're strugguling, I see you. I've been there. Trying to make sense of all that alone can be a lot. But you're not alone. I'm here to help you. I'm preparing a something special. You can join the waitlist to be the first to know when it's ready [here](johanie-fournier-s-school.teachable.com/p/geos-data-analysis-tutorials)
+> **How are you doing whit this code?**
+>
+> If you're OK, keep reading!
+>
+> If you're struggling, I see you. I've been there. Trying to make sense of all that alone can be a lot. But you're not alone. I'm here to help you. I'm preparing a something special. You can join the wait list to be the first to know when it's ready [here](johanie-fournier-s-school.teachable.com/p/geos-data-analysis-tutorials)
 
 # Vegetation period
 
