@@ -393,7 +393,8 @@ leaflet(width = "100%") |>
 ## Conclusion
 
 In this tutorial, we explored how to download, process, and visualize CMIP6 climate model data using R. We downloaded temperature data for Quebec from the CanDCS-M6 dataset, processed the NetCDF files, and converted them into spatial raster formats. We then used the `KrigR` package to disaggregate the data and create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for Quebec. This visualization provides an engaging way to explore climate change data and understand the potential impacts of different climate scenarios.
-
+<!-- AWeber Web Form Generator 3.0.1 -->
+<style type="text/css">
 #af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
 #af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
 #af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
@@ -613,7 +614,6 @@ body {
 
 
 <!-- /AWeber Web Form Generator 3.0.1 -->
-
 
 ## Session Info
 

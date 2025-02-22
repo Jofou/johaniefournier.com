@@ -289,7 +289,8 @@ leaflet(width = "100%") |>
 ## Conclusion
 
 In this tutorial, we explored how to download, process, and visualize CMIP6 climate model data using R. We downloaded temperature data for Quebec from the CanDCS-M6 dataset, processed the NetCDF files, and converted them into spatial raster formats. We then used the `KrigR` package to disaggregate the data and create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for Quebec. This visualization provides an engaging way to explore climate change data and understand the potential impacts of different climate scenarios.
-
+<!-- AWeber Web Form Generator 3.0.1 -->
+<style type="text/css">
 #af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
 #af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
 #af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
@@ -342,132 +343,132 @@ body {
 }
 
 #af-form-88198013 .af-body .af-textWrap {
-width: 100% !important;
+  width: 100% !important;
 }
 
 #af-form-88198013 .af-body .af-element {
-padding-top: 0px!important;
-padding-bottom: 0.5rem!important;
+  padding-top: 0px!important;
+  padding-bottom: 0.5rem!important;
 }
 #af-form-88198013 .af-body .af-element:first-child {
-margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 #af-form-88198013 .af-body input.text,
 #af-form-88198013 .af-body textarea {
-box-sizing: border-box !important;
-border-radius:2px;
-margin-bottom: 0.75rem !important;
-padding: 8px 12px !important;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
+  box-sizing: border-box !important;
+  border-radius:2px;
+  margin-bottom: 0.75rem !important;
+  padding: 8px 12px !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 
 #af-form-88198013 .af-body select {
-width: 100%;
+  width: 100%;
 }
 #af-form-88198013 .choiceList-radio-stacked {
-margin-bottom: 1rem !important;
-width: 100% !important;
+  margin-bottom: 1rem !important;
+  width: 100% !important;
 }
 #af-form-88198013 .af-element-radio {
-margin: 0 !important;
+  margin: 0 !important;
 }
 #af-form-88198013 .af-element-radio input.radio {
-display: inline;
-height: 0;
-opacity: 0;
-overflow: hidden;
-width: 0;
+  display: inline;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
 }
 #af-form-88198013 .af-element-radio input.radio:checked ~ label {
-font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 #af-form-88198013 .af-element-radio input.radio:focus ~ label {
-box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
+  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
 }
 #af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
-background-color: #777777;
-border-color: #d6dee3;
+  background-color: #777777;
+  border-color: #d6dee3;
 }
 #af-form-88198013 .af-element-radio label.choice {
-display: block !important;
-font-weight: 300 !important;
-margin: 0rem 0rem 0.5rem 1rem !important;
-padding: 0.25rem 1rem !important;
-position: relative;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
+  display: block !important;
+  font-weight: 300 !important;
+  margin: 0rem 0rem 0.5rem 1rem !important;
+  padding: 0.25rem 1rem !important;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 #af-form-88198013 .af-element-radio label.choice:before {
-background-color: #FFF;
-border: 1px solid #d6dee3;
-border-radius: 50%;
-content: '';
-height: 0.75rem;
-margin-top: 0.25rem;
-margin-left: -1.3rem;
-position: absolute;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
-width: 0.75rem;
+  background-color: #FFF;
+  border: 1px solid #d6dee3;
+  border-radius: 50%;
+  content: '';
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: -1.3rem;
+  position: absolute;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  width: 0.75rem;
 }
-#af-form-88198013 .af-selectWrap,
+#af-form-88198013 .af-selectWrap, 
 #af-form-88198013 .af-dateWrap {
-width:100% !important;
-margin: 0.5rem 0rem 0.5rem !important;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
+  width:100% !important;
+  margin: 0.5rem 0rem 0.5rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 #af-form-88198013 .af-selectWrap select {
-padding: 0.5rem !important;
-height: 2.5rem;
+  padding: 0.5rem !important;
+  height: 2.5rem;
 }
 #af-form-88198013 .af-dateWrap select {
-width: 32% !important;
-height: 2.5rem;
-padding: 0.5rem !important;
-margin: 0rem 0rem 0.75rem 0rem !important;
+  width: 32% !important;
+  height: 2.5rem;
+  padding: 0.5rem !important;
+  margin: 0rem 0rem 0.75rem 0rem !important;
 }
 #af-form-88198013 .af-checkWrap {
-padding: 0.5rem 0.5rem 0.75rem !important;
+  padding: 0.5rem 0.5rem 0.75rem !important;
 }
 #af-form-88198013 .buttonContainer {
-box-sizing: border-box !important;
+  box-sizing: border-box !important;
 }
 #af-form-88198013 .af-footer {
-box-sizing: border-box !important;
+  box-sizing: border-box !important;
 }
 
 #af-form-88198013 .af-footer p {
-margin: 0 !important;
+  margin: 0 !important;
 }
 #af-form-88198013 input.submit,
 #af-form-88198013 #webFormSubmitButton {
-border: none;
-border-radius:2px;
-font-weight: bold;
-margin-top: 0.75rem !important;
-margin-bottom: 1.5rem !Important;
-padding: 0.75rem 2rem !important;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
-}
+  border: none;
+  border-radius:2px;
+  font-weight: bold;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !Important;
+  padding: 0.75rem 2rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  }
 #af-form-88198013 input.submit:hover,
 #af-form-88198013 #webFormSubmitButton:hover {
-cursor: pointer;
-opacity: 0.8;
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 #af-form-88198013 input.text:hover {
-cursor: pointer;
-opacity: 0.8;
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 .poweredBy a,
 .privacyPolicy p {
-color: #333333 !important;
-font-size: 0.75rem !important;
-margin-bottom: 0rem !important;
+  color: #333333 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0rem !important;
 }
 </style>
 <form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl">
