@@ -1,5 +1,5 @@
 ---
-title: 'How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?'
+title: 'Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-02-13"
 slug: ca_temperature_EDA
@@ -15,7 +15,7 @@ tags:
   - tidymodels
   - tidytuesday
   - viz
-summary: "How is climate change affecting temperature, Growing Degree Days (GDD), and the vegetation period in Chaudières-Appalaches? This analysis explores 20 years of historical climate data, uncovering trends, anomalies, and shifts in temperature patterns. By examining GDD calculations and vegetation period variations, we highlight the impacts on agriculture, crop cycles, and ecosystem resilience. Using R for data analysis and visualization, this study provides key insights into how climate trends are reshaping growing conditions in the region."
+summary: "{pollen} and {vegperiod} are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region."
 editor_options: 
   chunk_output_type: inline
 ---

@@ -46,7 +46,7 @@
   <meta itemprop="name" content="Side by side interactive map with {leaflet} and {leaflet.extras2}">
 <meta itemprop="description" content="This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using {leaflet} and {leaflet.extras2} R packages."><meta itemprop="datePublished" content="2025-02-21T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2025-02-21T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2137"><meta itemprop="image" content="https://johaniefournier.com/blog/ca_temperature_viz/featured.png">
+<meta itemprop="wordCount" content="2136"><meta itemprop="image" content="https://johaniefournier.com/blog/ca_temperature_viz/featured.png">
 <meta itemprop="keywords" content="models,rstats,tidymodels,tidytuesday,viz," />
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
@@ -445,14 +445,15 @@ First 10 features:
     </svg></a>
 </h2>
 <p>In this tutorial, we explored how to download, process, and visualize CMIP6 climate model data using R. We downloaded temperature data for Quebec from the CanDCS-M6 dataset, processed the NetCDF files, and converted them into spatial raster formats. We then used the <code>KrigR</code> package to disaggregate the data and create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for Quebec. This visualization provides an engaging way to explore climate change data and understand the potential impacts of different climate scenarios.</p>
-<p>#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
+<!-- AWeber Web Form Generator 3.0.1 -->
+<style type="text/css">
+#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
 #af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
 #af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
 #af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
 #af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
 #af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
-#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url(&ldquo;
-<a href="https://awas.aweber-static.com/images/forms/journey/basic/background.png%22%29;background-position:top" target="_blank" rel="noopener">https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top</a> center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
+#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url("https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
 #af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
 #af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
 #af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
@@ -495,131 +496,137 @@ First 10 features:
 .af-element label{display:block; float:left;}
 .af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
 body {
-}</p>
-<p>#af-form-88198013 .af-body .af-textWrap {
-width: 100% !important;
-}</p>
-<p>#af-form-88198013 .af-body .af-element {
-padding-top: 0px!important;
-padding-bottom: 0.5rem!important;
+}
+
+#af-form-88198013 .af-body .af-textWrap {
+  width: 100% !important;
+}
+
+#af-form-88198013 .af-body .af-element {
+  padding-top: 0px!important;
+  padding-bottom: 0.5rem!important;
 }
 #af-form-88198013 .af-body .af-element:first-child {
-margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 #af-form-88198013 .af-body input.text,
 #af-form-88198013 .af-body textarea {
-box-sizing: border-box !important;
-border-radius:2px;
-margin-bottom: 0.75rem !important;
-padding: 8px 12px !important;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
-}</p>
-<p>#af-form-88198013 .af-body select {
-width: 100%;
+  box-sizing: border-box !important;
+  border-radius:2px;
+  margin-bottom: 0.75rem !important;
+  padding: 8px 12px !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+#af-form-88198013 .af-body select {
+  width: 100%;
 }
 #af-form-88198013 .choiceList-radio-stacked {
-margin-bottom: 1rem !important;
-width: 100% !important;
+  margin-bottom: 1rem !important;
+  width: 100% !important;
 }
 #af-form-88198013 .af-element-radio {
-margin: 0 !important;
+  margin: 0 !important;
 }
 #af-form-88198013 .af-element-radio input.radio {
-display: inline;
-height: 0;
-opacity: 0;
-overflow: hidden;
-width: 0;
+  display: inline;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
 }
 #af-form-88198013 .af-element-radio input.radio:checked ~ label {
-font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 #af-form-88198013 .af-element-radio input.radio:focus ~ label {
-box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
+  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
 }
 #af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
-background-color: #777777;
-border-color: #d6dee3;
+  background-color: #777777;
+  border-color: #d6dee3;
 }
 #af-form-88198013 .af-element-radio label.choice {
-display: block !important;
-font-weight: 300 !important;
-margin: 0rem 0rem 0.5rem 1rem !important;
-padding: 0.25rem 1rem !important;
-position: relative;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
+  display: block !important;
+  font-weight: 300 !important;
+  margin: 0rem 0rem 0.5rem 1rem !important;
+  padding: 0.25rem 1rem !important;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 #af-form-88198013 .af-element-radio label.choice:before {
-background-color: #FFF;
-border: 1px solid #d6dee3;
-border-radius: 50%;
-content: &lsquo;&rsquo;;
-height: 0.75rem;
-margin-top: 0.25rem;
-margin-left: -1.3rem;
-position: absolute;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
-width: 0.75rem;
+  background-color: #FFF;
+  border: 1px solid #d6dee3;
+  border-radius: 50%;
+  content: '';
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: -1.3rem;
+  position: absolute;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  width: 0.75rem;
 }
-#af-form-88198013 .af-selectWrap,
+#af-form-88198013 .af-selectWrap, 
 #af-form-88198013 .af-dateWrap {
-width:100% !important;
-margin: 0.5rem 0rem 0.5rem !important;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
+  width:100% !important;
+  margin: 0.5rem 0rem 0.5rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
 }
 #af-form-88198013 .af-selectWrap select {
-padding: 0.5rem !important;
-height: 2.5rem;
+  padding: 0.5rem !important;
+  height: 2.5rem;
 }
 #af-form-88198013 .af-dateWrap select {
-width: 32% !important;
-height: 2.5rem;
-padding: 0.5rem !important;
-margin: 0rem 0rem 0.75rem 0rem !important;
+  width: 32% !important;
+  height: 2.5rem;
+  padding: 0.5rem !important;
+  margin: 0rem 0rem 0.75rem 0rem !important;
 }
 #af-form-88198013 .af-checkWrap {
-padding: 0.5rem 0.5rem 0.75rem !important;
+  padding: 0.5rem 0.5rem 0.75rem !important;
 }
 #af-form-88198013 .buttonContainer {
-box-sizing: border-box !important;
+  box-sizing: border-box !important;
 }
 #af-form-88198013 .af-footer {
-box-sizing: border-box !important;
-}</p>
-<p>#af-form-88198013 .af-footer p {
-margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#af-form-88198013 .af-footer p {
+  margin: 0 !important;
 }
 #af-form-88198013 input.submit,
 #af-form-88198013 #webFormSubmitButton {
-border: none;
-border-radius:2px;
-font-weight: bold;
-margin-top: 0.75rem !important;
-margin-bottom: 1.5rem !Important;
-padding: 0.75rem 2rem !important;
--webkit-transition-duration: 0.3s;
-transition-duration: 0.3s;
-}
+  border: none;
+  border-radius:2px;
+  font-weight: bold;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !Important;
+  padding: 0.75rem 2rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  }
 #af-form-88198013 input.submit:hover,
 #af-form-88198013 #webFormSubmitButton:hover {
-cursor: pointer;
-opacity: 0.8;
-}</p>
-<p>#af-form-88198013 input.text:hover {
-cursor: pointer;
-opacity: 0.8;
-}</p>
-<p>.poweredBy a,
-.privacyPolicy p {
-color: #333333 !important;
-font-size: 0.75rem !important;
-margin-bottom: 0rem !important;
+  cursor: pointer;
+  opacity: 0.8;
 }
-</style></p>
+
+#af-form-88198013 input.text:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.poweredBy a,
+.privacyPolicy p {
+  color: #333333 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0rem !important;
+}
+</style>
 <form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl">
 <input type="hidden" name="meta_web_form_id" value="88198013" />
 <input type="hidden" name="meta_split_id" value="" />
@@ -747,7 +754,7 @@ loaded via a namespace (and not attached):
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">11 minute read, 2137 words</dd>
+    <dd class="fw5 ml0">11 minute read, 2136 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -765,11 +772,11 @@ loaded via a namespace (and not attached):
   <dl class="f6 lh-copy">
     <dt class="fw7">See Also:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/ca_temperature_eda/">How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz2/">Heatmap to Visualize Spatio-Temporal Data</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_eda/">Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/cdq_precipitation_viz/">Aminated Visualisation for Centre-du-Québec’s Precipitation</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/cdq_precipitation_ml/">From Trends to Predictions: Machine Learning Forecasts for Centre-du-Québec’s Precipitation</a></dd>
     
   </dl>
 </details>
@@ -779,10 +786,13 @@ loaded via a namespace (and not attached):
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://johaniefournier.com/blog/ca_temperature_viz2/">&larr; Heatmap to Visualize Spatio-Temporal Data</a>
+  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://johaniefournier.com/blog/ca_temperature_eda/">How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches? &rarr;</a>
+    href="https://johaniefournier.com/blog/ca_temperature_eda/">Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period &rarr;</a>
   
 </div>
 

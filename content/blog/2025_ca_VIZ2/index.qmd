@@ -1,0 +1,543 @@
+---
+title: 'Heatmap to Visualize Spatio-Temporal Data'
+author: Johanie Fournier, agr., M.Sc.
+date: "2025-02-25"
+slug: ca_temperature_VIZ2
+categories:
+  - rstats
+  - tidymodels
+  - tidytuesday
+  - eda
+  - viz
+tags:
+  - eda
+  - rstats
+  - tidymodels
+  - tidytuesday
+  - viz
+summary: "This post shows how to create a heatmap with geom_tile() to visualize the spatio-temporal evolution of the vegetative period in the Chaudière-Appalaches region."
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup}
+#| include: false
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE, 
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 7, fig.height = 5)
+
+# Importer des données
+library(openxlsx)
+
+# explorer et présenter les données
+library(inspectdf)
+library(kableExtra)
+library(lubridate)
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+library(skimr)
+
+# Parallel Processing
+library(doFuture)
+
+# Core 
+library(recipes)
+library(tidymodels)
+library(timetk)
+library(fs)
+
+
+#Import data
+library(pins)
+
+#H2O
+#library(h2o)
+
+#Geospatial
+library(sf)
+library(terra)
+#remotes::install_github("wmgeolab/rgeoboundaries")
+library(rgeoboundaries)
+
+# Climat
+#install.packages("ecmwfr")
+library(ecmwfr)
+#brew install netcdf
+library(ncdf4)
+#devtools::install_github("https://github.com/ErikKusch/KrigR", force=TRUE)
+library(KrigR)
+
+#Monitorer le temps que ça prend
+library(tictoc)
+
+#Tidytuesday
+library(tidytuesdayR)
+
+#Mes fonctions
+#devtools::install_github("jofou/jofou.lib")
+library(jofou.lib)
+
+#Python
+library(reticulate)
+#renv::use_python()
+Sys.setenv(RETICULATE_PYTHON ="~/.virtualenvs/r-reticulate/bin/python")
+
+#Theme_map
+theme_map <- function(base_size=9, base_family="") { # 3
+	require(grid)
+	theme_bw(base_size=base_size, base_family=base_family) %+replace%
+		theme(axis.line=element_blank(),
+			  axis.text=element_blank(),
+			  axis.ticks=element_blank(),
+			  axis.title=element_blank(),
+			  panel.background=element_blank(),
+			  panel.border=element_blank(),
+			  panel.grid=element_blank(),
+			  panel.spacing=unit(0, "lines"),
+			  plot.background=element_blank(),
+			  legend.justification = c(0,0),
+			  legend.position = c(0,0),
+			  plot.title= element_text(size=20, hjust=0, color="black", face="bold"),
+		)
+}
+
+#Graph theme
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", linewidth=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", linewidth=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+
+update_geom_defaults("rect", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("line", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
+
+#CRS
+#Geographic
+#WGS84:"EPSG:4326"
+#Projected
+#NAD83:"EPSG3978"
+
+Dir.Base <- getwd() # identifying the current directory
+Dir.Data <- file.path(Dir.Base, "Data") # folder path for data
+Dir.Covariates <- file.path(Dir.Base, "Covariates") # folder path for covariates
+Dir.Exports <- file.path(Dir.Base, "Exports") # folder path for exports
+```
+
+Vegetative period is the period of the year when plants grow and develop. The vegetative period is an essential factor in agriculture, as it determines the length of the growing season and the timing of planting and harvesting. The vegetative period is influenced by various factors, including temperature, precipitation, and day length. In this post, we will create a heatmap to visualize the spatio-temporal evolution of the vegetative period in the Chaudière-Appalaches region of Quebec over the past 20 years.
+
+
+# Goal
+
+* temperature data to calculate the vegetative period with the `vegperiod` package
+* create a heatmap to visualize the average vegetative period for each year over the past 20 years with `ggplot2`
+
+
+# Get the data
+
+## Region borders
+
+We need the polygon of the region of interest. [Données Québec](https://www.donneesquebec.ca/recherche/dataset/decoupages-administratifs) provides a shapefile of the administrative regions of Quebec. 
+
+```{r}
+qc_sf <- read_sf("SHP/mrc_s.shp") |> 
+  filter(MRS_NM_REG=="Chaudière-Appalaches") |> 
+  select(MRS_NM_MRC, geometry)
+```
+
+```{r}
+plot(qc_sf$geometry)
+```
+
+### Temperature data
+
+We will extract temperature data from the AgERA5 dataset using the KrigR package. The AgERA5 dataset provides high-resolution climate data, including precipitation, temperature, and wind speed, for global climate research.
+
+```{r}
+#| eval: FALSE
+# Load the KrigR package
+#api_user <- "*******************************" # PLEASE INSERT YOUR USER NUMBER
+#api_key <- "********************************" # PLEASE INSERT YOUR API TOKEN
+
+# List of available dataset
+KrigR::Meta.List()
+
+# Dataset description
+KrigR::Meta.QuickFacts(
+    "reanalysis-era5-land"
+)
+```
+
+```{r}
+#| eval: FALSE
+#extract precipitation data
+start_date <- "2003-01-01 00:00"
+end_date <- "2023-12-31 24:00"
+
+temperature_raw <- KrigR::CDownloadS(
+    Variable = "2m_temperature",
+    DataSet = "reanalysis-era5-land",
+    DateStart = start_date,
+    DateStop = end_date,
+    TResolution = "day",
+    TZone = "CET",
+    TStep = 1,
+    Dir = Dir.Data,
+    FileName = "temperature_raw",
+    Extent = as(qc_sf, "Spatial"),
+    API_User = api_user,
+    API_Key = api_key,
+    closeConnections = TRUE)
+```
+
+
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+temperature_raw<-rast("Data/temperature_raw.nc")
+temperature_raw
+```
+
+### Data preperation
+
+We will convert the raster data to a dataframe and extract the temperature values for the region of interest.
+
+```{r}
+#| eval: FALSE
+# Change layer names
+day_vector <- seq(
+    from = as.Date(start_date)-1,
+    to = as.Date(end_date),
+    by = "day"
+)
+names(temperature_raw) <- day_vector
+
+# Raster to dataframe
+temperature_sf <- temperature_raw |> 
+  as.data.frame(
+    precipitation_raw,
+    xy = TRUE, na.rm = TRUE)|>
+    tidyr::pivot_longer(
+        !c(x, y),
+        names_to = "date",
+        values_to = "value"
+    ) |> 
+  mutate(year=year(date), 
+         month=month(date),
+         value=value-273.15) |> 
+  select(x, y, date, year, month, value) |> 
+  st_as_sf(coords=c("x", "y")) |> 
+  st_set_crs("WGS84") |> 
+  st_intersection(qc_sf)
+```
+
+Next, we need to calculate the vegetative period for each year in the region of interest. The vegetative period is the period of the year when plants grow and develop. We will use the `vegperiod` function from the `vegperiod` package to calculate the vegetative period based on the temperature data.
+
+
+```{r}
+#| eval: FALSE
+#All dayly data
+temp_dt<-temperature_sf |> 
+  as_tibble() |> 
+  mutate(lon = st_coordinates(geometry)[,1],
+         lat = st_coordinates(geometry)[,2]) |>
+  select(-geometry) |> 
+  mutate(date=as.Date(date)) |> 
+  filter(date>="2003-01-01", date<="2023-12-31")
+
+# Growing season length
+library(vegperiod)
+
+vegperiod_dt<-temp_dt |>
+  group_by(MRS_NM_MRC) |>
+  reframe(vegperiod=vegperiod(
+    dates=date, 
+    Tavg=value, 
+    start.method="StdMeteo", 
+    end.method="StdMeteo"
+  )) |> 
+  unnest(cols = c(vegperiod)) |> 
+  mutate(vege_period=end-start) |> 
+  select(MRS_NM_MRC, year, vege_period)
+```
+
+```{r}
+#| eval: FALSE
+#| echo: FALSE
+#Save
+write_rds(vegperiod_dt, "Data/vegperiod_dt.rds")
+```
+
+```{r}
+#| echo: FALSE
+vegperiod_dt<-readRDS("Data/vegperiod_dt.rds")
+```
+
+
+## Heatmap
+
+We will create a heatmap to visualize the spatio-temporal evolution of vegetative period in the Chaudière-Appalaches region. The heatmap will show the average vegetative period for each year over the past 20 years.
+
+```{r}
+#| eval: FALSE
+library(hrbrthemes)
+
+gg<-ggplot(vegperiod_dt, aes(year, MRS_NM_MRC, fill= vege_period)) + 
+  geom_tile() +
+  scale_fill_distiller(palette = "RdYlBu") +
+  theme_ipsum() +
+  scale_x_continuous(breaks=seq(2003,2023,2), limits = c(2002.5, 2023.5))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank())+
+  labs(title = "Vegetative Period in Chaudière-Appalaches",
+       fill = "Days")+
+  theme(legend.position = "right")
+gg
+```
+
+
+```{r, out.width='100%', fig.align='center'}
+#| echo: FALSE
+magick::image_read("featured.png")
+```
+
+
+# Conclusion
+
+The heatmap shows the spatio-temporal evolution of the vegetative period in the Chaudières-Appalaches region over the past 20 years. The vegetative period is the period of the year when plants grow and develop. The heatmap shows that the vegetative period has been increasing over the past 20 years, which could be due to climate change. The heatmap provides valuable information for farmers and policymakers to make informed decisions about agriculture and land use in the region.
+
+
+<!-- AWeber Web Form Generator 3.0.1 -->
+<style type="text/css">
+#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
+#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
+#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
+#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
+#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
+#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url("https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
+#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
+#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
+#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
+#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
+#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
+#af-form-88198013 .buttonContainer{text-align:center;}
+#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
+#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
+#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
+#af-form-88198013.af-quirksMode{overflow-x:hidden;}
+#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
+#af-form-88198013{overflow:hidden;}
+#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
+#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
+#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
+#af-form-88198013 .buttonContainer input.submit {width:auto;}
+#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
+#af-form-88198013 div {margin:0;}
+#af-form-88198013 {display:block;}
+#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
+#af-form-88198013 p { color:inherit;}
+#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
+#af-form-88198013 .bodyText p {margin:1em 0;}
+#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
+#af-form-88198013 fieldset {border:0;}
+.af-clear{clear:both;}
+.af-form{box-sizing:border-box; margin:auto; text-align:left;}
+.af-element{padding-bottom:5px; padding-top:5px;}
+.af-form-wrapper{text-indent: 0;}
+.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
+.af-body input.submit{white-space: inherit;}
+.af-body input.text{width:100%; padding:2px!important;}
+.af-body .af-textWrap{text-align:left;}
+.af-element label{float:left; text-align:left;}
+.lbl-right .af-element label{text-align:right;}
+.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
+.af-body.af-standards input.submit{padding:4px 12px;}
+.af-body input.image{border:none!important;}
+.af-body input.text{float:none;}
+.af-element label{display:block; float:left;}
+.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
+body {
+}
+
+#af-form-88198013 .af-body .af-textWrap {
+  width: 100% !important;
+}
+
+#af-form-88198013 .af-body .af-element {
+  padding-top: 0px!important;
+  padding-bottom: 0.5rem!important;
+}
+#af-form-88198013 .af-body .af-element:first-child {
+  margin-top: 0 !important;
+}
+#af-form-88198013 .af-body input.text,
+#af-form-88198013 .af-body textarea {
+  box-sizing: border-box !important;
+  border-radius:2px;
+  margin-bottom: 0.75rem !important;
+  padding: 8px 12px !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
+#af-form-88198013 .af-body select {
+  width: 100%;
+}
+#af-form-88198013 .choiceList-radio-stacked {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+#af-form-88198013 .af-element-radio {
+  margin: 0 !important;
+}
+#af-form-88198013 .af-element-radio input.radio {
+  display: inline;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  width: 0;
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label {
+  font-weight: 700 !important;
+}
+#af-form-88198013 .af-element-radio input.radio:focus ~ label {
+  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
+}
+#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
+  background-color: #777777;
+  border-color: #d6dee3;
+}
+#af-form-88198013 .af-element-radio label.choice {
+  display: block !important;
+  font-weight: 300 !important;
+  margin: 0rem 0rem 0.5rem 1rem !important;
+  padding: 0.25rem 1rem !important;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-element-radio label.choice:before {
+  background-color: #FFF;
+  border: 1px solid #d6dee3;
+  border-radius: 50%;
+  content: '';
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  margin-left: -1.3rem;
+  position: absolute;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  width: 0.75rem;
+}
+#af-form-88198013 .af-selectWrap, 
+#af-form-88198013 .af-dateWrap {
+  width:100% !important;
+  margin: 0.5rem 0rem 0.5rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+#af-form-88198013 .af-selectWrap select {
+  padding: 0.5rem !important;
+  height: 2.5rem;
+}
+#af-form-88198013 .af-dateWrap select {
+  width: 32% !important;
+  height: 2.5rem;
+  padding: 0.5rem !important;
+  margin: 0rem 0rem 0.75rem 0rem !important;
+}
+#af-form-88198013 .af-checkWrap {
+  padding: 0.5rem 0.5rem 0.75rem !important;
+}
+#af-form-88198013 .buttonContainer {
+  box-sizing: border-box !important;
+}
+#af-form-88198013 .af-footer {
+  box-sizing: border-box !important;
+}
+
+#af-form-88198013 .af-footer p {
+  margin: 0 !important;
+}
+#af-form-88198013 input.submit,
+#af-form-88198013 #webFormSubmitButton {
+  border: none;
+  border-radius:2px;
+  font-weight: bold;
+  margin-top: 0.75rem !important;
+  margin-bottom: 1.5rem !Important;
+  padding: 0.75rem 2rem !important;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  }
+#af-form-88198013 input.submit:hover,
+#af-form-88198013 #webFormSubmitButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+#af-form-88198013 input.text:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.poweredBy a,
+.privacyPolicy p {
+  color: #333333 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0rem !important;
+}
+</style>
+<form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl"  >
+<div style="display: none;">
+<input type="hidden" name="meta_web_form_id" value="88198013" />
+<input type="hidden" name="meta_split_id" value="" />
+<input type="hidden" name="listname" value="awlist6634098" />
+<input type="hidden" name="redirect" value="https://www.aweber.com/thankyou-coi.htm?m=text" id="redirect_54bc847594a3cbc94af88c076598c2e4" />
+
+<input type="hidden" name="meta_adtracking" value="Sign_Up_Form" />
+<input type="hidden" name="meta_message" value="1" />
+<input type="hidden" name="meta_required" value="name,email" />
+
+<input type="hidden" name="meta_tooltip" value="" />
+</div>
+<div id="af-form-88198013" class="af-form"><div id="af-header-88198013" class="af-header"><div class="bodyText"><h5><br><span style="font-size:36px;"><strong>WANT MORE?</strong></span></h5><p>Sign up for exclusive content, emails &amp; things I doesn’t share anywhere else.</p></div></div><div id="af-body-88198013" class="af-body af-standards">
+<div class="af-element">
+<label class="previewLabel" for="awf_field-117870704">Name:</label>
+<div class="af-textWrap">
+<input id="awf_field-117870704" type="text" name="name" class="text" value="" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';} " tabindex="500" />
+</div>
+<div class="af-clear"></div>
+</div><div class="af-element">
+<label class="previewLabel" for="awf_field-117870705">Email:</label>
+<div class="af-textWrap"><input class="text" id="awf_field-117870705" type="email" name="email" value="" tabindex="501" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';}" />
+</div><div class="af-clear"></div>
+</div><div class="af-element buttonContainer">
+<input name="submit" class="submit" type="submit" value="Let&#x27;s do it!" tabindex="502" />
+<div class="af-clear"></div>
+</div><div class="af-element privacyPolicy" style="text-align: center"><p>We respect your <a title="Privacy Policy" href="https://www.aweber.com/permission.htm" target="_blank" rel="nofollow">email privacy</a></p>
+<div class="af-clear"></div>
+</div><div class="af-element poweredBy" style="text-align: center; font-size: 9px;"><p><a href="https://www.aweber.com" title="AWeber Email Marketing" target="_blank" rel="nofollow">Powered by AWeber Email Marketing</a></p>
+<div class="af-clear"></div>
+</div>
+</div>
+<div id="af-footer-88198013" class="af-footer"><div class="bodyText"><p>&nbsp;</p></div></div></div>
+<div style="display: none;"><img src="https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=" alt="" /></div>
+</form>
+
+
+<!-- /AWeber Web Form Generator 3.0.1 -->
+
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
