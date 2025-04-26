@@ -732,7 +732,7 @@ gdd_dt |>
 
 No anomalies were detected in the growing degree days data. This indicates that the dataset is consistent and reliable for forecasting purposes.
 
-## Conclusion
+# Conclusion
 
 In this study, we conducted an exploratory data analysis of temperature data for Chaudières-Appalaches. We analyzed the temporal and spatial trends, identified anomalies, and explored the relationship between temperature and vegetation period. Our analysis revealed that temperature levels have increased over the past 20 years, with significant spatial variations across the region. We also found that the vegetation period and growing degree days have increased over time, indicating favorable conditions for plant growth. By understanding these trends and patterns, we can develop more accurate forecasting models that account for both temporal and spatial dependencies in the data. This will help us make informed decisions about agricultural practices, land management, and climate change adaptation strategies in the region.
 
@@ -829,7 +829,5 @@ sessionInfo()
     [121] hoardr_0.5.5        memoise_2.0.1       quantmod_0.4.26    
     [124] DiceDesign_1.10    
 
-<head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>
-</head>

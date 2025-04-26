@@ -419,7 +419,7 @@ print(animation, info = FALSE)
 
 This animation shows the monthly precipitation anomalies in Chaudière-Appalaches over the past 30 years. The blue bars represent positive anomalies, while the red bars represent negative anomalies.
 
-## Conclusion
+# Conclusion
 
 In this analysis, we explored 30 years of precipitation data from the AgERA5 dataset for Quebec using Exploratory Data Analysis (EDA) techniques. By analyzing long-term precipitation trends, seasonal variations, and anomalies, we uncovered valuable insights into how rainfall patterns have evolved over the past tree decades.
 
@@ -510,7 +510,5 @@ sessionInfo()
     [109] ipred_0.9-15        xts_0.14.1          prodlim_2024.06.25 
     [112] e1071_1.7-16        crayon_1.5.3        rlang_1.1.5        
 
-<head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>
-</head>

@@ -341,7 +341,7 @@ DT::datatable(valid) |>
 
 So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.
 
-## Conclusion
+# Conclusion
 
 In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, but can't really capture complex climate patterns. By evaluating the model's performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.
 
@@ -425,7 +425,5 @@ sessionInfo()
     [91] xts_0.14.1          prodlim_2024.06.25  e1071_1.7-16       
     [94] crayon_1.5.3        rlang_1.1.5        
 
-<head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>
-</head>

@@ -405,7 +405,7 @@ print(animation, info = FALSE)
 
 ![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.gif)
 
-## Conclusion
+# Conclusion
 
 In this analysis, we explored machine learning approaches to predict future emissions in the St. Lawrence Lowlands. We trained three models -Random Forest, XGBoost, and ARIMA- and evaluated their performance using the root mean square error (RMSE) metric. The Random Forest model outperformed the other models, capturing complex climate patterns and providing accurate predictions for future emissions. This model can be used to guide climate analysis, agriculture, and water resource management in the region.
 
@@ -497,7 +497,5 @@ sessionInfo()
     [112] prodlim_2024.06.25   e1071_1.7-16         crayon_1.5.3        
     [115] rlang_1.1.5         
 
-<head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>
-</head>

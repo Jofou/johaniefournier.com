@@ -265,7 +265,5 @@ sessionInfo()
     [106] gstat_2.1-2         crayon_1.5.3        rlang_1.1.5        
     [109] cowplot_1.1.3      
 
-<head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>
-</head>

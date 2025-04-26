@@ -822,7 +822,5 @@ sessionInfo()
     [124] hoardr_0.5.5        memoise_2.0.1       quantmod_0.4.26    
     [127] DiceDesign_1.10    
 
-<head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>
-</head>

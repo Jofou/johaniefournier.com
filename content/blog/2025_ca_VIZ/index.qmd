@@ -417,6 +417,6 @@ In this tutorial, we explored how to download, process, and visualize CMIP6 clim
 sessionInfo()
 ```
 
-<head><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script></head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
+     crossorigin="anonymous"></script>
 

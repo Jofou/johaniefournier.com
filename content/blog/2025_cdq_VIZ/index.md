@@ -357,7 +357,5 @@ sessionInfo()
     [82] htmltools_0.5.8.1   lifecycle_1.0.4     hardhat_1.4.0      
     [85] MASS_7.3-64        
 
-<head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>
-</head>
