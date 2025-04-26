@@ -22,6 +22,8 @@ adsense:
   publisher-id: ca-pub-7674504334497845
 filters:
 - adsense
+resources:
+ - ads.txt 
 ---
 
 <script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>

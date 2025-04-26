@@ -22,6 +22,8 @@ adsense:
   publisher-id: ca-pub-7674504334497845
 filters:
 - adsense
+resources:
+ - ads.txt 
 ---
 
 <link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />

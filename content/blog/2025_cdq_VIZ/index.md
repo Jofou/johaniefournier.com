@@ -18,6 +18,8 @@ adsense:
   publisher-id: ca-pub-7674504334497845
 filters:
 - adsense
+resources:
+ - ads.txt 
 ---
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>

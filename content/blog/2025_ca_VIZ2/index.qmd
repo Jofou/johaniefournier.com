@@ -22,6 +22,8 @@ adsense:
   publisher-id: ca-pub-7674504334497845
 filters:
 - adsense
+resources:
+ - ads.txt 
 ---
 
 ```{r setup}
