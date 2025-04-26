@@ -13,7 +13,7 @@
       <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/blog/ca_temperature_viz/</guid>
-      <description>This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using {leaflet} and {leaflet.extras2} R packages.</description>
+      <description>This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using leaflet and leaflet.extras2 R packages.</description>
     </item>
     
     <item>
