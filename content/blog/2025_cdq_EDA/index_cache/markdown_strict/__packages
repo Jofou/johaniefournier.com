@@ -41,3 +41,6 @@ tidytuesdayR
 jofou.lib
 reticulate
 anomalize
+ecmwfr
+ncdf4
+KrigR

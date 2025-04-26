@@ -15,12 +15,12 @@ tags:
   - tidymodels
   - tidytuesday
   - viz
-summary: "{pollen} and {vegperiod} are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region."
+summary: "pollen and vegperiod are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region."
 editor_options: 
   chunk_output_type: inline
 ---
 
-<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
 
 <br>
@@ -45,9 +45,13 @@ By the end of this analysis, readers will gain a deeper understanding of climate
 
 ## Get the data
 
+{{% youtube "1cEWpLH3oAk" %}}
+
 ### Region borders
 
 We need the polygon of the region of interest. We will use the `rgeoboundaries` package to extract the polygon of Quebec.
+
+{{% youtube "K5khtyIdnbk" %}}
 
 ``` r
 qc_sf <- rgeoboundaries::gb_adm2(country = "CAN") |>
@@ -68,7 +72,7 @@ qc_sf #geographic coordinate
 plot(qc_sf$geometry)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="1260" />
 
 ### Temperature data
 
@@ -378,7 +382,7 @@ ggplot(data=temp_dt_year, aes(x=year, y=sum))+
   geom_smooth(method="lm", se=FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" width="1260" />
 
 We can see that the temperature has increased over the past 20 years.
 
@@ -391,7 +395,7 @@ mean<- app(temperature_raw, fun = "mean", na.rm = TRUE)
 plot(mean)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="1260" />
 
 The mean of temperature for the last 20 years is different for each location in the raster, with more hight temperature in the western section.
 
@@ -419,11 +423,13 @@ group_by(year, lon, lat) |>
         plot.title = element_text(hjust = 0, face = "bold", size=15.5))
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="1260" />
 
 This graph shows the spatial distribution of temperature over time. The color intensity represents the mean temperature for the year, with darker colors indicating coolest values. This clearly indicates that temperature levels vary across the region and the years.
 
 ## Anomalies and outliers
+
+{{% youtube "8jbBqnPZkZc" %}}
 
 Are there any anomalies or outliers in the temperature data? Let's investigate!
 
@@ -447,7 +453,7 @@ temp_dt |>
   theme(plot.title = element_text(hjust = 0, face = "bold", size=15.5))
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="1260" />
 
 What are monthly temperature anomalies?
 
@@ -466,15 +472,9 @@ temp_dt |>
   theme(plot.title = element_text(hjust = 0, face = "bold", size=15.5))
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="1260" />
 
 This graph does not show any monthly precipitation anomalies and does not show the seasonality of precipitation.
-
-> **How are you doing whit this code?**
->
-> If you're OK, keep reading!
->
-> If you're struggling, I see you. I've been there. Trying to make sense of all that alone can be a lot. But you're not alone. I'm here to help you. I'm preparing a something special. You can join the wait list to be the first to know when it's ready [here](johanie-fournier-s-school.teachable.com/p/geos-data-analysis-tutorials)
 
 # Vegetation period
 
@@ -523,7 +523,7 @@ ggplot(data=vegperiod_dt_year, aes(x=year, y=mean))+
   geom_smooth(method="lm", se=FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="1260" />
 
 We can see that the vegetation period has increased over the past 20 years.
 
@@ -542,7 +542,7 @@ vege_rast<-vegperiod_dt |>
 plot(vege_rast)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="1260" />
 
 The vegetation period is on average longueur in the western section by 15 days!
 
@@ -567,7 +567,7 @@ group_by(year, lon, lat) |>
         plot.title = element_text(hjust = 0, face = "bold", size=15.5))
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="1260" />
 
 This graph shows the spatial distribution of vegetation period over time. The color intensity represents the mean vegetation period for the year, with darker colors indicating shorter periods. This clearly indicates that vegetation period levels vary across the region and the years.
 
@@ -595,7 +595,7 @@ vegperiod_dt |>
   theme(plot.title = element_text(hjust = 0, face = "bold", size=15.5))
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="1260" />
 
 Some years have a shorter vegetation period than others. This could be due to extreme weather events or other factors that affect plant growth.
 
@@ -646,7 +646,7 @@ ggplot(data=vegperiod_dt_year, aes(x=year, y=mean))+
   geom_smooth(method="lm", se=FALSE)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="1260" />
 
 We can see that the growing degree days has increased over the past 20 years.
 
@@ -665,7 +665,7 @@ gdd_rast<-gdd_dt |>
 plot(gdd_rast)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.png" width="1260" />
 
 The growing degree days is on average longest in the western section by 300 degree!
 
@@ -690,11 +690,13 @@ group_by(year, lon, lat) |>
         plot.title = element_text(hjust = 0, face = "bold", size=15.5))
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-27-1.png" width="1260" />
 
 This graph shows the spatial distribution of growing degree days over time. The color intensity represents the mean growing degree days for the year, with darker colors indicating hotter values. This clearly indicates that growing degree days levels vary across the region and the years.
 
 ## Anomalies and outliers
+
+{{% youtube "8jbBqnPZkZc" %}}
 
 Are there any anomalies or outliers in the data? Let's investigate!
 
@@ -718,7 +720,7 @@ gdd_dt |>
   theme(plot.title = element_text(hjust = 0, face = "bold", size=15.5))
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-29-1.png" width="1260" />
 
 No anomalies were detected in the growing degree days data. This indicates that the dataset is consistent and reliable for forecasting purposes.
 
@@ -726,236 +728,14 @@ No anomalies were detected in the growing degree days data. This indicates that 
 
 In this study, we conducted an exploratory data analysis of temperature data for Chaudières-Appalaches. We analyzed the temporal and spatial trends, identified anomalies, and explored the relationship between temperature and vegetation period. Our analysis revealed that temperature levels have increased over the past 20 years, with significant spatial variations across the region. We also found that the vegetation period and growing degree days have increased over time, indicating favorable conditions for plant growth. By understanding these trends and patterns, we can develop more accurate forecasting models that account for both temporal and spatial dependencies in the data. This will help us make informed decisions about agricultural practices, land management, and climate change adaptation strategies in the region.
 
-<!-- AWeber Web Form Generator 3.0.1 -->
-<style type="text/css">
-#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
-#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
-#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
-#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
-#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
-#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
-#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url("https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
-#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
-#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
-#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
-#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
-#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
-#af-form-88198013 .buttonContainer{text-align:center;}
-#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
-#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
-#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
-#af-form-88198013.af-quirksMode{overflow-x:hidden;}
-#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
-#af-form-88198013{overflow:hidden;}
-#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
-#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
-#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
-#af-form-88198013 .buttonContainer input.submit {width:auto;}
-#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
-#af-form-88198013 div {margin:0;}
-#af-form-88198013 {display:block;}
-#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
-#af-form-88198013 p { color:inherit;}
-#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
-#af-form-88198013 .bodyText p {margin:1em 0;}
-#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
-#af-form-88198013 fieldset {border:0;}
-.af-clear{clear:both;}
-.af-form{box-sizing:border-box; margin:auto; text-align:left;}
-.af-element{padding-bottom:5px; padding-top:5px;}
-.af-form-wrapper{text-indent: 0;}
-.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
-.af-body input.submit{white-space: inherit;}
-.af-body input.text{width:100%; padding:2px!important;}
-.af-body .af-textWrap{text-align:left;}
-.af-element label{float:left; text-align:left;}
-.lbl-right .af-element label{text-align:right;}
-.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
-.af-body.af-standards input.submit{padding:4px 12px;}
-.af-body input.image{border:none!important;}
-.af-body input.text{float:none;}
-.af-element label{display:block; float:left;}
-.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
-body {
-}
+# Sign up for the newsletter
 
-#af-form-88198013 .af-body .af-textWrap {
-  width: 100% !important;
-}
+<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
+</a>
 
-#af-form-88198013 .af-body .af-element {
-  padding-top: 0px!important;
-  padding-bottom: 0.5rem!important;
-}
-#af-form-88198013 .af-body .af-element:first-child {
-  margin-top: 0 !important;
-}
-#af-form-88198013 .af-body input.text,
-#af-form-88198013 .af-body textarea {
-  box-sizing: border-box !important;
-  border-radius:2px;
-  margin-bottom: 0.75rem !important;
-  padding: 8px 12px !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
+<br>
 
-#af-form-88198013 .af-body select {
-  width: 100%;
-}
-#af-form-88198013 .choiceList-radio-stacked {
-  margin-bottom: 1rem !important;
-  width: 100% !important;
-}
-#af-form-88198013 .af-element-radio {
-  margin: 0 !important;
-}
-#af-form-88198013 .af-element-radio input.radio {
-  display: inline;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  width: 0;
-}
-#af-form-88198013 .af-element-radio input.radio:checked ~ label {
-  font-weight: 700 !important;
-}
-#af-form-88198013 .af-element-radio input.radio:focus ~ label {
-  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
-}
-#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
-  background-color: #777777;
-  border-color: #d6dee3;
-}
-#af-form-88198013 .af-element-radio label.choice {
-  display: block !important;
-  font-weight: 300 !important;
-  margin: 0rem 0rem 0.5rem 1rem !important;
-  padding: 0.25rem 1rem !important;
-  position: relative;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
-#af-form-88198013 .af-element-radio label.choice:before {
-  background-color: #FFF;
-  border: 1px solid #d6dee3;
-  border-radius: 50%;
-  content: '';
-  height: 0.75rem;
-  margin-top: 0.25rem;
-  margin-left: -1.3rem;
-  position: absolute;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-  width: 0.75rem;
-}
-#af-form-88198013 .af-selectWrap, 
-#af-form-88198013 .af-dateWrap {
-  width:100% !important;
-  margin: 0.5rem 0rem 0.5rem !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
-#af-form-88198013 .af-selectWrap select {
-  padding: 0.5rem !important;
-  height: 2.5rem;
-}
-#af-form-88198013 .af-dateWrap select {
-  width: 32% !important;
-  height: 2.5rem;
-  padding: 0.5rem !important;
-  margin: 0rem 0rem 0.75rem 0rem !important;
-}
-#af-form-88198013 .af-checkWrap {
-  padding: 0.5rem 0.5rem 0.75rem !important;
-}
-#af-form-88198013 .buttonContainer {
-  box-sizing: border-box !important;
-}
-#af-form-88198013 .af-footer {
-  box-sizing: border-box !important;
-}
-
-#af-form-88198013 .af-footer p {
-  margin: 0 !important;
-}
-#af-form-88198013 input.submit,
-#af-form-88198013 #webFormSubmitButton {
-  border: none;
-  border-radius:2px;
-  font-weight: bold;
-  margin-top: 0.75rem !important;
-  margin-bottom: 1.5rem !Important;
-  padding: 0.75rem 2rem !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-  }
-#af-form-88198013 input.submit:hover,
-#af-form-88198013 #webFormSubmitButton:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-#af-form-88198013 input.text:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.poweredBy a,
-.privacyPolicy p {
-  color: #333333 !important;
-  font-size: 0.75rem !important;
-  margin-bottom: 0rem !important;
-}
-</style>
-<form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl">
-
-<input type="hidden" name="meta_web_form_id" value="88198013" />
-<input type="hidden" name="meta_split_id" value="" />
-<input type="hidden" name="listname" value="awlist6634098" />
-<input type="hidden" name="redirect" value="https://www.aweber.com/thankyou-coi.htm?m=text" id="redirect_54bc847594a3cbc94af88c076598c2e4" />
-
-<input type="hidden" name="meta_adtracking" value="Sign_Up_Form" />
-<input type="hidden" name="meta_message" value="1" />
-<input type="hidden" name="meta_required" value="name,email" />
-
-<input type="hidden" name="meta_tooltip" value="" />
-
-<h5>
-<br><span style="font-size:36px;"><strong>WANT MORE?</strong></span>
-</h5>
-<p>
-Sign up for exclusive content, emails & things I doesn't share anywhere else.
-</p>
-
-<label class="previewLabel" for="awf_field-117870704">Name:</label>
-
-<input id="awf_field-117870704" type="text" name="name" class="text" value="" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';} " tabindex="500" />
-
-<label class="previewLabel" for="awf_field-117870705">Email:</label>
-
-<input class="text" id="awf_field-117870705" type="email" name="email" value="" tabindex="501" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';}" />
-
-<input name="submit" class="submit" type="submit" value="Let&#x27;s do it!" tabindex="502" />
-
-<p>
-We respect your <a title="Privacy Policy" href="https://www.aweber.com/permission.htm" target="_blank" rel="nofollow">email privacy</a>
-</p>
-
-<p>
-<a href="https://www.aweber.com" title="AWeber Email Marketing" target="_blank" rel="nofollow">Powered by AWeber Email Marketing</a>
-</p>
-
-<p>
- 
-</p>
-
-<img src="https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=" alt="" />
-
-</form>
-<!-- /AWeber Web Form Generator 3.0.1 -->
-
-## Session Info
+# Session Info
 
 ``` r
 sessionInfo()
@@ -963,7 +743,7 @@ sessionInfo()
 
     R version 4.4.2 (2024-10-31)
     Platform: aarch64-apple-darwin20
-    Running under: macOS Sequoia 15.3
+    Running under: macOS Sequoia 15.3.2
 
     Matrix products: default
     BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -998,43 +778,51 @@ sessionInfo()
     [46] knitr_1.49          
 
     loaded via a namespace (and not attached):
-      [1] countrycode_1.6.0   splines_4.4.2       hardhat_1.4.0      
-      [4] xts_0.14.1          rpart_4.1.24        lifecycle_1.0.4    
-      [7] globals_0.16.3      lattice_0.22-6      MASS_7.3-64        
-     [10] backports_1.5.0     magrittr_2.0.3      rmarkdown_2.29     
-     [13] yaml_2.3.10         fracdiff_1.5-3      zip_2.3.1          
-     [16] sp_2.1-4            cowplot_1.1.3       pbapply_1.7-2      
-     [19] DBI_1.2.3           abind_1.4-8         quadprog_1.5-8     
-     [22] nnet_7.3-20         tweenr_2.0.3        rappdirs_0.3.3     
-     [25] ipred_0.9-15        lava_1.8.1          listenv_0.9.1      
-     [28] crul_1.5.0          sweep_0.2.5         units_0.8-5        
-     [31] parallelly_1.41.0   svglite_2.1.3       codetools_0.2-20   
-     [34] gstat_2.1-2         xml2_1.3.6          tidyselect_1.2.1   
-     [37] httpcode_0.3.0      farver_2.1.2        urca_1.3-4         
-     [40] viridis_0.6.5       base64enc_0.1-3     jsonlite_1.8.9     
-     [43] e1071_1.7-16        survival_3.8-3      iterators_1.0.14   
-     [46] systemfonts_1.2.1   tools_4.4.2         progress_1.2.3     
-     [49] snow_0.4-4          Rcpp_1.0.14         glue_1.8.0         
-     [52] prodlim_2024.06.25  gridExtra_2.3       xfun_0.50          
-     [55] TTR_0.24.4          withr_3.0.2         fastmap_1.2.0      
-     [58] digest_0.6.37       timechange_0.3.0    R6_2.5.1           
-     [61] colorspace_2.1-1    generics_0.1.3      intervals_0.15.5   
-     [64] renv_1.0.7          data.table_1.16.4   FNN_1.1.4.1        
-     [67] class_7.3-23        prettyunits_1.2.0   httr_1.4.7         
-     [70] pkgconfig_2.0.3     gtable_0.3.6        timeDate_4041.110  
-     [73] forecast_8.23.0     GPfit_1.0-8         lmtest_0.9-40      
-     [76] furrr_0.3.1         htmltools_0.5.8.1   tseries_0.10-58    
-     [79] automap_1.1-12      png_0.1-8           doSNOW_1.0.20      
-     [82] gower_1.0.2         rstudioapi_0.17.1   tzdb_0.4.0         
-     [85] spacetime_1.3-2     nlme_3.1-166        curl_6.1.0         
-     [88] repr_1.1.7          proxy_0.4-27        cachem_1.1.0       
-     [91] zoo_1.8-12          KernSmooth_2.23-26  parallel_4.4.2     
-     [94] pillar_1.10.1       reshape_0.8.9       vctrs_0.6.5        
-     [97] ggfittext_0.10.2    lhs_1.2.0           evaluate_1.0.3     
-    [100] magick_2.8.5        cli_3.6.3           compiler_4.4.2     
-    [103] rlang_1.1.5         crayon_1.5.3        future.apply_1.11.3
-    [106] labeling_0.4.3      classInt_0.4-11     plyr_1.8.9         
-    [109] stringi_1.8.4       viridisLite_0.4.2   stars_0.6-7        
-    [112] assertthat_0.2.1    munsell_0.5.1       Matrix_1.7-2       
-    [115] hms_1.1.3           tibbletime_0.1.9    hoardr_0.5.5       
-    [118] memoise_2.0.1       quantmod_0.4.26     DiceDesign_1.10    
+      [1] countrycode_1.6.0   splines_4.4.2       urltools_1.7.3     
+      [4] triebeard_0.4.1     hardhat_1.4.0       xts_0.14.1         
+      [7] rpart_4.1.24        lifecycle_1.0.4     globals_0.16.3     
+     [10] lattice_0.22-6      MASS_7.3-64         backports_1.5.0    
+     [13] magrittr_2.0.3      rmarkdown_2.29      yaml_2.3.10        
+     [16] fracdiff_1.5-3      zip_2.3.1           sp_2.1-4           
+     [19] cowplot_1.1.3       pbapply_1.7-2       DBI_1.2.3          
+     [22] abind_1.4-8         quadprog_1.5-8      nnet_7.3-20        
+     [25] tweenr_2.0.3        rappdirs_0.3.3      ipred_0.9-15       
+     [28] lava_1.8.1          listenv_0.9.1       crul_1.5.0         
+     [31] sweep_0.2.5         units_0.8-5         parallelly_1.41.0  
+     [34] svglite_2.1.3       codetools_0.2-20    gstat_2.1-2        
+     [37] xml2_1.3.6          tidyselect_1.2.1    httpcode_0.3.0     
+     [40] farver_2.1.2        urca_1.3-4          viridis_0.6.5      
+     [43] base64enc_0.1-3     jsonlite_1.8.9      e1071_1.7-16       
+     [46] survival_3.8-3      iterators_1.0.14    systemfonts_1.2.1  
+     [49] tools_4.4.2         progress_1.2.3      snow_0.4-4         
+     [52] Rcpp_1.0.14         glue_1.8.0          prodlim_2024.06.25 
+     [55] gridExtra_2.3       xfun_0.50           mgcv_1.9-1         
+     [58] TTR_0.24.4          withr_3.0.2         fastmap_1.2.0      
+     [61] blogdown_1.20       digest_0.6.37       timechange_0.3.0   
+     [64] R6_2.5.1            mime_0.12           colorspace_2.1-1   
+     [67] wk_0.9.4            generics_0.1.3      intervals_0.15.5   
+     [70] renv_1.0.7          data.table_1.16.4   FNN_1.1.4.1        
+     [73] class_7.3-23        prettyunits_1.2.0   httr_1.4.7         
+     [76] pkgconfig_2.0.3     gtable_0.3.6        timeDate_4041.110  
+     [79] forecast_8.23.0     lmtest_0.9-40       GPfit_1.0-8        
+     [82] furrr_0.3.1         htmltools_0.5.8.1   tseries_0.10-58    
+     [85] automap_1.1-12      png_0.1-8           doSNOW_1.0.20      
+     [88] gower_1.0.2         rstudioapi_0.17.1   tzdb_0.4.0         
+     [91] spacetime_1.3-2     nlme_3.1-166        curl_6.1.0         
+     [94] repr_1.1.7          proxy_0.4-27        cachem_1.1.0       
+     [97] zoo_1.8-12          KernSmooth_2.23-26  parallel_4.4.2     
+    [100] s2_1.1.7            pillar_1.10.1       reshape_0.8.9      
+    [103] vctrs_0.6.5         ggfittext_0.10.2    lhs_1.2.0          
+    [106] evaluate_1.0.3      magick_2.8.5        cli_3.6.3          
+    [109] compiler_4.4.2      rlang_1.1.5         crayon_1.5.3       
+    [112] future.apply_1.11.3 labeling_0.4.3      classInt_0.4-11    
+    [115] plyr_1.8.9          stringi_1.8.4       viridisLite_0.4.2  
+    [118] stars_0.6-7         assertthat_0.2.1    munsell_0.5.1      
+    [121] Matrix_1.7-2        hms_1.1.3           tibbletime_0.1.9   
+    [124] hoardr_0.5.5        memoise_2.0.1       quantmod_0.4.26    
+    [127] DiceDesign_1.10    
+
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
+     crossorigin="anonymous"></script>
+</head>

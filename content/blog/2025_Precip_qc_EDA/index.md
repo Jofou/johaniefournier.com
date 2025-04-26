@@ -32,7 +32,7 @@ editor_options:
 <script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 
 
-<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
 
 <br>
@@ -56,9 +56,13 @@ This analysis will help uncover climate patterns, extreme weather events, and pr
 
 ## Get the data
 
+{{% youtube "1cEWpLH3oAk" %}}
+
 ### Country borders
 
 We need the polygon of the region of interest. We will use the `rgeoboundaries` package to extract the polygon of Quebec.
+
+{{% youtube "K5khtyIdnbk" %}}
 
 ``` r
 qc_sf <- rgeoboundaries::gb_adm2(country = "CAN") |>
@@ -102,7 +106,7 @@ qc_sf #geographic coordinate
 plot(qc_sf$geometry)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="1260" />
 
 ### Precipitation data
 
@@ -239,7 +243,7 @@ ggplot(data=precipitation_dt_year, aes(x=year, y=sum))+
   geom_line()
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="1260" />
 
 Precipitation has increased over time.
 
@@ -261,7 +265,7 @@ ggplot(data=precipitation_dt_site,
   ylab("Precipitation for 30 years (m) over Capitale-Nationale")
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" width="1260" />
 
 The total precipitation for 30 years is different for each *shapeName*.
 
@@ -285,11 +289,15 @@ precipitation_dt |>
     )
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="1260" />
 
 The trend looks similar for all the *shapeName* but the values are different.
 
 ## Anomalies and outliers
+
+{{% youtube "8jbBqnPZkZc" %}}
+
+Back to the tutorial!
 
 Are there any anomalies or outliers in the precipitation data? Let's investigate!
 
@@ -312,7 +320,7 @@ precipitation_dt |>
   plot_anomaly_decomposition()
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="1260" />
 
 ### Weather anomalies
 
@@ -349,8 +357,8 @@ DT::datatable(data_norm) |>
   DT::formatRound(c("mx","min","q25","q75","iqr"), digits=1)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-20aa3bcbff54f7c90012" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-20aa3bcbff54f7c90012">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],[1.983677047689511,2.351604149805041,2.064466129538289,1.584334930177135,1.601174762195797,1.010898653903297,0.8875683911325893,0.9303366507165407,1.011886222390984,1.5695833653335,1.210498447591448,2.429992381249335],[-3.692583086060907,-3.121678171011752,-2.048590502037001,-1.376858755959489,-1.678720484990734,-0.9325845831535702,-0.8808372815981613,-0.7761996166413923,-0.9810709662076107,-1.275540296228186,-1.453862609557035,-2.213939206270055],[-0.7444417410283748,-0.3531504994713544,-0.504599007134928,-0.366114106289988,-0.4330092376914294,-0.2869002727173076,-0.2909851576140312,-0.2635717933819564,-0.3252643677792193,-0.5075487314015561,-0.4615515679743289,-0.6376791040485941],[0.9634759045330092,0.6340730198896338,0.5124632211318598,0.3834008628466314,0.4530857351544846,0.2902091924472074,0.3066097042258669,0.233843929504399,0.3299036028324913,0.3778076821109018,0.6196425553043987,0.6872557826093981],[1.707917645561384,0.9872235193609882,1.017062228266788,0.7495149691366194,0.886094972845914,0.577109465164515,0.5975948618398981,0.4974157228863554,0.6551679706117106,0.8853564135124579,1.081194123278728,1.324934886657992]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>month_name_abb<\/th>\n      <th>mx<\/th>\n      <th>min<\/th>\n      <th>q25<\/th>\n      <th>q75<\/th>\n      <th>iqr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"month_name_abb","targets":1},{"name":"mx","targets":2},{"name":"min","targets":3},{"name":"q25","targets":4},{"name":"q75","targets":5},{"name":"iqr","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b3ab9e1b20448753e431" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b3ab9e1b20448753e431">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],[1.983677047689511,2.351604149805041,2.064466129538289,1.584334930177135,1.601174762195797,1.010898653903297,0.8875683911325893,0.9303366507165407,1.011886222390984,1.5695833653335,1.210498447591448,2.429992381249335],[-3.692583086060907,-3.121678171011752,-2.048590502037001,-1.376858755959489,-1.678720484990734,-0.9325845831535702,-0.8808372815981613,-0.7761996166413923,-0.9810709662076107,-1.275540296228186,-1.453862609557035,-2.213939206270055],[-0.7444417410283748,-0.3531504994713544,-0.504599007134928,-0.366114106289988,-0.4330092376914294,-0.2869002727173076,-0.2909851576140312,-0.2635717933819564,-0.3252643677792193,-0.5075487314015561,-0.4615515679743289,-0.6376791040485941],[0.9634759045330092,0.6340730198896338,0.5124632211318598,0.3834008628466314,0.4530857351544846,0.2902091924472074,0.3066097042258669,0.233843929504399,0.3299036028324913,0.3778076821109018,0.6196425553043987,0.6872557826093981],[1.707917645561384,0.9872235193609882,1.017062228266788,0.7495149691366194,0.886094972845914,0.577109465164515,0.5975948618398981,0.4974157228863554,0.6551679706117106,0.8853564135124579,1.081194123278728,1.324934886657992]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>month_name_abb<\/th>\n      <th>mx<\/th>\n      <th>min<\/th>\n      <th>q25<\/th>\n      <th>q75<\/th>\n      <th>iqr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"month_name_abb","targets":1},{"name":"mx","targets":2},{"name":"min","targets":3},{"name":"q25","targets":4},{"name":"q75","targets":5},{"name":"iqr","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
 
 #### Create the graph
 
@@ -407,7 +415,7 @@ animation <- magick::image_read("gif/output.gif")
 print(animation, info = FALSE)
 ```
 
-![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.gif)
+![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.gif)
 
 This animation shows the monthly precipitation anomalies in Chaudière-Appalaches over the past 30 years. The blue bars represent positive anomalies, while the red bars represent negative anomalies.
 
@@ -415,236 +423,14 @@ This animation shows the monthly precipitation anomalies in Chaudière-Appalache
 
 In this analysis, we explored 30 years of precipitation data from the AgERA5 dataset for Quebec using Exploratory Data Analysis (EDA) techniques. By analyzing long-term precipitation trends, seasonal variations, and anomalies, we uncovered valuable insights into how rainfall patterns have evolved over the past tree decades.
 
-<!-- AWeber Web Form Generator 3.0.1 -->
-<style type="text/css">
-#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
-#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
-#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
-#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
-#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
-#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
-#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url("https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
-#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
-#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
-#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
-#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
-#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
-#af-form-88198013 .buttonContainer{text-align:center;}
-#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
-#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
-#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
-#af-form-88198013.af-quirksMode{overflow-x:hidden;}
-#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
-#af-form-88198013{overflow:hidden;}
-#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
-#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
-#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
-#af-form-88198013 .buttonContainer input.submit {width:auto;}
-#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
-#af-form-88198013 div {margin:0;}
-#af-form-88198013 {display:block;}
-#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
-#af-form-88198013 p { color:inherit;}
-#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
-#af-form-88198013 .bodyText p {margin:1em 0;}
-#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
-#af-form-88198013 fieldset {border:0;}
-.af-clear{clear:both;}
-.af-form{box-sizing:border-box; margin:auto; text-align:left;}
-.af-element{padding-bottom:5px; padding-top:5px;}
-.af-form-wrapper{text-indent: 0;}
-.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
-.af-body input.submit{white-space: inherit;}
-.af-body input.text{width:100%; padding:2px!important;}
-.af-body .af-textWrap{text-align:left;}
-.af-element label{float:left; text-align:left;}
-.lbl-right .af-element label{text-align:right;}
-.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
-.af-body.af-standards input.submit{padding:4px 12px;}
-.af-body input.image{border:none!important;}
-.af-body input.text{float:none;}
-.af-element label{display:block; float:left;}
-.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
-body {
-}
+# Sign up for the newsletter
 
-#af-form-88198013 .af-body .af-textWrap {
-  width: 100% !important;
-}
+<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
+</a>
 
-#af-form-88198013 .af-body .af-element {
-  padding-top: 0px!important;
-  padding-bottom: 0.5rem!important;
-}
-#af-form-88198013 .af-body .af-element:first-child {
-  margin-top: 0 !important;
-}
-#af-form-88198013 .af-body input.text,
-#af-form-88198013 .af-body textarea {
-  box-sizing: border-box !important;
-  border-radius:2px;
-  margin-bottom: 0.75rem !important;
-  padding: 8px 12px !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
+<br>
 
-#af-form-88198013 .af-body select {
-  width: 100%;
-}
-#af-form-88198013 .choiceList-radio-stacked {
-  margin-bottom: 1rem !important;
-  width: 100% !important;
-}
-#af-form-88198013 .af-element-radio {
-  margin: 0 !important;
-}
-#af-form-88198013 .af-element-radio input.radio {
-  display: inline;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  width: 0;
-}
-#af-form-88198013 .af-element-radio input.radio:checked ~ label {
-  font-weight: 700 !important;
-}
-#af-form-88198013 .af-element-radio input.radio:focus ~ label {
-  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
-}
-#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
-  background-color: #777777;
-  border-color: #d6dee3;
-}
-#af-form-88198013 .af-element-radio label.choice {
-  display: block !important;
-  font-weight: 300 !important;
-  margin: 0rem 0rem 0.5rem 1rem !important;
-  padding: 0.25rem 1rem !important;
-  position: relative;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
-#af-form-88198013 .af-element-radio label.choice:before {
-  background-color: #FFF;
-  border: 1px solid #d6dee3;
-  border-radius: 50%;
-  content: '';
-  height: 0.75rem;
-  margin-top: 0.25rem;
-  margin-left: -1.3rem;
-  position: absolute;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-  width: 0.75rem;
-}
-#af-form-88198013 .af-selectWrap, 
-#af-form-88198013 .af-dateWrap {
-  width:100% !important;
-  margin: 0.5rem 0rem 0.5rem !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
-#af-form-88198013 .af-selectWrap select {
-  padding: 0.5rem !important;
-  height: 2.5rem;
-}
-#af-form-88198013 .af-dateWrap select {
-  width: 32% !important;
-  height: 2.5rem;
-  padding: 0.5rem !important;
-  margin: 0rem 0rem 0.75rem 0rem !important;
-}
-#af-form-88198013 .af-checkWrap {
-  padding: 0.5rem 0.5rem 0.75rem !important;
-}
-#af-form-88198013 .buttonContainer {
-  box-sizing: border-box !important;
-}
-#af-form-88198013 .af-footer {
-  box-sizing: border-box !important;
-}
-
-#af-form-88198013 .af-footer p {
-  margin: 0 !important;
-}
-#af-form-88198013 input.submit,
-#af-form-88198013 #webFormSubmitButton {
-  border: none;
-  border-radius:2px;
-  font-weight: bold;
-  margin-top: 0.75rem !important;
-  margin-bottom: 1.5rem !Important;
-  padding: 0.75rem 2rem !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-  }
-#af-form-88198013 input.submit:hover,
-#af-form-88198013 #webFormSubmitButton:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-#af-form-88198013 input.text:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.poweredBy a,
-.privacyPolicy p {
-  color: #333333 !important;
-  font-size: 0.75rem !important;
-  margin-bottom: 0rem !important;
-}
-</style>
-<form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl">
-
-<input type="hidden" name="meta_web_form_id" value="88198013" />
-<input type="hidden" name="meta_split_id" value="" />
-<input type="hidden" name="listname" value="awlist6634098" />
-<input type="hidden" name="redirect" value="https://www.aweber.com/thankyou-coi.htm?m=text" id="redirect_54bc847594a3cbc94af88c076598c2e4" />
-
-<input type="hidden" name="meta_adtracking" value="Sign_Up_Form" />
-<input type="hidden" name="meta_message" value="1" />
-<input type="hidden" name="meta_required" value="name,email" />
-
-<input type="hidden" name="meta_tooltip" value="" />
-
-<h5>
-<br><span style="font-size:36px;"><strong>WANT MORE?</strong></span>
-</h5>
-<p>
-Sign up for exclusive content, emails & things I doesn't share anywhere else.
-</p>
-
-<label class="previewLabel" for="awf_field-117870704">Name:</label>
-
-<input id="awf_field-117870704" type="text" name="name" class="text" value="" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';} " tabindex="500" />
-
-<label class="previewLabel" for="awf_field-117870705">Email:</label>
-
-<input class="text" id="awf_field-117870705" type="email" name="email" value="" tabindex="501" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';}" />
-
-<input name="submit" class="submit" type="submit" value="Let&#x27;s do it!" tabindex="502" />
-
-<p>
-We respect your <a title="Privacy Policy" href="https://www.aweber.com/permission.htm" target="_blank" rel="nofollow">email privacy</a>
-</p>
-
-<p>
-<a href="https://www.aweber.com" title="AWeber Email Marketing" target="_blank" rel="nofollow">Powered by AWeber Email Marketing</a>
-</p>
-
-<p>
- 
-</p>
-
-<img src="https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=" alt="" />
-
-</form>
-<!-- /AWeber Web Form Generator 3.0.1 -->
-
-## Session Info
+# Session Info
 
 ``` r
 sessionInfo()
@@ -652,7 +438,7 @@ sessionInfo()
 
     R version 4.4.2 (2024-10-31)
     Platform: aarch64-apple-darwin20
-    Running under: macOS Sequoia 15.2
+    Running under: macOS Sequoia 15.3.2
 
     Matrix products: default
     BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -668,7 +454,7 @@ sessionInfo()
     [1] stats     graphics  grDevices datasets  utils     methods   base     
 
     other attached packages:
-     [1] anomalize_0.3.0      jofou.lib_0.0.0.9000 reticulate_1.40.0   
+     [1] anomalize_0.3.0      reticulate_1.40.0    jofou.lib_0.0.0.9000
      [4] tidytuesdayR_1.1.2   tictoc_1.2.1         rgeoboundaries_1.3.1
      [7] terra_1.8-10         sf_1.0-19            pins_1.4.0          
     [10] fs_1.6.5             timetk_2.9.0         yardstick_1.3.2     
@@ -688,38 +474,43 @@ sessionInfo()
       [1] rstudioapi_0.17.1   jsonlite_1.8.9      magrittr_2.0.3     
       [4] magick_2.8.5        farver_2.1.2        rmarkdown_2.29     
       [7] vctrs_0.6.5         memoise_2.0.1       hoardr_0.5.5       
-     [10] base64enc_0.1-3     htmltools_0.5.8.1   progress_1.2.3     
-     [13] curl_6.1.0          TTR_0.24.4          sass_0.4.9         
-     [16] parallelly_1.41.0   bslib_0.8.0         KernSmooth_2.23-26 
-     [19] htmlwidgets_1.6.4   zoo_1.8-12          cachem_1.1.0       
-     [22] ggfittext_0.10.2    mime_0.12           lifecycle_1.0.4    
-     [25] iterators_1.0.14    pkgconfig_2.0.3     Matrix_1.7-2       
-     [28] R6_2.5.1            fastmap_1.2.0       digest_0.6.37      
-     [31] colorspace_2.1-1    furrr_0.3.1         crosstalk_1.2.1    
-     [34] labeling_0.4.3      urltools_1.7.3      timechange_0.3.0   
-     [37] compiler_4.4.2      proxy_0.4-27        withr_3.0.2        
-     [40] tseries_0.10-58     backports_1.5.0     DBI_1.2.3          
-     [43] MASS_7.3-64         lava_1.8.1          rappdirs_0.3.3     
-     [46] classInt_0.4-11     tibbletime_0.1.9    tools_4.4.2        
-     [49] units_0.8-5         lmtest_0.9-40       quantmod_0.4.26    
-     [52] zip_2.3.1           future.apply_1.11.3 nnet_7.3-20        
-     [55] quadprog_1.5-8      glue_1.8.0          nlme_3.1-166       
-     [58] grid_4.4.2          generics_0.1.3      gtable_0.3.6       
-     [61] countrycode_1.6.0   tzdb_0.4.0          class_7.3-23       
-     [64] data.table_1.16.4   hms_1.1.3           xml2_1.3.6         
-     [67] pillar_1.10.1       splines_4.4.2       lhs_1.2.0          
-     [70] tweenr_2.0.3        lattice_0.22-6      renv_1.0.7         
-     [73] survival_3.8-3      tidyselect_1.2.1    urca_1.3-4         
-     [76] svglite_2.1.3       forecast_8.23.0     crul_1.5.0         
-     [79] xfun_0.50           hardhat_1.4.0       timeDate_4041.110  
-     [82] DT_0.33             stringi_1.8.4       DiceDesign_1.10    
-     [85] yaml_2.3.10         evaluate_1.0.3      codetools_0.2-20   
-     [88] httpcode_0.3.0      cli_3.6.3           rpart_4.1.24       
-     [91] systemfonts_1.2.1   jquerylib_0.1.4     repr_1.1.7         
-     [94] munsell_0.5.1       Rcpp_1.0.14         globals_0.16.3     
-     [97] triebeard_0.4.1     png_0.1-8           parallel_4.4.2     
-    [100] fracdiff_1.5-3      assertthat_0.2.1    gower_1.0.2        
-    [103] prettyunits_1.2.0   sweep_0.2.5         GPfit_1.0-8        
-    [106] listenv_0.9.1       viridisLite_0.4.2   ipred_0.9-15       
-    [109] xts_0.14.1          prodlim_2024.06.25  e1071_1.7-16       
-    [112] crayon_1.5.3        rlang_1.1.5        
+     [10] base64enc_0.1-3     blogdown_1.20       htmltools_0.5.8.1  
+     [13] progress_1.2.3      curl_6.1.0          TTR_0.24.4         
+     [16] sass_0.4.9          parallelly_1.41.0   bslib_0.8.0        
+     [19] KernSmooth_2.23-26  htmlwidgets_1.6.4   zoo_1.8-12         
+     [22] cachem_1.1.0        ggfittext_0.10.2    mime_0.12          
+     [25] lifecycle_1.0.4     iterators_1.0.14    pkgconfig_2.0.3    
+     [28] Matrix_1.7-2        R6_2.5.1            fastmap_1.2.0      
+     [31] digest_0.6.37       colorspace_2.1-1    furrr_0.3.1        
+     [34] crosstalk_1.2.1     labeling_0.4.3      urltools_1.7.3     
+     [37] timechange_0.3.0    compiler_4.4.2      proxy_0.4-27       
+     [40] withr_3.0.2         tseries_0.10-58     backports_1.5.0    
+     [43] DBI_1.2.3           MASS_7.3-64         lava_1.8.1         
+     [46] rappdirs_0.3.3      classInt_0.4-11     tibbletime_0.1.9   
+     [49] tools_4.4.2         units_0.8-5         lmtest_0.9-40      
+     [52] quantmod_0.4.26     zip_2.3.1           future.apply_1.11.3
+     [55] nnet_7.3-20         quadprog_1.5-8      glue_1.8.0         
+     [58] nlme_3.1-166        grid_4.4.2          generics_0.1.3     
+     [61] gtable_0.3.6        countrycode_1.6.0   tzdb_0.4.0         
+     [64] class_7.3-23        data.table_1.16.4   hms_1.1.3          
+     [67] xml2_1.3.6          pillar_1.10.1       splines_4.4.2      
+     [70] lhs_1.2.0           tweenr_2.0.3        lattice_0.22-6     
+     [73] renv_1.0.7          survival_3.8-3      tidyselect_1.2.1   
+     [76] urca_1.3-4          svglite_2.1.3       forecast_8.23.0    
+     [79] crul_1.5.0          xfun_0.50           hardhat_1.4.0      
+     [82] timeDate_4041.110   DT_0.33             stringi_1.8.4      
+     [85] DiceDesign_1.10     yaml_2.3.10         evaluate_1.0.3     
+     [88] codetools_0.2-20    httpcode_0.3.0      cli_3.6.3          
+     [91] rpart_4.1.24        systemfonts_1.2.1   jquerylib_0.1.4    
+     [94] repr_1.1.7          munsell_0.5.1       Rcpp_1.0.14        
+     [97] globals_0.16.3      triebeard_0.4.1     png_0.1-8          
+    [100] parallel_4.4.2      fracdiff_1.5-3      assertthat_0.2.1   
+    [103] gower_1.0.2         prettyunits_1.2.0   sweep_0.2.5        
+    [106] GPfit_1.0-8         listenv_0.9.1       viridisLite_0.4.2  
+    [109] ipred_0.9-15        xts_0.14.1          prodlim_2024.06.25 
+    [112] e1071_1.7-16        crayon_1.5.3        rlang_1.1.5        
+
+<head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
+     crossorigin="anonymous"></script>
+</head>
