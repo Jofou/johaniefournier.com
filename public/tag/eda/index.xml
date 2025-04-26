@@ -17,21 +17,21 @@
     </item>
     
     <item>
+      <title>How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?</title>
+      <link>https://johaniefournier.com/blog/ca_temperature_eda/</link>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ca_temperature_eda/</guid>
+      <description>How is climate change affecting temperature, Growing Degree Days (GDD), and the vegetation period in Chaudières-Appalaches? This analysis explores 20 years of historical climate data, uncovering trends, anomalies, and shifts in temperature patterns. By examining GDD calculations and vegetation period variations, we highlight the impacts on agriculture, crop cycles, and ecosystem resilience. Using R for data analysis and visualization, this study provides key insights into how climate trends are reshaping growing conditions in the region.</description>
+    </item>
+    
+    <item>
       <title>Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</title>
       <link>https://johaniefournier.com/blog/ca_temperature_eda/</link>
       <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/blog/ca_temperature_eda/</guid>
-      <description>{pollen} and {vegperiod} are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region.</description>
-    </item>
-    
-    <item>
-      <title>30 Years of Precipitation for Centre-du-Québec: Trends, Patterns &amp; Anomalies</title>
-      <link>https://johaniefournier.com/blog/cdq_precipitation_eda/</link>
-      <pubDate>Wed, 29 Jan 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/blog/cdq_precipitation_eda/</guid>
-      <description>Understanding long-term precipitation patterns is crucial for climate research, agriculture, and water resource management. In this post, we analyze 30 years of high-resolution precipitation data from the AgERA5 dataset, focusing on a single administrative region in Quebec. Using exploratory data analysis (EDA) techniques, we uncover trends, seasonal variations, and anomalies to gain deeper insights into precipitation dynamics</description>
+      <description>pollen and vegperiod are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region.</description>
     </item>
     
     <item>
