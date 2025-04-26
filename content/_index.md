@@ -12,6 +12,8 @@ action_link: /blog
 action_label: "Read latest posts &rarr;"
 action_type: text # text, button
 type: home
+resources:
+    - ads.txt 
 ---
 
 ** index doesn't contain a body, just front matter above.
