@@ -18,7 +18,13 @@ tags:
 summary: "pollen and vegperiod are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
 <a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
@@ -821,6 +827,3 @@ sessionInfo()
     [121] Matrix_1.7-2        hms_1.1.3           tibbletime_0.1.9   
     [124] hoardr_0.5.5        memoise_2.0.1       quantmod_0.4.26    
     [127] DiceDesign_1.10    
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>

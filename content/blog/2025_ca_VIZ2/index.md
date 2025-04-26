@@ -18,7 +18,13 @@ tags:
 summary: "This post shows how to create a heatmap with geom_tile() to visualize the spatio-temporal evolution of the vegetative period in the Chaudière-Appalaches region."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
 <a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
@@ -264,6 +270,3 @@ sessionInfo()
     [103] xts_0.14.1          prodlim_2024.06.25  e1071_1.7-16       
     [106] gstat_2.1-2         crayon_1.5.3        rlang_1.1.5        
     [109] cowplot_1.1.3      
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>

@@ -14,7 +14,13 @@ tags:
 summary: "Building upon previous analyses and predictive modeling, I details the process of creating this visualization, including data preparation, disaggregation to daily levels, and kriging for enhanced spatial resolution. The post culminates in an animated map that illustrates precipitation trends and anomalies over time, providing valuable insights for climate analysis, agriculture, and water resource management."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
 <a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
@@ -356,6 +362,3 @@ sessionInfo()
     [79] GPfit_1.0-8         digest_0.6.37       classInt_0.4-11    
     [82] htmltools_0.5.8.1   lifecycle_1.0.4     hardhat_1.4.0      
     [85] MASS_7.3-64        
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>

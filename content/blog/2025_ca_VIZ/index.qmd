@@ -15,9 +15,13 @@ tags:
   - tidymodels
   - tidytuesday
   - viz
-summary: "This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using {leaflet} and {leaflet.extras2} R packages."
+summary: "This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using leaflet and leaflet.extras2 R packages."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
 
 ```{r setup}
@@ -416,7 +420,4 @@ In this tutorial, we explored how to download, process, and visualize CMIP6 clim
 ```{r}
 sessionInfo()
 ```
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>
 

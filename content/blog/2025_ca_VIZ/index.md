@@ -15,9 +15,13 @@ tags:
   - tidymodels
   - tidytuesday
   - viz
-summary: "This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using {leaflet} and {leaflet.extras2} R packages."
+summary: "This tutorial shows how to create an interactive side-by-side map visualization of the mean temperature for 2024 and 2100 for the Chaudière-Appalaches region in Quebec using leaflet and leaflet.extras2 R packages."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
 
 <script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
@@ -32,6 +36,8 @@ editor_options:
 <script src="index_files/libs/lfx-sidebyside-1.0.0/lfx-side-by-side.js"></script>
 <script src="index_files/libs/lfx-sidebyside-1.0.0/lfx-side-by-side-bindings.js"></script>
 
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
 <a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
@@ -382,6 +388,3 @@ sessionInfo()
     [109] ipred_0.9-15        xts_0.14.1          prodlim_2024.06.25 
     [112] e1071_1.7-16        gstat_2.1-2         crayon_1.5.3       
     [115] rlang_1.1.5         cowplot_1.1.3      
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>

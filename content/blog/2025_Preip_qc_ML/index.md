@@ -18,6 +18,10 @@ tags:
 summary: "In this phase of the analysis, we aim to model precipitation patterns in the St. Lawrence Lowlands using machine learning techniques, leveraging historical climate and environmental data. We will compare Random Forest, XGBoost, and Mars models to assess their ability to capture complex relationships and predict precipitation trends. Model performance will be evaluated using cross-validation and regression metrics to determine the most effective approach."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
 
 <link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
@@ -31,6 +35,8 @@ editor_options:
 <link href="index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
 <script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
 <a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
@@ -496,6 +502,3 @@ sessionInfo()
     [109] viridisLite_0.4.2    ipred_0.9-15         xts_0.14.1          
     [112] prodlim_2024.06.25   e1071_1.7-16         crayon_1.5.3        
     [115] rlang_1.1.5         
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>

@@ -18,7 +18,13 @@ tags:
 summary: "How is climate change affecting temperature, Growing Degree Days (GDD), and the vegetation period in Chaudières-Appalaches? This analysis explores 20 years of historical climate data, uncovering trends, anomalies, and shifts in temperature patterns. By examining GDD calculations and vegetation period variations, we highlight the impacts on agriculture, crop cycles, and ecosystem resilience. Using R for data analysis and visualization, this study provides key insights into how climate trends are reshaping growing conditions in the region."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
 <a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>

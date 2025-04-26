@@ -18,6 +18,10 @@ tags:
 summary: "Understanding long-term precipitation patterns is essential for climate research, agriculture, and water resource management. In this post, we analyze 30 years of precipitation data from the AgERA5 dataset for St. Lawrence Lowlands, using exploratory data analysis (EDA) techniques to uncover trends, seasonal variations, and anomalies."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
 ---
 
 ```{r setup}
@@ -505,7 +509,3 @@ In this analysis, we explored 30 years of precipitation data from the AgERA5 dat
 ```{r}
 sessionInfo()
 ```
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>
-
