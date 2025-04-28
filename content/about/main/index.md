@@ -21,6 +21,18 @@ intro: |
   * https://www.tidyverse.org/
   * https://www.rstudio.com/
   
+  
+  My favorites courses: **GET 15% OFF WITH CODE DS4B15**
+  
+  * [5 Course R-Track: Machine Learning, Web Apps, & Time Series](https://university.business-science.io/p/5-course-bundle-machine-learning-web-apps-time-series/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+  * [Learning Labs Pro](https://university.business-science.io/p/learning-labs-pro/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+  * [Data Science for Business Part 1](https://university.business-science.io/p/ds4b-101-r-business-analysis-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+  * [Data Science for Business Part 2](https://university.business-science.io/p/hr201-using-machine-learning-h2o-lime-to-predict-employee-turnover/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+  * [High Performance Time Series](https://university.business-science.io/p/ds4b-203-r-high-performance-time-series-forecasting/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+  * [Shiny Web Applications Part 1](https://university.business-science.io/p/ds4b-102-r-shiny-web-application-business-level-1/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+  * [Shiny Web Applications Part 2](https://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+  
+  
   Some of my favorite books: 
   * [An Introduction to Statistical Learning](https://amzn.to/44JPTXZ) by Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani
   * [Spatio-Temporal Statistics with R](https://amzn.to/3EIXBHl) by Christopher K. Wikle, Jeffrey S. Cressie and Chunsheng Zhang
@@ -50,18 +62,7 @@ intro: |
   * [R Packages](https://amzn.to/4iN1B7W) by Hadley Wickham and Jenny Bryan
   * [Practical Time Series Analysis](https://amzn.to/42LdViU) by Aileen Nielsen
   * [Football Analytics with R](https://amzn.to/4jypi51) by Eric A. Eager and Richard A. Erickson 
-  
 
-  My favorites courses: **GET 15% OFF WITH CODE DS4B15**
-  
-  * [5 Course R-Track: Machine Learning, Web Apps, & Time Series](https://university.business-science.io/p/5-course-bundle-machine-learning-web-apps-time-series/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-  * [Learning Labs Pro](https://university.business-science.io/p/learning-labs-pro/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-  * [Data Science for Business Part 1](https://university.business-science.io/p/ds4b-101-r-business-analysis-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-  * [Data Science for Business Part 2](https://university.business-science.io/p/hr201-using-machine-learning-h2o-lime-to-predict-employee-turnover/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-  * [High Performance Time Series](https://university.business-science.io/p/ds4b-203-r-high-performance-time-series-forecasting/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-  * [Shiny Web Applications Part 1](https://university.business-science.io/p/ds4b-102-r-shiny-web-application-business-level-1/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-  * [Shiny Web Applications Part 2](https://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-  
   
   My favorite personal development books:
   * [Atomic Habits](https://amzn.to/4iBUn6A) by James Clear
