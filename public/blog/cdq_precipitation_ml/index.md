@@ -16,6 +16,12 @@ tags:
 summary: "In this phase of the analysis, we aim to model precipitation patterns in Centre-du-Québec using machine learning techniques, leveraging historical climate and environmental data. We will train an XGBoost models and predict precipitation trends. Model performance will be evaluated using cross-validation and regression metrics to determine the most effective approach."
 editor_options: 
   chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
+resources:
+ - ads.txt 
 ---
 
 <link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
@@ -30,7 +36,9 @@ editor_options:
 <script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 
 
-<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
+
+<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
 </a>
 
 <br>
@@ -82,6 +90,8 @@ precipitation_data_agg <- precipitation_data |>
 ```
 
 ### Create a Distance Matrix
+
+{{% youtube "UH8RSlgiz9E" %}}
 
 We need some spatial information extracted from the coordinate to put into the temporal model. For this purpose, we will create a distance matrix using the `sf` package.
 
@@ -268,7 +278,7 @@ gg <- gg + labs(title ="Comparing Predict to Actual Values of Precipitations (19
 print(gg)
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="1260" />
 
 #### Residuals
 
@@ -282,7 +292,7 @@ gg <- gg + labs(title = "Residuals\n")
 print(gg) 
 ```
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="1260" />
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="1260" />
 
 ## Predict 2024 to 2030
 
@@ -334,245 +344,23 @@ DT::datatable(valid) |>
   DT::formatRound(c("mean", "sd"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-02009635d4d5d916b6b2" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-02009635d4d5d916b6b2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[41.82448215569933,33.01121443826246,41.75739852211403,23.80545214853353,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392],[1.671617109785621,2.39342419664615,2.709303794028265,0.5720241033171247,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-39598b5e185d31e0c853" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-39598b5e185d31e0c853">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[41.82448215569933,33.01121443826246,41.75739852211403,23.80545214853353,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392],[1.671617109785621,2.39342419664615,2.709303794028265,0.5720241033171247,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
 
 So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.
 
-## Conclusion
+# Conclusion
 
 In this analysis, we trained an XGBoost model to predict precipitation patterns in Centre-du-Québec using historical climate data. The model performed well, but can't really capture complex climate patterns. By evaluating the model's performance using cross-validation and regression metrics, we identified the most effective approach for precipitation prediction in this region.
 
-<!-- AWeber Web Form Generator 3.0.1 -->
-<style type="text/css">
-#af-form-88198013 .af-body{font-family:Tahoma, serif;font-size:18px;color:#333333;background-image:none;background-position:inherit;background-repeat:no-repeat;padding-top:0px;padding-bottom:0px;}
-#af-form-88198013 .af-body .privacyPolicy{font-family:Tahoma, serif;font-size:18px;color:#333333;}
-#af-form-88198013 {border-style:none;border-width:none;border-color:#F8F8F8;background-color:#F8F8F8;}
-#af-form-88198013 .af-standards .af-element{padding-left:50px;padding-right:50px;}
-#af-form-88198013 .af-quirksMode{padding-left:50px;padding-right:50px;}
-#af-form-88198013 .af-header{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:none;background-position:inherit;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:40px;padding-bottom:20px;}
-#af-form-88198013 .af-footer{font-family:Tahoma, serif;font-size:16px;color:#333333;border-top-style:none;border-right-style:none;border-bottom-style:none;border-left-style:none;border-width:1px;background-image:url("https://awas.aweber-static.com/images/forms/journey/basic/background.png");background-position:top center;background-repeat:no-repeat;background-color:#F8F8F8;padding-left:20px;padding-right:20px;padding-top:80px;padding-bottom:80px;}
-#af-form-88198013 .af-body input.text, #af-form-88198013 .af-body textarea{border-color:#000000;border-width:1px;border-style:solid;font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;background-color:#FFFFFF;}
-#af-form-88198013 .af-body input.text:focus, #af-form-88198013 .af-body textarea:focus{border-style:solid;border-width:1px;border-color:#EDEDED;background-color:#FAFAFA;}
-#af-form-88198013 .af-body label.previewLabel{font-family:Tahoma, serif;font-size:18px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;display:block;float:left;text-align:left;width:25%;}
-#af-form-88198013 .af-body .af-textWrap{width:70%;display:block;float:right;}
-#af-form-88198013 .buttonContainer input.submit{font-family:Tahoma, serif;font-size:24px;font-weight:normal;font-style:normal;text-decoration:none;color:#FFFFFF;background-color:#333333;background-image:none;}
-#af-form-88198013 .buttonContainer{text-align:center;}
-#af-form-88198013 .af-body label.choice{font-family:inherit;font-size:inherit;font-weight:normal;font-style:normal;text-decoration:none;color:#000000;}
-#af-form-88198013 .af-body a{font-weight:normal;font-style:normal;text-decoration:underline;color:#000000;}
-#af-form-88198013, #af-form-88198013 .quirksMode{width:100%;max-width:486.0px;}
-#af-form-88198013.af-quirksMode{overflow-x:hidden;}
-#af-form-88198013 .af-quirksMode .bodyText{padding-top:2px;padding-bottom:2px;}
-#af-form-88198013{overflow:hidden;}
-#af-form-88198013 button,#af-form-88198013 input,#af-form-88198013 submit,#af-form-88198013 textarea,#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {float:none;margin:0;position:static;}
-#af-form-88198013 select,#af-form-88198013 label,#af-form-88198013 optgroup,#af-form-88198013 option {padding:0;}
-#af-form-88198013 input,#af-form-88198013 button,#af-form-88198013 textarea,#af-form-88198013 select {font-size:100%;}
-#af-form-88198013 .buttonContainer input.submit {width:auto;}
-#af-form-88198013 form,#af-form-88198013 textarea,.af-form-wrapper,.af-form-close-button,#af-form-88198013 img {float:none;color:inherit;margin:0;padding:0;position:static;background-color:none;border:none;}
-#af-form-88198013 div {margin:0;}
-#af-form-88198013 {display:block;}
-#af-form-88198013 body,#af-form-88198013 dl,#af-form-88198013 dt,#af-form-88198013 dd,#af-form-88198013 h1,#af-form-88198013 h2,#af-form-88198013 h3,#af-form-88198013 h4,#af-form-88198013 h5,#af-form-88198013 h6,#af-form-88198013 pre,#af-form-88198013 code,#af-form-88198013 fieldset,#af-form-88198013 legend,#af-form-88198013 blockquote,#af-form-88198013 th,#af-form-88198013 td { float:none;color:inherit;margin:0;padding:0;position:static;}
-#af-form-88198013 p { color:inherit;}
-#af-form-88198013 ul,#af-form-88198013 ol {list-style-image:none;list-style-position:outside;list-style-type:disc;padding-left:40px;}
-#af-form-88198013 .bodyText p {margin:1em 0;}
-#af-form-88198013 table {border-collapse:collapse;border-spacing:0;}
-#af-form-88198013 fieldset {border:0;}
-.af-clear{clear:both;}
-.af-form{box-sizing:border-box; margin:auto; text-align:left;}
-.af-element{padding-bottom:5px; padding-top:5px;}
-.af-form-wrapper{text-indent: 0;}
-.af-body input.submit, .af-body input.image, .af-form .af-element input.button{float:none!important;}
-.af-body input.submit{white-space: inherit;}
-.af-body input.text{width:100%; padding:2px!important;}
-.af-body .af-textWrap{text-align:left;}
-.af-element label{float:left; text-align:left;}
-.lbl-right .af-element label{text-align:right;}
-.af-quirksMode .af-element{padding-left: 0!important; padding-right: 0!important;}
-.af-body.af-standards input.submit{padding:4px 12px;}
-.af-body input.image{border:none!important;}
-.af-body input.text{float:none;}
-.af-element label{display:block; float:left;}
-.af-header,.af-footer { margin-bottom:0; margin-top:0; padding:10px; }
-body {
-}
+# Sign up for the newsletter
 
-#af-form-88198013 .af-body .af-textWrap {
-  width: 100% !important;
-}
+<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
+</a>
 
-#af-form-88198013 .af-body .af-element {
-  padding-top: 0px!important;
-  padding-bottom: 0.5rem!important;
-}
-#af-form-88198013 .af-body .af-element:first-child {
-  margin-top: 0 !important;
-}
-#af-form-88198013 .af-body input.text,
-#af-form-88198013 .af-body textarea {
-  box-sizing: border-box !important;
-  border-radius:2px;
-  margin-bottom: 0.75rem !important;
-  padding: 8px 12px !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
+<br>
 
-#af-form-88198013 .af-body select {
-  width: 100%;
-}
-#af-form-88198013 .choiceList-radio-stacked {
-  margin-bottom: 1rem !important;
-  width: 100% !important;
-}
-#af-form-88198013 .af-element-radio {
-  margin: 0 !important;
-}
-#af-form-88198013 .af-element-radio input.radio {
-  display: inline;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  width: 0;
-}
-#af-form-88198013 .af-element-radio input.radio:checked ~ label {
-  font-weight: 700 !important;
-}
-#af-form-88198013 .af-element-radio input.radio:focus ~ label {
-  box-shadow: inset 0 0 0 2px rgba(25,35,70,.25);
-}
-#af-form-88198013 .af-element-radio input.radio:checked ~ label:before {
-  background-color: #777777;
-  border-color: #d6dee3;
-}
-#af-form-88198013 .af-element-radio label.choice {
-  display: block !important;
-  font-weight: 300 !important;
-  margin: 0rem 0rem 0.5rem 1rem !important;
-  padding: 0.25rem 1rem !important;
-  position: relative;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
-#af-form-88198013 .af-element-radio label.choice:before {
-  background-color: #FFF;
-  border: 1px solid #d6dee3;
-  border-radius: 50%;
-  content: '';
-  height: 0.75rem;
-  margin-top: 0.25rem;
-  margin-left: -1.3rem;
-  position: absolute;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-  width: 0.75rem;
-}
-#af-form-88198013 .af-selectWrap, 
-#af-form-88198013 .af-dateWrap {
-  width:100% !important;
-  margin: 0.5rem 0rem 0.5rem !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-}
-#af-form-88198013 .af-selectWrap select {
-  padding: 0.5rem !important;
-  height: 2.5rem;
-}
-#af-form-88198013 .af-dateWrap select {
-  width: 32% !important;
-  height: 2.5rem;
-  padding: 0.5rem !important;
-  margin: 0rem 0rem 0.75rem 0rem !important;
-}
-#af-form-88198013 .af-checkWrap {
-  padding: 0.5rem 0.5rem 0.75rem !important;
-}
-#af-form-88198013 .buttonContainer {
-  box-sizing: border-box !important;
-}
-#af-form-88198013 .af-footer {
-  box-sizing: border-box !important;
-}
-
-#af-form-88198013 .af-footer p {
-  margin: 0 !important;
-}
-#af-form-88198013 input.submit,
-#af-form-88198013 #webFormSubmitButton {
-  border: none;
-  border-radius:2px;
-  font-weight: bold;
-  margin-top: 0.75rem !important;
-  margin-bottom: 1.5rem !Important;
-  padding: 0.75rem 2rem !important;
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-  }
-#af-form-88198013 input.submit:hover,
-#af-form-88198013 #webFormSubmitButton:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-#af-form-88198013 input.text:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.poweredBy a,
-.privacyPolicy p {
-  color: #333333 !important;
-  font-size: 0.75rem !important;
-  margin-bottom: 0rem !important;
-}
-</style>
-<form method="post" class="af-form-wrapper" accept-charset="UTF-8" action="https://www.aweber.com/scripts/addlead.pl">
-
-<input type="hidden" name="meta_web_form_id" value="88198013" />
-<input type="hidden" name="meta_split_id" value="" />
-<input type="hidden" name="listname" value="awlist6634098" />
-<input type="hidden" name="redirect" value="https://www.aweber.com/thankyou-coi.htm?m=text" id="redirect_54bc847594a3cbc94af88c076598c2e4" />
-
-<input type="hidden" name="meta_adtracking" value="Sign_Up_Form" />
-<input type="hidden" name="meta_message" value="1" />
-<input type="hidden" name="meta_required" value="name,email" />
-
-<input type="hidden" name="meta_tooltip" value="" />
-
-<h5>
-<br><span style="font-size:36px;"><strong>WANT MORE?</strong></span>
-</h5>
-<p>
-Sign up for exclusive content, emails & things I doesn't share anywhere else.
-</p>
-
-<label class="previewLabel" for="awf_field-117870704">Name:</label>
-
-<input id="awf_field-117870704" type="text" name="name" class="text" value="" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';} " tabindex="500" />
-
-<label class="previewLabel" for="awf_field-117870705">Email:</label>
-
-<input class="text" id="awf_field-117870705" type="email" name="email" value="" tabindex="501" onfocus=" if (this.value == '') { this.value = ''; }" onblur="if (this.value == '') { this.value='';}" />
-
-<input name="submit" class="submit" type="submit" value="Let&#x27;s do it!" tabindex="502" />
-
-<p>
-We respect your <a title="Privacy Policy" href="https://www.aweber.com/permission.htm" target="_blank" rel="nofollow">email privacy</a>
-</p>
-
-<p>
-<a href="https://www.aweber.com" title="AWeber Email Marketing" target="_blank" rel="nofollow">Powered by AWeber Email Marketing</a>
-</p>
-
-<p>
- 
-</p>
-
-<img src="https://forms.aweber.com/form/displays.htm?id=HByMnBwMjMw=" alt="" />
-
-</form>
-<!-- /AWeber Web Form Generator 3.0.1 -->
-
-## Session Info
+# Session Info
 
 ``` r
 sessionInfo()
@@ -580,7 +368,7 @@ sessionInfo()
 
     R version 4.4.2 (2024-10-31)
     Platform: aarch64-apple-darwin20
-    Running under: macOS Sequoia 15.2
+    Running under: macOS Sequoia 15.3.2
 
     Matrix products: default
     BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -612,33 +400,35 @@ sessionInfo()
     [40] openxlsx_4.2.7.1     knitr_1.49          
 
     loaded via a namespace (and not attached):
-     [1] DBI_1.2.3           rlang_1.1.5         magrittr_2.0.3     
-     [4] furrr_0.3.1         e1071_1.7-16        compiler_4.4.2     
-     [7] png_0.1-8           systemfonts_1.2.1   vctrs_0.6.5        
-    [10] lhs_1.2.0           pkgconfig_2.0.3     crayon_1.5.3       
-    [13] fastmap_1.2.0       backports_1.5.0     rmarkdown_2.29     
-    [16] prodlim_2024.06.25  ggfittext_0.10.2    tzdb_0.4.0         
-    [19] xfun_0.50           cachem_1.1.0        jsonlite_1.8.9     
-    [22] progress_1.2.3      parallel_4.4.2      prettyunits_1.2.0  
-    [25] R6_2.5.1            bslib_0.8.0         StanHeaders_2.32.10
-    [28] stringi_1.8.4       parallelly_1.41.0   rpart_4.1.24       
-    [31] jquerylib_0.1.4     Rcpp_1.0.14         iterators_1.0.14   
-    [34] future.apply_1.11.3 zoo_1.8-12          base64enc_0.1-3    
-    [37] Matrix_1.7-2        splines_4.4.2       nnet_7.3-20        
-    [40] timechange_0.3.0    tidyselect_1.2.1    rstudioapi_0.17.1  
-    [43] yaml_2.3.10         timeDate_4041.110   codetools_0.2-20   
-    [46] listenv_0.9.1       lattice_0.22-6      withr_3.0.2        
-    [49] evaluate_1.0.3      survival_3.8-3      units_0.8-5        
-    [52] proxy_0.4-27        RcppParallel_5.1.10 zip_2.3.1          
-    [55] xts_0.14.1          xml2_1.3.6          pillar_1.10.1      
-    [58] KernSmooth_2.23-26  DT_0.33             renv_1.0.7         
-    [61] generics_0.1.3      hms_1.1.3           munsell_0.5.1      
-    [64] globals_0.16.3      class_7.3-23        glue_1.8.0         
-    [67] tools_4.4.2         data.table_1.16.4   gower_1.0.2        
-    [70] grid_4.4.2          crosstalk_1.2.1     ipred_0.9-15       
-    [73] colorspace_2.1-1    repr_1.1.7          cli_3.6.3          
-    [76] DiceDesign_1.10     rappdirs_0.3.3      viridisLite_0.4.2  
-    [79] svglite_2.1.3       lava_1.8.1          gtable_0.3.6       
-    [82] GPfit_1.0-8         sass_0.4.9          digest_0.6.37      
-    [85] classInt_0.4-11     htmlwidgets_1.6.4   htmltools_0.5.8.1  
-    [88] lifecycle_1.0.4     hardhat_1.4.0       MASS_7.3-64        
+     [1] rstudioapi_0.17.1   jsonlite_1.8.9      magrittr_2.0.3     
+     [4] farver_2.1.2        rmarkdown_2.29      vctrs_0.6.5        
+     [7] base64enc_0.1-3     blogdown_1.20       htmltools_0.5.8.1  
+    [10] progress_1.2.3      sass_0.4.9          parallelly_1.41.0  
+    [13] StanHeaders_2.32.10 KernSmooth_2.23-26  bslib_0.8.0        
+    [16] htmlwidgets_1.6.4   zoo_1.8-12          cachem_1.1.0       
+    [19] ggfittext_0.10.2    lifecycle_1.0.4     iterators_1.0.14   
+    [22] pkgconfig_2.0.3     Matrix_1.7-2        R6_2.5.1           
+    [25] fastmap_1.2.0       digest_0.6.37       colorspace_2.1-1   
+    [28] furrr_0.3.1         crosstalk_1.2.1     labeling_0.4.3     
+    [31] timechange_0.3.0    mgcv_1.9-1          compiler_4.4.2     
+    [34] proxy_0.4-27        withr_3.0.2         backports_1.5.0    
+    [37] DBI_1.2.3           MASS_7.3-64         lava_1.8.1         
+    [40] rappdirs_0.3.3      classInt_0.4-11     tools_4.4.2        
+    [43] units_0.8-5         zip_2.3.1           future.apply_1.11.3
+    [46] nnet_7.3-20         glue_1.8.0          nlme_3.1-166       
+    [49] grid_4.4.2          generics_0.1.3      gtable_0.3.6       
+    [52] tzdb_0.4.0          class_7.3-23        data.table_1.16.4  
+    [55] hms_1.1.3           xml2_1.3.6          pillar_1.10.1      
+    [58] splines_4.4.2       lhs_1.2.0           lattice_0.22-6     
+    [61] renv_1.0.7          survival_3.8-3      tidyselect_1.2.1   
+    [64] svglite_2.1.3       xfun_0.50           hardhat_1.4.0      
+    [67] timeDate_4041.110   DT_0.33             stringi_1.8.4      
+    [70] DiceDesign_1.10     yaml_2.3.10         evaluate_1.0.3     
+    [73] codetools_0.2-20    cli_3.6.3           RcppParallel_5.1.10
+    [76] rpart_4.1.24        systemfonts_1.2.1   repr_1.1.7         
+    [79] munsell_0.5.1       jquerylib_0.1.4     Rcpp_1.0.14        
+    [82] globals_0.16.3      png_0.1-8           parallel_4.4.2     
+    [85] gower_1.0.2         prettyunits_1.2.0   GPfit_1.0-8        
+    [88] listenv_0.9.1       viridisLite_0.4.2   ipred_0.9-15       
+    [91] xts_0.14.1          prodlim_2024.06.25  e1071_1.7-16       
+    [94] crayon_1.5.3        rlang_1.1.5        
