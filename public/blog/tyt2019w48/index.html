@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.98.0" />
+<title>TyT2019W48 - Put Together Two Histograms | Johanie Fournier</title>
+
+
+<meta property="twitter:site" content="@fournierjohanie">
+<meta property="twitter:creator" content="@fournierjohanie">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Freelance Agronomist Doing Data Analysis">
+
+
+<meta property="og:site_name" content="Johanie Fournier">
+<meta property="og:title" content="TyT2019W48 - Put Together Two Histograms | Johanie Fournier">
+<meta property="og:description" content="Freelance Agronomist Doing Data Analysis" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://johaniefournier.com/blog/tyt2019w48/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://johaniefournier.com/blog/tyt2019w48/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://johaniefournier.com/blog/tyt2019w48/featured.png" >
+    
+    
+  <meta itemprop="name" content="TyT2019W48 - Put Together Two Histograms">
+<meta itemprop="description" content="Initially publish it on my wordpress blog. I put it here for reference purpose."><meta itemprop="datePublished" content="2019-11-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-11-28T00:00:00+00:00" />
+<meta itemprop="wordCount" content="477"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2019w48/featured.png">
+<meta itemprop="keywords" content="rstats,tidyverse,tidytuesday," />
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
+<script>
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-K3765H3YGW', { 'anonymize_ip': true });
+}
+</script>
+
+  
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K3765H3YGW', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.934ab0c39d760cb2a3d6c2d9f252dada805049003f570a926d19dea3b61aacfc.css" integrity="sha256-k0qww512DLKj1sLZ8lLa2oBQSQA/VwqSbRneo7YarPw=" media="screen">
+  
+  
+  <script src="/panelset.min.8f4cba0107356728f266d94a12a4d18ef504eda8a9a284cda73675bae7884a68.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.5c2a34ae6659865a008a6856c3d0035205be131e5a950ccb863e57f6a76d4b1c.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://johaniefournier.com/" title="Home">
+      <img src="/img/icon.png" class="dib db-l h2 w-auto" alt="Johanie Fournier">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/eda/" title="eda">eda</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/viz/" title="viz">viz</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/models/" title="models">models</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">TyT2019W48 - Put Together Two Histograms</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </p>
+        <p class="f7 db mv0 ttu">November 28, 2019</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        
+
+
+
+<h2 id="get-the-data">Get the data
+  <a href="#get-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>loans <span style="color:#666">&lt;-</span> readr<span style="color:#666">::</span><span style="color:#06287e">read_csv</span>(<span style="color:#4070a0">&#34;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-11-26/loans.csv&#34;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>## Rows: 291 Columns: 10
+</code></pre><pre tabindex="0"><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &#34;,&#34;
+## chr (1): agency_name
+## dbl (9): year, quarter, starting, added, total, consolidation, rehabilitatio...
+</code></pre><pre tabindex="0"><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</code></pre>
+
+
+
+<h2 id="explore-the-data">Explore the data
+  <a href="#explore-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">summary</span>(loans)
+</span></span></code></pre></div><pre tabindex="0"><code>##  agency_name             year          quarter         starting        
+##  Length:291         Min.   :15.00   Min.   :1.000   Min.   :4.964e+07  
+##  Class :character   1st Qu.:16.00   1st Qu.:1.500   1st Qu.:9.311e+08  
+##  Mode  :character   Median :17.00   Median :2.000   Median :2.801e+09  
+##                     Mean   :16.74   Mean   :2.543   Mean   :3.878e+09  
+##                     3rd Qu.:17.00   3rd Qu.:4.000   3rd Qu.:6.615e+09  
+##                     Max.   :18.00   Max.   :4.000   Max.   :1.119e+10  
+##                                                     NA&#39;s   :9          
+##      added               total           consolidation      rehabilitation     
+##  Min.   :2.918e+08   Min.   :   212828   Min.   :   74574   Min.   :      -26  
+##  1st Qu.:5.430e+08   1st Qu.: 32888118   1st Qu.: 2977484   1st Qu.: 24843043  
+##  Median :9.127e+08   Median : 72669212   Median : 9508287   Median : 54501827  
+##  Mean   :1.305e+09   Mean   :106005716   Mean   :14950255   Mean   : 81592767  
+##  3rd Qu.:1.652e+09   3rd Qu.:167945568   3rd Qu.:23702274   3rd Qu.:123045718  
+##  Max.   :9.459e+09   Max.   :395249672   Max.   :52340470   Max.   :337310727  
+##  NA&#39;s   :160                                                NA&#39;s   :11         
+##  voluntary_payments wage_garnishments 
+##  Min.   :   19833   Min.   :     517  
+##  1st Qu.: 1270194   1st Qu.: 2527537  
+##  Median : 3464174   Median : 6317306  
+##  Mean   : 4590299   Mean   : 7956659  
+##  3rd Qu.: 8019843   3rd Qu.:11321348  
+##  Max.   :14687278   Max.   :28107801  
+## 
+</code></pre>
+
+
+
+<h2 id="prepare-the-data">Prepare the data
+  <a href="#prepare-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data <span style="color:#666">&lt;-</span> loans <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(year, quarter) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise</span>(dette<span style="color:#666">=</span><span style="color:#06287e">sum</span>(starting, na.rm<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">TRUE</span>), 
+</span></span><span style="display:flex;"><span>            remboursement<span style="color:#666">=</span><span style="color:#06287e">sum</span>(total, na.rm<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">TRUE</span>)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(pourcentage<span style="color:#666">=</span>(remboursement<span style="color:#666">/</span>dette), 
+</span></span><span style="display:flex;"><span>         aug_dette<span style="color:#666">=</span>(dette<span style="color:#666">/</span><span style="color:#40a070">113325957209</span>)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ungroup</span>() <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">add_column</span>(cent<span style="color:#666">=</span><span style="color:#40a070">20</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">unite</span>(annee, <span style="color:#4070a0">&#34;cent&#34;</span>, <span style="color:#4070a0">&#34;year&#34;</span>, sep<span style="color:#666">=</span><span style="color:#4070a0">&#34;&#34;</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">unite</span>(date, annee, quarter, sep<span style="color:#666">=</span><span style="color:#4070a0">&#34;-&#34;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.
+</code></pre>
+
+
+
+<h2 id="visualize-the-data">Visualize the data
+  <a href="#visualize-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> <span style="color:#06287e">ggplot</span>(data<span style="color:#666">=</span>data,<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> date, y<span style="color:#666">=</span>aug_dette, group<span style="color:#666">=</span><span style="color:#40a070">1</span>))
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">geom_bar</span>(stat<span style="color:#666">=</span><span style="color:#4070a0">&#34;identity&#34;</span>, width <span style="color:#666">=</span> <span style="color:#40a070">0.75</span>, fill<span style="color:#666">=</span><span style="color:#4070a0">&#34;#C8C8C8&#34;</span>)
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">geom_bar</span>(<span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>date, y<span style="color:#666">=</span>pourcentage),stat<span style="color:#666">=</span><span style="color:#4070a0">&#34;identity&#34;</span>, width <span style="color:#666">=</span> <span style="color:#40a070">0.60</span>, fill<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FB5012&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#retirer la légende</span>
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">theme</span>(legend.position <span style="color:#666">=</span> <span style="color:#4070a0">&#34;none&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajuster les axes</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">scale_y_continuous</span>(breaks<span style="color:#666">=</span><span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">1</span>,<span style="color:#40a070">0.20</span>), limits<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">1</span>), labels<span style="color:#666">=</span>scales<span style="color:#666">::</span>percent)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajouter les étiquettes</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">geom_text</span>(data<span style="color:#666">=</span>data, <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>date, y<span style="color:#666">=</span>pourcentage, label<span style="color:#666">=</span><span style="color:#06287e">paste0</span>(<span style="color:#06287e">round</span>(data<span style="color:#666">$</span>pourcentage<span style="color:#666">*</span><span style="color:#40a070">100</span>,<span style="color:#40a070">1</span>),<span style="color:#4070a0">&#34;%&#34;</span>, sep<span style="color:#666">=</span><span style="color:#4070a0">&#34;&#34;</span>)),
+</span></span><span style="display:flex;"><span>                     color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FB5012&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">3</span>, position <span style="color:#666">=</span> <span style="color:#06287e">position_stack</span>(vjust <span style="color:#666">=</span> <span style="color:#40a070">2.5</span>), fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#retourner le graphique</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">coord_flip</span>()
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#modifier le thème</span>
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">theme</span>(panel.border <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    panel.background <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    plot.background <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    panel.grid.major.x<span style="color:#666">=</span> <span style="color:#06287e">element_line</span>(size<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#C8C8C8&#34;</span>, linetype <span style="color:#666">=</span> <span style="color:#4070a0">&#34;dotted&#34;</span>),
+</span></span><span style="display:flex;"><span>                    panel.grid.major.y<span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    panel.grid.minor <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    axis.line.x <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    axis.line.y <span style="color:#666">=</span><span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    axis.ticks.x <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(), 
+</span></span><span style="display:flex;"><span>                    axis.ticks.y <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>())
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajouter les titres</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">labs</span>(title<span style="color:#666">=</span><span style="color:#4070a0">&#34;&lt;span style=&#39;color:#C8C8C8&#39;&gt;**Student loans**&lt;/span&gt; increase but not &lt;span style=&#39;color:#FB5012&#39;&gt;**repayment**&lt;/span&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>              subtitle <span style="color:#666">=</span> <span style="color:#4070a0">&#34;\nThe amount of student loans increased by 47% in the United States, but repayment decreased by 0.8%.\n&#34;</span>,
+</span></span><span style="display:flex;"><span>              x<span style="color:#666">=</span><span style="color:#4070a0">&#34; &#34;</span>, 
+</span></span><span style="display:flex;"><span>              y<span style="color:#666">=</span><span style="color:#4070a0">&#34; &#34;</span>, 
+</span></span><span style="display:flex;"><span>              caption<span style="color:#666">=</span><span style="color:#4070a0">&#34;\nSOURCE: US Department of Education   |  DESIGN: Johanie Fournier, agr.&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">theme</span>(  plot.title    <span style="color:#666">=</span>  <span style="color:#06287e">element_markdown</span>(lineheight <span style="color:#666">=</span> <span style="color:#40a070">1.1</span>,size<span style="color:#666">=</span><span style="color:#40a070">25.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, face<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#333333&#34;</span>),
+</span></span><span style="display:flex;"><span>                 plot.subtitle <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">11</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#333333&#34;</span>),
+</span></span><span style="display:flex;"><span>                 plot.caption  <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">10</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#333333&#34;</span>),
+</span></span><span style="display:flex;"><span>                 axis.title.y  <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                 axis.title.x  <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                 axis.text.y   <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">12</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#333333&#34;</span>), 
+</span></span><span style="display:flex;"><span>                 axis.text.x   <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">12</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#333333&#34;</span>))
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/tyt2019w48/index_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">November 28, 2019</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">3 minute read, 477 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/tags/tidytuesday">tidytuesday</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz2/">Heatmap to Visualize Spatio-Temporal Data</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz/">Side by side interactive map with {leaflet} and {leaflet.extras2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_eda/">Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://johaniefournier.com/blog/tyt2019w49/">&larr; TyT2019W49 - Visualize Mean Price</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://johaniefournier.com/blog/tyt2019w47/">TyT2019W47 - Treemap &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+  
+  <script src="https://utteranc.es/client.js"
+          repo="jofou/johaniefournier.com"
+          issue-term="title"
+          theme="github-light"
+          label="comments :speech_balloon:"
+          crossorigin="anonymous"
+          async
+          type="text/javascript">
+  </script>
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Johanie Fournier
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="License">License</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#2D2D39"
+    },
+    "button": {
+      "background": "#14a7d0"
+    }
+  },
+  "theme": "edgeless",
+  "position": "bottom-right",
+  "content": {
+      "message": "This website uses cookies for Google Analytics so that I know how many people are reading the blog and which blogposts are the most popular. The website does not collect any personal data.",
+  "href": "https://www.cookiesandyou.com/"
+  }
+});
+</script>
+
+      </div>
+    </body>
+</html>

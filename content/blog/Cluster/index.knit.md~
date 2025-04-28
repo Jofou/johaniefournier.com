@@ -1,0 +1,37 @@
+---
+title: "Some Clusters"
+author: Johanie Fournier, agr. 
+date: "2023-11-16"
+slug: Clusters
+categories:
+  - rstats
+  - tidyverse
+tags:
+  - rstats
+  - tidyverse
+subtitle: ''
+summary: "I work a lot with cluster, let's try some techniques!"
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+
+
+I work a lot with clustering techniques, let's try some alternatives to the famous Kmeans clustering. 
+
+## Get the data
+
+Let's look at the data of *Chaudière-Appalaches*
+
+
+
+
+
+
+
+
+

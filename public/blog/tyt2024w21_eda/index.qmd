@@ -1,0 +1,285 @@
+---
+title: 'TyT2024W21 - EDA:Carbon Majors Emissions Data'
+author: Johanie Fournier, agr., M.Sc.
+date: "2024-10-24"
+slug: TyT2024W21_EDA
+categories:
+  - rstats
+  - tidymodels
+  - tidytuesday
+  - eda
+tags:
+  - eda
+  - rstats
+  - tidymodels
+  - tidytuesday
+summary: "This week we are exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this first part, I start with some exploratory data analysis."
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup}
+#| include: false
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE, 
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 7, fig.height = 5)
+
+# Importer des données
+library(openxlsx)
+
+# explorer et présenter les données
+library(inspectdf)
+library(kableExtra)
+library(lubridate)
+library(tidyverse)
+library(ggplot2)
+library(skimr)
+
+# Parallel Processing
+library(doFuture)
+
+# Core 
+library(recipes)
+library(tidymodels)
+library(timetk)
+library(fs)
+
+
+#Import data
+library(pins)
+
+#H2O
+#library(h2o)
+
+#Geospatial
+library(sf)
+library(terra)
+
+#Monitorer le temps que ça prend
+library(tictoc)
+
+#Tidytuesday
+library(tidytuesdayR)
+
+#Python
+library(reticulate)
+#renv::use_python()
+Sys.setenv(RETICULATE_PYTHON = "~/Library/Mobile Documents/com~apple~CloudDocs/ADV/johaniefournier.com/renv/python/virtualenvs/renv-python-3.9/bin/python")
+
+#Mes fonctions
+#devtools::install_github("jofou/jofou.lib")
+library(jofou.lib)
+
+#Theme_map
+theme_map <- function(base_size=9, base_family="") { # 3
+	require(grid)
+	theme_bw(base_size=base_size, base_family=base_family) %+replace%
+		theme(axis.line=element_blank(),
+			  axis.text=element_blank(),
+			  axis.ticks=element_blank(),
+			  axis.title=element_blank(),
+			  panel.background=element_blank(),
+			  panel.border=element_blank(),
+			  panel.grid=element_blank(),
+			  panel.spacing=unit(0, "lines"),
+			  plot.background=element_blank(),
+			  legend.justification = c(0,0),
+			  legend.position = c(0,0),
+			  plot.title= element_text(size=20, hjust=0, color="black", face="bold"),
+		)
+}
+
+#Graph theme
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", size=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", size=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+
+update_geom_defaults("rect", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("line", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
+
+#CRS
+#Geographic
+#WGS84:"EPSG:4326"
+#Projected
+#NAD83:"EPSG3978"
+```
+
+I have worked extensively with spatial data over the past two years, so I decided to select suitable [`#TidyTuesday` dataset](https://github.com/rfordatascience/tidytuesday) and document what I have learned so far."
+
+My latest contribution to the [`#TidyTuesday`](https://github.com/rfordatascience/tidytuesday) project featuring a recent dataset on carbon major emissions. The dataset is a compilation of emissions data from 1854 to 2019.
+
+```{r}
+#| echo: false
+blogdown::shortcode("youtube", "3xoz262R-qM")
+```
+
+## Goal 
+
+The overall goal of this blog series is to predict carbon emissions over time and space.
+
+In this first part, the goal is to do some Exploratory Data Analysis (EDA) to look at the data set and summarize the main characteristics. To do so, I will look at the data structure, anomalies, outliers and relationships.
+
+
+## Get the data
+
+Let's start by reading in the data:
+
+```{r}
+emissions <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-05-21/emissions.csv')
+
+library(skimr)
+library(PerformanceAnalytics)
+
+skim(emissions)
+chart.Correlation(select_if(emissions, is.numeric))
+```
+
+So, we have a temporal dataset because their's a *year* column, 3 classifications  columns (*parent_entity*, *parent_type*, *commodity*) and our variable of interest *total_emission_MtCO2e*.
+ 
+## Trend over time
+
+Is there a general trend over time?
+
+```{r}
+sum_emissions_year<-emissions  |> 
+  group_by(year) |>  
+  summarise(sum=sum(total_emissions_MtCO2e)) |>  
+  ungroup()
+
+ggplot(data=sum_emissions_year, aes(x=year, y=sum))+
+  geom_line()
+```
+
+We can see a clear augmentation of carbon emissions over time. 
+
+The ultimate goal for this blog series will be to predict over time and space the carbon emission and visualize the result. To achieve that, we first need to understand more the relationship between *parent_entity* and *total_emission_MtCO2e*.
+
+## Space trend
+
+```{r}
+sum_emissions_entity<-emissions  |> 
+  group_by(parent_entity) |>  
+  summarise(sum=sum(total_emissions_MtCO2e)) |>  
+  ungroup() |> 
+  arrange(desc(sum))
+
+DT::datatable(sum_emissions_entity) |> 
+  DT::formatRound(columns=c("sum"), digits=0)
+```
+
+We have a clear indication that country does not produce the same amount of carbon. 
+
+## Spatio-temporal trend
+
+Can we link the spatial trend to the temporal trend? Let's find out by looking at the top 10 countries with the highest emissions.
+
+```{r}
+
+top10_entity<-sum_emissions_entity |> 
+  top_n(6, sum) |> 
+  select(parent_entity)
+
+emissions_top10<-emissions |> 
+  filter(parent_entity %in% top10_entity$parent_entity) 
+
+plot_data<-emissions_top10 |> 
+  group_by(parent_entity, year) |>
+  summarize(sum=sum(total_emissions_MtCO2e)) |>
+  ungroup() |>
+  mutate(date=as.Date(as.character(year), "%Y"),
+         parent_entity_fct=as.factor(parent_entity)) |>
+  select(parent_entity_fct, date, sum) |>
+  pad_by_time(date, .by = "year")
+
+plot_data |> 
+    group_by(parent_entity_fct) |> 
+    plot_time_series(
+        .date_var    = date,
+        .value       = sum,
+        .interactive = FALSE,
+        .facet_ncol  = 2,
+        .facet_scales = "free",
+    )
+```
+
+Each *parent_entity* has its own trend over time.
+
+## Anomalies and outliers
+
+```{r}
+library(anomalize)
+
+plot_data |> 
+    group_by(parent_entity_fct) |> 
+    time_decompose(sum) |> 
+    anomalize(remainder) |>
+  plot_anomalies(size_dots = 1, ncol = 2)
+```
+
+```{r}
+plot_data |> 
+    filter(parent_entity_fct=="Saudi Aramco") |> 
+    time_decompose(sum) |> 
+    anomalize(remainder) |>
+  plot_anomaly_decomposition()
+```
+
+So for simplicity, I will replace the anomalies detected by the trend for all the data. All the subsequent analysis will be done with the corrected data for the top 50 countries
+
+```{r}
+top50_entity<-sum_emissions_entity |> 
+  top_n(50, sum) |> 
+  select(parent_entity)
+
+
+final_data<-emissions |> 
+  filter(parent_entity %in% top50_entity$parent_entity) |>
+  group_by(parent_entity, year) |>
+  summarize(sum=sum(total_emissions_MtCO2e)) |>
+  ungroup() |>
+  mutate(date=as.Date(as.character(year), "%Y"),
+         parent_entity_fct=as.factor(parent_entity)) |>
+  select(parent_entity_fct, date, sum) |>
+  filter(parent_entity_fct %ni% c("Seriti Resources", "CNX Resources", "Navajo Transitional Energy Company"))|> 
+  pad_by_time(date, 
+              .by = "year", 
+              .pad_value = NA) |> 
+    group_by(parent_entity_fct) |> 
+    time_decompose(sum) |> 
+    anomalize(remainder) |> 
+  mutate(observed=case_when(anomaly=="Yes" ~ trend,
+                            TRUE ~ observed)) |> 
+  select(parent_entity_fct, date, observed)
+
+```
+
+```{r}
+#| echo: FALSE
+
+#write_rds(final_data, "data/final_data.rds")
+```
+
+
+## Conclusion
+
+In this first part, we have explored the dataset and identified the main characteristics. We have seen that the carbon emissions have increased over time and that the top 50 countries have different trends. We have also identified some anomalies and outliers that have been correct for the work to come in the next part. 
+
+
+
+<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
+

@@ -1,0 +1,120 @@
+---
+title: "Some Clusters"
+author: Johanie Fournier, agr. 
+date: "2023-11-16"
+slug: Clusters
+categories:
+  - rstats
+  - tidyverse
+tags:
+  - rstats
+  - tidyverse
+subtitle: ''
+summary: "I work a lot with cluster, let's try some techniques!"
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+                      echo = TRUE, dpi = 300, cache.lazy = FALSE,
+                      tidy = "styler", fig.width = 8, fig.height = 5)
+library(tidyverse)
+library(tidymodels)
+library(ggplot2)
+library(jofou.lib)
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", size=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", size=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+```
+
+I work a lot with clustering techniques, let's try some alternatives to the famous Kmeans clustering. 
+
+## Get the data
+
+Let's look at the data of *Chaudière-Appalaches*
+
+```{r, echo=FALSE}
+path_to_file="/Users/johaniefournier/Library/Mobile Documents/com~apple~CloudDocs/ADV/PINs/FADQ/2 Prepared/"
+```
+
+```{r}
+board_prepared <- pins::board_folder(path_to_file, versioned = TRUE)
+
+data<-board_prepared %>%
+  pins::pin_read("shape_2022") %>% 
+  sample_n(1000)
+```
+
+
+```{r}
+mapview::mapview(data)
+```
+
+
+## Kmeans
+
+First, some classic Kmeans clustering techniques:
+
+```{r}
+data_unique<-data %>% 
+  select(geometry) %>% 
+  unique() 
+  
+
+ df<-data_unique%>% 
+  sf::st_as_sf(.) %>% 
+  sf::st_make_valid()  %>% 
+  sf::st_centroid() %>% 
+  mutate(longitude = sf::st_coordinates(.)[,1],
+         latitude  = sf::st_coordinates(.)[,2]) %>% 
+  as.data.frame() %>% 
+  select(longitude, latitude) %>% 
+  na.omit() %>%
+  scale()
+
+# #matrice de distance: commencer par 2 groupes et 25 ittérations
+set.seed(123)
+k <- kmeans(df, centers=12, nstart=2)
+p <- factoextra::fviz_cluster(k, geom="point", data=df)
+p
+
+
+cluster <-k$cluster %>% 
+  as.data.frame() %>% 
+  rename(cluster=".")
+
+data_clu<-data_unique %>% 
+  bind_cols(cluster) %>% 
+  sf::st_as_sf(.) 
+
+
+polys<- data_clu %>% 
+  dplyr::group_by(cluster) %>% 
+  dplyr::summarise() %>%
+  sf::st_cast("POLYGON") %>% 
+  sf::st_convex_hull() %>% 
+  sf::st_transform(., 3978)
+
+
+data_final.sf<-data_process %>%
+  as.data.frame() %>% 
+  select(-geometry) %>% 
+  left_join(as.data.frame(data_clu), by=c("id")) %>% 
+  sf::st_as_sf(.) %>% 
+  st_transform(., 3978)
+
+write_rds(data_final.sf, paste0(pathD, "/Documents/Projet POUTs/Projet Geospatial/MO/GeoMO 1 Prep/", name_model,"/", version, "/in
+```
+

@@ -1,0 +1,190 @@
+---
+title: "TyT2019W31 - Video Games"
+author: Johanie Fournier, agr. 
+date: "2019-08-01"
+slug: TyT2019W31
+categories:
+  - rstats
+  - tidyverse
+  - tidytuesday
+tags:
+  - rstats
+  - tidyverse
+  - tidytuesday
+subtitle: ''
+summary: "Initially publish it on my wordpress blog. I put it here for reference purpose."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(magick)
+library(lubridate)
+library(inspectdf)
+library(ggtext)
+library(rmarkdown)
+library(patchwork)
+library(ggpmisc)
+library(tidytuesdayR)
+```
+
+
+## Get the data
+
+```{r}
+video_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-30/video_games.csv")
+```
+
+## Explore the data
+
+```{r}
+summary(video_games)
+```
+
+## Prepare the data
+
+```{r, eval=FALSE}
+#SCORE
+#moyenne globale
+moyenne_globale_score <- video_games %>% 
+  filter(metascore>=45) %>% 
+  summarise(score_moy_globale=mean(metascore, na.rm=TRUE))
+
+#moyenne annuelle
+moyenne_annee_score <- video_games %>% 
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))  %>%
+ filter(metascore>=45) %>% 
+  group_by(annee)%>%
+  summarise(score_moy_annee=mean(metascore, na.rm=TRUE))
+
+#fichier de travail
+games_score <- video_games %>% 
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))%>%
+  filter(metascore>=45) %>% 
+  group_by(annee, metascore) %>% 
+  summarise(moy_annee=mean(metascore)) %>% 
+  right_join(moyenne_annee_score, by="annee") %>%
+  mutate(score_moy_global=moyenne_globale_score$score_moy_globale)
+
+#PRIX
+#moyenne prix
+med_globale_prix <- video_games %>% 
+  summarise(prix_med_globale=mean(price, na.rm=TRUE))
+
+#median annuel
+med_annee_prix <- video_games %>% 
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))  %>%
+  group_by(annee)%>%
+  summarise(prix_med_annee=mean(price, na.rm=TRUE))
+
+#fichier de travail
+games_prix <- video_games %>% 
+ filter(price<=20) %>%
+  mutate(release_date = ifelse(release_date == "8 Oct, 2014", "Oct 8, 2014", release_date),
+         date = mdy(release_date),
+         annee = year(date))  %>%
+    group_by(annee, price) %>% 
+  summarise(moy_annee=mean(price)) %>% 
+  right_join(med_annee_prix, by="annee") %>%
+  mutate(prix_med_globale=med_globale_prix$prix_med_globale)
+```
+
+## Visualize the data
+
+```{r, eval=FALSE}
+#Graphique score
+set.seed(123)
+gg1<-ggplot(games_score, aes(x=annee, y=metascore, fill=annee))
+gg1 <- gg1 + geom_jitter(color="#8597A0", size=5, alpha = 0.25, width = 0.20)
+gg1 <- gg1 + geom_hline(aes(yintercept = score_moy_global), color = "#6D7C83", size = 0.5) 
+gg1 <- gg1 + geom_segment(aes(x = annee, xend = annee,y = score_moy_global, yend = score_moy_annee), size = 0.5, color='#6D7C83')
+gg1 <- gg1 + geom_point(mapping=aes(x=annee, y=score_moy_annee, fill=annee), fill="#386FA4",color="#6D7C83", shape=21, size=7, stroke=1)
+#retirer la légende
+gg1 <- gg1 + theme(legend.position = "none")
+#ajuster les axes 
+gg1 <- gg1 + scale_y_continuous(breaks=seq(40,100,20), limits = c(40, 100))
+gg1 <- gg1 + scale_x_continuous(breaks=seq(2004,2018,1), limits = c(2003, 2018))
+#modifier le thème
+gg1 <- gg1 +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.y= element_line(size=0.1,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les étiquettes
+gg1<-gg1 + annotate(geom="text", x=2003,y=74, label="Mean=72", color="#6D7C83", size=4, hjust=0.5,vjust=0, fontface="bold")
+#ajouter les titres
+gg1<-gg1 + labs(title="Evolution of Video Games",
+              subtitle="\nThe score has not changed much in recent years. As for the price, it is clear that there are more and more video\n games that are available at lower prices.",
+              y="Metascore", 
+              x=" ")
+gg1<-gg1 + theme(plot.title    = element_text(hjust=0,size=36, color="#6D7C83", face="bold", family="Arial Rounded MT Bold"),
+                 plot.subtitle = element_text(hjust=0,size=12, color="#6D7C83", family="Arial Rounded MT Bold"),
+                 axis.title.y  = element_text(hjust=1, vjust=0, size=12, color="#6D7C83", face="bold"),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=0.5, vjust=0, size=12, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_blank())
+
+#Graphique Prix
+set.seed(123)
+gg2<-ggplot(games_prix, aes(x=annee, y=price, fill=annee))
+gg2 <- gg2 + geom_jitter(color="#8597A0", size=6, alpha = 0.25, width = 0.20)
+gg2 <- gg2 + geom_hline(aes(yintercept = prix_med_globale), color = "#6D7C83", size = 0.5) 
+gg2 <- gg2 + geom_segment(aes(x = annee, xend = annee,y = prix_med_globale, yend = prix_med_annee), size = 0.5, color='#6D7C83')
+gg2 <- gg2 + geom_point(mapping=aes(x=annee, y=prix_med_annee, fill=annee), fill="#386FA4",color="#6D7C83", shape=21, size=8.5, stroke=1)
+#retirer la légende
+gg2 <- gg2 + theme(legend.position = "none")
+#ajuster les axes 
+gg2 <- gg2 + scale_y_continuous(breaks=seq(0,20,5), limits = c(0, 20))
+gg2 <- gg2 + scale_x_continuous(breaks=seq(2004,2018,1), limits = c(2003, 2018))
+#modifier le thème
+gg2 <- gg2 +  theme(panel.border = element_blank(),
+                    panel.background = element_blank(),
+                    plot.background = element_blank(),
+                    panel.grid.major.y= element_line(size=0.1,linetype="dotted", color="#6D7C83"),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    axis.ticks.x = element_blank())
+#ajouter les étiquettes
+gg2<-gg2 + annotate(geom="text", x=2003,y=9.5, label="Mean=9", color="#6D7C83", size=5, hjust=0.5,vjust=0, fontface="bold")
+#ajouter les titres
+gg2<-gg2 + labs(title=" ",
+              subtitle=" ",
+              y="Price ($US)", 
+              x=" ")
+gg2<-gg2 + theme(plot.title    = element_blank(),
+                 plot.subtitle = element_blank(),
+                 axis.title.y  = element_text(hjust=1, vjust=0, size=14, color="#6D7C83", face="bold"),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_text(hjust=0.5, vjust=0, size=14, color="#6D7C83", face="bold"), 
+                 axis.text.x   = element_text(hjust=0.5, vjust=0, size=14, color="#6D7C83", face="bold"))
+```
+
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+magick::image_read('featured.png')
+```
+

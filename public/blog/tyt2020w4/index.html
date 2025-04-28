@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.98.0" />
+<title>TyT2020W04 - Visualize Index | Johanie Fournier</title>
+
+
+<meta property="twitter:site" content="@fournierjohanie">
+<meta property="twitter:creator" content="@fournierjohanie">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Freelance Agronomist Doing Data Analysis">
+
+
+<meta property="og:site_name" content="Johanie Fournier">
+<meta property="og:title" content="TyT2020W04 - Visualize Index | Johanie Fournier">
+<meta property="og:description" content="Freelance Agronomist Doing Data Analysis" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://johaniefournier.com/blog/tyt2020w4/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://johaniefournier.com/blog/tyt2020w4/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://johaniefournier.com/blog/tyt2020w4/featured.png" >
+    
+    
+  <meta itemprop="name" content="TyT2020W04 - Visualize Index">
+<meta itemprop="description" content="Initially publish it on my wordpress blog. I put it here for reference purpose."><meta itemprop="datePublished" content="2020-01-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-01-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1022"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2020w4/featured.png">
+<meta itemprop="keywords" content="rstats,tidyverse,tidytuesday," />
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
+<script>
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-K3765H3YGW', { 'anonymize_ip': true });
+}
+</script>
+
+  
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K3765H3YGW', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.934ab0c39d760cb2a3d6c2d9f252dada805049003f570a926d19dea3b61aacfc.css" integrity="sha256-k0qww512DLKj1sLZ8lLa2oBQSQA/VwqSbRneo7YarPw=" media="screen">
+  
+  
+  <script src="/panelset.min.8f4cba0107356728f266d94a12a4d18ef504eda8a9a284cda73675bae7884a68.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.5c2a34ae6659865a008a6856c3d0035205be131e5a950ccb863e57f6a76d4b1c.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://johaniefournier.com/" title="Home">
+      <img src="/img/icon.png" class="dib db-l h2 w-auto" alt="Johanie Fournier">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/eda/" title="eda">eda</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/viz/" title="viz">viz</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/models/" title="models">models</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">TyT2020W04 - Visualize Index</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </p>
+        <p class="f7 db mv0 ttu">January 22, 2020</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        
+
+
+
+<h2 id="get-the-data">Get the data
+  <a href="#get-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>spotify_songs <span style="color:#666">&lt;-</span> readr<span style="color:#666">::</span><span style="color:#06287e">read_csv</span>(<span style="color:#4070a0">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-21/spotify_songs.csv&#39;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>## Rows: 32833 Columns: 23
+</code></pre><pre tabindex="0"><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &#34;,&#34;
+## chr (10): track_id, track_name, track_artist, track_album_id, track_album_na...
+## dbl (13): track_popularity, danceability, energy, key, loudness, mode, speec...
+</code></pre><pre tabindex="0"><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</code></pre>
+
+
+
+<h2 id="explore-the-data">Explore the data
+  <a href="#explore-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">summary</span>(spotify_songs)
+</span></span></code></pre></div><pre tabindex="0"><code>##    track_id          track_name        track_artist       track_popularity
+##  Length:32833       Length:32833       Length:32833       Min.   :  0.00  
+##  Class :character   Class :character   Class :character   1st Qu.: 24.00  
+##  Mode  :character   Mode  :character   Mode  :character   Median : 45.00  
+##                                                           Mean   : 42.48  
+##                                                           3rd Qu.: 62.00  
+##                                                           Max.   :100.00  
+##  track_album_id     track_album_name   track_album_release_date
+##  Length:32833       Length:32833       Length:32833            
+##  Class :character   Class :character   Class :character        
+##  Mode  :character   Mode  :character   Mode  :character        
+##                                                                
+##                                                                
+##                                                                
+##  playlist_name      playlist_id        playlist_genre     playlist_subgenre 
+##  Length:32833       Length:32833       Length:32833       Length:32833      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##   danceability        energy              key            loudness      
+##  Min.   :0.0000   Min.   :0.000175   Min.   : 0.000   Min.   :-46.448  
+##  1st Qu.:0.5630   1st Qu.:0.581000   1st Qu.: 2.000   1st Qu.: -8.171  
+##  Median :0.6720   Median :0.721000   Median : 6.000   Median : -6.166  
+##  Mean   :0.6548   Mean   :0.698619   Mean   : 5.374   Mean   : -6.720  
+##  3rd Qu.:0.7610   3rd Qu.:0.840000   3rd Qu.: 9.000   3rd Qu.: -4.645  
+##  Max.   :0.9830   Max.   :1.000000   Max.   :11.000   Max.   :  1.275  
+##       mode         speechiness      acousticness    instrumentalness   
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000000  
+##  1st Qu.:0.0000   1st Qu.:0.0410   1st Qu.:0.0151   1st Qu.:0.0000000  
+##  Median :1.0000   Median :0.0625   Median :0.0804   Median :0.0000161  
+##  Mean   :0.5657   Mean   :0.1071   Mean   :0.1753   Mean   :0.0847472  
+##  3rd Qu.:1.0000   3rd Qu.:0.1320   3rd Qu.:0.2550   3rd Qu.:0.0048300  
+##  Max.   :1.0000   Max.   :0.9180   Max.   :0.9940   Max.   :0.9940000  
+##     liveness         valence           tempo         duration_ms    
+##  Min.   :0.0000   Min.   :0.0000   Min.   :  0.00   Min.   :  4000  
+##  1st Qu.:0.0927   1st Qu.:0.3310   1st Qu.: 99.96   1st Qu.:187819  
+##  Median :0.1270   Median :0.5120   Median :121.98   Median :216000  
+##  Mean   :0.1902   Mean   :0.5106   Mean   :120.88   Mean   :225800  
+##  3rd Qu.:0.2480   3rd Qu.:0.6930   3rd Qu.:133.92   3rd Qu.:253585  
+##  Max.   :0.9960   Max.   :0.9910   Max.   :239.44   Max.   :517810
+</code></pre><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">glimpse</span>(spotify_songs)
+</span></span></code></pre></div><pre tabindex="0"><code>## Rows: 32,833
+## Columns: 23
+## $ track_id                 &lt;chr&gt; &#34;6f807x0ima9a1j3VPbc7VN&#34;, &#34;0r7CVbZTWZgbTCYdfa…
+## $ track_name               &lt;chr&gt; &#34;I Don&#39;t Care (with Justin Bieber) - Loud Lux…
+## $ track_artist             &lt;chr&gt; &#34;Ed Sheeran&#34;, &#34;Maroon 5&#34;, &#34;Zara Larsson&#34;, &#34;Th…
+## $ track_popularity         &lt;dbl&gt; 66, 67, 70, 60, 69, 67, 62, 69, 68, 67, 58, 6…
+## $ track_album_id           &lt;chr&gt; &#34;2oCs0DGTsRO98Gh5ZSl2Cx&#34;, &#34;63rPSO264uRjW1X5E6…
+## $ track_album_name         &lt;chr&gt; &#34;I Don&#39;t Care (with Justin Bieber) [Loud Luxu…
+## $ track_album_release_date &lt;chr&gt; &#34;2019-06-14&#34;, &#34;2019-12-13&#34;, &#34;2019-07-05&#34;, &#34;20…
+## $ playlist_name            &lt;chr&gt; &#34;Pop Remix&#34;, &#34;Pop Remix&#34;, &#34;Pop Remix&#34;, &#34;Pop R…
+## $ playlist_id              &lt;chr&gt; &#34;37i9dQZF1DXcZDD7cfEKhW&#34;, &#34;37i9dQZF1DXcZDD7cf…
+## $ playlist_genre           &lt;chr&gt; &#34;pop&#34;, &#34;pop&#34;, &#34;pop&#34;, &#34;pop&#34;, &#34;pop&#34;, &#34;pop&#34;, &#34;po…
+## $ playlist_subgenre        &lt;chr&gt; &#34;dance pop&#34;, &#34;dance pop&#34;, &#34;dance pop&#34;, &#34;dance…
+## $ danceability             &lt;dbl&gt; 0.748, 0.726, 0.675, 0.718, 0.650, 0.675, 0.4…
+## $ energy                   &lt;dbl&gt; 0.916, 0.815, 0.931, 0.930, 0.833, 0.919, 0.8…
+## $ key                      &lt;dbl&gt; 6, 11, 1, 7, 1, 8, 5, 4, 8, 2, 6, 8, 1, 5, 5,…
+## $ loudness                 &lt;dbl&gt; -2.634, -4.969, -3.432, -3.778, -4.672, -5.38…
+## $ mode                     &lt;dbl&gt; 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, …
+## $ speechiness              &lt;dbl&gt; 0.0583, 0.0373, 0.0742, 0.1020, 0.0359, 0.127…
+## $ acousticness             &lt;dbl&gt; 0.10200, 0.07240, 0.07940, 0.02870, 0.08030, …
+## $ instrumentalness         &lt;dbl&gt; 0.00e+00, 4.21e-03, 2.33e-05, 9.43e-06, 0.00e…
+## $ liveness                 &lt;dbl&gt; 0.0653, 0.3570, 0.1100, 0.2040, 0.0833, 0.143…
+## $ valence                  &lt;dbl&gt; 0.518, 0.693, 0.613, 0.277, 0.725, 0.585, 0.1…
+## $ tempo                    &lt;dbl&gt; 122.036, 99.972, 124.008, 121.956, 123.976, 1…
+## $ duration_ms              &lt;dbl&gt; 194754, 162600, 176616, 169093, 189052, 16304…
+</code></pre>
+
+
+
+<h2 id="prepare-the-data">Prepare the data
+  <a href="#prepare-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># convertir le tempo en un indicateur qui varie entre 0 et 1</span>
+</span></span><span style="display:flex;"><span>tempo<span style="color:#666">&lt;-</span><span style="color:#06287e">data.frame</span>(tempo<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">99.96</span>,<span style="color:#40a070">120.88</span>,<span style="color:#40a070">133.92</span>,<span style="color:#40a070">239.44</span>),tempo_0_1<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">0.25</span>,<span style="color:#40a070">0.50</span>,<span style="color:#40a070">0.75</span>,<span style="color:#40a070">1</span>))
+</span></span><span style="display:flex;"><span>formula <span style="color:#666">&lt;-</span> y <span style="color:#666">~</span> x
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> <span style="color:#06287e">ggplot</span>(data<span style="color:#666">=</span>tempo, <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>tempo, y<span style="color:#666">=</span>tempo_0_1))
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_point</span>()
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_smooth</span>(method<span style="color:#666">=</span><span style="color:#4070a0">&#39;lm&#39;</span>, se<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">FALSE</span>, formula<span style="color:#666">=</span>formula)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">stat_poly_eq</span>(<span style="color:#06287e">aes</span>(label <span style="color:#666">=</span>  <span style="color:#06287e">paste</span>(..eq.label.., ..adj.rr.label.., sep <span style="color:#666">=</span> <span style="color:#4070a0">&#34;~~~~&#34;</span>)),
+</span></span><span style="display:flex;"><span>                   formula <span style="color:#666">=</span> formula, parse <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">theme_classic</span>()
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">scale_y_continuous</span>(limits<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">1</span>))
+</span></span><span style="display:flex;"><span>gg
+</span></span></code></pre></div><pre tabindex="0"><code>## Warning: Removed 5 rows containing missing values (geom_smooth).
+</code></pre><img src="https://johaniefournier.com/blog/tyt2020w4/index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data<span style="color:#666">&lt;-</span>spotify_songs <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(playlist_genre, danceability, energy,valence,tempo) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(tempo_0_1<span style="color:#666">=</span><span style="color:#40a070">0.00438</span><span style="color:#666">*</span>tempo<span style="color:#40a070">-0.0208</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>tempo) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">gather</span>(type, valeur,<span style="color:#666">-</span>playlist_genre) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">group_by</span>(playlist_genre, type) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summarise_if</span>(is.numeric, median, na.rm <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ungroup</span>() 
+</span></span></code></pre></div>
+
+
+
+<h2 id="visualize-the-data">Visualize the data
+  <a href="#visualize-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#Graphique</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span> <span style="color:#06287e">ggplot</span>(data<span style="color:#666">=</span>data,<span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> valeur, y<span style="color:#666">=</span>playlist_genre))
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_segment</span>( <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, xend<span style="color:#666">=</span><span style="color:#40a070">0.9</span>,y<span style="color:#666">=</span>playlist_genre, yend<span style="color:#666">=</span>playlist_genre),
+</span></span><span style="display:flex;"><span>                           color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#838A90&#34;</span>, alpha<span style="color:#666">=</span><span style="color:#40a070">0.6</span>, size<span style="color:#666">=</span><span style="color:#40a070">4</span>)
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_segment</span>( <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, xend<span style="color:#666">=</span><span style="color:#40a070">0.9</span>,y<span style="color:#666">=</span>playlist_genre, yend<span style="color:#666">=</span>playlist_genre),
+</span></span><span style="display:flex;"><span>                           color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, alpha<span style="color:#666">=</span><span style="color:#40a070">1</span>, size<span style="color:#666">=</span><span style="color:#40a070">0.5</span>)
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">geom_point</span>(<span style="color:#06287e">aes</span>(fill<span style="color:#666">=</span>type, group<span style="color:#666">=</span>playlist_genre), color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">20</span>, pch<span style="color:#666">=</span><span style="color:#40a070">21</span>, alpha<span style="color:#666">=</span><span style="color:#40a070">0.5</span>)
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">geom_point</span>(<span style="color:#06287e">aes</span>(fill<span style="color:#666">=</span>type, group<span style="color:#666">=</span>playlist_genre), color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">12</span>, pch<span style="color:#666">=</span><span style="color:#40a070">21</span>)
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">scale_fill_brewer</span>(palette <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Set1&#34;</span>,labels<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;danceability&#34;</span>,<span style="color:#4070a0">&#34;Energy&#34;</span>, <span style="color:#4070a0">&#34;Tempo&#34;</span>, <span style="color:#4070a0">&#34;Valance&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajouter les étiquettes de points</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">geom_text</span>(data<span style="color:#666">=</span>data, <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>valeur, y<span style="color:#666">=</span>playlist_genre, label<span style="color:#666">=</span>(<span style="color:#06287e">round</span>(data<span style="color:#666">$</span>valeur,<span style="color:#40a070">1</span>)), group<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">NULL</span>), color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">4.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#pour l&#39;axe des y à l&#39;intérieur du graphique</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>,x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, y<span style="color:#666">=</span><span style="color:#40a070">1.3</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Edm&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>,x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, y<span style="color:#666">=</span><span style="color:#40a070">2.3</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Latin&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>,x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, y<span style="color:#666">=</span><span style="color:#40a070">3.3</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Pop&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>,x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, y<span style="color:#666">=</span><span style="color:#40a070">4.3</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;R&amp;B&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>,x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, y<span style="color:#666">=</span><span style="color:#40a070">5.3</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Rap&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>,x<span style="color:#666">=</span><span style="color:#40a070">0.3</span>, y<span style="color:#666">=</span><span style="color:#40a070">6.3</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Rock&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#ffffff&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">5.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajuster l&#39;axe des x</span>
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">scale_x_continuous</span>(expand <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">0</span>))
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#modifier le thème</span>
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">theme</span>(plot.background <span style="color:#666">=</span> <span style="color:#06287e">element_rect</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#171717&#34;</span>),
+</span></span><span style="display:flex;"><span>                  panel.background <span style="color:#666">=</span> <span style="color:#06287e">element_rect</span>(fill <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#171717&#34;</span>),
+</span></span><span style="display:flex;"><span>                  panel.grid.major.y<span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                  panel.grid.major.x<span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                  panel.grid.minor <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                  axis.line.x <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                  axis.line.y <span style="color:#666">=</span><span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                  axis.ticks.x <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(), 
+</span></span><span style="display:flex;"><span>                  axis.ticks.y <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>())
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">theme</span>(legend.position<span style="color:#666">=</span><span style="color:#4070a0">&#34;top&#34;</span>, 
+</span></span><span style="display:flex;"><span>                  legend.title <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(), 
+</span></span><span style="display:flex;"><span>                  legend.background <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),  
+</span></span><span style="display:flex;"><span>                  legend.key<span style="color:#666">=</span><span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                  legend.spacing.x <span style="color:#666">=</span> <span style="color:#06287e">unit</span>(<span style="color:#40a070">0.2</span>, <span style="color:#4070a0">&#39;cm&#39;</span>), 
+</span></span><span style="display:flex;"><span>                  legend.text<span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(hjust <span style="color:#666">=</span><span style="color:#40a070">0.5</span>,size<span style="color:#666">=</span> <span style="color:#40a070">8</span>, colour <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#FFFFFF&#34;</span>))
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>    <span style="color:#06287e">guides</span>(fill <span style="color:#666">=</span> <span style="color:#06287e">guide_legend</span>(nrow <span style="color:#666">=</span> <span style="color:#40a070">1</span>, reverse <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajouter les titres</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">labs</span>(title<span style="color:#666">=</span><span style="color:#4070a0">&#34;What kind of music do you prefer?&#34;</span>,
+</span></span><span style="display:flex;"><span>            subtitle <span style="color:#666">=</span> <span style="color:#4070a0">&#34;\nSpotify classifies music genres according to their characteristics to help users make their choice.\n&#34;</span>,
+</span></span><span style="display:flex;"><span>              x<span style="color:#666">=</span><span style="color:#4070a0">&#34;Index&#34;</span>, 
+</span></span><span style="display:flex;"><span>              y<span style="color:#666">=</span><span style="color:#4070a0">&#34; &#34;</span>, 
+</span></span><span style="display:flex;"><span>              caption<span style="color:#666">=</span><span style="color:#4070a0">&#34;\nSOURCE: Spotifyr   |  DESIGN: Johanie Fournier, agr.&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">theme</span>(  plot.title    <span style="color:#666">=</span>  <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">30</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, family<span style="color:#666">=</span><span style="color:#4070a0">&#34;Tw Cen MT&#34;</span>, face<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>),
+</span></span><span style="display:flex;"><span>                 plot.subtitle <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">15</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, family<span style="color:#666">=</span><span style="color:#4070a0">&#34;Tw Cen MT&#34;</span>),
+</span></span><span style="display:flex;"><span>                 plot.caption  <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">10</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, family<span style="color:#666">=</span><span style="color:#4070a0">&#34;Tw Cen MT&#34;</span>),
+</span></span><span style="display:flex;"><span>                 axis.title.x  <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(size<span style="color:#666">=</span><span style="color:#40a070">15</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0.05</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#FFFFFF&#34;</span>, family<span style="color:#666">=</span><span style="color:#4070a0">&#34;Tw Cen MT&#34;</span>, angle <span style="color:#666">=</span><span style="color:#40a070">0</span>),
+</span></span><span style="display:flex;"><span>                 axis.title.y  <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                 axis.text.y   <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(), 
+</span></span><span style="display:flex;"><span>                 axis.text.x   <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>())
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/tyt2020w4/index_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">January 22, 2020</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">5 minute read, 1022 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/tags/tidytuesday">tidytuesday</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz2/">Heatmap to Visualize Spatio-Temporal Data</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz/">Side by side interactive map with {leaflet} and {leaflet.extras2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_eda/">Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://johaniefournier.com/blog/tyt2020w6/">&larr; TyT2020W06 - Facet Wrap and Areas Under the Curve</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://johaniefournier.com/blog/tyt2020w3/">TyT2020W03 - Percentage by Category &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+  
+  <script src="https://utteranc.es/client.js"
+          repo="jofou/johaniefournier.com"
+          issue-term="title"
+          theme="github-light"
+          label="comments :speech_balloon:"
+          crossorigin="anonymous"
+          async
+          type="text/javascript">
+  </script>
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Johanie Fournier
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="License">License</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#2D2D39"
+    },
+    "button": {
+      "background": "#14a7d0"
+    }
+  },
+  "theme": "edgeless",
+  "position": "bottom-right",
+  "content": {
+      "message": "This website uses cookies for Google Analytics so that I know how many people are reading the blog and which blogposts are the most popular. The website does not collect any personal data.",
+  "href": "https://www.cookiesandyou.com/"
+  }
+});
+</script>
+
+      </div>
+    </body>
+</html>

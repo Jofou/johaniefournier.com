@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.98.0" />
+<title>IRDA soil data | Johanie Fournier</title>
+
+
+<meta property="twitter:site" content="@fournierjohanie">
+<meta property="twitter:creator" content="@fournierjohanie">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Freelance Agronomist Doing Data Analysis">
+
+
+<meta property="og:site_name" content="Johanie Fournier">
+<meta property="og:title" content="IRDA soil data | Johanie Fournier">
+<meta property="og:description" content="Freelance Agronomist Doing Data Analysis" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://johaniefournier.com/blog/data-irda/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://johaniefournier.com/blog/data-irda/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://johaniefournier.com/blog/data-irda/featured.png" >
+    
+    
+  <meta itemprop="name" content="IRDA soil data">
+<meta itemprop="description" content="I recently prepare FADQ data to make some predictives models. Those are great spatial data, but I can&rsquo;t go without a bit of soil information."><meta itemprop="datePublished" content="2023-10-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-10-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="715"><meta itemprop="image" content="https://johaniefournier.com/blog/data-irda/featured.png">
+<meta itemprop="keywords" content="rstats,tidyverse," />
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
+<script>
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-K3765H3YGW', { 'anonymize_ip': true });
+}
+</script>
+
+  
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K3765H3YGW', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.934ab0c39d760cb2a3d6c2d9f252dada805049003f570a926d19dea3b61aacfc.css" integrity="sha256-k0qww512DLKj1sLZ8lLa2oBQSQA/VwqSbRneo7YarPw=" media="screen">
+  
+  
+  <script src="/panelset.min.8f4cba0107356728f266d94a12a4d18ef504eda8a9a284cda73675bae7884a68.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.5c2a34ae6659865a008a6856c3d0035205be131e5a950ccb863e57f6a76d4b1c.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://johaniefournier.com/" title="Home">
+      <img src="/img/icon.png" class="dib db-l h2 w-auto" alt="Johanie Fournier">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/eda/" title="eda">eda</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/viz/" title="viz">viz</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/models/" title="models">models</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">IRDA soil data</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a> </p>
+        <p class="f7 db mv0 ttu">October 23, 2023</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>
+<a href="https://www.irda.qc.ca/fr/" target="_blank" rel="noopener">IRDA</a> here in Quebec, is generous enough to put on their website all the data from their soil studies. You can find it 
+<a href="https://www.irda.qc.ca/fr/services/protection-ressources/sante-sols/information-sols/etudes-pedologiques/" target="_blank" rel="noopener">here</a></p>
+<p>I download all of it on my computer and you can find the process in 
+<a href="https://github.com/Jofou/PINs/tree/master/IRDA/1%20Import" target="_blank" rel="noopener">this github repro</a>.</p>
+<p>Now, let&rsquo;s see what we got in this data set!</p>
+
+
+
+
+<h2 id="get-the-data">Get the data
+  <a href="#get-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Let&rsquo;s look at the data of <em>Chaudière-Appalaches</em></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>board_prepared <span style="color:#666">&lt;-</span> pins<span style="color:#666">::</span><span style="color:#06287e">board_folder</span>(path_to_file, versioned <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data <span style="color:#666">&lt;-</span> board_prepared <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  pins<span style="color:#666">::</span><span style="color:#06287e">pin_read</span>(<span style="color:#4070a0">&#34;TS_chaudiere_appalaches&#34;</span>)
+</span></span></code></pre></div>
+
+
+
+<h2 id="explore-the-data">Explore the data
+  <a href="#explore-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>There is a lot of information in there!! I usually go directly to the most interesting part: the texture, but let&rsquo;s explore a bit more here.</p>
+<p>Let&rsquo;s see how everything is correlated.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(pct_mo, sable, limon, argile, sable_tf) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate_all</span>(as.numeric) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">drop_na</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">my_corr_num_graph</span>(data)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-3-1.png" width="2400" />
+<pre tabindex="0"><code>## NULL
+</code></pre>
+
+
+
+<h2 id="principal-component-analysis">Principal component analysis
+  <a href="#principal-component-analysis"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Let&rsquo;s do a bit dimentionnality reduction!</p>
+
+
+
+
+<h3 id="step_pca">step_pca
+  <a href="#step_pca"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_pca <span style="color:#666">&lt;-</span> data <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(nom_sol, pct_mo, sable, limon, argile, sable_tf, clas_react, clas_calca, clas_humid) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate_at</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;pct_mo&#34;</span>, <span style="color:#4070a0">&#34;sable&#34;</span>, <span style="color:#4070a0">&#34;limon&#34;</span>, <span style="color:#4070a0">&#34;argile&#34;</span>, <span style="color:#4070a0">&#34;sable_tf&#34;</span>), as.numeric) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate_at</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;clas_react&#34;</span>, <span style="color:#4070a0">&#34;clas_calca&#34;</span>, <span style="color:#4070a0">&#34;clas_humid&#34;</span>), as.factor) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">drop_na</span>()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>pca <span style="color:#666">&lt;-</span> <span style="color:#06287e">recipe</span>(<span style="color:#666">~</span>., data <span style="color:#666">=</span> data_pca) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">update_role</span>(nom_sol, new_role <span style="color:#666">=</span> <span style="color:#4070a0">&#34;id&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_normalize</span>(<span style="color:#06287e">all_numeric_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_dummy</span>(<span style="color:#06287e">all_nominal_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_pca</span>(<span style="color:#06287e">all_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prep</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">bake</span>(., new_data <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pca <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(PC1, PC2, label <span style="color:#666">=</span> nom_sol)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>(color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, size <span style="color:#666">=</span> <span style="color:#40a070">2</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_text</span>(check_overlap <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>, hjust <span style="color:#666">=</span> <span style="color:#4070a0">&#34;inward&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(color <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-5-1.png" width="2400" />
+
+
+
+
+<h3 id="step_umap">step_umap
+  <a href="#step_umap"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(embed)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>umap_pca <span style="color:#666">&lt;-</span> <span style="color:#06287e">recipe</span>(<span style="color:#666">~</span>., data <span style="color:#666">=</span> data_pca) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">update_role</span>(nom_sol, new_role <span style="color:#666">=</span> <span style="color:#4070a0">&#34;id&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_normalize</span>(<span style="color:#06287e">all_numeric_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_dummy</span>(<span style="color:#06287e">all_nominal_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_umap</span>(<span style="color:#06287e">all_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prep</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">bake</span>(., new_data <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>umap_pca <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">ggplot</span>(<span style="color:#06287e">aes</span>(UMAP1, UMAP2, label <span style="color:#666">=</span> nom_sol)) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_point</span>(color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#DBBDC3&#34;</span>, size <span style="color:#666">=</span> <span style="color:#40a070">2</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_text</span>(check_overlap <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>, hjust <span style="color:#666">=</span> <span style="color:#4070a0">&#34;inward&#34;</span>) <span style="color:#666">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">labs</span>(color <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-6-1.png" width="2400" />
+
+
+
+
+<h3 id="prcomp">prcomp
+  <a href="#prcomp"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+
+
+
+
+<h4 id="test-1">Test 1
+  <a href="#test-1"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>prcomp_pca <span style="color:#666">&lt;-</span> <span style="color:#06287e">recipe</span>(<span style="color:#666">~</span>., data <span style="color:#666">=</span> data_pca) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">update_role</span>(nom_sol, new_role <span style="color:#666">=</span> <span style="color:#4070a0">&#34;id&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_normalize</span>(<span style="color:#06287e">all_numeric_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_dummy</span>(<span style="color:#06287e">all_nominal_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prep</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">bake</span>(., new_data <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>nom_sol) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prcomp</span>(., tol <span style="color:#666">=</span> <span style="color:#40a070">0.1</span>, scale <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prcomp_pca <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">summary</span>(prcomp_pca)
+</span></span></code></pre></div><pre tabindex="0"><code>## Importance of first k=14 (out of 19) components:
+##                           PC1    PC2     PC3     PC4     PC5     PC6     PC7
+## Standard deviation     2.7386 1.3919 1.18051 1.09472 1.08282 1.04870 1.01337
+## Proportion of Variance 0.3947 0.1020 0.07335 0.06307 0.06171 0.05788 0.05405
+## Cumulative Proportion  0.3947 0.4967 0.57005 0.63312 0.69483 0.75271 0.80676
+##                            PC8     PC9    PC10    PC11    PC12    PC13    PC14
+## Standard deviation     1.00904 0.91347 0.74312 0.62665 0.56573 0.51546 0.35904
+## Proportion of Variance 0.05359 0.04392 0.02906 0.02067 0.01684 0.01398 0.00678
+## Cumulative Proportion  0.86035 0.90427 0.93333 0.95400 0.97084 0.98483 0.99161
+</code></pre><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_eig</span>(prcomp_pca)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-7-1.png" width="2400" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_pca_var</span>(prcomp_pca,
+</span></span><span style="display:flex;"><span>  col.var <span style="color:#666">=</span> <span style="color:#4070a0">&#34;contrib&#34;</span>,
+</span></span><span style="display:flex;"><span>  gradient.cols <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;#00AFBB&#34;</span>, <span style="color:#4070a0">&#34;#E7B800&#34;</span>, <span style="color:#4070a0">&#34;#FC4E07&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-7-2.png" width="2400" />
+
+
+
+
+<h4 id="test-2">Test 2
+  <a href="#test-2"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_pca_smpl <span style="color:#666">&lt;-</span> data_pca <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>clas_humid)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prcomp_pca <span style="color:#666">&lt;-</span> <span style="color:#06287e">recipe</span>(<span style="color:#666">~</span>., data <span style="color:#666">=</span> data_pca_smpl) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">update_role</span>(nom_sol, new_role <span style="color:#666">=</span> <span style="color:#4070a0">&#34;id&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_normalize</span>(<span style="color:#06287e">all_numeric_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_dummy</span>(<span style="color:#06287e">all_nominal_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prep</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">bake</span>(., new_data <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>nom_sol) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prcomp</span>(., tol <span style="color:#666">=</span> <span style="color:#40a070">0.1</span>, scale <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">summary</span>(prcomp_pca)
+</span></span></code></pre></div><pre tabindex="0"><code>## Importance of first k=10 (out of 12) components:
+##                           PC1    PC2     PC3     PC4     PC5     PC6     PC7
+## Standard deviation     2.4885 1.2221 1.01127 1.00687 0.92494 0.71271 0.62815
+## Proportion of Variance 0.5161 0.1245 0.08522 0.08448 0.07129 0.04233 0.03288
+## Cumulative Proportion  0.5161 0.6405 0.72574 0.81022 0.88151 0.92384 0.95672
+##                            PC8     PC9   PC10
+## Standard deviation     0.50548 0.39574 0.2706
+## Proportion of Variance 0.02129 0.01305 0.0061
+## Cumulative Proportion  0.97802 0.99107 0.9972
+</code></pre><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_eig</span>(prcomp_pca)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-8-1.png" width="2400" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_pca_var</span>(prcomp_pca,
+</span></span><span style="display:flex;"><span>  col.var <span style="color:#666">=</span> <span style="color:#4070a0">&#34;contrib&#34;</span>,
+</span></span><span style="display:flex;"><span>  gradient.cols <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;#00AFBB&#34;</span>, <span style="color:#4070a0">&#34;#E7B800&#34;</span>, <span style="color:#4070a0">&#34;#FC4E07&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-8-2.png" width="2400" />
+
+
+
+
+<h4 id="test-3">Test 3
+  <a href="#test-3"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_pca_smpl <span style="color:#666">&lt;-</span> data_pca <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>clas_humid, <span style="color:#666">-</span>clas_react)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prcomp_pca <span style="color:#666">&lt;-</span> <span style="color:#06287e">recipe</span>(<span style="color:#666">~</span>., data <span style="color:#666">=</span> data_pca_smpl) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">update_role</span>(nom_sol, new_role <span style="color:#666">=</span> <span style="color:#4070a0">&#34;id&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_normalize</span>(<span style="color:#06287e">all_numeric_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_dummy</span>(<span style="color:#06287e">all_nominal_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prep</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">bake</span>(., new_data <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>nom_sol) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prcomp</span>(., tol <span style="color:#666">=</span> <span style="color:#40a070">0.1</span>, scale <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">summary</span>(prcomp_pca)
+</span></span></code></pre></div><pre tabindex="0"><code>## Importance of first k=7 (out of 8) components:
+##                           PC1    PC2     PC3     PC4     PC5     PC6     PC7
+## Standard deviation     2.2676 1.0138 0.84391 0.64084 0.58962 0.46451 0.31824
+## Proportion of Variance 0.6428 0.1285 0.08902 0.05133 0.04346 0.02697 0.01266
+## Cumulative Proportion  0.6428 0.7713 0.86028 0.91162 0.95507 0.98204 0.99470
+</code></pre><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_eig</span>(prcomp_pca)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-9-1.png" width="2400" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_pca_var</span>(prcomp_pca,
+</span></span><span style="display:flex;"><span>  col.var <span style="color:#666">=</span> <span style="color:#4070a0">&#34;contrib&#34;</span>,
+</span></span><span style="display:flex;"><span>  gradient.cols <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;#00AFBB&#34;</span>, <span style="color:#4070a0">&#34;#E7B800&#34;</span>, <span style="color:#4070a0">&#34;#FC4E07&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-9-2.png" width="2400" />
+
+
+
+
+<h4 id="test-4">Test 4
+  <a href="#test-4"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data_pca_smpl <span style="color:#666">&lt;-</span> data_pca <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>clas_humid, <span style="color:#666">-</span>clas_react, <span style="color:#666">-</span>clas_calca)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prcomp_pca <span style="color:#666">&lt;-</span> <span style="color:#06287e">recipe</span>(<span style="color:#666">~</span>., data <span style="color:#666">=</span> data_pca_smpl) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">update_role</span>(nom_sol, new_role <span style="color:#666">=</span> <span style="color:#4070a0">&#34;id&#34;</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_normalize</span>(<span style="color:#06287e">all_numeric_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">step_dummy</span>(<span style="color:#06287e">all_nominal_predictors</span>()) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prep</span>() <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">bake</span>(., new_data <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">NULL</span>) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(<span style="color:#666">-</span>nom_sol) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">prcomp</span>(., tol <span style="color:#666">=</span> <span style="color:#40a070">0.1</span>, scale <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">TRUE</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06287e">summary</span>(prcomp_pca)
+</span></span></code></pre></div><pre tabindex="0"><code>## Importance of components:
+##                           PC1    PC2     PC3     PC4     PC5
+## Standard deviation     1.8982 0.8097 0.62634 0.46801 0.36039
+## Proportion of Variance 0.7206 0.1311 0.07846 0.04381 0.02598
+## Cumulative Proportion  0.7206 0.8518 0.93022 0.97402 1.00000
+</code></pre><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_eig</span>(prcomp_pca)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-10-1.png" width="2400" />
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>factoextra<span style="color:#666">::</span><span style="color:#06287e">fviz_pca_var</span>(prcomp_pca,
+</span></span><span style="display:flex;"><span>  col.var <span style="color:#666">=</span> <span style="color:#4070a0">&#34;contrib&#34;</span>,
+</span></span><span style="display:flex;"><span>  gradient.cols <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;#00AFBB&#34;</span>, <span style="color:#4070a0">&#34;#E7B800&#34;</span>, <span style="color:#4070a0">&#34;#FC4E07&#34;</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-10-2.png" width="2400" />
+<p>Percentage of variance obtain under independence <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="https://johaniefournier.com/blog/data-irda/index_files/figure-html/unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;" />
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Source: 
+<a href="https://www.youtube.com/watch?v=Oi4aQcUb1Yc&amp;list=PLnZgp6epRBbRn3FeMdaQgVsFh9Kl0fjqX&amp;index=3" target="_blank" rel="noopener">https://www.youtube.com/watch?v=Oi4aQcUb1Yc&list=PLnZgp6epRBbRn3FeMdaQgVsFh9Kl0fjqX&index=3</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">October 23, 2023</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">4 minute read, 715 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidyverse">tidyverse</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz2/">Heatmap to Visualize Spatio-Temporal Data</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz/">Side by side interactive map with {leaflet} and {leaflet.extras2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_eda/">Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://johaniefournier.com/blog/irda-h2o/">&larr; Predicting MO with H2O Models from IRDA data</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://johaniefournier.com/blog/cheat-sheet/">This is the begining of a cheat sheet! &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+  
+  <script src="https://utteranc.es/client.js"
+          repo="jofou/johaniefournier.com"
+          issue-term="title"
+          theme="github-light"
+          label="comments :speech_balloon:"
+          crossorigin="anonymous"
+          async
+          type="text/javascript">
+  </script>
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Johanie Fournier
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="License">License</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#2D2D39"
+    },
+    "button": {
+      "background": "#14a7d0"
+    }
+  },
+  "theme": "edgeless",
+  "position": "bottom-right",
+  "content": {
+      "message": "This website uses cookies for Google Analytics so that I know how many people are reading the blog and which blogposts are the most popular. The website does not collect any personal data.",
+  "href": "https://www.cookiesandyou.com/"
+  }
+});
+</script>
+
+      </div>
+    </body>
+</html>
