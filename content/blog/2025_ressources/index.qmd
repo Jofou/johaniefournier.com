@@ -1,5 +1,5 @@
 ---
-title: 'Resources to Learn, Grow, and Work Smarter'
+title: 'Recommended Resources to Learn, Grow, and Work Smarter'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-04-27"
 slug: ressources
@@ -7,7 +7,9 @@ categories:
 - ressources
 tags:
 - ressources
-summary: "Here you’ll find my personal recommendations for books, courses, and tools that have helped me learn R programming, grow my data science skills, and stay organized as a busy professional. Every resource listed here is something I truly use or trust. Some links are affiliate links, meaning I may earn a small commission at no extra cost to you. Thank you for supporting my work and learning journey! "
+summary: "Here are the resources for data analysts and programmers I personally recommend — including the best R programming books, top data science courses, and productivity tools for developers that I use to stay organized and learn faster.
+Whether you're starting out or growing your career, these tools and learning paths can help you learn R programming faster and build real-world skills.
+(Some links are affiliate links. They cost you nothing extra and help support my work. Thanks!)"
 editor_options: 
   chunk_output_type: inline
 adsense:
@@ -118,6 +120,12 @@ update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
 #Projected
 #NAD83:"EPSG3978"
 ```
+
+Here are the resources for data analysts and programmers I personally recommend — including the best R programming books, top data science courses, and productivity tools for developers that I use to stay organized and learn faster.
+
+Whether you're starting out or growing your career, these tools and learning paths can help you learn R programming faster and build real-world skills.
+
+Some links are affiliate links. They cost you nothing extra and help support my work. Thanks!
 
 ## My favorites courses 
 
