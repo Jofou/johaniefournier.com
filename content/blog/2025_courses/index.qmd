@@ -2,7 +2,7 @@
 title: 'Top 7 Online Courses to Level Up Your R Programming and Data Science Skills (2025 Edition)'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-04-27"
-slug: ressources
+slug: courses
 categories:
 - ressources
 tags:
