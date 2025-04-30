@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ressources on Johanie Fournier</title>
+    <link>https://johaniefournier.com/tag/ressources/</link>
+    <description>Recent content in ressources on Johanie Fournier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 27 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/ressources/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Recommended Resources to Learn, Grow, and Work Smarter</title>
+      <link>https://johaniefournier.com/blog/ressources/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ressources/</guid>
+      <description>Here are the resources for data analysts and programmers I personally recommend — including the best R programming books, top data science courses, and productivity tools for developers that I use to stay organized and learn faster. Whether you&amp;rsquo;re starting out or growing your career, these tools and learning paths can help you learn R programming faster and build real-world skills. (Some links are affiliate links. They cost you nothing extra and help support my work. Thanks!)</description>
+    </item>
+    
+    <item>
+      <title>Top 7 Online Courses to Level Up Your R Programming and Data Science Skills (2025 Edition)</title>
+      <link>https://johaniefournier.com/blog/courses/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/courses/</guid>
+      <description>Discover the best R programming and data science courses to boost your skills, build real-world projects, and grow your career. Start learning smarter today!</description>
+    </item>
+    
+  </channel>
+</rss>

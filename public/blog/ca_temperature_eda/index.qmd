@@ -1,5 +1,5 @@
 ---
-title: 'How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?'
+title: 'Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-02-13"
 slug: ca_temperature_EDA
@@ -15,7 +15,7 @@ tags:
   - tidymodels
   - tidytuesday
   - viz
-summary: "How is climate change affecting temperature, Growing Degree Days (GDD), and the vegetation period in Chaudières-Appalaches? This analysis explores 20 years of historical climate data, uncovering trends, anomalies, and shifts in temperature patterns. By examining GDD calculations and vegetation period variations, we highlight the impacts on agriculture, crop cycles, and ecosystem resilience. Using R for data analysis and visualization, this study provides key insights into how climate trends are reshaping growing conditions in the region."
+summary: "pollen and vegperiod are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region."
 editor_options: 
   chunk_output_type: inline
 adsense:
@@ -135,7 +135,6 @@ Dir.Data <- file.path(Dir.Base, "Data") # folder path for data
 Dir.Covariates <- file.path(Dir.Base, "Covariates") # folder path for covariates
 Dir.Exports <- file.path(Dir.Base, "Exports") # folder path for exports
 ```
-
 
 
 <a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
@@ -453,16 +452,6 @@ temp_dt |>
 This graph does not show any monthly precipitation anomalies and does not show the seasonality of precipitation.
 
 
-::: {.callout-tip}
-
-### How are you doing whit this code? 
-
-If you're OK, keep reading! 
-
-If you're struggling, I see you. I've been there. Trying to make sense of all that alone can be a lot. But you're not alone. I'm here to help you. I'm preparing a something special. You can join the wait list to be the first to know when it's ready [here](johanie-fournier-s-school.teachable.com/p/geos-data-analysis-tutorials)
-
-:::
-
 # Vegetation period
 
 ## General trend
@@ -533,11 +522,6 @@ group_by(year, lon, lat) |>
 This graph shows the spatial distribution of vegetation period over time. The color intensity represents the mean vegetation period for the year, with darker colors indicating shorter periods. This clearly indicates that vegetation period levels vary across the region and the years.
 
 ## Anomalies and outliers
-
-```{r}
-#| echo: false
-blogdown::shortcode("youtube", "8jbBqnPZkZc")
-```
 
 Are there any anomalies or outliers in the data? Let's investigate!
 
@@ -666,7 +650,7 @@ No anomalies were detected in the growing degree days data. This indicates that 
 
 
 
-# Conclusion
+## Conclusion
 
 In this study, we conducted an exploratory data analysis of temperature data for Chaudières-Appalaches. We analyzed the temporal and spatial trends, identified anomalies, and explored the relationship between temperature and vegetation period. Our analysis revealed that temperature levels have increased over the past 20 years, with significant spatial variations across the region. We also found that the vegetation period and growing degree days have increased over time, indicating favorable conditions for plant growth. By understanding these trends and patterns, we can develop more accurate forecasting models that account for both temporal and spatial dependencies in the data. This will help us make informed decisions about agricultural practices, land management, and climate change adaptation strategies in the region.
 
@@ -683,7 +667,3 @@ In this study, we conducted an exploratory data analysis of temperature data for
 ```{r}
 sessionInfo()
 ```
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
-     crossorigin="anonymous"></script>
-

@@ -5,10 +5,21 @@
     <description>Recent content in Categories on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 25 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Apr 2025 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://johaniefournier.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ressources</title>
+      <link>https://johaniefournier.com/categories/ressources/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/categories/ressources/</guid>
+      <description></description>
+      
+      
+    </item>
     
     <item>
       <title>eda</title>
