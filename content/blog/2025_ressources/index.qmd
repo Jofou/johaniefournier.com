@@ -172,6 +172,7 @@ Some links are affiliate links. They cost you nothing extra and help support my 
   * [R Packages](https://amzn.to/4iN1B7W) by Hadley Wickham and Jenny Bryan
   * [Practical Time Series Analysis](https://amzn.to/42LdViU) by Aileen Nielsen
   * [Football Analytics with R](https://amzn.to/4jypi51) by Eric A. Eager and Richard A. Erickson 
+  * [Practical Statistics for Data Scientists](https://amzn.to/3Gt0koQ) by Peter Bruce and Andrew Bruce
 
   
 ## My favorite personal development books
