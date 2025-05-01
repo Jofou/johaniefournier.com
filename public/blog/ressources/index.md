@@ -32,7 +32,7 @@ Some links are affiliate links. They cost you nothing extra and help support my 
 
 > **Tip**
 >
-> **GET 15% OFF!**
+> **GET 15% OFF WITH CODE DS4B15**
 
 -   [5 Course R-Track: Machine Learning, Web Apps, & Time Series](https://university.business-science.io/p/5-course-bundle-machine-learning-web-apps-time-series/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 -   [Learning Labs Pro](https://university.business-science.io/p/learning-labs-pro/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
@@ -41,11 +41,6 @@ Some links are affiliate links. They cost you nothing extra and help support my 
 -   [High Performance Time Series](https://university.business-science.io/p/ds4b-203-r-high-performance-time-series-forecasting/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 -   [Shiny Web Applications Part 1](https://university.business-science.io/p/ds4b-102-r-shiny-web-application-business-level-1/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 -   [Shiny Web Applications Part 2](https://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
-
-## My favorites tools
-
--   [Motion](https://get.usemotion.com/5s22lvxggmwy)
--   [Tella](https://refer.tella.com/johanie-fournier)
 
 ## Some of my favorite books
 
