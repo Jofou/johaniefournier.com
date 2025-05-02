@@ -2,7 +2,7 @@
 title: 'Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-02-13"
-slug: ca_temperature_EDA
+slug: ca_temperature_EDA_polen
 categories:
   - rstats
   - tidymodels

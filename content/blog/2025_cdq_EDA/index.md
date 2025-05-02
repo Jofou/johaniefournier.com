@@ -2,7 +2,7 @@
 title: 'How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?'
 author: Johanie Fournier, agr., M.Sc.
 date: "2025-02-13"
-slug: ca_temperature_EDA
+slug: ca_temperature_EDA_gdd
 categories:
   - rstats
   - tidymodels

@@ -1,0 +1,198 @@
+---
+title: 'What Is Data Valorisation in Agriculture? 10 Ways to Turn Raw Data into Real Value'
+author: Johanie Fournier, agr., M.Sc.
+date: "2025-05-01"
+slug: valorisation
+categories:
+- ressources
+tags:
+- ressources
+summary: "Want to make better use of your farm data? In this post, you'll discover what data valorisation means in agriculture and how to apply it using real-world examples, practical tools, and a mindset shift. From soil tests to weather records, learn how to turn everyday data into smarter decisions and better outcomes—without needing complex technology."
+editor_options: 
+  chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
+resources:
+ - ads.txt 
+---
+
+```{r setup}
+#| include: false
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE, 
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 7, fig.height = 5)
+
+# Importer des données
+library(openxlsx)
+
+# explorer et présenter les données
+library(inspectdf)
+library(kableExtra)
+library(lubridate)
+library(tidyverse)
+library(ggplot2)
+library(skimr)
+
+# Parallel Processing
+library(doFuture)
+
+# Core 
+library(recipes)
+library(tidymodels)
+library(timetk)
+library(fs)
+
+#Time series
+library(modeltime)
+
+#Import data
+library(pins)
+
+#H2O
+#library(h2o)
+
+#Geospatial
+library(sf)
+library(terra)
+
+#Monitorer le temps que ça prend
+library(tictoc)
+
+#Tidytuesday
+library(tidytuesdayR)
+
+#Python
+library(reticulate)
+#renv::use_python()
+Sys.setenv(RETICULATE_PYTHON = "~/Library/Mobile Documents/com~apple~CloudDocs/ADV/johaniefournier.com/renv/python/virtualenvs/renv-python-3.9/bin/python")
+#py_install("pandas")
+#py_install("requests")
+#py_install("chardet")
+
+
+
+#Mes fonctions
+#devtools::install_github("jofou/jofou.lib")
+library(jofou.lib)
+
+#Theme_map
+theme_map <- function(base_size=9, base_family="") { # 3
+	require(grid)
+	theme_bw(base_size=base_size, base_family=base_family) %+replace%
+		theme(axis.line=element_blank(),
+			  axis.text=element_blank(),
+			  axis.ticks=element_blank(),
+			  axis.title=element_blank(),
+			  panel.background=element_blank(),
+			  panel.border=element_blank(),
+			  panel.grid=element_blank(),
+			  panel.spacing=unit(0, "lines"),
+			  plot.background=element_blank(),
+			  legend.justification = c(0,0),
+			  legend.position = c(0,0),
+			  plot.title= element_text(size=20, hjust=0, color="black", face="bold"),
+		)
+}
+
+#Graph theme
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", linewidth=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", linewidth=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+
+update_geom_defaults("rect", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("line", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
+
+#CRS
+#Geographic
+#WGS84:"EPSG:4326"
+#Projected
+#NAD83:"EPSG3978"
+```
+
+<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
+</a>
+
+<br>
+
+From weather stations to soil tests, drones to spreadsheets, agricultural data is everywhere. Yet, much of it sits unused. Data valorisation is about changing that—by transforming raw information into insights that lead to better decisions, stronger returns, and more sustainable practices.
+
+In this post, we explore 10 ways agricultural stakeholders—farmers, consultants, cooperatives, and agronomists—can unlock the true value of their data.
+
+## What Is Data Valorisation and Why It Matters
+
+Data valorisation is the act of converting existing agricultural data into actionable insights. It’s not just about having data—it’s about using it meaningfully. For example, you can use soil and yield data to optimize inputs, weather trends to assess pest risks, or milk quality logs to improve animal health. The goal is always the same: create value through better decisions.
+
+## Why Farm Data Often Goes Unused
+
+Despite the growing volume of data collected on farms, much of it never gets applied. This often happens because data is stuck in silos, producers lack time or technical support, or the purpose of the data isn’t clearly defined. The solution is to start small—focus on one decision you’d like to improve, involve people who understand the data, and use tools that are already accessible to your team.
+
+## Four Types of Value from Ag Data
+
+Agricultural data can generate value in four major ways. Economically, it can reduce input costs or create new services. Operationally, it can streamline tasks and reduce waste. Strategically, it helps organizations make informed decisions faster. And societally, it supports sustainable practices, regulatory compliance, and responsible land management.
+
+```{r, echo=FALSE}
+magick::image_read("value.png") 
+```
+
+
+## The Four Pillars of Data Valorisation
+
+To unlock value, data must meet four conditions. First, it must be relevant—it should help answer a practical question. Second, it must be high quality: accurate, consistent, and reliable. Third, it needs to be accessible to those who need it. And finally, it must be actionable, meaning it leads directly to a useful decision or intervention.
+
+## Case Study – Lime Application Zones
+
+One producer had years of soil pH test results stored in spreadsheets but never used them. By georeferencing the data and interpolating it across their fields, we created a variable-rate lime application map. The result was lower lime usage, more uniform pH across zones, and improved nutrient uptake in the crop.
+
+## Case Study – Fertilization Zones from Soil Data
+
+Another producer leveraged historical nutrient test data to create spatially-defined fertilizer zones. This allowed them to apply nutrients precisely where they were needed. The result was a drop in fertilizer costs, fewer environmental losses, and more consistent yields across the field.
+
+```{r, echo=FALSE}
+magick::image_read("ferti.png") 
+```
+
+## The Data Valorisation Mindset
+
+Successful data valorisation doesn’t come from technology alone—it starts with people. It requires curiosity to ask the right questions, collaboration between technical and field staff, and a commitment to using data for action. Culture is key: a team that values data is far more likely to use it to drive change.
+
+## Tools & Skills to Get Started
+
+You don’t need to be a data scientist to start valorising farm data. Tools like Excel, QGIS, Google Earth Engine, or basic R/Python scripts can go a long way. What matters most is the ability to ask a good question, explore the data visually, and communicate insights clearly to decision-makers.
+
+## Challenges & How to Overcome Them
+
+Common obstacles include poor data quality, lack of time, and resistance to change. The key is to start with manageable datasets and focus on quick wins. Don’t aim for perfection—look for small actions with clear results. One success story can build momentum for bigger transformations.
+
+
+```{r, echo=FALSE}
+magick::image_read("how.png") 
+```
+
+## From Data to Decisions
+
+You likely already have valuable data—you just need to put it to work. Start with one question, one dataset, and one decision. Whether it’s optimizing a practice, improving communication with clients, or building a smarter workflow, the value is already there, waiting to be unlocked.
+
+
+```{r, echo=FALSE}
+magick::image_read("conclu.png") 
+```
+
+
+## Sign up for the newsletter
+
+<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
+</a>
+
+<br>
+
+

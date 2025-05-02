@@ -3,24 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://johaniefournier.com/blog/</loc>
-    <lastmod>2025-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/categories/</loc>
-    <lastmod>2025-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/</loc>
-    <lastmod>2025-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://johaniefournier.com/blog/ressources/</loc>
-    <lastmod>2025-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/tag/ressources/</loc>
-    <lastmod>2025-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/categories/ressources/</loc>
-    <lastmod>2025-04-27T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/tags/</loc>
+    <lastmod>2025-05-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/blog/valorisation/</loc>
+    <lastmod>2025-05-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://johaniefournier.com/blog/ressources/</loc>
     <lastmod>2025-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/blog/courses/</loc>
@@ -68,10 +71,10 @@
     <loc>https://johaniefournier.com/blog/ca_temperature_viz/</loc>
     <lastmod>2025-02-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://johaniefournier.com/blog/ca_temperature_eda/</loc>
+    <loc>https://johaniefournier.com/blog/ca_temperature_eda_gdd/</loc>
     <lastmod>2025-02-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://johaniefournier.com/blog/ca_temperature_eda/</loc>
+    <loc>https://johaniefournier.com/blog/ca_temperature_eda_polen/</loc>
     <lastmod>2025-02-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://johaniefournier.com/blog/cdq_precipitation_viz/</loc>
