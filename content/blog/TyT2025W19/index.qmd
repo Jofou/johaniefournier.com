@@ -1,0 +1,225 @@
+---
+title: 'TyT2025W19: Seismic Events at Mount Vesuvius'
+author: Johanie Fournier, agr., M.Sc.
+date: "2025-05-11"
+slug: TyT2025W19
+categories:
+  - rstats
+  - tidymodels
+  - tidytuesday
+  - eda
+  - viz
+tags:
+  - eda
+  - rstats
+  - tidymodels
+  - tidytuesday
+  - viz
+summary: "The dataset this week explores seismic events detected at the famous Mount Vesuvius in Italy. It comes from the Italian Istituto Nazionale di Geofisica e Vulcanologia (INGV)'s Data Portal and can be explored along with other seismic areas on the GOSSIP website. The raw data was saved as individual CSV files from the GOSSIP website and some values were translated from Italian to English."
+editor_options: 
+  chunk_output_type: inline
+adsense:
+  publisher-id: ca-pub-7674504334497845
+filters:
+- adsense
+resources:
+ - ads.txt 
+---
+
+```{r setup}
+#| include: false
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE, 
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 7, fig.height = 5)
+
+# Importer des données
+library(openxlsx)
+
+# explorer et présenter les données
+library(inspectdf)
+library(kableExtra)
+library(lubridate)
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+library(skimr)
+
+# Parallel Processing
+library(doFuture)
+
+# Core 
+library(recipes)
+library(tidymodels)
+library(timetk)
+library(fs)
+
+
+#Import data
+library(pins)
+
+#H2O
+#library(h2o)
+
+#Geospatial
+library(sf)
+library(terra)
+#remotes::install_github("wmgeolab/rgeoboundaries")
+library(rgeoboundaries)
+
+# Climat
+#install.packages("ecmwfr")
+library(ecmwfr)
+#brew install netcdf
+library(ncdf4)
+#devtools::install_github("https://github.com/ErikKusch/KrigR", force=TRUE)
+library(KrigR)
+
+#Monitorer le temps que ça prend
+library(tictoc)
+
+#Tidytuesday
+library(tidytuesdayR)
+
+#Mes fonctions
+#devtools::install_github("jofou/jofou.lib")
+library(jofou.lib)
+
+#Python
+library(reticulate)
+#renv::use_python()
+Sys.setenv(RETICULATE_PYTHON ="~/.virtualenvs/r-reticulate/bin/python")
+
+#Theme_map
+theme_map <- function(base_size=9, base_family="") { # 3
+	require(grid)
+	theme_bw(base_size=base_size, base_family=base_family) %+replace%
+		theme(axis.line=element_blank(),
+			  axis.text=element_blank(),
+			  axis.ticks=element_blank(),
+			  axis.title=element_blank(),
+			  panel.background=element_blank(),
+			  panel.border=element_blank(),
+			  panel.grid=element_blank(),
+			  panel.spacing=unit(0, "lines"),
+			  plot.background=element_blank(),
+			  legend.justification = c(0,0),
+			  legend.position = c(0,0),
+			  plot.title= element_text(size=20, hjust=0, color="black", face="bold"),
+		)
+}
+
+#Graph theme
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", linewidth=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", linewidth=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+
+update_geom_defaults("rect", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("line", list(fill = "#DBBDC3", alpha = 0.8))
+update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
+
+#CRS
+#Geographic
+#WGS84:"EPSG:4326"
+#Projected
+#NAD83:"EPSG3978"
+
+Dir.Base <- getwd() # identifying the current directory
+Dir.Data <- file.path(Dir.Base, "Data") # folder path for data
+Dir.Covariates <- file.path(Dir.Base, "Covariates") # folder path for covariates
+Dir.Exports <- file.path(Dir.Base, "Exports") # folder path for exports
+```
+
+
+<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
+</a>
+
+<br>
+
+
+The data of this week [Tidytuesday challenge](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-05-13/readme.md) inspire me to make an aminated map of the seismic events at Mount Vesuvius. The dataset contains information about seismic events detected at the famous Mount Vesuvius in Italy. It comes from the Italian Istituto Nazionale di Geofisica e Vulcanologia (INGV)'s Data Portal and can be explored along with other seismic areas on the GOSSIP website. The raw data was saved as individual CSV files from the GOSSIP website and some values were translated from Italian to English.
+
+
+## Get the data
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2025, week = 19)
+
+vesuvius <- tuesdata$vesuvius
+```
+
+## Explore the data
+
+```{r}
+skimr::skim(tuesdata$vesuvius)
+```
+
+We have a date variable and an indication og the magnitude of the seismic event. 
+
+## Animated Visualization
+
+
+```{r}
+#| eval: FALSE
+library(gganimate)
+library(rgeoboundaries)
+
+# Gulf of Naples in Campania, Italy
+naples <- gb_adm3("Italy") |> 
+  filter(shapeName == "Napoli")
+
+#Create the base map
+base_map <- ggplot() +
+ geom_sf(data=naples, fill="lightgrey", color="white") +
+ geom_point(data=vesuvius, 
+            aes(x=longitude, 
+                y=latitude, 
+                group=year, 
+                color=duration_magnitude_md,
+                size=duration_magnitude_md*1000,
+                alpha = 50)) +
+  transition_time(year) +
+  ggtitle('Seismic Events Magnitude at Mount Vesuvius {frame_time}') +
+  shadow_mark() +
+  scale_color_gradient(low = "pink", high = "darkred")+
+  theme(legend.position = "none", 
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.line.x=element_blank(),
+        axis.line.y=element_blank(),
+        plot.title=element_text(hjust=0.5))
+num_years <- max(vesuvius$year) - min(vesuvius$year) + 1
+
+# Save the animation as a GIF
+anim <- gganimate::animate(base_map, nframes = num_years, duration=20)
+anim_save("ggmap_animation.gif", animation = anim)
+```
+
+```{r}
+# Read and display the saved GIF animation
+animation <- magick::image_read("ggmap_animation.gif")
+print(animation, info = FALSE)
+```
+
+# Sign up for the newsletter
+
+<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
+</a>
+
+<br>
+
+# Session Info
+
+```{r}
+sessionInfo()
+```
