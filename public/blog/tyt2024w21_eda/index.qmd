@@ -112,6 +112,10 @@ update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
 #NAD83:"EPSG3978"
 ```
 
+[![Subscribe button](petit.png)](https://subscribepage.io/E3ia1B)
+
+<br>
+
 I have worked extensively with spatial data over the past two years, so I decided to select suitable [`#TidyTuesday` dataset](https://github.com/rfordatascience/tidytuesday) and document what I have learned so far."
 
 My latest contribution to the [`#TidyTuesday`](https://github.com/rfordatascience/tidytuesday) project featuring a recent dataset on carbon major emissions. The dataset is a compilation of emissions data from 1854 to 2019.
@@ -273,8 +277,9 @@ final_data<-emissions |>
 In this first part, we have explored the dataset and identified the main characteristics. We have seen that the carbon emissions have increased over time and that the top 50 countries have different trends. We have also identified some anomalies and outliers that have been correct for the work to come in the next part. 
 
 
+# Sign up for the newsletter
 
-<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+[![Sign up](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
 
 
 ## Session Info

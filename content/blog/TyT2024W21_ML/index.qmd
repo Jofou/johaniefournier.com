@@ -119,6 +119,9 @@ update_geom_defaults("point", list(fill = "#DBBDC3", alpha = 0.8))
 #NAD83:"EPSG3978"
 ```
 
+[![Subscribe button](petit.png)](https://subscribepage.io/E3ia1B)
+
+<br>
 
 This is my latest contribution to the [`#TidyTuesday` dataset](https://github.com/rfordatascience/tidytuesday) project, featuring a recent dataset on carbon major emissions.
 
@@ -469,7 +472,10 @@ nested_best_refit_tbl |>
 In this post, I have shown how to predict carbon emissions over space and time using the Carbon Majors dataset. I have demonstrated how to preprocess the data, create a spatial weights matrix, and train machine learning models to predict future emissions. I have also shown how to evaluate the model's performance and make predictions for future emissions. This is just one example of how machine learning can be used to analyze environmental data and make predictions about future trends. I hope this post has been helpful and informative, and that it has inspired you to explore the Carbon Majors dataset further and apply machine learning techniques to other environmental datasets.
 
 
-<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+# Sign up for the newsletter
+
+[![Sign up](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
+
 
 ## Session Info
 

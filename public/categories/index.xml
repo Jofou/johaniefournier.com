@@ -5,26 +5,15 @@
     <description>Recent content in Categories on Johanie Fournier</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 01 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 May 2025 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://johaniefournier.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>ressources</title>
-      <link>https://johaniefournier.com/categories/ressources/</link>
-      <pubDate>Thu, 01 May 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://johaniefournier.com/categories/ressources/</guid>
-      <description></description>
-      
-      
-    </item>
-    
-    <item>
       <title>eda</title>
       <link>https://johaniefournier.com/categories/eda/</link>
-      <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/categories/eda/</guid>
       <description></description>
@@ -35,7 +24,7 @@
     <item>
       <title>rstats</title>
       <link>https://johaniefournier.com/categories/rstats/</link>
-      <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/categories/rstats/</guid>
       <description></description>
@@ -46,7 +35,7 @@
     <item>
       <title>tidymodels</title>
       <link>https://johaniefournier.com/categories/tidymodels/</link>
-      <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/categories/tidymodels/</guid>
       <description></description>
@@ -57,7 +46,7 @@
     <item>
       <title>tidytuesday</title>
       <link>https://johaniefournier.com/categories/tidytuesday/</link>
-      <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/categories/tidytuesday/</guid>
       <description></description>
@@ -68,9 +57,20 @@
     <item>
       <title>viz</title>
       <link>https://johaniefournier.com/categories/viz/</link>
-      <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
       
       <guid>https://johaniefournier.com/categories/viz/</guid>
+      <description></description>
+      
+      
+    </item>
+    
+    <item>
+      <title>ressources</title>
+      <link>https://johaniefournier.com/categories/ressources/</link>
+      <pubDate>Thu, 01 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/categories/ressources/</guid>
       <description></description>
       
       

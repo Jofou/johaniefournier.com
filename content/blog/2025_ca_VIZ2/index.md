@@ -28,8 +28,9 @@ resources:
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
-<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
-</a>
+[![](petit.png)](https://subscribepage.io/E3ia1B)
+
+Subscribe button
 
 <br>
 
@@ -189,8 +190,9 @@ The heatmap shows the spatio-temporal evolution of the vegetative period in the 
 
 # Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
+[![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
+
+Sign up
 
 <br>
 
@@ -202,7 +204,7 @@ sessionInfo()
 
     R version 4.4.2 (2024-10-31)
     Platform: aarch64-apple-darwin20
-    Running under: macOS Sequoia 15.3.2
+    Running under: macOS Sequoia 15.5
 
     Matrix products: default
     BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 

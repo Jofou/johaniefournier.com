@@ -21,7 +21,7 @@ adsense:
 filters:
 - adsense
 resources:
- - ads.txt 
+ - ads.txt
 ---
 
 <link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
@@ -38,8 +38,9 @@ resources:
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
-<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
-</a>
+[![](petit.png)](https://subscribepage.io/E3ia1B)
+
+Subscribe button
 
 <br>
 
@@ -231,8 +232,8 @@ DT::datatable(rsq) |>
   DT::formatRound(c(".estimate"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-ef5dc2b9a32fefcbfa5f" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ef5dc2b9a32fefcbfa5f">{"x":{"filter":"none","vertical":false,"data":[["1"],["rsq"],["standard"],[0.9856713133646924]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.metric<\/th>\n      <th>.estimator<\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".metric","targets":1},{"name":".estimator","targets":2},{"name":".estimate","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-b677d94981108cbc6107" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b677d94981108cbc6107">{"x":{"filter":"none","vertical":false,"data":[["1"],["rsq"],["standard"],[0.9856713133646924]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.metric<\/th>\n      <th>.estimator<\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":3},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".metric","targets":1},{"name":".estimator","targets":2},{"name":".estimate","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 #### RMSE
 
@@ -244,8 +245,8 @@ DT::datatable(rmse)|>
   DT::formatRound(c(".estimate"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-aa5d1bd10d77c6d001dc" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-aa5d1bd10d77c6d001dc">{"x":{"filter":"none","vertical":false,"data":[["1"],[0.6850784245411075]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-bb513f30c5ad0b9ed3b8" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-bb513f30c5ad0b9ed3b8">{"x":{"filter":"none","vertical":false,"data":[["1"],[0.6850784245411075]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 #### MAPE
 
@@ -256,8 +257,8 @@ DT::datatable(mape)|>
   DT::formatRound(c(".estimate"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-2a2462b6d998fe5b569b" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-2a2462b6d998fe5b569b">{"x":{"filter":"none","vertical":false,"data":[["1"],[1.667112015162908]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-60e17a37a3105c831d43" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-60e17a37a3105c831d43">{"x":{"filter":"none","vertical":false,"data":[["1"],[1.667112015162908]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.estimate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":1},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".estimate","targets":1}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 
 #### Visualize the Predictions
 
@@ -344,8 +345,8 @@ DT::datatable(valid) |>
   DT::formatRound(c("mean", "sd"), digits=2)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-b7706a1b68e714912bc8" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b7706a1b68e714912bc8">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[41.82448215569933,33.01121443826246,41.75739852211403,23.80545214853353,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392],[1.671617109785621,2.39342419664615,2.709303794028265,0.5720241033171247,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-2d79b109426986dcb3dd" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2d79b109426986dcb3dd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11"],[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],[41.82448215569933,33.01121443826246,41.75739852211403,23.80545214853353,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392,23.98284198141392],[1.671617109785621,2.39342419664615,2.709303794028265,0.5720241033171247,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863,0.6327815779359863]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>mean<\/th>\n      <th>sd<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"year","targets":1},{"name":"mean","targets":2},{"name":"sd","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
 
 So, we can clearly see here that even if this model seems to have a good performance, the predictions over many years are not very good. This is a proof that this model need to improve his understanding of the concept of seasonality.
 
@@ -355,8 +356,9 @@ In this analysis, we trained an XGBoost model to predict precipitation patterns 
 
 # Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
+[![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
+
+Sign up
 
 <br>
 
@@ -368,7 +370,7 @@ sessionInfo()
 
     R version 4.4.2 (2024-10-31)
     Platform: aarch64-apple-darwin20
-    Running under: macOS Sequoia 15.3.2
+    Running under: macOS Sequoia 15.5
 
     Matrix products: default
     BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -400,35 +402,36 @@ sessionInfo()
     [40] openxlsx_4.2.7.1     knitr_1.49          
 
     loaded via a namespace (and not attached):
-     [1] rstudioapi_0.17.1   jsonlite_1.8.9      magrittr_2.0.3     
-     [4] farver_2.1.2        rmarkdown_2.29      vctrs_0.6.5        
-     [7] base64enc_0.1-3     blogdown_1.20       htmltools_0.5.8.1  
-    [10] progress_1.2.3      sass_0.4.9          parallelly_1.41.0  
-    [13] StanHeaders_2.32.10 KernSmooth_2.23-26  bslib_0.8.0        
-    [16] htmlwidgets_1.6.4   zoo_1.8-12          cachem_1.1.0       
-    [19] ggfittext_0.10.2    lifecycle_1.0.4     iterators_1.0.14   
-    [22] pkgconfig_2.0.3     Matrix_1.7-2        R6_2.5.1           
-    [25] fastmap_1.2.0       digest_0.6.37       colorspace_2.1-1   
-    [28] furrr_0.3.1         crosstalk_1.2.1     labeling_0.4.3     
-    [31] timechange_0.3.0    mgcv_1.9-1          compiler_4.4.2     
-    [34] proxy_0.4-27        withr_3.0.2         backports_1.5.0    
-    [37] DBI_1.2.3           MASS_7.3-64         lava_1.8.1         
-    [40] rappdirs_0.3.3      classInt_0.4-11     tools_4.4.2        
-    [43] units_0.8-5         zip_2.3.1           future.apply_1.11.3
-    [46] nnet_7.3-20         glue_1.8.0          nlme_3.1-166       
-    [49] grid_4.4.2          generics_0.1.3      gtable_0.3.6       
-    [52] tzdb_0.4.0          class_7.3-23        data.table_1.16.4  
-    [55] hms_1.1.3           xml2_1.3.6          pillar_1.10.1      
-    [58] splines_4.4.2       lhs_1.2.0           lattice_0.22-6     
-    [61] renv_1.0.7          survival_3.8-3      tidyselect_1.2.1   
-    [64] svglite_2.1.3       xfun_0.50           hardhat_1.4.0      
-    [67] timeDate_4041.110   DT_0.33             stringi_1.8.4      
-    [70] DiceDesign_1.10     yaml_2.3.10         evaluate_1.0.3     
-    [73] codetools_0.2-20    cli_3.6.3           RcppParallel_5.1.10
-    [76] rpart_4.1.24        systemfonts_1.2.1   repr_1.1.7         
-    [79] munsell_0.5.1       jquerylib_0.1.4     Rcpp_1.0.14        
-    [82] globals_0.16.3      png_0.1-8           parallel_4.4.2     
-    [85] gower_1.0.2         prettyunits_1.2.0   GPfit_1.0-8        
-    [88] listenv_0.9.1       viridisLite_0.4.2   ipred_0.9-15       
-    [91] xts_0.14.1          prodlim_2024.06.25  e1071_1.7-16       
-    [94] crayon_1.5.3        rlang_1.1.5        
+     [1] rstudioapi_0.17.1   jsonlite_1.8.9      wk_0.9.4           
+     [4] magrittr_2.0.3      farver_2.1.2        rmarkdown_2.29     
+     [7] vctrs_0.6.5         base64enc_0.1-3     blogdown_1.20      
+    [10] htmltools_0.5.8.1   progress_1.2.3      s2_1.1.7           
+    [13] sass_0.4.9          parallelly_1.41.0   StanHeaders_2.32.10
+    [16] KernSmooth_2.23-26  bslib_0.8.0         htmlwidgets_1.6.4  
+    [19] cachem_1.1.0        zoo_1.8-12          ggfittext_0.10.2   
+    [22] lifecycle_1.0.4     iterators_1.0.14    pkgconfig_2.0.3    
+    [25] Matrix_1.7-2        R6_2.5.1            fastmap_1.2.0      
+    [28] digest_0.6.37       colorspace_2.1-1    furrr_0.3.1        
+    [31] crosstalk_1.2.1     labeling_0.4.3      timechange_0.3.0   
+    [34] mgcv_1.9-1          compiler_4.4.2      proxy_0.4-27       
+    [37] withr_3.0.2         backports_1.5.0     DBI_1.2.3          
+    [40] MASS_7.3-64         lava_1.8.1          rappdirs_0.3.3     
+    [43] classInt_0.4-11     tools_4.4.2         units_0.8-5        
+    [46] zip_2.3.1           future.apply_1.11.3 nnet_7.3-20        
+    [49] glue_1.8.0          nlme_3.1-166        grid_4.4.2         
+    [52] generics_0.1.3      gtable_0.3.6        tzdb_0.4.0         
+    [55] class_7.3-23        data.table_1.16.4   hms_1.1.3          
+    [58] xml2_1.3.6          pillar_1.10.1       splines_4.4.2      
+    [61] lhs_1.2.0           lattice_0.22-6      renv_1.0.7         
+    [64] survival_3.8-3      tidyselect_1.2.1    svglite_2.1.3      
+    [67] xfun_0.50           hardhat_1.4.0       timeDate_4041.110  
+    [70] DT_0.33             stringi_1.8.4       DiceDesign_1.10    
+    [73] yaml_2.3.10         evaluate_1.0.3      codetools_0.2-20   
+    [76] cli_3.6.3           RcppParallel_5.1.10 rpart_4.1.24       
+    [79] systemfonts_1.2.1   repr_1.1.7          munsell_0.5.1      
+    [82] jquerylib_0.1.4     Rcpp_1.0.14         globals_0.16.3     
+    [85] png_0.1-8           parallel_4.4.2      gower_1.0.2        
+    [88] prettyunits_1.2.0   GPfit_1.0-8         listenv_0.9.1      
+    [91] viridisLite_0.4.2   ipred_0.9-15        xts_0.14.1         
+    [94] prodlim_2024.06.25  e1071_1.7-16        crayon_1.5.3       
+    [97] rlang_1.1.5        

@@ -23,13 +23,14 @@ adsense:
 filters:
 - adsense
 resources:
- - ads.txt 
+ - ads.txt
 ---
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
-<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
-</a>
+[![](petit.png)](https://subscribepage.io/E3ia1B)
+
+Subscribe button
 
 <br>
 
@@ -746,8 +747,9 @@ In this study, we conducted an exploratory data analysis of temperature data for
 
 # Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
+[![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
+
+Sign up
 
 <br>
 
@@ -759,7 +761,7 @@ sessionInfo()
 
     R version 4.4.2 (2024-10-31)
     Platform: aarch64-apple-darwin20
-    Running under: macOS Sequoia 15.3.2
+    Running under: macOS Sequoia 15.5
 
     Matrix products: default
     BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -794,48 +796,49 @@ sessionInfo()
     [46] knitr_1.49          
 
     loaded via a namespace (and not attached):
-      [1] countrycode_1.6.0   splines_4.4.2       hardhat_1.4.0      
-      [4] xts_0.14.1          rpart_4.1.24        lifecycle_1.0.4    
-      [7] globals_0.16.3      lattice_0.22-6      MASS_7.3-64        
-     [10] backports_1.5.0     magrittr_2.0.3      rmarkdown_2.29     
-     [13] yaml_2.3.10         fracdiff_1.5-3      zip_2.3.1          
-     [16] sp_2.1-4            cowplot_1.1.3       pbapply_1.7-2      
-     [19] DBI_1.2.3           abind_1.4-8         quadprog_1.5-8     
-     [22] nnet_7.3-20         tweenr_2.0.3        rappdirs_0.3.3     
-     [25] ipred_0.9-15        lava_1.8.1          listenv_0.9.1      
-     [28] crul_1.5.0          sweep_0.2.5         units_0.8-5        
-     [31] parallelly_1.41.0   svglite_2.1.3       codetools_0.2-20   
-     [34] gstat_2.1-2         xml2_1.3.6          tidyselect_1.2.1   
-     [37] httpcode_0.3.0      farver_2.1.2        urca_1.3-4         
-     [40] viridis_0.6.5       base64enc_0.1-3     jsonlite_1.8.9     
-     [43] e1071_1.7-16        survival_3.8-3      iterators_1.0.14   
-     [46] systemfonts_1.2.1   tools_4.4.2         progress_1.2.3     
-     [49] snow_0.4-4          Rcpp_1.0.14         glue_1.8.0         
-     [52] prodlim_2024.06.25  gridExtra_2.3       mgcv_1.9-1         
-     [55] xfun_0.50           TTR_0.24.4          withr_3.0.2        
-     [58] fastmap_1.2.0       blogdown_1.20       digest_0.6.37      
-     [61] timechange_0.3.0    R6_2.5.1            colorspace_2.1-1   
-     [64] wk_0.9.4            generics_0.1.3      intervals_0.15.5   
-     [67] renv_1.0.7          data.table_1.16.4   FNN_1.1.4.1        
-     [70] class_7.3-23        prettyunits_1.2.0   httr_1.4.7         
-     [73] pkgconfig_2.0.3     gtable_0.3.6        timeDate_4041.110  
-     [76] forecast_8.23.0     GPfit_1.0-8         lmtest_0.9-40      
-     [79] furrr_0.3.1         htmltools_0.5.8.1   tseries_0.10-58    
-     [82] automap_1.1-12      png_0.1-8           doSNOW_1.0.20      
-     [85] gower_1.0.2         rstudioapi_0.17.1   tzdb_0.4.0         
-     [88] nlme_3.1-166        spacetime_1.3-2     curl_6.1.0         
-     [91] repr_1.1.7          proxy_0.4-27        cachem_1.1.0       
-     [94] zoo_1.8-12          KernSmooth_2.23-26  parallel_4.4.2     
-     [97] s2_1.1.7            pillar_1.10.1       reshape_0.8.9      
-    [100] vctrs_0.6.5         ggfittext_0.10.2    lhs_1.2.0          
-    [103] evaluate_1.0.3      magick_2.8.5        cli_3.6.3          
-    [106] compiler_4.4.2      rlang_1.1.5         crayon_1.5.3       
-    [109] future.apply_1.11.3 labeling_0.4.3      classInt_0.4-11    
-    [112] plyr_1.8.9          stringi_1.8.4       viridisLite_0.4.2  
-    [115] stars_0.6-7         assertthat_0.2.1    munsell_0.5.1      
-    [118] Matrix_1.7-2        hms_1.1.3           tibbletime_0.1.9   
-    [121] hoardr_0.5.5        memoise_2.0.1       quantmod_0.4.26    
-    [124] DiceDesign_1.10    
+      [1] countrycode_1.6.0   splines_4.4.2       urltools_1.7.3     
+      [4] triebeard_0.4.1     hardhat_1.4.0       xts_0.14.1         
+      [7] rpart_4.1.24        lifecycle_1.0.4     globals_0.16.3     
+     [10] lattice_0.22-6      MASS_7.3-64         backports_1.5.0    
+     [13] magrittr_2.0.3      rmarkdown_2.29      yaml_2.3.10        
+     [16] fracdiff_1.5-3      zip_2.3.1           sp_2.1-4           
+     [19] cowplot_1.1.3       pbapply_1.7-2       DBI_1.2.3          
+     [22] abind_1.4-8         quadprog_1.5-8      nnet_7.3-20        
+     [25] tweenr_2.0.3        rappdirs_0.3.3      ipred_0.9-15       
+     [28] lava_1.8.1          listenv_0.9.1       crul_1.5.0         
+     [31] sweep_0.2.5         units_0.8-5         parallelly_1.41.0  
+     [34] svglite_2.1.3       codetools_0.2-20    gstat_2.1-2        
+     [37] xml2_1.3.6          tidyselect_1.2.1    httpcode_0.3.0     
+     [40] farver_2.1.2        urca_1.3-4          viridis_0.6.5      
+     [43] base64enc_0.1-3     jsonlite_1.8.9      e1071_1.7-16       
+     [46] survival_3.8-3      iterators_1.0.14    systemfonts_1.2.1  
+     [49] tools_4.4.2         progress_1.2.3      snow_0.4-4         
+     [52] Rcpp_1.0.14         glue_1.8.0          prodlim_2024.06.25 
+     [55] gridExtra_2.3       xfun_0.50           mgcv_1.9-1         
+     [58] TTR_0.24.4          withr_3.0.2         fastmap_1.2.0      
+     [61] blogdown_1.20       digest_0.6.37       timechange_0.3.0   
+     [64] R6_2.5.1            mime_0.12           colorspace_2.1-1   
+     [67] wk_0.9.4            generics_0.1.3      intervals_0.15.5   
+     [70] renv_1.0.7          data.table_1.16.4   FNN_1.1.4.1        
+     [73] class_7.3-23        prettyunits_1.2.0   httr_1.4.7         
+     [76] pkgconfig_2.0.3     gtable_0.3.6        timeDate_4041.110  
+     [79] forecast_8.23.0     lmtest_0.9-40       GPfit_1.0-8        
+     [82] furrr_0.3.1         htmltools_0.5.8.1   tseries_0.10-58    
+     [85] automap_1.1-12      png_0.1-8           doSNOW_1.0.20      
+     [88] gower_1.0.2         rstudioapi_0.17.1   tzdb_0.4.0         
+     [91] spacetime_1.3-2     nlme_3.1-166        curl_6.1.0         
+     [94] repr_1.1.7          proxy_0.4-27        cachem_1.1.0       
+     [97] zoo_1.8-12          KernSmooth_2.23-26  parallel_4.4.2     
+    [100] s2_1.1.7            pillar_1.10.1       reshape_0.8.9      
+    [103] vctrs_0.6.5         ggfittext_0.10.2    lhs_1.2.0          
+    [106] evaluate_1.0.3      magick_2.8.5        cli_3.6.3          
+    [109] compiler_4.4.2      rlang_1.1.5         crayon_1.5.3       
+    [112] future.apply_1.11.3 labeling_0.4.3      classInt_0.4-11    
+    [115] plyr_1.8.9          stringi_1.8.4       viridisLite_0.4.2  
+    [118] stars_0.6-7         assertthat_0.2.1    munsell_0.5.1      
+    [121] Matrix_1.7-2        hms_1.1.3           tibbletime_0.1.9   
+    [124] hoardr_0.5.5        memoise_2.0.1       quantmod_0.4.26    
+    [127] DiceDesign_1.10    
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
      crossorigin="anonymous"></script>

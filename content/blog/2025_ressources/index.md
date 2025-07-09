@@ -17,7 +17,7 @@ adsense:
 filters:
 - adsense
 resources:
- - ads.txt 
+ - ads.txt
 ---
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
@@ -91,7 +91,8 @@ Disclosure: Some links are affiliate links. It costs you nothing extra and helps
 
 ## Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
+[![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
+
+Sign up
 
 <br>

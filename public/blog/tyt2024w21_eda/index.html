@@ -46,7 +46,7 @@
   <meta itemprop="name" content="TyT2024W21 - EDA:Carbon Majors Emissions Data">
 <meta itemprop="description" content="This week we are exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this first part, I start with some exploratory data analysis."><meta itemprop="datePublished" content="2024-10-24T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2024-10-24T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1018"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2024w21_eda/featured.png">
+<meta itemprop="wordCount" content="1028"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2024w21_eda/featured.png">
 <meta itemprop="keywords" content="eda,rstats,tidymodels,tidytuesday," />
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
@@ -141,15 +141,20 @@ if (!doNotTrack) {
 
       </header>
       <section class="post-body pt5 pb4">
-        <script src="index_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+        <link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="index_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="index_files/libs/datatables-binding-0.19/datatables.js"></script>
+<script src="index_files/libs/datatables-binding-0.33/datatables.js"></script>
 <script src="index_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="index_files/libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="index_files/libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="index_files/libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="index_files/libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="index_files/libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="index_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<p>
+<a href="https://subscribepage.io/E3ia1B" target="_blank" rel="noopener"><img src="petit.png" alt=""></a></p>
+<p>Subscribe button</p>
+<br>
 <p>I have worked extensively with spatial data over the past two years, so I decided to select suitable 
 <a href="https://github.com/rfordatascience/tidytuesday" target="_blank" rel="noopener"><code>#TidyTuesday</code> dataset</a> and document what I have learned so far.&quot;</p>
 <p>My latest contribution to the 
@@ -186,216 +191,107 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(PerformanceAnalytics)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#06287e">skim</span>(emissions)
-</span></span></code></pre></div><table style="width: auto;" class="table table-condensed">
-<caption>
-Data summary
-</caption>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Name
-</td>
-<td style="text-align:left;">
-emissions
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Number of rows
-</td>
-<td style="text-align:left;">
-12551
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Number of columns
-</td>
-<td style="text-align:left;">
-7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Column type frequency:
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-character
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-numeric
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Group variables
-</td>
-<td style="text-align:left;">
-None
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Variable type: character</strong></p>
-<table>
+</span></span></code></pre></div><table>
 <thead>
 <tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:right;">
-min
-</th>
-<th style="text-align:right;">
-max
-</th>
-<th style="text-align:right;">
-empty
-</th>
-<th style="text-align:right;">
-n_unique
-</th>
-<th style="text-align:right;">
-whitespace
-</th>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-parent_entity
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-39
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-122
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left">Name</td>
+<td style="text-align:left">emissions</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-parent_type
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-22
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left">Number of rows</td>
+<td style="text-align:left">12551</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-commodity
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left">Number of columns</td>
+<td style="text-align:left">7</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-production_unit
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0
-</td>
+<td style="text-align:left">_______________________</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Column type frequency:</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">character</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left">numeric</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">________________________</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Group variables</td>
+<td style="text-align:left">None</td>
+</tr>
+</tbody>
+</table>
+<p>Data summary</p>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">skim_variable</th>
+<th style="text-align:right">n_missing</th>
+<th style="text-align:right">complete_rate</th>
+<th style="text-align:right">min</th>
+<th style="text-align:right">max</th>
+<th style="text-align:right">empty</th>
+<th style="text-align:right">n_unique</th>
+<th style="text-align:right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">parent_entity</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">39</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">122</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:left">parent_type</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">22</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:left">commodity</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">19</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">9</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td style="text-align:left">production_unit</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">18</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">4</td>
+<td style="text-align:right">0</td>
 </tr>
 </tbody>
 </table>
@@ -403,151 +299,63 @@ production_unit
 <table>
 <thead>
 <tr>
-<th style="text-align:left;">
-skim_variable
-</th>
-<th style="text-align:right;">
-n_missing
-</th>
-<th style="text-align:right;">
-complete_rate
-</th>
-<th style="text-align:right;">
-mean
-</th>
-<th style="text-align:right;">
-sd
-</th>
-<th style="text-align:right;">
-p0
-</th>
-<th style="text-align:right;">
-p25
-</th>
-<th style="text-align:right;">
-p50
-</th>
-<th style="text-align:right;">
-p75
-</th>
-<th style="text-align:right;">
-p100
-</th>
-<th style="text-align:left;">
-hist
-</th>
+<th style="text-align:left">skim_variable</th>
+<th style="text-align:right">n_missing</th>
+<th style="text-align:right">complete_rate</th>
+<th style="text-align:right">mean</th>
+<th style="text-align:right">sd</th>
+<th style="text-align:right">p0</th>
+<th style="text-align:right">p25</th>
+<th style="text-align:right">p50</th>
+<th style="text-align:right">p75</th>
+<th style="text-align:right">p100</th>
+<th style="text-align:left">hist</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-year
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1987.15
-</td>
-<td style="text-align:right;">
-29.20
-</td>
-<td style="text-align:right;">
-1854
-</td>
-<td style="text-align:right;">
-1973.00
-</td>
-<td style="text-align:right;">
-1994.00
-</td>
-<td style="text-align:right;">
-2009.00
-</td>
-<td style="text-align:right;">
-2022.00
-</td>
-<td style="text-align:left;">
-▁▁▁▅▇
-</td>
+<td style="text-align:left">year</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">1987.15</td>
+<td style="text-align:right">29.20</td>
+<td style="text-align:right">1854</td>
+<td style="text-align:right">1973.00</td>
+<td style="text-align:right">1994.00</td>
+<td style="text-align:right">2009.00</td>
+<td style="text-align:right">2022.00</td>
+<td style="text-align:left">▁▁▁▅▇</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-production_value
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-412.71
-</td>
-<td style="text-align:right;">
-1357.57
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-10.60
-</td>
-<td style="text-align:right;">
-63.20
-</td>
-<td style="text-align:right;">
-320.66
-</td>
-<td style="text-align:right;">
-27192.00
-</td>
-<td style="text-align:left;">
-▇▁▁▁▁
-</td>
+<td style="text-align:left">production_value</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">412.71</td>
+<td style="text-align:right">1357.57</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">10.60</td>
+<td style="text-align:right">63.20</td>
+<td style="text-align:right">320.66</td>
+<td style="text-align:right">27192.00</td>
+<td style="text-align:left">▇▁▁▁▁</td>
 </tr>
 <tr>
-<td style="text-align:left;">
-total_emissions_MtCO2e
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-113.22
-</td>
-<td style="text-align:right;">
-329.81
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-8.79
-</td>
-<td style="text-align:right;">
-33.06
-</td>
-<td style="text-align:right;">
-102.15
-</td>
-<td style="text-align:right;">
-8646.91
-</td>
-<td style="text-align:left;">
-▇▁▁▁▁
-</td>
+<td style="text-align:left">total_emissions_MtCO2e</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">113.22</td>
+<td style="text-align:right">329.81</td>
+<td style="text-align:right">0</td>
+<td style="text-align:right">8.79</td>
+<td style="text-align:right">33.06</td>
+<td style="text-align:right">102.15</td>
+<td style="text-align:right">8646.91</td>
+<td style="text-align:left">▇▁▁▁▁</td>
 </tr>
 </tbody>
 </table>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">chart.Correlation</span>(<span style="color:#06287e">select_if</span>(emissions, is.numeric))
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="1260" />
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="1260" />
 <p>So, we have a temporal dataset because their&rsquo;s a <em>year</em> column, 3 classifications columns (<em>parent_entity</em>, <em>parent_type</em>, <em>commodity</em>) and our variable of interest <em>total_emission_MtCO2e</em>.</p>
 
 
@@ -567,7 +375,7 @@ total_emissions_MtCO2e
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#06287e">ggplot</span>(data<span style="color:#666">=</span>sum_emissions_year, <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span>year, y<span style="color:#666">=</span>sum))<span style="color:#666">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">geom_line</span>()
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="1260" />
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="1260" />
 <p>We can see a clear augmentation of carbon emissions over time.</p>
 <p>The ultimate goal for this blog series will be to predict over time and space the carbon emission and visualize the result. To achieve that, we first need to understand more the relationship between <em>parent_entity</em> and <em>total_emission_MtCO2e</em>.</p>
 
@@ -588,8 +396,8 @@ total_emissions_MtCO2e
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>(sum_emissions_entity) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">formatRound</span>(columns<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;sum&#34;</span>), digits<span style="color:#666">=</span><span style="color:#40a070">0</span>)
-</span></span></code></pre></div><div id="htmlwidget-c4bfc687ed6e27e58ec9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c4bfc687ed6e27e58ec9">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122"],["China (Coal)","Former Soviet Union","Saudi Aramco","Chevron","ExxonMobil","Gazprom","National Iranian Oil Co.","BP","Shell","Coal India","Poland","Pemex","Russian Federation","China (Cement)","ConocoPhillips","British Coal Corporation","CNPC","Peabody Coal Group","TotalEnergies","Abu Dhabi National Oil Company","Petroleos de Venezuela","Kuwait Petroleum Corp.","Iraq National Oil Company","Sonatrach","Rosneft","Occidental Petroleum","BHP","Petrobras","CONSOL Energy","Nigerian National Petroleum Corp.","Czechoslovakia","Petronas","Eni","QatarEnergy","Pertamina","Anglo American","Libya National Oil Corp.","Arch Resources","Lukoil","Kazakhstan","Equinor","RWE","Rio Tinto","Glencore","Alpha Metallurgical Resources","ONGC India","Sasol","Ukraine","Surgutneftegas","Repsol","Petroleum Development Oman","Sinopec","Egyptian General Petroleum","TurkmenGaz","Petoro","CNOOC","North Korea","Marathon Oil","Bumi Resources","Devon Energy","Singareni Collieries","Sonangol","Holcim Group","Novatek","Ecopetrol","Suncor Energy","Hess Corporation","Ovintiv","Czech Republic","Canadian Natural Resources","Cyprus AMAX Minerals","Westmoreland Mining","BASF","American Consolidated Natural Resources","Exxaro Resources Ltd","Bapco Energies","Adaro Energy","YPF","Cenovus Energy","APA Corporation","Banpu","PetroEcuador","EOG Resources","Alliance Resource Partners","Kiewit Mining Group","Heidelberg Materials","North American Coal","Chesapeake Energy","Syrian Petroleum","Cloud Peak","Vistra","Teck Resources","Inpex","Naftogaz","Coterra Energy","PTTEP","OMV Group","EQT Corporation","Southwestern Energy","Woodside Energy","UK Coal","Cemex","Santos","Pioneer Natural Resources","Murphy Oil","Orlen","Antero","Taiheiyo Cement","Continental Resources","Tourmaline Oil","Whitehaven Coal","Navajo Transitional Energy Company","Wolverine Fuels","Seriti Resources","Obsidian Energy","Vale","SM Energy","Adani Enterprises","CNX Resources","CRH","Tullow Oil","Slovakia"],[276458.02492082,135112.668813454,68831.5371038049,57897.8526780308,55105.0951438195,50686.9725960528,43111.6933371727,42530.4193021717,40674.0595286655,29391.301962912,28749.881872077,25496.9702223447,23412.4597853956,23161.2674748,20222.2587592593,19745.3614159457,18950.9099374694,17735.4272607568,17583.5566389311,17383.1781780909,16900.9964886558,15921.8100817819,15188.3319625943,14954.6969185315,14294.5995626711,12907.1666995437,11042.1107132738,10799.3014774493,10490.1353121505,10243.4346425407,9618.47096479113,9130.3042923771,9074.62598421214,8404.87718545639,8269.72842642096,8162.76285199174,8146.45093179807,7969.29320263312,7835.30435399672,7768.91312157044,7738.84445852112,7584.75041806049,6767.00067503288,6329.25433231514,6127.22336061584,5917.36393716968,4991.74738532649,4969.16296710561,4734.52335389813,4584.29006915196,4386.74015392261,4374.18031699524,4318.01143317843,4222.7028687985,4173.51889785532,4147.45195702434,4103.6786217367,3804.40360061962,3762.01223959853,3296.65217966089,3290.96068860636,3281.23149402648,3172.61488629005,3096.41678676808,3095.75610781481,3072.27555015738,3026.03861025751,2992.80130871679,2737.35005584155,2640.05036633372,2568.88336291029,2339.07321609418,2313.43445405336,2239.72239693733,2159.90141611748,2127.18114419001,2068.44584656087,2038.97607788709,1965.29890484058,1963.91632421968,1942.73452903939,1922.40210164233,1806.07862580342,1777.07079047006,1688.6139943611,1683.69769631625,1643.72803770716,1608.84172667945,1578.27098510082,1476.15740538291,1393.53784597781,1307.51870577066,1256.04352675101,1252.49025479955,1183.72510380333,1079.56774370571,1014.16171050331,1000.97785430615,981.974828995937,918.253426767465,881.959476578908,867.4431883275,836.503784597426,825.675499865858,765.018468149223,720.309583008861,606.199782562199,580.217273699,455.424224997692,449.588109759621,428.392375723516,389.715756839308,384.717350233232,361.397036552038,355.74103477328,317.151646348455,316.173342181209,316.050246230678,227.074903356675,216.74008502,210.986423185838,104.499507804202]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parent_entity<\/th>\n      <th>sum<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 0, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-7de1b286ed22383819ec" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7de1b286ed22383819ec">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122"],["China (Coal)","Former Soviet Union","Saudi Aramco","Chevron","ExxonMobil","Gazprom","National Iranian Oil Co.","BP","Shell","Coal India","Poland","Pemex","Russian Federation","China (Cement)","ConocoPhillips","British Coal Corporation","CNPC","Peabody Coal Group","TotalEnergies","Abu Dhabi National Oil Company","Petroleos de Venezuela","Kuwait Petroleum Corp.","Iraq National Oil Company","Sonatrach","Rosneft","Occidental Petroleum","BHP","Petrobras","CONSOL Energy","Nigerian National Petroleum Corp.","Czechoslovakia","Petronas","Eni","QatarEnergy","Pertamina","Anglo American","Libya National Oil Corp.","Arch Resources","Lukoil","Kazakhstan","Equinor","RWE","Rio Tinto","Glencore","Alpha Metallurgical Resources","ONGC India","Sasol","Ukraine","Surgutneftegas","Repsol","Petroleum Development Oman","Sinopec","Egyptian General Petroleum","TurkmenGaz","Petoro","CNOOC","North Korea","Marathon Oil","Bumi Resources","Devon Energy","Singareni Collieries","Sonangol","Holcim Group","Novatek","Ecopetrol","Suncor Energy","Hess Corporation","Ovintiv","Czech Republic","Canadian Natural Resources","Cyprus AMAX Minerals","Westmoreland Mining","BASF","American Consolidated Natural Resources","Exxaro Resources Ltd","Bapco Energies","Adaro Energy","YPF","Cenovus Energy","APA Corporation","Banpu","PetroEcuador","EOG Resources","Alliance Resource Partners","Kiewit Mining Group","Heidelberg Materials","North American Coal","Chesapeake Energy","Syrian Petroleum","Cloud Peak","Vistra","Teck Resources","Inpex","Naftogaz","Coterra Energy","PTTEP","OMV Group","EQT Corporation","Southwestern Energy","Woodside Energy","UK Coal","Cemex","Santos","Pioneer Natural Resources","Murphy Oil","Orlen","Antero","Taiheiyo Cement","Continental Resources","Tourmaline Oil","Whitehaven Coal","Navajo Transitional Energy Company","Wolverine Fuels","Seriti Resources","Obsidian Energy","Vale","SM Energy","Adani Enterprises","CNX Resources","CRH","Tullow Oil","Slovakia"],[276458.0249208205,135112.6688134541,68831.53710380489,57897.85267803081,55105.09514381952,50686.97259605284,43111.69333717276,42530.41930217174,40674.05952866554,29391.30196291197,28749.881872077,25496.97022234476,23412.45978539556,23161.2674748,20222.25875925934,19745.3614159457,18950.90993746938,17735.42726075683,17583.55663893105,17383.17817809093,16900.99648865578,15921.81008178187,15188.33196259433,14954.69691853146,14294.59956267105,12907.16669954367,11042.11071327381,10799.30147744934,10490.13531215047,10243.43464254068,9618.470964791135,9130.304292377097,9074.625984212142,8404.877185456387,8269.728426420961,8162.762851991738,8146.450931798072,7969.293202633115,7835.304353996718,7768.913121570439,7738.844458521123,7584.75041806049,6767.000675032878,6329.254332315144,6127.223360615835,5917.363937169678,4991.747385326496,4969.162967105618,4734.523353898128,4584.290069151959,4386.740153922608,4374.180316995242,4318.011433178433,4222.7028687985,4173.518897855325,4147.451957024344,4103.678621736704,3804.403600619622,3762.012239598535,3296.652179660894,3290.960688606358,3281.231494026478,3172.614886290049,3096.416786768081,3095.756107814811,3072.275550157381,3026.038610257515,2992.801308716792,2737.350055841549,2640.050366333717,2568.883362910287,2339.073216094178,2313.434454053363,2239.722396937326,2159.901416117481,2127.181144190014,2068.445846560873,2038.976077887086,1965.298904840582,1963.916324219679,1942.734529039392,1922.402101642326,1806.078625803419,1777.070790470055,1688.6139943611,1683.69769631625,1643.728037707161,1608.841726679448,1578.270985100816,1476.157405382907,1393.537845977806,1307.518705770664,1256.043526751006,1252.490254799547,1183.725103803332,1079.567743705714,1014.161710503308,1000.977854306152,981.9748289959367,918.253426767465,881.959476578908,867.4431883275001,836.5037845974257,825.6754998658582,765.0184681492226,720.3095830088613,606.1997825621994,580.217273699,455.4242249976924,449.588109759621,428.3923757235158,389.7157568393082,384.7173502332316,361.3970365520375,355.7410347732798,317.1516463484545,316.1733421812088,316.0502462306778,227.0749033566748,216.74008502,210.9864231858376,104.499507804202]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parent_entity<\/th>\n      <th>sum<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 0, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":2},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"parent_entity","targets":1},{"name":"sum","targets":2}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 <p>We have a clear indication that country does not produce the same amount of carbon.</p>
 
 
@@ -627,7 +435,7 @@ total_emissions_MtCO2e
 </span></span><span style="display:flex;"><span>        .facet_ncol  <span style="color:#666">=</span> <span style="color:#40a070">2</span>,
 </span></span><span style="display:flex;"><span>        .facet_scales <span style="color:#666">=</span> <span style="color:#4070a0">&#34;free&#34;</span>,
 </span></span><span style="display:flex;"><span>    )
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="1260" />
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="1260" />
 <p>Each <em>parent_entity</em> has its own trend over time.</p>
 
 
@@ -646,13 +454,13 @@ total_emissions_MtCO2e
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">time_decompose</span>(sum) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">anomalize</span>(remainder) <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">plot_anomalies</span>(size_dots <span style="color:#666">=</span> <span style="color:#40a070">1</span>, ncol <span style="color:#666">=</span> <span style="color:#40a070">2</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="1260" />
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="1260" />
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>plot_data <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">filter</span>(parent_entity_fct<span style="color:#666">==</span><span style="color:#4070a0">&#34;Saudi Aramco&#34;</span>) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">time_decompose</span>(sum) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">anomalize</span>(remainder) <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">plot_anomaly_decomposition</span>()
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="1260" />
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="1260" />
 <p>So for simplicity, I will replace the anomalies detected by the trend for all the data. All the subsequent analysis will be done with the corrected data for the top 50 countries</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>top50_entity<span style="color:#666">&lt;-</span>sum_emissions_entity <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">top_n</span>(<span style="color:#40a070">50</span>, sum) <span style="color:#666">|&gt;</span> 
@@ -688,7 +496,16 @@ total_emissions_MtCO2e
     </svg></a>
 </h2>
 <p>In this first part, we have explored the dataset and identified the main characteristics. We have seen that the carbon emissions have increased over time and that the top 50 countries have different trends. We have also identified some anomalies and outliers that have been correct for the work to come in the next part.</p>
-<p><a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> <img src="petit.png" alt=""></p>
+
+
+
+
+<h1 id="sign-up-for-the-newsletter">Sign up for the newsletter
+  <a href="#sign-up-for-the-newsletter"></a>
+</h1>
+<p>
+<a href="https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share" target="_blank" rel="noopener"><img src="sign_up.png" alt=""></a></p>
+<p>Sign up</p>
 
 
 
@@ -700,83 +517,84 @@ total_emissions_MtCO2e
     </svg></a>
 </h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">sessionInfo</span>()
-</span></span></code></pre></div><pre><code>R version 4.1.1 (2021-08-10)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+</span></span></code></pre></div><pre><code>R version 4.4.2 (2024-10-31)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.5
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Toronto
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices datasets  utils     methods   base     
 
 other attached packages:
- [1] anomalize_0.3.0            PerformanceAnalytics_2.0.4
- [3] xts_0.12.1                 zoo_1.8-12                
- [5] jofou.lib_0.0.0.9000       reticulate_1.37.0         
- [7] tidytuesdayR_1.0.2         tictoc_1.2.1              
- [9] terra_1.6-17               sf_1.0-5                  
-[11] pins_1.0.1.9000            fs_1.5.2                  
-[13] timetk_2.6.1               yardstick_1.2.0           
-[15] workflowsets_0.1.0         workflows_0.2.4           
-[17] tune_0.1.6                 rsample_0.1.0             
-[19] parsnip_1.1.1              modeldata_0.1.1           
-[21] infer_1.0.0                dials_0.0.10              
-[23] scales_1.3.0               broom_1.0.4               
-[25] tidymodels_0.1.4           recipes_0.1.17            
-[27] doFuture_0.12.0            future_1.22.1             
-[29] foreach_1.5.1              skimr_2.1.5               
-[31] forcats_1.0.0              stringr_1.5.0             
-[33] dplyr_1.1.2                purrr_1.0.1               
-[35] readr_2.1.4                tidyr_1.3.0               
+ [1] anomalize_0.3.0            PerformanceAnalytics_2.0.8
+ [3] xts_0.14.1                 zoo_1.8-12                
+ [5] jofou.lib_0.0.0.9000       reticulate_1.40.0         
+ [7] tidytuesdayR_1.1.2         tictoc_1.2.1              
+ [9] terra_1.8-10               sf_1.0-19                 
+[11] pins_1.4.0                 fs_1.6.5                  
+[13] timetk_2.9.0               yardstick_1.3.2           
+[15] workflowsets_1.1.0         workflows_1.1.4           
+[17] tune_1.2.1                 rsample_1.2.1             
+[19] parsnip_1.2.1              modeldata_1.4.0           
+[21] infer_1.0.7                dials_1.3.0               
+[23] scales_1.3.0               broom_1.0.7               
+[25] tidymodels_1.2.0           recipes_1.1.0             
+[27] doFuture_1.0.1             future_1.34.0             
+[29] foreach_1.5.2              skimr_2.1.5               
+[31] forcats_1.0.0              stringr_1.5.1             
+[33] dplyr_1.1.4                purrr_1.0.2               
+[35] readr_2.1.5                tidyr_1.3.1               
 [37] tibble_3.2.1               ggplot2_3.5.1             
-[39] tidyverse_2.0.0            lubridate_1.9.2           
-[41] kableExtra_1.3.4.9000      inspectdf_0.0.11          
-[43] openxlsx_4.2.4             knitr_1.36                
+[39] tidyverse_2.0.0            lubridate_1.9.4           
+[41] kableExtra_1.4.0           inspectdf_0.0.12.1        
+[43] openxlsx_4.2.7.1           knitr_1.49                
 
 loaded via a namespace (and not attached):
-  [1] readxl_1.4.2       backports_1.4.1    systemfonts_1.0.3 
-  [4] repr_1.1.7         splines_4.1.1      crosstalk_1.1.1   
-  [7] listenv_0.8.0      usethis_2.0.1      digest_0.6.29     
- [10] htmltools_0.5.8.1  fansi_0.5.0        magrittr_2.0.3    
- [13] tzdb_0.1.2         globals_0.14.0     ggfittext_0.9.1   
- [16] gower_0.2.2        vroom_1.6.0        svglite_2.0.0     
- [19] hardhat_1.3.0      timechange_0.1.1   tseries_0.10-48   
- [22] forecast_8.15      prettyunits_1.1.1  colorspace_2.0-2  
- [25] rvest_1.0.3        rappdirs_0.3.3     xfun_0.39         
- [28] crayon_1.4.2       jsonlite_1.8.4     survival_3.2-11   
- [31] iterators_1.0.13   glue_1.6.2         gtable_0.3.0      
- [34] ipred_0.9-12       webshot_0.5.2      future.apply_1.8.1
- [37] quantmod_0.4.18    padr_0.6.0         DBI_1.1.1         
- [40] Rcpp_1.0.13        viridisLite_0.4.0  progress_1.2.2    
- [43] units_0.7-2        bit_4.0.4          GPfit_1.0-8       
- [46] proxy_0.4-26       tibbletime_0.1.8   DT_0.19           
- [49] lava_1.6.10        prodlim_2019.11.13 htmlwidgets_1.5.4 
- [52] httr_1.4.6         farver_2.1.0       pkgconfig_2.0.3   
- [55] sass_0.4.0         nnet_7.3-16        utf8_1.2.2        
- [58] labeling_0.4.2     tidyselect_1.2.0   rlang_1.1.1       
- [61] DiceDesign_1.9     munsell_0.5.0      cellranger_1.1.0  
- [64] tools_4.1.1        cli_3.6.1          sweep_0.2.5       
- [67] generics_0.1.3     evaluate_0.14      fastmap_1.2.0     
- [70] yaml_2.2.1         bit64_4.0.5        zip_2.2.0         
- [73] nlme_3.1-152       xml2_1.3.4         compiler_4.1.1    
- [76] rstudioapi_0.14    curl_5.2.3         png_0.1-7         
- [79] e1071_1.7-9        lhs_1.1.3          bslib_0.3.1       
- [82] stringi_1.7.5      highr_0.9          lattice_0.20-44   
- [85] Matrix_1.3-4       classInt_0.4-3     urca_1.3-0        
- [88] vctrs_0.6.5        pillar_1.9.0       lifecycle_1.0.3   
- [91] furrr_0.2.3        lmtest_0.9-38      jquerylib_0.1.4   
- [94] R6_2.5.1           renv_1.0.7         KernSmooth_2.23-20
- [97] parallelly_1.28.1  codetools_0.2-18   assertthat_0.2.1  
-[100] MASS_7.3-54        withr_2.5.0        fracdiff_1.5-1    
-[103] parallel_4.1.1     hms_1.1.3          quadprog_1.5-8    
-[106] grid_4.1.1         rpart_4.1-15       timeDate_3043.102 
-[109] class_7.3-19       rmarkdown_2.25     TTR_0.24.2        
-[112] base64enc_0.1-3   
+  [1] rstudioapi_0.17.1   jsonlite_1.8.9      magrittr_2.0.3     
+  [4] farver_2.1.2        rmarkdown_2.29      vctrs_0.6.5        
+  [7] base64enc_0.1-3     blogdown_1.20       htmltools_0.5.8.1  
+ [10] progress_1.2.3      curl_6.1.0          TTR_0.24.4         
+ [13] sass_0.4.9          parallelly_1.41.0   bslib_0.8.0        
+ [16] KernSmooth_2.23-26  htmlwidgets_1.6.4   cachem_1.1.0       
+ [19] ggfittext_0.10.2    lifecycle_1.0.4     iterators_1.0.14   
+ [22] pkgconfig_2.0.3     Matrix_1.7-2        R6_2.5.1           
+ [25] fastmap_1.2.0       digest_0.6.37       colorspace_2.1-1   
+ [28] furrr_0.3.1         crosstalk_1.2.1     labeling_0.4.3     
+ [31] timechange_0.3.0    compiler_4.4.2      proxy_0.4-27       
+ [34] bit64_4.6.0-1       withr_3.0.2         tseries_0.10-58    
+ [37] backports_1.5.0     DBI_1.2.3           MASS_7.3-64        
+ [40] lava_1.8.1          rappdirs_0.3.3      classInt_0.4-11    
+ [43] tibbletime_0.1.9    tools_4.4.2         units_0.8-5        
+ [46] lmtest_0.9-40       quantmod_0.4.26     zip_2.3.1          
+ [49] future.apply_1.11.3 nnet_7.3-20         glue_1.8.0         
+ [52] quadprog_1.5-8      nlme_3.1-166        grid_4.4.2         
+ [55] generics_0.1.3      gtable_0.3.6        tzdb_0.4.0         
+ [58] class_7.3-23        data.table_1.16.4   hms_1.1.3          
+ [61] xml2_1.3.6          pillar_1.10.1       vroom_1.6.5        
+ [64] splines_4.4.2       lhs_1.2.0           lattice_0.22-6     
+ [67] padr_0.6.3          renv_1.0.7          survival_3.8-3     
+ [70] bit_4.5.0.1         tidyselect_1.2.1    urca_1.3-4         
+ [73] svglite_2.1.3       forecast_8.23.0     xfun_0.50          
+ [76] hardhat_1.4.0       timeDate_4041.110   DT_0.33            
+ [79] stringi_1.8.4       DiceDesign_1.10     yaml_2.3.10        
+ [82] evaluate_1.0.3      codetools_0.2-20    cli_3.6.3          
+ [85] rpart_4.1.24        systemfonts_1.2.1   jquerylib_0.1.4    
+ [88] repr_1.1.7          munsell_0.5.1       Rcpp_1.0.14        
+ [91] globals_0.16.3      png_0.1-8           parallel_4.4.2     
+ [94] fracdiff_1.5-3      assertthat_0.2.1    gower_1.0.2        
+ [97] prettyunits_1.2.0   sweep_0.2.5         GPfit_1.0-8        
+[100] listenv_0.9.1       viridisLite_0.4.2   ipred_0.9-15       
+[103] prodlim_2024.06.25  e1071_1.7-16        crayon_1.5.3       
+[106] rlang_1.1.5        
 </code></pre>
 
         
@@ -787,7 +605,7 @@ loaded via a namespace (and not attached):
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">5 minute read, 1018 words</dd>
+    <dd class="fw5 ml0">5 minute read, 1028 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -805,11 +623,11 @@ loaded via a namespace (and not attached):
   <dl class="f6 lh-copy">
     <dt class="fw7">See Also:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/tyt2025w19/">TyT2025W19: Seismic Events at Mount Vesuvius</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz2/">Heatmap to Visualize Spatio-Temporal Data</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz/">Side by side interactive map with {leaflet} and {leaflet.extras2}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/ca_temperature_eda_polen/">Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</a></dd>
     
   </dl>
 </details>

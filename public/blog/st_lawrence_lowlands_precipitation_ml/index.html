@@ -46,7 +46,7 @@
   <meta itemprop="name" content="St. Lawrence Lowlands Precipitation Data: 30-Year Trends Prediction">
 <meta itemprop="description" content="In this phase of the analysis, we aim to model precipitation patterns in the St. Lawrence Lowlands using machine learning techniques, leveraging historical climate and environmental data. We will compare Random Forest, XGBoost, and Mars models to assess their ability to capture complex relationships and predict precipitation trends. Model performance will be evaluated using cross-validation and regression metrics to determine the most effective approach."><meta itemprop="datePublished" content="2025-01-28T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2025-01-28T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1626"><meta itemprop="image" content="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/featured.png">
+<meta itemprop="wordCount" content="1714"><meta itemprop="image" content="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/featured.png">
 <meta itemprop="keywords" content="rstats,tidymodels,tidytuesday,models,viz," />
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
@@ -141,22 +141,21 @@ if (!doNotTrack) {
 
       </header>
       <section class="post-body pt5 pb4">
-        <link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
-<script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<link href="index_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="index_files/libs/datatables-binding-0.33/datatables.js"></script>
-<script src="index_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="index_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="index_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="index_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="index_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
-<p><a href = "https://subscribepage.io/E3ia1B"> <img src="petit.png" alt="">
-</a></p>
+        <link href="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/htmltools-fill/fill.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/htmlwidgets/htmlwidgets.js"></script>
+<link href="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/datatables-binding/datatables.js"></script>
+<script src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/jquery/jquery-3.6.0.min.js"></script>
+<link href="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/crosstalk/js/crosstalk.min.js"></script>
+<p>
+<a href="https://subscribepage.io/E3ia1B" target="_blank" rel="noopener"><img src="petit.png" alt="Subscribe button"></a></p>
 <br>
 <p>Understanding precipitation patterns in the St. Lawrence Lowlands is essential for climate analysis, agriculture, and water resource management. In the previous blog post, we conducted an exploratory data analysis (EDA) to uncover key trends, spatial distributions, and relationships within the dataset. This provided valuable insights into precipitation variability and guided feature selection for modeling.</p>
-<p>Building on that foundation, this post explores machine learning approaches to predict precipitation using historical climate data. We will evaluate three models &mdash;Random Forest (RF), XGBoost, and and Mars- to determine their effectiveness in capturing complex climate patterns. Using cross-validation and standard regression metrics, we will compare model performance and identify the most suitable approach for precipitation prediction in this region.</p>
+<p>Building on that foundation, this post explores machine learning approaches to predict precipitation using historical climate data. We will evaluate three models —Random Forest (RF), XGBoost, and and Mars- to determine their effectiveness in capturing complex climate patterns. Using cross-validation and standard regression metrics, we will compare model performance and identify the most suitable approach for precipitation prediction in this region.</p>
 
 
 
@@ -181,15 +180,15 @@ if (!doNotTrack) {
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>precipitation_data <span style="color:#666">&lt;-</span> <span style="color:#06287e">readRDS</span>(<span style="color:#4070a0">&#34;Data/precipitation_dt.rds&#34;</span>) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(shapeName, date, mean)
 </span></span><span style="display:flex;"><span><span style="color:#06287e">head</span>(precipitation_data)
-</span></span></code></pre></div><pre><code># A tibble: 6 × 3
-  shapeName             date        mean
-  &lt;chr&gt;                 &lt;chr&gt;      &lt;dbl&gt;
-1 Abitibi-Témiscamingue 1993-01-01  258.
-2 Abitibi-Témiscamingue 1993-02-01  255.
-3 Abitibi-Témiscamingue 1993-03-01  266.
-4 Abitibi-Témiscamingue 1993-04-01  275.
-5 Abitibi-Témiscamingue 1993-05-01  283.
-6 Abitibi-Témiscamingue 1993-06-01  287.
+</span></span></code></pre></div><pre><code>## # A tibble: 6 × 3
+##   shapeName             date        mean
+##   &lt;chr&gt;                 &lt;chr&gt;      &lt;dbl&gt;
+## 1 Abitibi-Témiscamingue 1993-01-01  258.
+## 2 Abitibi-Témiscamingue 1993-02-01  255.
+## 3 Abitibi-Témiscamingue 1993-03-01  266.
+## 4 Abitibi-Témiscamingue 1993-04-01  275.
+## 5 Abitibi-Témiscamingue 1993-05-01  283.
+## 6 Abitibi-Témiscamingue 1993-06-01  287.
 </code></pre>
 
 
@@ -254,7 +253,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                     .facet_ncol <span style="color:#666">=</span> <span style="color:#40a070">2</span>,
 </span></span><span style="display:flex;"><span>                     .smooth <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>, 
 </span></span><span style="display:flex;"><span>                     .interactive <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="1260" />
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/figure-html/unnamed-chunk-5-1.png" width="1260" />
 
 
 
@@ -369,7 +368,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">group_by</span>(shapeName) <span style="color:#666">|&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">plot_modeltime_forecast</span>(.facet_ncol <span style="color:#666">=</span> <span style="color:#40a070">3</span>,
 </span></span><span style="display:flex;"><span>                            .interactive <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>) 
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="1260" />
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/figure-html/unnamed-chunk-9-1.png" width="1260" />
 
 
 
@@ -391,7 +390,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">plot_modeltime_forecast</span>(.facet_ncol <span style="color:#666">=</span> <span style="color:#40a070">2</span>, 
 </span></span><span style="display:flex;"><span>                            .legend_show <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>,
 </span></span><span style="display:flex;"><span>                            .interactive <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="1260" />
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/figure-html/unnamed-chunk-10-1.png" width="1260" />
 
 
 
@@ -414,9 +413,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Error last check</span>
 </span></span><span style="display:flex;"><span>nested_best_refit_tbl<span style="color:#666">|&gt;</span>  <span style="color:#06287e">extract_nested_error_report</span>()
-</span></span></code></pre></div><pre><code># A tibble: 0 × 4
-# ℹ 4 variables: shapeName &lt;chr&gt;, .model_id &lt;int&gt;, .model_desc &lt;chr&gt;,
-#   .error_desc &lt;chr&gt;
+</span></span></code></pre></div><pre><code>## # A tibble: 0 × 4
+## # ℹ 4 variables: shapeName &lt;chr&gt;, .model_id &lt;int&gt;, .model_desc &lt;chr&gt;,
+## #   .error_desc &lt;chr&gt;
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Visualize Future Forecast </span>
 </span></span><span style="display:flex;"><span>nested_best_refit_tbl<span style="color:#666">|&gt;</span> 
@@ -426,7 +425,7 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>    <span style="color:#06287e">plot_modeltime_forecast</span>(.facet_ncol <span style="color:#666">=</span> <span style="color:#40a070">2</span>, 
 </span></span><span style="display:flex;"><span>                            .legend_show <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>,
 </span></span><span style="display:flex;"><span>                            .interactive <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>)
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="1260" />
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_ml/index_files/figure-html/unnamed-chunk-11-1.png" width="1260" />
 
 
 
@@ -515,8 +514,8 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>                )
 </span></span><span style="display:flex;"><span>DT<span style="color:#666">::</span><span style="color:#06287e">datatable</span>(data_norm) <span style="color:#666">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  DT<span style="color:#666">::</span><span style="color:#06287e">formatRound</span>(<span style="color:#06287e">c</span>(<span style="color:#4070a0">&#34;mx&#34;</span>,<span style="color:#4070a0">&#34;min&#34;</span>,<span style="color:#4070a0">&#34;q25&#34;</span>,<span style="color:#4070a0">&#34;q75&#34;</span>,<span style="color:#4070a0">&#34;iqr&#34;</span>), digits<span style="color:#666">=</span><span style="color:#40a070">1</span>)
-</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-e28134a0064ebe34e05a" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e28134a0064ebe34e05a">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],[1.935951027601007,2.314933127441435,2.015677982321733,1.501609603484582,1.566526815286693,0.9565469016346526,0.9143693614659583,0.8779345476604306,0.9492889428496767,1.548441977321758,1.217108707049377,2.341365571777828],[-3.7376527466906,-3.121793923963352,-2.068808156667259,-1.457172630972465,-1.697452660540009,-0.9858905896576857,-0.8994214107670331,-0.8304236680279047,-1.023017264077055,-1.38005776178835,-1.483540680301715,-2.298547887550427],[-0.6878261489265149,-0.3241954572890862,-0.5224098300452766,-0.3477106812858857,-0.3829218309301439,-0.2617484028834554,-0.2752262244819619,-0.2704297741002328,-0.3320392769011633,-0.5210700110215072,-0.4435624469487891,-0.6670970446522162],[0.8593569580412996,0.5709910343208549,0.5118821026981699,0.3803797947384098,0.3984437312175579,0.2846591171818815,0.2915506658724887,0.2340116048643068,0.330077380172181,0.4084774206591426,0.5378935144745363,0.759233915241694],[1.547183106967815,0.895186491609941,1.034291932743447,0.7280904760242954,0.7813655621477018,0.5464075200653369,0.5667768903544506,0.5044413789645397,0.6621166570733443,0.9295474316806498,0.9814559614233254,1.42633095989391]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>month_name_abb<\/th>\n      <th>mx<\/th>\n      <th>min<\/th>\n      <th>q25<\/th>\n      <th>q75<\/th>\n      <th>iqr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"month_name_abb","targets":1},{"name":"mx","targets":2},{"name":"min","targets":3},{"name":"q25","targets":4},{"name":"q75","targets":5},{"name":"iqr","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
+</span></span></code></pre></div><div class="datatables html-widget html-fill-item" id="htmlwidget-1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],[1.935951027601007,2.314933127441435,2.015677982321733,1.501609603484582,1.566526815286693,0.9565469016346526,0.9143693614659583,0.8779345476604306,0.9492889428496767,1.548441977321758,1.217108707049377,2.341365571777828],[-3.7376527466906,-3.121793923963352,-2.068808156667259,-1.457172630972465,-1.697452660540009,-0.9858905896576857,-0.8994214107670331,-0.8304236680279047,-1.023017264077055,-1.38005776178835,-1.483540680301715,-2.298547887550427],[-0.6878261489265149,-0.3241954572890862,-0.5224098300452766,-0.3477106812858857,-0.3829218309301439,-0.2617484028834554,-0.2752262244819619,-0.2704297741002328,-0.3320392769011633,-0.5210700110215072,-0.4435624469487891,-0.6670970446522162],[0.8593569580412996,0.5709910343208549,0.5118821026981699,0.3803797947384098,0.3984437312175579,0.2846591171818815,0.2915506658724887,0.2340116048643068,0.330077380172181,0.4084774206591426,0.5378935144745363,0.759233915241694],[1.547183106967815,0.895186491609941,1.034291932743447,0.7280904760242954,0.7813655621477018,0.5464075200653369,0.5667768903544506,0.5044413789645397,0.6621166570733443,0.9295474316806498,0.9814559614233254,1.42633095989391]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>month_name_abb<\/th>\n      <th>mx<\/th>\n      <th>min<\/th>\n      <th>q25<\/th>\n      <th>q75<\/th>\n      <th>iqr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"month_name_abb","targets":1},{"name":"mx","targets":2},{"name":"min","targets":3},{"name":"q25","targets":4},{"name":"q75","targets":5},{"name":"iqr","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">library</span>(ggthemes)
 </span></span><span style="display:flex;"><span><span style="color:#06287e">library</span>(gganimate)
 </span></span><span style="display:flex;"><span>
@@ -562,7 +561,7 @@ if (!doNotTrack) {
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic"># Read and display the saved GIF animation</span>
 </span></span><span style="display:flex;"><span>animation <span style="color:#666">&lt;-</span> magick<span style="color:#666">::</span><span style="color:#06287e">image_read</span>(<span style="color:#4070a0">&#34;gif/output.gif&#34;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#06287e">print</span>(animation, info <span style="color:#666">=</span> <span style="color:#007020;font-weight:bold">FALSE</span>)
-</span></span></code></pre></div><p><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.gif" alt=""></p>
+</span></span></code></pre></div><p><img src="index_files/figure-html/unnamed-chunk-17-1.gif" alt=""><!-- --></p>
 
 
 
@@ -578,9 +577,9 @@ if (!doNotTrack) {
 <h1 id="sign-up-for-the-newsletter">Sign up for the newsletter
   <a href="#sign-up-for-the-newsletter"></a>
 </h1>
-<p><a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> <img src="sign_up.png" alt="">
-</a></p>
-<br>
+<p>
+<a href="https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share" target="_blank" rel="noopener"><img src="sign_up.png" alt="Sign up"></a>
+<br></p>
 
 
 
@@ -589,80 +588,80 @@ if (!doNotTrack) {
   <a href="#session-info"></a>
 </h1>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">sessionInfo</span>()
-</span></span></code></pre></div><pre><code>R version 4.4.2 (2024-10-31)
-Platform: aarch64-apple-darwin20
-Running under: macOS Sequoia 15.2
-
-Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
-
-locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-
-time zone: America/Toronto
-tzcode source: internal
-
-attached base packages:
-[1] stats     graphics  grDevices datasets  utils     methods   base     
-
-other attached packages:
- [1] gganimate_1.0.9      ggthemes_5.1.0       jofou.lib_0.0.0.9000
- [4] reticulate_1.40.0    tidytuesdayR_1.1.2   tictoc_1.2.1        
- [7] terra_1.8-10         sf_1.0-19            pins_1.4.0          
-[10] modeltime_1.3.1      fs_1.6.5             timetk_2.9.0        
-[13] yardstick_1.3.2      workflowsets_1.1.0   workflows_1.1.4     
-[16] tune_1.2.1           rsample_1.2.1        parsnip_1.2.1       
-[19] modeldata_1.4.0      infer_1.0.7          dials_1.3.0         
-[22] scales_1.3.0         broom_1.0.7          tidymodels_1.2.0    
-[25] recipes_1.1.0        doFuture_1.0.1       future_1.34.0       
-[28] foreach_1.5.2        skimr_2.1.5          forcats_1.0.0       
-[31] stringr_1.5.1        dplyr_1.1.4          purrr_1.0.2         
-[34] readr_2.1.5          tidyr_1.3.1          tibble_3.2.1        
-[37] ggplot2_3.5.1        tidyverse_2.0.0      lubridate_1.9.4     
-[40] kableExtra_1.4.0     inspectdf_0.0.12.1   openxlsx_4.2.7.1    
-[43] knitr_1.49          
-
-loaded via a namespace (and not attached):
-  [1] wk_0.9.4             rstudioapi_0.17.1    jsonlite_1.8.9      
-  [4] magrittr_2.0.3       magick_2.8.5         farver_2.1.2        
-  [7] rmarkdown_2.29       vctrs_0.6.5          spdep_1.3-10        
- [10] memoise_2.0.1        hoardr_0.5.5         base64enc_0.1-3     
- [13] htmltools_0.5.8.1    progress_1.2.3       curl_6.1.0          
- [16] xgboost_1.7.8.1      s2_1.1.7             sass_0.4.9          
- [19] spData_2.3.4         parallelly_1.41.0    StanHeaders_2.32.10 
- [22] bslib_0.8.0          KernSmooth_2.23-26   htmlwidgets_1.6.4   
- [25] zoo_1.8-12           cachem_1.1.0         ggfittext_0.10.2    
- [28] igraph_2.1.4         mime_0.12            lifecycle_1.0.4     
- [31] iterators_1.0.14     pkgconfig_2.0.3      Matrix_1.7-2        
- [34] R6_2.5.1             fastmap_1.2.0        digest_0.6.37       
- [37] colorspace_2.1-1     furrr_0.3.1          crosstalk_1.2.1     
- [40] labeling_0.4.3       urltools_1.7.3       timechange_0.3.0    
- [43] compiler_4.4.2       proxy_0.4-27         doParallel_1.0.17   
- [46] withr_3.0.2          backports_1.5.0      DBI_1.2.3           
- [49] rgeoboundaries_1.3.1 MASS_7.3-64          lava_1.8.1          
- [52] rappdirs_0.3.3       classInt_0.4-11      tools_4.4.2         
- [55] units_0.8-5          zip_2.3.1            future.apply_1.11.3 
- [58] nnet_7.3-20          glue_1.8.0           grid_4.4.2          
- [61] generics_0.1.3       gtable_0.3.6         countrycode_1.6.0   
- [64] tzdb_0.4.0           class_7.3-23         data.table_1.16.4   
- [67] hms_1.1.3            sp_2.1-4             xml2_1.3.6          
- [70] utf8_1.2.4           pillar_1.10.1        splines_4.4.2       
- [73] lhs_1.2.0            tweenr_2.0.3         lattice_0.22-6      
- [76] deldir_2.0-4         renv_1.0.7           survival_3.8-3      
- [79] tidyselect_1.2.1     svglite_2.1.3        crul_1.5.0          
- [82] xfun_0.50            hardhat_1.4.0        timeDate_4041.110   
- [85] DT_0.33              stringi_1.8.4        boot_1.3-31         
- [88] DiceDesign_1.10      yaml_2.3.10          evaluate_1.0.3      
- [91] codetools_0.2-20     httpcode_0.3.0       cli_3.6.3           
- [94] RcppParallel_5.1.10  rpart_4.1.24         systemfonts_1.2.1   
- [97] jquerylib_0.1.4      repr_1.1.7           munsell_0.5.1       
-[100] Rcpp_1.0.14          globals_0.16.3       triebeard_0.4.1     
-[103] png_0.1-8            parallel_4.4.2       gower_1.0.2         
-[106] prettyunits_1.2.0    GPfit_1.0-8          listenv_0.9.1       
-[109] viridisLite_0.4.2    ipred_0.9-15         xts_0.14.1          
-[112] prodlim_2024.06.25   e1071_1.7-16         crayon_1.5.3        
-[115] rlang_1.1.5         
+</span></span></code></pre></div><pre><code>## R version 4.4.2 (2024-10-31)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Sequoia 15.5
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: America/Toronto
+## tzcode source: internal
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices datasets  utils     methods   base     
+## 
+## other attached packages:
+##  [1] gganimate_1.0.9      ggthemes_5.1.0       jofou.lib_0.0.0.9000
+##  [4] reticulate_1.40.0    tidytuesdayR_1.1.2   tictoc_1.2.1        
+##  [7] terra_1.8-10         sf_1.0-19            pins_1.4.0          
+## [10] modeltime_1.3.1      fs_1.6.5             timetk_2.9.0        
+## [13] yardstick_1.3.2      workflowsets_1.1.0   workflows_1.1.4     
+## [16] tune_1.2.1           rsample_1.2.1        parsnip_1.2.1       
+## [19] modeldata_1.4.0      infer_1.0.7          dials_1.3.0         
+## [22] scales_1.3.0         broom_1.0.7          tidymodels_1.2.0    
+## [25] recipes_1.1.0        doFuture_1.0.1       future_1.34.0       
+## [28] foreach_1.5.2        skimr_2.1.5          forcats_1.0.0       
+## [31] stringr_1.5.1        dplyr_1.1.4          purrr_1.0.2         
+## [34] readr_2.1.5          tidyr_1.3.1          tibble_3.2.1        
+## [37] ggplot2_3.5.1        tidyverse_2.0.0      lubridate_1.9.4     
+## [40] kableExtra_1.4.0     inspectdf_0.0.12.1   openxlsx_4.2.7.1    
+## [43] knitr_1.49          
+## 
+## loaded via a namespace (and not attached):
+##   [1] wk_0.9.4             rstudioapi_0.17.1    jsonlite_1.8.9      
+##   [4] magrittr_2.0.3       magick_2.8.5         farver_2.1.2        
+##   [7] rmarkdown_2.29       vctrs_0.6.5          spdep_1.3-10        
+##  [10] memoise_2.0.1        hoardr_0.5.5         base64enc_0.1-3     
+##  [13] blogdown_1.20        htmltools_0.5.8.1    progress_1.2.3      
+##  [16] curl_6.1.0           xgboost_1.7.8.1      s2_1.1.7            
+##  [19] spData_2.3.4         sass_0.4.9           parallelly_1.41.0   
+##  [22] StanHeaders_2.32.10  KernSmooth_2.23-26   bslib_0.8.0         
+##  [25] htmlwidgets_1.6.4    zoo_1.8-12           cachem_1.1.0        
+##  [28] ggfittext_0.10.2     igraph_2.1.4         mime_0.12           
+##  [31] lifecycle_1.0.4      iterators_1.0.14     pkgconfig_2.0.3     
+##  [34] Matrix_1.7-2         R6_2.5.1             fastmap_1.2.0       
+##  [37] digest_0.6.37        colorspace_2.1-1     furrr_0.3.1         
+##  [40] crosstalk_1.2.1      labeling_0.4.3       urltools_1.7.3      
+##  [43] timechange_0.3.0     compiler_4.4.2       proxy_0.4-27        
+##  [46] doParallel_1.0.17    withr_3.0.2          backports_1.5.0     
+##  [49] DBI_1.2.3            rgeoboundaries_1.3.1 MASS_7.3-64         
+##  [52] lava_1.8.1           rappdirs_0.3.3       classInt_0.4-11     
+##  [55] tools_4.4.2          units_0.8-5          zip_2.3.1           
+##  [58] future.apply_1.11.3  nnet_7.3-20          glue_1.8.0          
+##  [61] grid_4.4.2           generics_0.1.3       gtable_0.3.6        
+##  [64] countrycode_1.6.0    tzdb_0.4.0           class_7.3-23        
+##  [67] data.table_1.16.4    hms_1.1.3            sp_2.1-4            
+##  [70] xml2_1.3.6           utf8_1.2.4           pillar_1.10.1       
+##  [73] splines_4.4.2        lhs_1.2.0            tweenr_2.0.3        
+##  [76] lattice_0.22-6       deldir_2.0-4         renv_1.0.7          
+##  [79] survival_3.8-3       tidyselect_1.2.1     bookdown_0.42       
+##  [82] svglite_2.1.3        crul_1.5.0           xfun_0.50           
+##  [85] hardhat_1.4.0        timeDate_4041.110    DT_0.33             
+##  [88] stringi_1.8.4        boot_1.3-31          DiceDesign_1.10     
+##  [91] yaml_2.3.10          evaluate_1.0.3       codetools_0.2-20    
+##  [94] httpcode_0.3.0       cli_3.6.3            RcppParallel_5.1.10 
+##  [97] rpart_4.1.24         systemfonts_1.2.1    repr_1.1.7          
+## [100] munsell_0.5.1        jquerylib_0.1.4      Rcpp_1.0.14         
+## [103] globals_0.16.3       triebeard_0.4.1      png_0.1-8           
+## [106] parallel_4.4.2       gower_1.0.2          prettyunits_1.2.0   
+## [109] GPfit_1.0-8          listenv_0.9.1        viridisLite_0.4.2   
+## [112] ipred_0.9-15         xts_0.14.1           prodlim_2024.06.25  
+## [115] e1071_1.7-16         crayon_1.5.3         rlang_1.1.5
 </code></pre>
 
         
@@ -673,7 +672,7 @@ loaded via a namespace (and not attached):
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">8 minute read, 1626 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1714 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -691,11 +690,11 @@ loaded via a namespace (and not attached):
   <dl class="f6 lh-copy">
     <dt class="fw7">See Also:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/tyt2025w19/">TyT2025W19: Seismic Events at Mount Vesuvius</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz2/">Heatmap to Visualize Spatio-Temporal Data</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz/">Side by side interactive map with {leaflet} and {leaflet.extras2}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/ca_temperature_eda_polen/">Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</a></dd>
     
   </dl>
 </details>

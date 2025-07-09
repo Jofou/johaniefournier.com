@@ -23,7 +23,7 @@ adsense:
 filters:
 - adsense
 resources:
- - ads.txt 
+ - ads.txt
 ---
 
 <link href="index_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
@@ -40,8 +40,9 @@ resources:
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
-<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
-</a>
+[![](petit.png)](https://subscribepage.io/E3ia1B)
+
+Subscribe button
 
 <br>
 
@@ -357,8 +358,8 @@ DT::datatable(data_norm) |>
   DT::formatRound(c("mx","min","q25","q75","iqr"), digits=1)
 ```
 
-<div class="datatables html-widget html-fill-item" id="htmlwidget-e28134a0064ebe34e05a" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e28134a0064ebe34e05a">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],[1.935951027601007,2.314933127441435,2.015677982321733,1.501609603484582,1.566526815286693,0.9565469016346526,0.9143693614659583,0.8779345476604306,0.9492889428496767,1.548441977321758,1.217108707049377,2.341365571777828],[-3.7376527466906,-3.121793923963352,-2.068808156667259,-1.457172630972465,-1.697452660540009,-0.9858905896576857,-0.8994214107670331,-0.8304236680279047,-1.023017264077055,-1.38005776178835,-1.483540680301715,-2.298547887550427],[-0.6878261489265149,-0.3241954572890862,-0.5224098300452766,-0.3477106812858857,-0.3829218309301439,-0.2617484028834554,-0.2752262244819619,-0.2704297741002328,-0.3320392769011633,-0.5210700110215072,-0.4435624469487891,-0.6670970446522162],[0.8593569580412996,0.5709910343208549,0.5118821026981699,0.3803797947384098,0.3984437312175579,0.2846591171818815,0.2915506658724887,0.2340116048643068,0.330077380172181,0.4084774206591426,0.5378935144745363,0.759233915241694],[1.547183106967815,0.895186491609941,1.034291932743447,0.7280904760242954,0.7813655621477018,0.5464075200653369,0.5667768903544506,0.5044413789645397,0.6621166570733443,0.9295474316806498,0.9814559614233254,1.42633095989391]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>month_name_abb<\/th>\n      <th>mx<\/th>\n      <th>min<\/th>\n      <th>q25<\/th>\n      <th>q75<\/th>\n      <th>iqr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"month_name_abb","targets":1},{"name":"mx","targets":2},{"name":"min","targets":3},{"name":"q25","targets":4},{"name":"q75","targets":5},{"name":"iqr","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-38fd6db599d19584859e" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-38fd6db599d19584859e">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12"],["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],[1.935951027601007,2.314933127441435,2.015677982321733,1.501609603484582,1.566526815286693,0.9565469016346526,0.9143693614659583,0.8779345476604306,0.9492889428496767,1.548441977321758,1.217108707049377,2.341365571777828],[-3.7376527466906,-3.121793923963352,-2.068808156667259,-1.457172630972465,-1.697452660540009,-0.9858905896576857,-0.8994214107670331,-0.8304236680279047,-1.023017264077055,-1.38005776178835,-1.483540680301715,-2.298547887550427],[-0.6878261489265149,-0.3241954572890862,-0.5224098300452766,-0.3477106812858857,-0.3829218309301439,-0.2617484028834554,-0.2752262244819619,-0.2704297741002328,-0.3320392769011633,-0.5210700110215072,-0.4435624469487891,-0.6670970446522162],[0.8593569580412996,0.5709910343208549,0.5118821026981699,0.3803797947384098,0.3984437312175579,0.2846591171818815,0.2915506658724887,0.2340116048643068,0.330077380172181,0.4084774206591426,0.5378935144745363,0.759233915241694],[1.547183106967815,0.895186491609941,1.034291932743447,0.7280904760242954,0.7813655621477018,0.5464075200653369,0.5667768903544506,0.5044413789645397,0.6621166570733443,0.9295474316806498,0.9814559614233254,1.42633095989391]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>month_name_abb<\/th>\n      <th>mx<\/th>\n      <th>min<\/th>\n      <th>q25<\/th>\n      <th>q75<\/th>\n      <th>iqr<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"month_name_abb","targets":1},{"name":"mx","targets":2},{"name":"min","targets":3},{"name":"q25","targets":4},{"name":"q75","targets":5},{"name":"iqr","targets":6}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render","options.columnDefs.4.render"],"jsHooks":[]}</script>
 
 ``` r
 library(ggthemes)
@@ -419,9 +420,7 @@ In this analysis, we explored machine learning approaches to predict future emis
 
 # Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
-
+[![Sign up](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
 <br>
 
 # Session Info
@@ -432,7 +431,7 @@ sessionInfo()
 
     R version 4.4.2 (2024-10-31)
     Platform: aarch64-apple-darwin20
-    Running under: macOS Sequoia 15.2
+    Running under: macOS Sequoia 15.5
 
     Matrix products: default
     BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 

@@ -106,6 +106,10 @@ theme_set(theme_minimal() +
 #NAD83:"EPSG3978"
 ```
 
+[![Subscribe button](petit.png)](https://subscribepage.io/E3ia1B)
+
+<br>
+
 This is my latest contribution to the [`#TidyTuesday` dataset](https://github.com/rfordatascience/tidytuesday) project, featuring a recent dataset on carbon major emissions.
 
 In the first part, I did  some Exploratory Data Analysis (EDA) to look at the data set and summarize the main characteristics. In the second part, I built a spatio-temporal machine learning model to predict future emissions. In this part, I'm creating an animated map of the data including the predictions.
@@ -174,7 +178,9 @@ print(animation, info = FALSE)
 This animated map shows the evolution of carbon emissions over time. The size of the points represents the amount of emissions, while the color represents the intensity of the emissions. The map shows how emissions have evolved over time and how they are distributed geographically.
 
 
-<a href = "https://johaniefournier.aweb.page/p/4b2b1e24-af09-488d-8ff6-7b46ce61e367"> ![](petit.png)
+# Sign up for the newsletter
+
+[![Sign up](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
 
 ## Session Info
 

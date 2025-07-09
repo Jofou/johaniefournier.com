@@ -17,7 +17,7 @@ adsense:
 filters:
 - adsense
 resources:
- - ads.txt 
+ - ads.txt
 ---
 
 ```{r setup}
@@ -192,8 +192,7 @@ Disclosure: Some links are affiliate links. It costs you nothing extra and helps
 
 ## Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
+[![Sign up](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
 
 <br>
 

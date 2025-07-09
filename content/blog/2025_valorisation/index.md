@@ -15,13 +15,16 @@ adsense:
 filters:
 - adsense
 resources:
- - ads.txt 
+ - ads.txt
 ---
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845" crossorigin="anonymous"></script>
 
-<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
-</a>
+[![](petit.png)](https://subscribepage.io/E3ia1B)
+
+Subscribe button
+
+<br>
 
 <br>
 
@@ -79,7 +82,8 @@ You likely already have valuable data---you just need to put it to work. Start w
 
 ## Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
+[![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
+
+Sign up
 
 <br>

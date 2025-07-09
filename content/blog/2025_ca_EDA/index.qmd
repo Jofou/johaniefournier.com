@@ -137,8 +137,7 @@ Dir.Exports <- file.path(Dir.Base, "Exports") # folder path for exports
 ```
 
 
-<a href = "https://subscribepage.io/E3ia1B"> ![](petit.png)
-</a>
+[![Subscribe button](petit.png)](https://subscribepage.io/E3ia1B)
 
 <br>
 
@@ -657,8 +656,7 @@ In this study, we conducted an exploratory data analysis of temperature data for
 
 # Sign up for the newsletter
 
-<a href = "https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share"> ![](sign_up.png)
-</a>
+[![Sign up](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
 
 <br>
 
