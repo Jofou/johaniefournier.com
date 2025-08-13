@@ -1,0 +1,481 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ressources on Johanie Fournier</title>
+    <link>https://johaniefournier.com/categories/ressources/</link>
+    <description>Recent content in ressources on Johanie Fournier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 01 May 2025 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://johaniefournier.com/categories/ressources/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What Is Data Valorisation in Agriculture? 10 Ways to Turn Raw Data into Real Value</title>
+      <link>https://johaniefournier.com/blog/valorisation/</link>
+      <pubDate>Thu, 01 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/valorisation/</guid>
+      <description>&lt;script async src=&#34;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://subscribepage.io/E3ia1B&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;petit.png&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Subscribe button&lt;/p&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;p&gt;From weather stations to soil tests, drones to spreadsheets, agricultural data is everywhere. Yet, much of it sits unused. Data valorisation is about changing that&amp;mdash;by transforming raw information into insights that lead to better decisions, stronger returns, and more sustainable practices.&lt;/p&gt;
+&lt;p&gt;In this post, we explore 10 ways agricultural stakeholders&amp;mdash;farmers, consultants, cooperatives, and agronomists&amp;mdash;can unlock the true value of their data.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;what-is-data-valorisation-and-why-it-matters&#34;&gt;What Is Data Valorisation and Why It Matters
+  &lt;a href=&#34;#what-is-data-valorisation-and-why-it-matters&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Data valorisation is the act of converting existing agricultural data into actionable insights. It&amp;rsquo;s not just about having data&amp;mdash;it&amp;rsquo;s about using it meaningfully. For example, you can use soil and yield data to optimize inputs, weather trends to assess pest risks, or milk quality logs to improve animal health. The goal is always the same: create value through better decisions.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;why-farm-data-often-goes-unused&#34;&gt;Why Farm Data Often Goes Unused
+  &lt;a href=&#34;#why-farm-data-often-goes-unused&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Despite the growing volume of data collected on farms, much of it never gets applied. This often happens because data is stuck in silos, producers lack time or technical support, or the purpose of the data isn&amp;rsquo;t clearly defined. The solution is to start small&amp;mdash;focus on one decision you&amp;rsquo;d like to improve, involve people who understand the data, and use tools that are already accessible to your team.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;four-types-of-value-from-ag-data&#34;&gt;Four Types of Value from Ag Data
+  &lt;a href=&#34;#four-types-of-value-from-ag-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Agricultural data can generate value in four major ways. Economically, it can reduce input costs or create new services. Operationally, it can streamline tasks and reduce waste. Strategically, it helps organizations make informed decisions faster. And societally, it supports sustainable practices, regulatory compliance, and responsible land management.&lt;/p&gt;
+&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-1-1.png&#34; width=&#34;273&#34; /&gt;
+
+
+
+
+&lt;h2 id=&#34;the-four-pillars-of-data-valorisation&#34;&gt;The Four Pillars of Data Valorisation
+  &lt;a href=&#34;#the-four-pillars-of-data-valorisation&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;To unlock value, data must meet four conditions. First, it must be relevant&amp;mdash;it should help answer a practical question. Second, it must be high quality: accurate, consistent, and reliable. Third, it needs to be accessible to those who need it. And finally, it must be actionable, meaning it leads directly to a useful decision or intervention.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;case-study----lime-application-zones&#34;&gt;Case Study &amp;ndash; Lime Application Zones
+  &lt;a href=&#34;#case-study----lime-application-zones&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;One producer had years of soil pH test results stored in spreadsheets but never used them. By georeferencing the data and interpolating it across their fields, we created a variable-rate lime application map. The result was lower lime usage, more uniform pH across zones, and improved nutrient uptake in the crop.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;case-study----fertilization-zones-from-soil-data&#34;&gt;Case Study &amp;ndash; Fertilization Zones from Soil Data
+  &lt;a href=&#34;#case-study----fertilization-zones-from-soil-data&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Another producer leveraged historical nutrient test data to create spatially-defined fertilizer zones. This allowed them to apply nutrients precisely where they were needed. The result was a drop in fertilizer costs, fewer environmental losses, and more consistent yields across the field.&lt;/p&gt;
+&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png&#34; width=&#34;273&#34; /&gt;
+
+
+
+
+&lt;h2 id=&#34;the-data-valorisation-mindset&#34;&gt;The Data Valorisation Mindset
+  &lt;a href=&#34;#the-data-valorisation-mindset&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Successful data valorisation doesn&amp;rsquo;t come from technology alone&amp;mdash;it starts with people. It requires curiosity to ask the right questions, collaboration between technical and field staff, and a commitment to using data for action. Culture is key: a team that values data is far more likely to use it to drive change.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;tools--skills-to-get-started&#34;&gt;Tools &amp;amp; Skills to Get Started
+  &lt;a href=&#34;#tools--skills-to-get-started&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;You don&amp;rsquo;t need to be a data scientist to start valorising farm data. Tools like Excel, QGIS, Google Earth Engine, or basic R/Python scripts can go a long way. What matters most is the ability to ask a good question, explore the data visually, and communicate insights clearly to decision-makers.&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;challenges--how-to-overcome-them&#34;&gt;Challenges &amp;amp; How to Overcome Them
+  &lt;a href=&#34;#challenges--how-to-overcome-them&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;Common obstacles include poor data quality, lack of time, and resistance to change. The key is to start with manageable datasets and focus on quick wins. Don&amp;rsquo;t aim for perfection&amp;mdash;look for small actions with clear results. One success story can build momentum for bigger transformations.&lt;/p&gt;
+&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png&#34; width=&#34;273&#34; /&gt;
+
+
+
+
+&lt;h2 id=&#34;from-data-to-decisions&#34;&gt;From Data to Decisions
+  &lt;a href=&#34;#from-data-to-decisions&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;You likely already have valuable data&amp;mdash;you just need to put it to work. Start with one question, one dataset, and one decision. Whether it&amp;rsquo;s optimizing a practice, improving communication with clients, or building a smarter workflow, the value is already there, waiting to be unlocked.&lt;/p&gt;
+&lt;img src=&#34;index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png&#34; width=&#34;273&#34; /&gt;
+
+
+
+
+&lt;h2 id=&#34;sign-up-for-the-newsletter&#34;&gt;Sign up for the newsletter
+  &lt;a href=&#34;#sign-up-for-the-newsletter&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;sign_up.png&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Sign up&lt;/p&gt;
+&lt;br&gt;
+</description>
+      
+            <category>ressources</category>
+      
+      
+            <category>ressources</category>
+      
+    </item>
+    
+    <item>
+      <title>Recommended Resources to Learn, Grow, and Work Smarter</title>
+      <link>https://johaniefournier.com/blog/ressources/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ressources/</guid>
+      <description>&lt;script async src=&#34;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+&lt;p&gt;Here are the resources for data analysts and programmers I personally recommend &amp;mdash; including the best R programming books, top data science courses, and productivity tools for developers that I use to stay organized and learn faster.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re starting out or growing your career, these tools and learning paths can help you learn R programming faster and build real-world skills.&lt;/p&gt;
+&lt;p&gt;Some links are affiliate links. They cost you nothing extra and help support my work. Thanks!&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;my-favorites-courses&#34;&gt;My favorites courses
+  &lt;a href=&#34;#my-favorites-courses&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;GET 15% OFF!&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://university.business-science.io/p/5-course-bundle-machine-learning-web-apps-time-series/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;5 Course R-Track: Machine Learning, Web Apps, &amp;amp; Time Series&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://university.business-science.io/p/learning-labs-pro/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Learning Labs Pro&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://university.business-science.io/p/ds4b-101-r-business-analysis-r/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science for Business Part 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://university.business-science.io/p/hr201-using-machine-learning-h2o-lime-to-predict-employee-turnover/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science for Business Part 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://university.business-science.io/p/ds4b-203-r-high-performance-time-series-forecasting/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;High Performance Time Series&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://university.business-science.io/p/ds4b-102-r-shiny-web-application-business-level-1/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Shiny Web Applications Part 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Shiny Web Applications Part 2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+
+
+&lt;h2 id=&#34;my-favorites-tools&#34;&gt;My favorites tools
+  &lt;a href=&#34;#my-favorites-tools&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://get.usemotion.com/5s22lvxggmwy&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Motion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://refer.tella.com/johanie-fournier&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tella&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+
+
+&lt;h2 id=&#34;some-of-my-favorite-books&#34;&gt;Some of my favorite books
+  &lt;a href=&#34;#some-of-my-favorite-books&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/44JPTXZ&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;An Introduction to Statistical Learning&lt;/a&gt; by Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3EIXBHl&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Spatio-Temporal Statistics with R&lt;/a&gt; by Christopher K. Wikle, Jeffrey S. Cressie and Chunsheng Zhang&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3RG5C2S&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Statistical Rethinking&lt;/a&gt; by Richard McElreath&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4jYZmzn&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tree-Based Methods for Stastistical Learning&lt;/a&gt; by Brandon M. Greenwell&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4cSbSOs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Explanatory Model Analysis&lt;/a&gt; by Przemyslaw Biecek and Tomasz Burzykowski&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/44McRhb&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Feature Engineering and Selection&lt;/a&gt; by Max Kuhn and Kjell Johnson&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4ixVp3j&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Using R for Bayesian Spatial and Spatio-Temporal Modeling&lt;/a&gt; by Andrew Zammit Mangion&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3SeYyu0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Understanding Machine Learning&lt;/a&gt; by Shai Shalev-Shwartz and Shai Ben-David&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3RAZBo3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;R for Data Science&lt;/a&gt; by Hadley Wickham and Garrett Grolemund&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3YgBGOw&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Applied Spatial Data Analysis with R&lt;/a&gt; by Bivand, Pebesma and Gomez-Rubio&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3GvVt6v&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Spatial Data Science with Application in R&lt;/a&gt; by Edzer Pebesma and Roger Bivand&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3RDxSTD&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Spatial Analysis with R&lt;/a&gt; by Tonny J. Oyana&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3YSh6nA&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tidy Modelling with R&lt;/a&gt; by Max Kuhn and Julia Silge&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/42URiIR&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Forecasting: Principles and Practice&lt;/a&gt; by Rob J Hyndman and George Athanasopoulos&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3EDOSX2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Geocomputation with R&lt;/a&gt; by Robin Lovelace, Jakub Nowosad and Jannes Muenchow&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4jSHYfm&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;The Elements of Statistical Learning&lt;/a&gt; by Trevor Hastie, Robert Tibshirani and Jerome Friedman&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4cOVz56&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Time Series Analysis and its Applications&lt;/a&gt; by Robert H. Shumway and David S. Stoffer&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/44eWFVI&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Introduction to Statistics and Data Analysis&lt;/a&gt; by Christian Heumann and Michael Schomaker&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/44eQYXJ&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Applied Predictive Modeling&lt;/a&gt; by Max Kuhn and Kjell Johnson&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3YjLEyD&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Practical Guide to Principal Component Methods in R&lt;/a&gt; by Alboukadel Kassambara&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3GwZ6sP&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Practical Guide to Cluster Analysis in R&lt;/a&gt; by Alboukadel Kassambara&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/42zDK6O&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Statistics for Spatio-Temporal Data&lt;/a&gt; by Edzer Pebesma and Roger Bivand&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3GpmGYz&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Interpretable Machine Learning&lt;/a&gt; by Christoph Molnar&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4lNEqga&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Practical Time Series Forecasting with R&lt;/a&gt; by Galit Shmueli and Kenneth C. Lichtendahl Jr.&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3ERVjWp&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Build a Carreer in Data Science&lt;/a&gt; by Emily Robinson and Jacqueline Nolis&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4iN1B7W&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;R Packages&lt;/a&gt; by Hadley Wickham and Jenny Bryan&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/42LdViU&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Practical Time Series Analysis&lt;/a&gt; by Aileen Nielsen&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4jypi51&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Football Analytics with R&lt;/a&gt; by Eric A. Eager and Richard A. Erickson&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3Gt0koQ&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Practical Statistics for Data Scientists&lt;/a&gt; by Peter Bruce and Andrew Bruce&lt;/li&gt;
+&lt;/ul&gt;
+
+
+
+
+&lt;h2 id=&#34;my-favorite-personal-development-books&#34;&gt;My favorite personal development books
+  &lt;a href=&#34;#my-favorite-personal-development-books&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4iBUn6A&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Atomic Habits&lt;/a&gt; by James Clear&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3YlsQyR&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Deep Work&lt;/a&gt; by Cal Newport&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/433DnkU&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Grit&lt;/a&gt; by Angela Duckworth&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/3S8hxGJ&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Mindset&lt;/a&gt; by Carol S. Dweck&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://amzn.to/4cN234u&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;The Power of Now&lt;/a&gt; by Eckhart Tolle&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Disclosure: Some links are affiliate links. It costs you nothing extra and helps support my work. Thanks for your support!&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;sign-up-for-the-newsletter&#34;&gt;Sign up for the newsletter
+  &lt;a href=&#34;#sign-up-for-the-newsletter&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;sign_up.png&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Sign up&lt;/p&gt;
+&lt;br&gt;
+</description>
+      
+            <category>ressources</category>
+      
+      
+            <category>ressources</category>
+      
+    </item>
+    
+    <item>
+      <title>Top 7 Online Courses to Level Up Your R Programming and Data Science Skills (2025 Edition)</title>
+      <link>https://johaniefournier.com/blog/courses/</link>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/courses/</guid>
+      <description>&lt;script async src=&#34;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+&lt;p&gt;Learning R and mastering data science is one of the best career moves you can make today.&lt;/p&gt;
+&lt;p&gt;But with so many courses available, it&amp;rsquo;s easy to feel overwhelmed.
+That&amp;rsquo;s why I&amp;rsquo;ve curated a list of the top 7 online programs that I personally recommend for anyone serious about growing their skills &amp;mdash; from machine learning to time series forecasting, to creating real web applications with Shiny.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re starting out or advancing your career, these courses are practical, trusted, and designed for real-world success.
+Let&amp;rsquo;s dive in! 🚀&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;GET 15% OFF WITH CODE DS4B15&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+
+
+
+&lt;h2 id=&#34;5-course-r-track-machine-learning-web-apps--time-series&#34;&gt;5 Course R-Track: Machine Learning, Web Apps, &amp;amp; Time Series
+  &lt;a href=&#34;#5-course-r-track-machine-learning-web-apps--time-series&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;🚀 Ready to master Machine Learning, build real web apps, and tackle time series forecasting? The 5 Course R-Track offers a complete journey for aspiring data scientists using R. Gain practical, job-ready skills all in one structured program.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Focus:&lt;/strong&gt; complete structured program → great for focused learners&lt;/p&gt;
+&lt;p&gt;✅ 
+&lt;a href=&#34;Yhttps://university.business-science.io/p/5-course-bundle-machine-learning-web-apps-time-series/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34;&gt;Enroll here.&lt;/a&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;learning-labs-pro&#34;&gt;Learning Labs Pro
+  &lt;a href=&#34;#learning-labs-pro&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;🛠️ Learning R is not just about theory &amp;mdash; it&amp;rsquo;s about practice. Learning Labs Pro gives you real-world projects and hands-on experience to sharpen your R skills faster. Perfect for building a strong portfolio and growing your confidence.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Focus:&lt;/strong&gt; hands-on practice beats passive learning, real projects to build a portfolio fast&lt;/p&gt;
+&lt;p&gt;✅ 
+&lt;a href=&#34;Yhttps://university.business-science.io/p/learning-labs-pro/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34;&gt;Start practicing here.&lt;/a&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;data-science-for-business-part-1&#34;&gt;Data Science for Business Part 1
+  &lt;a href=&#34;#data-science-for-business-part-1&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;📈 Knowing R is powerful &amp;mdash; but applying it to real business problems changes everything. Data Science for Business Part 1 teaches you how to turn data into strategic decisions. Essential for anyone who wants to bridge the gap between coding and business.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Focus&lt;/strong&gt;: turn R skills into business decision-making, understanding how data drives real companies&lt;/p&gt;
+&lt;p&gt;✅ 
+&lt;a href=&#34;Yhttps://university.business-science.io/p/ds4b-101-r-business-analysis-r/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34;&gt;Learn how data drives business success.&lt;/a&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;data-science-for-business-part-2&#34;&gt;Data Science for Business Part 2
+  &lt;a href=&#34;#data-science-for-business-part-2&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;🔍 Ready to dive deeper into business-driven data analysis?
+Part 2 takes you beyond the basics into advanced applications of R in real-world business settings. Build skills that make you truly indispensable in a data-driven world.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Focus:&lt;/strong&gt; advanced business data applications, bridges coding + real-world business impact&lt;/p&gt;
+&lt;p&gt;✅ 
+&lt;a href=&#34;Yhttps://university.business-science.io/p/hr201-using-machine-learning-h2o-lime-to-predict-employee-turnover/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34;&gt;Continue your business data journey here.&lt;/a&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;high-performance-time-series&#34;&gt;High Performance Time Series
+  &lt;a href=&#34;#high-performance-time-series&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;⏳ Forecasting isn&amp;rsquo;t a guessing game &amp;mdash; it&amp;rsquo;s a science. Hight Performance Time Series teaches you advanced techniques to predict trends, demand, and outcomes using R. Masster scalable, efficient modeling for smarter decision-making.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Focus:&lt;/strong&gt; time series forecasting &amp;mdash; one of the highest-paid DS skills, practical, fast modeling approaches with R&lt;/p&gt;
+&lt;p&gt;✅ 
+&lt;a href=&#34;Yhttps://university.business-science.io/p/ds4b-203-r-high-performance-time-series-forecasting/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34;&gt;Learn high-performance forecasting here.&lt;/a&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;shiny-web-applications-part-1&#34;&gt;Shiny Web Applications Part 1
+  &lt;a href=&#34;#shiny-web-applications-part-1&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;🎨 Transform your R scripts into stunning, interactive web applications. Shiny Web Applications Part 1 shows you how to design and deploy real-world apps, step-by-step. Perfect for analysts, researchers, or entrepreneurs who want to showcase data dynamically.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Focus:&lt;/strong&gt; build real web apps from R analysis, interactive dashboards, simple UI building
+✅ 
+&lt;a href=&#34;Yhttps://university.business-science.io/p/ds4b-102-r-shiny-web-application-business-level-1/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34;&gt;Start building your first app here.&lt;/a&gt;&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;shiny-web-applications-part-2&#34;&gt;Shiny Web Applications Part 2
+  &lt;a href=&#34;#shiny-web-applications-part-2&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;🚀 Already comfortable with basic Shiny apps? Part 2 teaches you how to level up: creating professional-grade applications with advanced UI and server-side techniques. Stand out in the R community with real app development skills.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Focus:&lt;/strong&gt; advanced app development techniques, move from basic dashboards to pro-grade apps&lt;/p&gt;
+&lt;p&gt;✅ 
+&lt;a href=&#34;Yhttps://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/?coupon_code=DS4B15&amp;amp;affcode=173166_sqpk4nck&#34;&gt;Advance your Shiny skills here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re serious about growing your R programming and data science skills,
+these courses offer real, practical learning &amp;mdash; not just theory.&lt;/p&gt;
+&lt;p&gt;Whether you&amp;rsquo;re aiming to launch a new career, level up your job skills, or build your own projects, investing time in the right learning path is key.
+Ready to grow? 🚀&lt;/p&gt;
+&lt;p&gt;Check out the full courses linked above and start building your future today!&lt;/p&gt;
+&lt;p&gt;Disclosure: Some links are affiliate links. It costs you nothing extra and helps support my work. Thanks for your support!&lt;/p&gt;
+
+
+
+
+&lt;h2 id=&#34;sign-up-for-the-newsletter&#34;&gt;Sign up for the newsletter
+  &lt;a href=&#34;#sign-up-for-the-newsletter&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;
+      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;
+    &lt;/svg&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;sign_up.png&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Sign up&lt;/p&gt;
+&lt;br&gt;
+</description>
+      
+            <category>ressources</category>
+      
+      
+            <category>ressources</category>
+      
+    </item>
+    
+  </channel>
+</rss>
