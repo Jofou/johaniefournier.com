@@ -1,0 +1,54 @@
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      {{ if ne site.Copyright "" }}{{ site.Copyright | safeHTML }}{{ else }}&copy; {{ now.Format "2006"}}{{ if site.Params.orgName }} {{ site.Params.orgName }}{{ end }}{{ if site.Params.orgLocal }}, {{ site.Params.orgLocal }}{{ end }}{{ end }}
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      {{ partial "shared/attribution.html" }}
+    </p>
+    {{ if and (not .IsHome) (site.Params.socialInFooter) }}
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      {{ partial "shared/social-links.html" . }}
+    </div>
+    {{ end }}
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      {{ range site.Menus.footer }}
+      <a class="dib pv1 ph2 link" href="{{ .URL }}" title="{{ .Title }}">{{ .Name }}</a>
+      {{ end }}
+    </div>
+  </nav>
+  {{ with site.Params.math }}
+    {{ partial "shared/math-preprocess.html" }}
+  {{ with .renderer }}
+    {{ if eq . "mathjax" }}
+      {{ partial "shared/math-render-mathjax.html" }}
+    {{ end }}
+    {{ if eq . "katex" }}
+      {{ partial "shared/math-render-katex.html" }}
+    {{ end }}
+  {{ end }}
+  {{ end }}
+</footer>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#2D2D39"
+    },
+    "button": {
+      "background": "#14a7d0"
+    }
+  },
+  "theme": "edgeless",
+  "position": "bottom-right",
+  "content": {
+      "message": "This website uses cookies for Google Analytics so that I know how many people are reading the blog and which blogposts are the most popular. The website does not collect any personal data.",
+  "href": "https://www.cookiesandyou.com/"
+  }
+});
+</script>
