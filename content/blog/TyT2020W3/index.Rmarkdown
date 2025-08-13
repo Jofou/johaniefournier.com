@@ -1,0 +1,142 @@
+---
+title: "TyT2020W03 - Percentage by Category"
+author: Johanie Fournier, agr. 
+date: "2020-01-15"
+slug: TyT2020W3
+categories:
+  - rstats
+  - tidyverse
+  - tidytuesday
+tags:
+  - rstats
+  - tidyverse
+  - tidytuesday
+subtitle: ''
+summary: "Initially publish it on my wordpress blog. I put it here for reference purpose."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(magick)
+library(lubridate)
+library(inspectdf)
+library(ggtext)
+library(rmarkdown)
+library(patchwork)
+library(ggpmisc)
+library(tidytuesdayR)
+```
+
+
+## Get the data
+
+```{r}
+passwords <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-14/passwords.csv')
+```
+
+## Explore the data
+
+```{r}
+summary(passwords)
+glimpse(passwords)
+```
+
+## Prepare the data
+
+```{r}
+plt1 <-passwords %>% 
+  filter(strength<=10& strength>=1) %>% 
+  ggplot(aes(x=" ", y = strength)) +
+  geom_boxplot(fill = "#FFFFFF", color = "black") + 
+  coord_flip() +
+  theme_classic() +
+  xlab("") +
+  ylab("strength")+
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+plt2 <-passwords %>%
+  filter(strength<=10 & strength>=1) %>% 
+  ggplot() +
+   geom_histogram(aes(x = strength, y = (..count..)/sum(..count..)),
+                       position = "identity", binwidth = 1, 
+                       fill = "#FFFFFF", color = "black") +
+   ylab("Fréquence Relative")+
+   xlab("")+
+  theme_classic()+
+  theme(axis.text.x = element_blank())+
+  theme(axis.ticks.x = element_blank())
+plt2 + plt1 + plot_layout(nrow = 2, heights = c(2, 1))
+
+data<-passwords %>% 
+  filter(strength<=10 & strength>=1)
+
+summary(data)
+
+data<-passwords %>% 
+  filter(strength<=10 & strength>=1) %>% 
+       mutate(force=case_when(strength >= 8 ~ "fort",
+                             strength <= 6 ~ "mauvais",
+                             strength >6 & strength<8 ~ "moyen")) %>% 
+  count(category, force) %>%
+  spread(force, n) %>% 
+  mutate(Fort=fort/(fort+moyen+mauvais)*100) %>% 
+  mutate(Moyen=moyen/(fort+moyen+mauvais)*100) %>% 
+  mutate(Mauvais=mauvais/(fort+moyen+mauvais)*100) %>% 
+  filter(!category=="food")
+```
+
+## Visualize the data
+
+```{r, eval=FALSE}
+#Graphique
+gg<- ggplot(data=data,aes(x = pct_fort, y=reorder(category, pct_fort), group=category))
+gg <- gg +  geom_point(color="#ffffff",fill="#F7B32B", size=17, pch=21)
+gg <- gg + geom_segment( aes(x=0, xend=100,y=category, yend=category),
+                           color="#838A90", alpha=0.6, size=4)
+gg <- gg + geom_segment( aes(x=0, xend=100,y=category, yend=category),
+                           color="#ffffff", alpha=1, size=0.5)
+gg <- gg +  geom_point(color="#ffffff",fill="#F7B32B", size=18, pch=21)
+#ajouter les étiquettes de points
+gg<-gg + geom_text(data=data, aes(x=pct_fort, y=category, label=(paste0(round(data$pct_fort,0),"%")), group=NULL), color="#ffffff", size=4.5, vjust=0.5, hjust=0.5, fontface="bold")
+#modifier le thème
+gg <- gg +  theme(plot.background = element_rect(fill = "#173f50"),
+                  panel.background = element_rect(fill = "#173f50"),
+                  panel.grid.major.y= element_blank(),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y =element_blank(),
+                    axis.ticks.x = element_blank(), 
+                    axis.ticks.y = element_blank())
+#ajouter les titres
+gg<-gg + labs(title="Don't choose simple alpha-numeric password!",
+            subtitle = "\nThey are easy to guess. If  you really want to choose a bad password, go for neardy-pop\nstyle instead like 'starwars' or 'matrix'. They are the best among the worst you can choose.\n",
+              x="% of hight strenght password for each category", 
+              y=" ", 
+              caption="\nSOURCE: Knowledge is Beautiful   |  DESIGN: Johanie Fournier, agr.")
+gg<-gg + theme(  plot.title    =  element_text(size=30, hjust=1,vjust=0.5, color="#FFFFFF", family="Tw Cen MT", face="bold"),
+                 plot.subtitle = element_text(size=16.1, hjust=1,vjust=0.5, color="#FFFFFF", family="Tw Cen MT"),
+                 plot.caption  = element_text(size=10, hjust=1,vjust=0.5, color="#FFFFFF", family="Tw Cen MT"),
+                 axis.title.x  = element_text(size=14, hjust=0.05,vjust=0.5, color="#FFFFFF", family="Tw Cen MT", angle =0),
+                 axis.title.y  = element_blank(),
+                 axis.text.y   = element_text(size=16, hjust=0,vjust=0.5, color="#FFFFFF", family="Tw Cen MT"), 
+                 axis.text.x   = element_text(size=14, hjust=0.5,vjust=0.5, color="#FFFFFF", family="Tw Cen MT"))
+```
+
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+magick::image_read('featured.png')
+```
+

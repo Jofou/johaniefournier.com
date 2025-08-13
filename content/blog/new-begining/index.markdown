@@ -1,0 +1,34 @@
+---
+title: "This is a new begining!"
+author: Johanie Fournier, agr. 
+date: "2023-07-20"
+slug: new-begining
+categories:
+  - rstats
+tags:
+  - rstats
+subtitle: ''
+summary: "I now know how to use this beautiful tool."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+
+
+I finaly understand what I should do with this blog 🎉. Since my last post was more that a year ago, you can tell that it has take me a long time to figure out!
+
+I've always had the desire to share my knowledge by teatching. I was a tutor in college and I loved it, but there is no way I can stand in front of a class all day so I choose to study agronomy insted of becoming a teatcher. 
+
+I am currentely reading [Atomic Habits](https://www.amazon.com/Atomic-Habits-Proven-Build-Break/dp/0735211299/ref=tmm_hrd_swatch_0?_encoding=UTF8&amp;qid=1689816049&amp;sr=8-1&_encoding=UTF8&tag=johaniefourni-20&linkCode=ur2&linkId=943e1528bf42c9d9c22a441d320c04db&camp=1789&creative=9325)[^1] of James Clear and I an extract of his introduction really resonate with me: 
+
+> While science support everithing I've written, this book is not an academic research paper; it's an operating manual. You will find wisdom and practical advice front and center [...] that have been around for many years. What I offer you is a synthesis of the best idea smart people figured out long time ago as well as the compelling discovery scientists have made recently. My contribution, I hope, is to find the ideas that matter most and connect them in a way that is highly actionable. Anything wise in these pages yu should credit to the many experts who precede me. Anything foolish, assume it is my error.
+
+This is exactly what I want to do with this blog, make it a place to synthetis the best ideas about data analysis, data manipulation, machine learning, geospatial analysis, geospatial statistics, and so much more. 
+
+So, let's get started! 💥
+
+[^1]: A little disclosure: I only recommend products I would use myself and all opinions expressed here are my own. This post may contain affiliate links that at no additional cost to you, I may earn a small commission. Thanks for your support!
