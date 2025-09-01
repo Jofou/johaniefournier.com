@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>eda on Johanie Fournier</title>
+    <link>https://johaniefournier.com/tag/eda/</link>
+    <description>Recent content in eda on Johanie Fournier</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 11 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://johaniefournier.com/tag/eda/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TyT2025W19: Seismic Events at Mount Vesuvius</title>
+      <link>https://johaniefournier.com/blog/tyt2025w19/</link>
+      <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2025w19/</guid>
+      <description>The dataset this week explores seismic events detected at the famous Mount Vesuvius in Italy. It comes from the Italian Istituto Nazionale di Geofisica e Vulcanologia (INGV)&amp;rsquo;s Data Portal and can be explored along with other seismic areas on the GOSSIP website. The raw data was saved as individual CSV files from the GOSSIP website and some values were translated from Italian to English.</description>
+    </item>
+    
+    <item>
+      <title>Heatmap to Visualize Spatio-Temporal Data</title>
+      <link>https://johaniefournier.com/blog/ca_temperature_viz2/</link>
+      <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ca_temperature_viz2/</guid>
+      <description>This post shows how to create a heatmap with geom_tile() to visualize the spatio-temporal evolution of the vegetative period in the Chaudière-Appalaches region.</description>
+    </item>
+    
+    <item>
+      <title>How Temperature and GDD Trends Are Transforming the Growing Season in Chaudières-Appalaches?</title>
+      <link>https://johaniefournier.com/blog/ca_temperature_eda_gdd/</link>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ca_temperature_eda_gdd/</guid>
+      <description>How is climate change affecting temperature, Growing Degree Days (GDD), and the vegetation period in Chaudières-Appalaches? This analysis explores 20 years of historical climate data, uncovering trends, anomalies, and shifts in temperature patterns. By examining GDD calculations and vegetation period variations, we highlight the impacts on agriculture, crop cycles, and ecosystem resilience. Using R for data analysis and visualization, this study provides key insights into how climate trends are reshaping growing conditions in the region.</description>
+    </item>
+    
+    <item>
+      <title>Using {pollen} and {vegperiod} to analyze temperature, GDD, and vegetation period</title>
+      <link>https://johaniefournier.com/blog/ca_temperature_eda_polen/</link>
+      <pubDate>Thu, 13 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/ca_temperature_eda_polen/</guid>
+      <description>pollen and vegperiod are two R packages that can be used to analyze temperature, Growing Degree Days (GDD), and vegetation period. In this analysis, we explore historical temperature records, GDD trends, and vegetation period changes in Chaudières-Appalaches, Quebec, using these packages. By combining data visualization and exploratory data analysis (EDA) techniques, we uncover key patterns and anomalies that shed light on climate-driven changes in the region.</description>
+    </item>
+    
+    <item>
+      <title>St. Lawrence Lowlands Precipitation Data: 30-Year Trends &amp; Anomalies</title>
+      <link>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/</link>
+      <pubDate>Mon, 27 Jan 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/st_lawrence_lowlands_precipitation_eda/</guid>
+      <description>Understanding long-term precipitation patterns is essential for climate research, agriculture, and water resource management. In this post, we analyze 30 years of precipitation data from the AgERA5 dataset for St. Lawrence Lowlands, using exploratory data analysis (EDA) techniques to uncover trends, seasonal variations, and anomalies.</description>
+    </item>
+    
+    <item>
+      <title>TyT2024W21 - EDA:Carbon Majors Emissions Data</title>
+      <link>https://johaniefournier.com/blog/tyt2024w21_eda/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/tyt2024w21_eda/</guid>
+      <description>This week we are exploring historical emissions data from Carbon Majors. They have complied a database of emissions data going back to 1854. In this first part, I start with some exploratory data analysis.</description>
+    </item>
+    
+    <item>
+      <title>This is the begining of a cheat sheet!</title>
+      <link>https://johaniefournier.com/blog/cheat-sheet/</link>
+      <pubDate>Thu, 12 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://johaniefournier.com/blog/cheat-sheet/</guid>
+      <description>I will list here all the little snipset of code that I look up all the time.</description>
+    </item>
+    
+  </channel>
+</rss>

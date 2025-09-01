@@ -1,0 +1,224 @@
+---
+title: "Predicting MO with H2O Models from IRDA data"
+author: Johanie Fournier, agr. 
+date: "2023-11-01"
+slug: IRDA-H2O
+categories:
+  - rstats
+  - tidyverse
+tags:
+  - rstats
+  - tidyverse
+subtitle: ''
+summary: "H2O is a powerful tools to have a general idea of the performance of different models."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+                      echo = TRUE, dpi = 300, cache.lazy = FALSE,
+                      tidy = "styler", fig.width = 8, fig.height = 5)
+library(tidyverse)
+library(tidymodels)
+library(ggplot2)
+library(jofou.lib)
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", size=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", size=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+```
+
+H2O is a powerful tools to have a general idea of the performance of different models. Unfortunately this resource is constantly updating which make this structure hard to maintain in a production setting.
+
+So I mainly use it to know which model perform best with my data. This make me gain a considerable amount of time. From there I can work on the few best models a make solid code for production purpose.
+
+Let's see if I can make a template of this H2O technologies that will resist the test of time (and constant update `r emo::ji("laugh")`)!
+
+## Get the data
+
+Let's look at the data of *Chaudière-Appalaches*
+
+```{r, echo=FALSE}
+path_to_file="/Users/johaniefournier/Library/Mobile Documents/com~apple~CloudDocs/ADV/PINs/IRDA/2 Prepared/Chaudiere-Appalaches/"
+```
+
+```{r}
+board_prepared <- pins::board_folder(path_to_file, versioned = TRUE)
+
+data<-board_prepared %>%
+  pins::pin_read("TS_chaudiere_appalaches") %>% 
+  select(pct_mo, sable_tf, sable, argile, limon, geometry) %>% 
+  sf::st_as_sf(.) %>%
+  sf::st_centroid() %>% 
+  mutate(longitude = sf::st_coordinates(.)[,1],
+         latitude  = sf::st_coordinates(.)[,2]) %>% 
+  as.data.frame() %>% 
+  select(-geometry) %>%
+  mutate_all(as.numeric) %>% 
+  drop_na()  
+```
+
+## Explore the data
+
+* Organic Matter distribution
+
+```{r}
+data %>% 
+  select(pct_mo) %>% 
+  my_num_dist()
+```
+
+```{r}
+data<-data %>% 
+  filter(pct_mo > 0 & pct_mo < 10)
+```
+
+```{r}
+data %>% 
+  select(pct_mo) %>% 
+  my_num_dist()
+```
+
+**Let's see how everything is correlated**
+
+```{r}
+data %>% 
+  my_corr_num_graph(data)
+```
+
+## Build the model
+
+```{r}
+#Parallele Processing
+doFuture::registerDoFuture()
+n_cores <- parallel::detectCores()
+future::plan(
+    strategy = future::cluster, 
+    workers  = parallel::makeCluster(n_cores)
+)
+```
+
+
+**Recipe**
+
+```{r}
+#Define recipe
+recipe_spec <- recipe(as.formula(pct_mo ~.), data = data) %>%
+    step_normalize(all_predictors())
+  
+tbl_prep <-recipe_spec %>% prep() %>% juice()
+
+head(tbl_prep)
+```
+
+
+**CorrelationFunnel**
+
+```{r}
+var_select <-tbl_prep %>% 
+  select(pct_mo) %>% 
+  correlationfunnel::binarize() %>% 
+  select(starts_with("pct_mo") & ends_with("_Inf")) %>%
+  names()
+  
+  tbl_prep %>% 
+  correlationfunnel::binarize() %>% 
+  correlationfunnel::correlate(var_select) %>% 
+  correlationfunnel::plot_correlation_funnel() +
+  labs(title= "IRDA pct_mo - Correlation Funnel")
+
+```
+
+
+**H2O Models**
+
+```{r}
+library(h2o)
+
+# START H2O CLUSTER
+h2o.init()
+#h2o.shutdown(prompt = TRUE)
+
+# H2O DATA PREP 
+train <- as.h2o(tbl_prep)
+
+# Identify the response column
+y <- "pct_mo"
+
+# Identify the predictor columns (remove response and ID column)
+x <- setdiff(names(train), c(y))
+
+# H2O AutoML Training
+aml <- h2o.automl(
+    y = y, 
+    x = x, 
+    training_frame = train,
+    project_name = paste0("H20", y),
+    max_runtime_secs = 1800,
+    max_models = 10,
+    exclude_algos  = c("DeepLearning"),
+    seed = 123)
+
+# H2O AutoML Leaderboard
+aml@leaderboard %>% 
+  as.data.frame() %>% 
+  mutate_if(is.numeric, round, digits=3)%>% 
+  DT::datatable(options = list(pageLength = 16))
+```
+
+## Look at the results
+
+**All 10 models**
+
+```{r}
+model_ids<-as_tibble(aml@leaderboard$model_id)[,1] %>% 
+  mutate(n=row_number())
+
+model_ident<-model_ids %>% 
+  filter(model_id %in% "StackedEnsemble_AllModels_4_AutoML_5_20231031_160025")
+
+model_all<-h2o.getModel(model_ident$model_id)
+model_all
+```
+
+
+```{r}
+model_ident<-model_ids %>% 
+  filter(model_id %in% "StackedEnsemble_BestOfFamily_5_AutoML_5_20231031_160025")
+model_best_of<-h2o.getModel(model_ident$model_id)
+model_best_of
+```
+
+
+```{r}
+model_ident<-model_ids %>% 
+  filter(model_id %in% "GBM_4_AutoML_5_20231031_160025")
+model_gbm<-h2o.getModel(model_ident$model_id)
+model_gbm
+h2o::h2o.varimp_plot(model_gbm)
+```
+
+
+
+```{r}
+#End Parallele Processing
+future::plan(future::sequential)
+```
+
+## Session Info
+
+```{r}
+git2r::repository()
+sessionInfo()
+```

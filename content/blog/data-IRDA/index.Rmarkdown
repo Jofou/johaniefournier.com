@@ -1,0 +1,240 @@
+---
+title: "IRDA soil data"
+author: Johanie Fournier, agr. 
+date: "2023-10-23"
+slug: data-IRDA
+categories:
+  - rstats
+  - tidyverse
+tags:
+  - rstats
+  - tidyverse
+subtitle: ''
+summary: "I recently prepare FADQ data to make some predictives models. Those are great spatial data, but I can't go without a bit of soil information."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, 
+                      echo = TRUE, dpi = 300, cache.lazy = FALSE,
+                      tidy = "styler", fig.width = 8, fig.height = 5)
+library(tidyverse)
+library(tidymodels)
+library(ggplot2)
+library(jofou.lib)
+theme_set(theme_minimal() +
+          theme(axis.line = element_line(linetype="solid", size=.3, color="black"),
+                axis.ticks = element_line(linetype="solid", size=.5, color="black"),
+                panel.grid.major.y = element_blank(),
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.title.x = element_text(hjust = 0, face = "bold"),
+                axis.title.y = element_text(hjust = 1, face = "bold"),
+                title = element_text(hjust = 1, face = "bold", size=14)))
+```
+
+[IRDA](https://www.irda.qc.ca/fr/) here in Quebec, is generous enough to put on their website all the data from their soil studies. You can find it [here](https://www.irda.qc.ca/fr/services/protection-ressources/sante-sols/information-sols/etudes-pedologiques/) 
+
+I download all of it on my computer and you can find the process in [this github repro](https://github.com/Jofou/PINs/tree/master/IRDA/1%20Import).
+
+Now, let's see what we got in this data set!
+
+## Get the data
+
+Let's look at the data of *Chaudière-Appalaches*
+
+```{r, echo=FALSE}
+path_to_file="/Users/johaniefournier/Library/Mobile Documents/com~apple~CloudDocs/ADV/PINs/IRDA/2 Prepared/Chaudiere-Appalaches/"
+```
+
+```{r}
+board_prepared <- pins::board_folder(path_to_file, versioned = TRUE)
+
+data<-board_prepared %>%
+  pins::pin_read("TS_chaudiere_appalaches")
+```
+
+## Explore the data
+
+There is a lot of information in there!! I usually go directly to the most interesting part: the texture, but let's explore a bit more here.
+
+Let's see how everything is correlated.
+
+```{r}
+data %>% 
+  select(pct_mo, sable, limon, argile, sable_tf) %>% 
+  mutate_all(as.numeric) %>% 
+  drop_na() %>% 
+  my_corr_num_graph(data)
+```
+
+## Principal component analysis
+
+Let's do a bit dimentionnality reduction!
+
+### step_pca
+
+```{r}
+data_pca<-data %>% 
+  select(nom_sol, pct_mo, sable, limon, argile, sable_tf, clas_react, clas_calca, clas_humid) %>% 
+  mutate_at(c("pct_mo", "sable", "limon", "argile", "sable_tf"), as.numeric) %>% 
+  mutate_at(c("clas_react", "clas_calca", "clas_humid"), as.factor) %>% 
+  drop_na()
+```
+
+
+```{r}
+pca <- recipe(~., data = data_pca) %>%
+  update_role(nom_sol, new_role = "id") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_pca(all_predictors()) %>% 
+  prep() %>% 
+  bake(., new_data=NULL)
+
+
+pca %>%
+  ggplot(aes(PC1, PC2, label = nom_sol)) +
+  geom_point(color = "#DBBDC3", size = 2) +
+  geom_text(check_overlap = TRUE, hjust = "inward") +
+  labs(color = NULL)
+```
+
+### step_umap
+
+```{r}
+library(embed)
+
+umap_pca <- recipe(~., data = data_pca) %>%
+  update_role(nom_sol, new_role = "id") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_umap(all_predictors()) %>% 
+  prep() %>% 
+  bake(., new_data=NULL)
+
+umap_pca %>%
+  ggplot(aes(UMAP1, UMAP2, label = nom_sol)) +
+  geom_point(color = "#DBBDC3", size = 2) +
+  geom_text(check_overlap = TRUE, hjust = "inward") +
+  labs(color = NULL)
+
+```
+
+
+### prcomp
+
+#### Test 1
+
+```{r}
+prcomp_pca <- recipe(~., data = data_pca) %>%
+  update_role(nom_sol, new_role = "id") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  prep() %>% 
+  bake(., new_data=NULL) %>% 
+  select(-nom_sol) %>% 
+  prcomp(.,tol = 0.1, scale=TRUE)
+
+prcomp_pca %>% 
+  
+
+summary(prcomp_pca)
+
+factoextra::fviz_eig(prcomp_pca)
+
+factoextra::fviz_pca_var(prcomp_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
+```
+
+#### Test 2
+
+```{r}
+data_pca_smpl<-data_pca %>% 
+  select(-clas_humid)
+
+prcomp_pca <- recipe(~., data = data_pca_smpl) %>%
+  update_role(nom_sol, new_role = "id") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  prep() %>% 
+  bake(., new_data=NULL) %>% 
+  select(-nom_sol) %>% 
+  prcomp(.,tol = 0.1, scale=TRUE)
+
+summary(prcomp_pca)
+
+factoextra::fviz_eig(prcomp_pca)
+
+factoextra::fviz_pca_var(prcomp_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
+```
+
+#### Test 3
+
+```{r}
+data_pca_smpl<-data_pca %>% 
+  select(-clas_humid, -clas_react)
+
+prcomp_pca <- recipe(~., data = data_pca_smpl) %>%
+  update_role(nom_sol, new_role = "id") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  prep() %>% 
+  bake(., new_data=NULL) %>% 
+  select(-nom_sol) %>% 
+  prcomp(.,tol = 0.1, scale=TRUE)
+
+summary(prcomp_pca)
+
+factoextra::fviz_eig(prcomp_pca)
+
+factoextra::fviz_pca_var(prcomp_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
+```
+
+#### Test 4
+
+```{r}
+data_pca_smpl<-data_pca %>% 
+  select(-clas_humid, -clas_react, -clas_calca)
+
+prcomp_pca <- recipe(~., data = data_pca_smpl) %>%
+  update_role(nom_sol, new_role = "id") %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  prep() %>% 
+  bake(., new_data=NULL) %>% 
+  select(-nom_sol) %>% 
+  prcomp(.,tol = 0.1, scale=TRUE)
+
+summary(prcomp_pca)
+
+factoextra::fviz_eig(prcomp_pca)
+
+factoextra::fviz_pca_var(prcomp_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+             )
+```
+
+
+Percentage of variance obtain under independence [^1]: 
+
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+magick::image_read('inertie_1.png')
+```
+
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+magick::image_read('inertie_2.jpeg')
+```
+
+[^1]: Source: https://www.youtube.com/watch?v=Oi4aQcUb1Yc&list=PLnZgp6epRBbRn3FeMdaQgVsFh9Kl0fjqX&index=3

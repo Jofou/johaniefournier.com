@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.98.0" />
+<title>TyT2019W33 - Bullet Graph | Johanie Fournier</title>
+
+
+<meta property="twitter:site" content="@fournierjohanie">
+<meta property="twitter:creator" content="@fournierjohanie">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Freelance Agronomist Doing Data Analysis">
+
+
+<meta property="og:site_name" content="Johanie Fournier">
+<meta property="og:title" content="TyT2019W33 - Bullet Graph | Johanie Fournier">
+<meta property="og:description" content="Freelance Agronomist Doing Data Analysis" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://johaniefournier.com/blog/tyt2019w33/" />
+<meta property="og:locale" content="en">
+
+
+
+
+    
+        <meta property="og:image" content="https://johaniefournier.com/blog/tyt2019w33/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://johaniefournier.com/blog/tyt2019w33/featured.png" >
+    
+    
+  <meta itemprop="name" content="TyT2019W33 - Bullet Graph">
+<meta itemprop="description" content="Initially publish it on my wordpress blog. I put it here for reference purpose."><meta itemprop="datePublished" content="2019-08-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2019-08-13T00:00:00+00:00" />
+<meta itemprop="wordCount" content="569"><meta itemprop="image" content="https://johaniefournier.com/blog/tyt2019w33/featured.png">
+<meta itemprop="keywords" content="rstats,tidyverse,tidytuesday," />
+  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K3765H3YGW"></script>
+<script>
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-K3765H3YGW', { 'anonymize_ip': true });
+}
+</script>
+
+  
+<script type="application/javascript">
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-K3765H3YGW', 'auto');
+	ga('set', 'anonymizeIp', true);
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/icon.png" type="image/x-icon">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.3e7a26cb4247ffea6d23e69795ed2666ea212de564f2266ac96ed47b4ee5b931.css" integrity="sha256-Pnomy0JH/&#43;ptI&#43;aXle0mZuohLeVk8iZqyW7Ue07luTE=" media="screen">
+  
+  
+  <script src="/panelset.min.8f4cba0107356728f266d94a12a4d18ef504eda8a9a284cda73675bae7884a68.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.5c2a34ae6659865a008a6856c3d0035205be131e5a950ccb863e57f6a76d4b1c.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://johaniefournier.com/" title="Home">
+      <img src="/img/icon.png" class="dib db-l h2 w-auto" alt="Johanie Fournier">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About me">About</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/eda/" title="eda">eda</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/viz/" title="viz">viz</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/models/" title="models">models</a>
+      
+      
+    </div>
+  </nav>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845"
+     crossorigin="anonymous"></script>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">TyT2019W33 - Bullet Graph</h1>
+        
+        <p class="f6 measure lh-copy mv1">By Johanie Fournier, agr. in <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </p>
+        <p class="f7 db mv0 ttu">August 13, 2019</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        
+
+
+
+<h2 id="get-the-data">Get the data
+  <a href="#get-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>emperors <span style="color:#666">&lt;-</span> readr<span style="color:#666">::</span><span style="color:#06287e">read_csv</span>(<span style="color:#4070a0">&#34;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&#34;</span>)
+</span></span></code></pre></div><pre tabindex="0"><code>## Rows: 68 Columns: 16
+</code></pre><pre tabindex="0"><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &#34;,&#34;
+## chr  (11): name, name_full, birth_cty, birth_prv, rise, cause, killer, dynas...
+## dbl   (1): index
+## date  (4): birth, death, reign_start, reign_end
+</code></pre><pre tabindex="0"><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</code></pre>
+
+
+
+<h2 id="explore-the-data">Explore the data
+  <a href="#explore-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#06287e">summary</span>(emperors)
+</span></span></code></pre></div><pre tabindex="0"><code>##      index           name            name_full             birth           
+##  Min.   : 1.00   Length:68          Length:68          Min.   :0002-12-24  
+##  1st Qu.:17.75   Class :character   Class :character   1st Qu.:0123-12-13  
+##  Median :34.50   Mode  :character   Mode  :character   Median :0201-01-01  
+##  Mean   :34.50                                         Mean   :0184-07-15  
+##  3rd Qu.:51.25                                         3rd Qu.:0250-01-01  
+##  Max.   :68.00                                         Max.   :0371-01-01  
+##                                                        NA&#39;s   :5           
+##      death             birth_cty          birth_prv             rise          
+##  Min.   :0014-08-19   Length:68          Length:68          Length:68         
+##  1st Qu.:0189-10-20   Class :character   Class :character   Class :character  
+##  Median :0251-08-08   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   :0236-06-01                                                           
+##  3rd Qu.:0310-09-25                                                           
+##  Max.   :0395-01-17                                                           
+##                                                                               
+##   reign_start           reign_end             cause          
+##  Min.   :0014-09-18   Min.   :0014-08-19   Length:68         
+##  1st Qu.:0173-01-17   1st Qu.:0189-10-20   Class :character  
+##  Median :0250-08-08   Median :0251-08-08   Mode  :character  
+##  Mean   :0228-06-24   Mean   :0236-02-08                     
+##  3rd Qu.:0305-05-01   3rd Qu.:0306-11-06                     
+##  Max.   :0379-01-01   Max.   :0395-01-17                     
+##                                                              
+##     killer            dynasty              era               notes          
+##  Length:68          Length:68          Length:68          Length:68         
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##   verif_who        
+##  Length:68         
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+## 
+</code></pre>
+
+
+
+<h2 id="prepare-the-data">Prepare the data
+  <a href="#prepare-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>data<span style="color:#666">&lt;-</span>emperors <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(annee_naiss<span style="color:#666">=</span><span style="color:#06287e">year</span>(birth)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(annee_mort<span style="color:#666">=</span><span style="color:#06287e">year</span>(death)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(annee_deb<span style="color:#666">=</span><span style="color:#06287e">year</span>(reign_start)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(annee_fin<span style="color:#666">=</span><span style="color:#06287e">year</span>(reign_end)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(age_mort<span style="color:#666">=</span><span style="color:#06287e">abs</span>(annee_mort<span style="color:#666">-</span>annee_naiss)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(age_deb<span style="color:#666">=</span><span style="color:#06287e">abs</span>(annee_deb<span style="color:#666">-</span>annee_naiss)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(age_fin<span style="color:#666">=</span><span style="color:#06287e">abs</span>(annee_fin<span style="color:#666">-</span>annee_naiss)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(duree<span style="color:#666">=</span><span style="color:#06287e">abs</span>(age_fin<span style="color:#666">-</span>age_deb)) <span style="color:#666">%&gt;%</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">mutate</span>(remove<span style="color:#666">=</span><span style="color:#06287e">ifelse</span>(age_deb<span style="color:#666">==</span>age_mort, <span style="color:#4070a0">&#39;retirer&#39;</span>, <span style="color:#007020;font-weight:bold">NA</span>)) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">filter</span>(<span style="color:#666">!</span>age_mort <span style="color:#666">%in%</span> <span style="color:#007020;font-weight:bold">NA</span>,<span style="color:#666">!</span>age_deb <span style="color:#666">%in%</span> <span style="color:#007020;font-weight:bold">NA</span>,<span style="color:#666">!</span>age_fin <span style="color:#666">%in%</span> <span style="color:#007020;font-weight:bold">NA</span>, 
+</span></span><span style="display:flex;"><span>         <span style="color:#666">!</span>age_mort <span style="color:#666">%in%</span> <span style="color:#40a070">4</span>, <span style="color:#666">!</span>remove <span style="color:#666">%in%</span> <span style="color:#4070a0">&#34;retirer&#34;</span>) <span style="color:#666">%&gt;%</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#06287e">select</span>(name, age_deb, age_fin, age_mort, duree) 
+</span></span></code></pre></div>
+
+
+
+<h2 id="visualize-the-data">Visualize the data
+  <a href="#visualize-the-data"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#Graphique</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span><span style="color:#06287e">ggplot</span>(data, <span style="color:#06287e">aes</span>(x<span style="color:#666">=</span><span style="color:#06287e">reorder</span>(name, <span style="color:#666">-</span>age_mort), y<span style="color:#666">=</span>age_mort))
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_bar</span>(stat<span style="color:#666">=</span><span style="color:#4070a0">&#34;identity&#34;</span>, position<span style="color:#666">=</span><span style="color:#4070a0">&#34;stack&#34;</span>, width<span style="color:#666">=</span><span style="color:#40a070">0.65</span>, fill<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, alpha<span style="color:#666">=</span><span style="color:#40a070">0.4</span>)
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_segment</span>(<span style="color:#06287e">aes</span>(y <span style="color:#666">=</span> age_deb, 
+</span></span><span style="display:flex;"><span>                            x <span style="color:#666">=</span> name, 
+</span></span><span style="display:flex;"><span>                            yend <span style="color:#666">=</span> age_fin, 
+</span></span><span style="display:flex;"><span>                            xend <span style="color:#666">=</span> name), 
+</span></span><span style="display:flex;"><span>                        color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#175676&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">2.3</span>, alpha<span style="color:#666">=</span><span style="color:#40a070">0.8</span>) 
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_errorbar</span>(<span style="color:#06287e">aes</span>(y<span style="color:#666">=</span>age_mort, x<span style="color:#666">=</span>name, ymin<span style="color:#666">=</span>age_mort, ymax<span style="color:#666">=</span>age_mort), color<span style="color:#666">=</span><span style="color:#4070a0">&#34;black&#34;</span>, width<span style="color:#666">=</span><span style="color:#40a070">0.85</span>) 
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">geom_point</span>(<span style="color:#06287e">aes</span>(name, age_mort), colour<span style="color:#666">=</span><span style="color:#4070a0">&#34;black&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">0.75</span>) 
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">coord_flip</span>()
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajuster les axes </span>
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">scale_y_continuous</span>(breaks<span style="color:#666">=</span><span style="color:#06287e">seq</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">80</span>,<span style="color:#40a070">10</span>), limits <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>,<span style="color:#40a070">80</span>))
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span> <span style="color:#06287e">expand_limits</span>(x<span style="color:#666">=</span><span style="color:#06287e">c</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">56</span>))
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#modifier le thème</span>
+</span></span><span style="display:flex;"><span>gg <span style="color:#666">&lt;-</span> gg <span style="color:#666">+</span>  <span style="color:#06287e">theme</span>(panel.border <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    panel.background <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    plot.background <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    panel.grid.major.x<span style="color:#666">=</span> <span style="color:#06287e">element_line</span>(size<span style="color:#666">=</span><span style="color:#40a070">0.2</span>,linetype<span style="color:#666">=</span><span style="color:#4070a0">&#34;dotted&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>),
+</span></span><span style="display:flex;"><span>                    panel.grid.major.y<span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    panel.grid.minor <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    axis.line.x <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    axis.line.y <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    axis.ticks.y <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                    axis.ticks.x <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>())
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajouter les titres</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">labs</span>(title<span style="color:#666">=</span><span style="color:#4070a0">&#34; &#34;</span>,
+</span></span><span style="display:flex;"><span>              subtitle<span style="color:#666">=</span><span style="color:#4070a0">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>              y<span style="color:#666">=</span><span style="color:#4070a0">&#34; &#34;</span>, 
+</span></span><span style="display:flex;"><span>              x<span style="color:#666">=</span><span style="color:#4070a0">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">theme</span>(plot.title    <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                 plot.subtitle <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                 axis.title.y  <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                 axis.title.x  <span style="color:#666">=</span> <span style="color:#06287e">element_blank</span>(),
+</span></span><span style="display:flex;"><span>                 axis.text.y   <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(hjust<span style="color:#666">=</span><span style="color:#40a070">1</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, size<span style="color:#666">=</span><span style="color:#40a070">12</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, face<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>), 
+</span></span><span style="display:flex;"><span>                 axis.text.x   <span style="color:#666">=</span> <span style="color:#06287e">element_text</span>(hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, vjust<span style="color:#666">=</span><span style="color:#40a070">0</span>, size<span style="color:#666">=</span><span style="color:#40a070">12</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, face<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#Faire des flèches</span>
+</span></span><span style="display:flex;"><span>arrows <span style="color:#666">&lt;-</span> <span style="color:#06287e">tibble</span>(
+</span></span><span style="display:flex;"><span>  x1 <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">50</span>, <span style="color:#40a070">16</span>, <span style="color:#40a070">53.5</span>, <span style="color:#40a070">53.5</span>, <span style="color:#40a070">53.5</span>),
+</span></span><span style="display:flex;"><span>  x2 <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">49</span>, <span style="color:#40a070">15</span>,   <span style="color:#40a070">51</span>,   <span style="color:#40a070">51</span>,   <span style="color:#40a070">51</span>),
+</span></span><span style="display:flex;"><span>  y1 <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">35</span>, <span style="color:#40a070">70</span>,    <span style="color:#40a070">5</span>,   <span style="color:#40a070">25</span>,   <span style="color:#40a070">40</span>),
+</span></span><span style="display:flex;"><span>  y2 <span style="color:#666">=</span> <span style="color:#06287e">c</span>(<span style="color:#40a070">22</span>, <span style="color:#40a070">61</span>,    <span style="color:#40a070">0</span>,   <span style="color:#40a070">13</span>,   <span style="color:#40a070">19</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span>    <span style="color:#06287e">geom_curve</span>(data <span style="color:#666">=</span> arrows, <span style="color:#06287e">aes</span>(x <span style="color:#666">=</span> x1, y <span style="color:#666">=</span> y1, xend <span style="color:#666">=</span> x2, yend <span style="color:#666">=</span> y2), 
+</span></span><span style="display:flex;"><span>                              arrow <span style="color:#666">=</span> <span style="color:#06287e">arrow</span>(length <span style="color:#666">=</span> <span style="color:#06287e">unit</span>(<span style="color:#40a070">0.1</span>, <span style="color:#4070a0">&#34;inch&#34;</span>)), 
+</span></span><span style="display:flex;"><span>                              size <span style="color:#666">=</span> <span style="color:#40a070">0.3</span>, color <span style="color:#666">=</span> <span style="color:#4070a0">&#34;#6D7C83&#34;</span>, curvature <span style="color:#666">=</span> <span style="color:#40a070">-0.3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#60a0b0;font-style:italic">#ajouter les étiquettes de données</span>
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">50</span>,y<span style="color:#666">=</span><span style="color:#40a070">35</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;The youngest to\nbecome Emperor&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">3</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">18</span>,y<span style="color:#666">=</span><span style="color:#40a070">70</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;His reign\nend before\nhe dies&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">3</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">54</span>,y<span style="color:#666">=</span><span style="color:#40a070">5</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Birth&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">3</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">55</span>,y<span style="color:#666">=</span><span style="color:#40a070">25</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Reign\nStart&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">3</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.8</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span><span style="display:flex;"><span>gg<span style="color:#666">&lt;-</span>gg <span style="color:#666">+</span> <span style="color:#06287e">annotate</span>(geom<span style="color:#666">=</span><span style="color:#4070a0">&#34;text&#34;</span>, x<span style="color:#666">=</span><span style="color:#40a070">54</span>,y<span style="color:#666">=</span><span style="color:#40a070">40</span>, label<span style="color:#666">=</span><span style="color:#4070a0">&#34;Death&#34;</span>, color<span style="color:#666">=</span><span style="color:#4070a0">&#34;#6D7C83&#34;</span>, size<span style="color:#666">=</span><span style="color:#40a070">3</span>, hjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>,vjust<span style="color:#666">=</span><span style="color:#40a070">0.5</span>, fontface<span style="color:#666">=</span><span style="color:#4070a0">&#34;bold&#34;</span>)
+</span></span></code></pre></div><img src="https://johaniefournier.com/blog/tyt2019w33/index_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">August 13, 2019</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">3 minute read, 569 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categories:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/categories/rstats">rstats</a>  <a href="https://johaniefournier.com/categories/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/categories/tidytuesday">tidytuesday</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://johaniefournier.com/tags/rstats">rstats</a>  <a href="https://johaniefournier.com/tags/tidyverse">tidyverse</a>  <a href="https://johaniefournier.com/tags/tidytuesday">tidytuesday</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/tyt2025w19/">TyT2025W19: Seismic Events at Mount Vesuvius</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz2/">Heatmap to Visualize Spatio-Temporal Data</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ca_temperature_viz/">Side by side interactive map with {leaflet} and {leaflet.extras2}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://johaniefournier.com/blog/tyt2019w34/">&larr; TyT2019W34 - Stack of Histograms</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://johaniefournier.com/blog/tyt2019w32/">TyT2019W32 - Bob Ross Painting &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      
+<div class="post-comments pa0 pa4-l mt4">
+  
+  <script src="https://utteranc.es/client.js"
+          repo="jofou/johaniefournier.com"
+          issue-term="title"
+          theme="github-light"
+          label="comments :speech_balloon:"
+          crossorigin="anonymous"
+          async
+          type="text/javascript">
+  </script>
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Johanie Fournier
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="License">License</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#2D2D39"
+    },
+    "button": {
+      "background": "#14a7d0"
+    }
+  },
+  "theme": "edgeless",
+  "position": "bottom-right",
+  "content": {
+      "message": "This website uses cookies for Google Analytics so that I know how many people are reading the blog and which blogposts are the most popular. The website does not collect any personal data.",
+  "href": "https://www.cookiesandyou.com/"
+  }
+});
+</script>
+
+      </div>
+    </body>
+</html>
+

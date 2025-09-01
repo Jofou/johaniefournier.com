@@ -1,0 +1,178 @@
+---
+title: "TyT2019W44 - Show Some Informations"
+author: Johanie Fournier, agr. 
+date: "2019-10-31"
+slug: TyT2019W44
+categories:
+  - rstats
+  - tidyverse
+  - tidytuesday
+tags:
+  - rstats
+  - tidyverse
+  - tidytuesday
+subtitle: ''
+summary: "Initially publish it on my wordpress blog. I put it here for reference purpose."
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: false
+projects: []
+---
+
+```{r setup, include=FALSE}
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(magick)
+library(lubridate)
+library(inspectdf)
+library(ggtext)
+library(rmarkdown)
+library(patchwork)
+library(ggpmisc)
+library(tidytuesdayR)
+```
+
+
+## Get the data
+
+```{r}
+nyc_squirrels <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-29/nyc_squirrels.csv")
+```
+
+## Explore the data
+
+```{r}
+summary(nyc_squirrels)
+```
+
+## Prepare the data
+
+```{r}
+temps<-nyc_squirrels %>% 
+  group_by(shift) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=shift) %>% 
+  add_column(categorie="shift")
+
+age<-nyc_squirrels %>% 
+  group_by(age) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=age) %>% 
+  add_column(categorie="age")
+
+couleur<-nyc_squirrels %>% 
+  group_by(primary_fur_color) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=primary_fur_color) %>% 
+  add_column(categorie="couleur")
+
+location<-nyc_squirrels %>% 
+  group_by(location) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=location) %>% 
+  add_column(categorie="emplacement")
+
+activite<-nyc_squirrels %>% 
+  select(running, chasing, climbing, eating, foraging) %>%
+  gather(activite, valeur) %>% 
+  filter(!valeur=="FALSE") %>% 
+  group_by(activite) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=activite) %>% 
+  add_column(categorie="activite")
+
+vocalise<-nyc_squirrels %>% 
+  select(kuks, quaas, moans) %>%
+  gather(vocalise, valeur) %>% 
+  filter(!valeur=="FALSE") %>% 
+  group_by(vocalise) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=vocalise) %>% 
+  add_column(categorie="vocalise")
+
+tail<-nyc_squirrels %>% 
+  select(tail_flags, tail_twitches) %>%
+  gather(tail, valeur) %>% 
+  filter(!valeur=="FALSE") %>% 
+  group_by(tail) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=tail) %>% 
+  add_column(categorie="tail")
+
+human<-nyc_squirrels %>% 
+  select(approaches, indifferent, runs_from) %>%
+  gather(human, valeur) %>% 
+  filter(!valeur=="FALSE") %>% 
+  group_by(human) %>% 
+  summarise(n=n()) %>% 
+  mutate(rel.freq =round(100 * n/sum(n), 0)) %>% 
+  rename(type=human) %>% 
+  add_column(categorie="human")
+
+data<-human %>% 
+  bind_rows(tail, vocalise, activite, location, couleur, age, temps)
+```
+
+## Visualize the data
+
+```{r, eval=FALSE}
+#Graphique
+gg<- ggplot(data=data,aes(x = reorder(categorie,desc(rel.freq)), y=rel.freq, fill=reorder(type, desc(rel.freq))))
+gg <- gg + geom_chicklet(width = 0.8, radius = grid::unit(2, 'mm'))
+gg <- gg + coord_flip()
+gg <- gg + scale_fill_manual(values=c("#A86C30", "#A86C30", "#A86C30", "#A86C30", "#A86C30", "#A86C30","#A86C30", "#DED4BB", "#A86C30", "#DED4BB", "#DED4BB", "#DED4BB","#DED4BB", "#DED4BB", "#DED4BB", "#DED4BB", "#DED4BB", "#DED4BB","#DED4BB", "#DED4BB", "#DED4BB", "#DED4BB", "#DED4BB", "#DED4BB"), na.value="#DED4BB")
+#retirer la légende
+gg <- gg +  theme(legend.position = "none")
+#étiquettes de données
+gg<-gg + annotate(geom="text", x=1,y=1, label="55 % prefer the afternoon", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=2,y=1, label="74 % twitches their tail", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=3,y=1, label="70 % prefer the ground", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=4,y=1, label="63 % are indifferent to human", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=5,y=1, label="66 % kurks", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=6,y=1, label="85 % are adults", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=7,y=1, label="82 % are gray", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+gg<-gg + annotate(geom="text", x=8,y=1, label="37 % do foraging", color="black", size=6, hjust=0,vjust=0.5, fontface="bold", family="Tw Cen MT")
+#modifier le thème
+gg <- gg +  theme(panel.border = element_rect(color="#394018",size=1, fill=NA),
+                    panel.background = element_rect(fill="#394018"),
+                    plot.background = element_rect(fill="#394018"),
+                    panel.grid.major.x= element_blank(),
+                    panel.grid.major.y= element_blank(),
+                    panel.grid.minor = element_blank(),
+                    axis.line.x = element_blank(),
+                    axis.line.y =element_blank(),
+                    axis.ticks.x = element_blank(), 
+                    axis.ticks.y = element_blank())
+#ajouter les titres
+gg<-gg + labs(title="New York's squirrels...",
+              subtitle = "Here is the list of the main features of Central Park's squirrels\n",
+              x=" ", 
+              y=" ", 
+              caption="\nSOURCE: NYC Squirrel Census   |  DESIGN: Johanie Fournier, agr.")
+gg<-gg + theme(  plot.title    =  element_text(size=40, hjust=0,vjust=0.5, family="Tw Cen MT", color="black"),
+                 plot.subtitle = element_text(size=16, hjust=0,vjust=0.5, family="Tw Cen MT", color="black"),
+                 plot.caption  = element_text(size=10, hjust=1,vjust=0.5, family="Tw Cen MT", color="black"),
+                 axis.title.y  = element_blank(),
+                 axis.title.x  = element_blank(),
+                 axis.text.y   = element_blank(), 
+                 axis.text.x   = element_blank())
+```
+
+```{r echo=FALSE, out.width='100%', fig.align='center'}
+magick::image_read('featured.png')
+```
+
