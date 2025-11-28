@@ -38,7 +38,7 @@ Let's dive in! 🚀
 
 **Focus:** complete structured program → great for focused learners
 
-✅ [Enroll here.](Yhttps://university.business-science.io/p/5-course-bundle-machine-learning-web-apps-time-series/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+✅ [Enroll here.](https://university.business-science.io/p/5-course-bundle-machine-learning-web-apps-time-series/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 
 ## Learning Labs Pro
 
@@ -46,7 +46,7 @@ Let's dive in! 🚀
 
 **Focus:** hands-on practice beats passive learning, real projects to build a portfolio fast
 
-✅ [Start practicing here.](Yhttps://university.business-science.io/p/learning-labs-pro/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+✅ [Start practicing here.](https://university.business-science.io/p/learning-labs-pro/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 
 ## Data Science for Business Part 1
 
@@ -54,7 +54,7 @@ Let's dive in! 🚀
 
 **Focus**: turn R skills into business decision-making, understanding how data drives real companies
 
-✅ [Learn how data drives business success.](Yhttps://university.business-science.io/p/ds4b-101-r-business-analysis-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+✅ [Learn how data drives business success.](https://university.business-science.io/p/ds4b-101-r-business-analysis-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 
 ## Data Science for Business Part 2
 
@@ -63,7 +63,7 @@ Part 2 takes you beyond the basics into advanced applications of R in real-world
 
 **Focus:** advanced business data applications, bridges coding + real-world business impact
 
-✅ [Continue your business data journey here.](Yhttps://university.business-science.io/p/hr201-using-machine-learning-h2o-lime-to-predict-employee-turnover/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+✅ [Continue your business data journey here.](https://university.business-science.io/p/hr201-using-machine-learning-h2o-lime-to-predict-employee-turnover/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 
 ## High Performance Time Series
 
@@ -71,14 +71,14 @@ Part 2 takes you beyond the basics into advanced applications of R in real-world
 
 **Focus:** time series forecasting --- one of the highest-paid DS skills, practical, fast modeling approaches with R
 
-✅ [Learn high-performance forecasting here.](Yhttps://university.business-science.io/p/ds4b-203-r-high-performance-time-series-forecasting/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+✅ [Learn high-performance forecasting here.](https://university.business-science.io/p/ds4b-203-r-high-performance-time-series-forecasting/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 
 ## Shiny Web Applications Part 1
 
 🎨 Transform your R scripts into stunning, interactive web applications. Shiny Web Applications Part 1 shows you how to design and deploy real-world apps, step-by-step. Perfect for analysts, researchers, or entrepreneurs who want to showcase data dynamically.
 
 **Focus:** build real web apps from R analysis, interactive dashboards, simple UI building
-✅ [Start building your first app here.](Yhttps://university.business-science.io/p/ds4b-102-r-shiny-web-application-business-level-1/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+✅ [Start building your first app here.](https://university.business-science.io/p/ds4b-102-r-shiny-web-application-business-level-1/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 
 ## Shiny Web Applications Part 2
 
@@ -86,7 +86,7 @@ Part 2 takes you beyond the basics into advanced applications of R in real-world
 
 **Focus:** advanced app development techniques, move from basic dashboards to pro-grade apps
 
-✅ [Advance your Shiny skills here](Yhttps://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
+✅ [Advance your Shiny skills here](https://university.business-science.io/p/expert-shiny-developer-with-aws-course-ds4b-202a-r/?coupon_code=DS4B15&affcode=173166_sqpk4nck)
 
 If you're serious about growing your R programming and data science skills,
 these courses offer real, practical learning --- not just theory.
