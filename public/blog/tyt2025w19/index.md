@@ -30,8 +30,6 @@ resources:
 
 [![](petit.png)](https://subscribepage.io/E3ia1B)
 
-Subscribe button
-
 <br>
 
 The data of this week [Tidytuesday challenge](https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-05-13/readme.md) inspire me to make an aminated map of the seismic events at Mount Vesuvius. The dataset contains information about seismic events detected at the famous Mount Vesuvius in Italy. It comes from the Italian Istituto Nazionale di Geofisica e Vulcanologia (INGV)'s Data Portal and can be explored along with other seismic areas on the GOSSIP website. The raw data was saved as individual CSV files from the GOSSIP website and some values were translated from Italian to English.
@@ -91,7 +89,7 @@ Data summary
 |:---------|------:|---------:|:------------|:------------|:------------|------:|
 | time          |         0 |             1 | 2011-04-20 00:27:24 | 2024-12-31 17:02:32 | 2019-05-11 22:23:43 |    11953 |
 
-We have a date variable and an indication og the magnitude of the seismic event.
+We have a date variable and an indication of the magnitude of the seismic event.
 
 ## Animated Visualization
 
@@ -145,8 +143,6 @@ print(animation, info = FALSE)
 # Sign up for the newsletter
 
 [![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
-
-Sign up
 
 <br>
 

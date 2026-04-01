@@ -140,6 +140,12 @@ print(animation, info = FALSE)
 
 ![](index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.gif)
 
+# Have a question or a project in mind?
+
+[![](contact_me.png)](https://tally.so/r/gDZMrJ)
+
+<br>
+
 # Sign up for the newsletter
 
 [![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)

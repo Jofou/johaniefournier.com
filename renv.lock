@@ -1,0 +1,17 @@
+{
+  "R": {
+    "Version": "4.4.2",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cloud.r-project.org"
+      }
+    ]
+  },
+  "Packages": [],
+  "Python": {
+    "Version": "3.9.6",
+    "Type": "virtualenv",
+    "Name": "./env"
+  }
+}

@@ -137,7 +137,7 @@ Dir.Exports <- file.path(Dir.Base, "Exports") # folder path for exports
 ```
 
 
-[![Subscribe button](petit.png)](https://subscribepage.io/E3ia1B)
+[![](petit.png)](https://subscribepage.io/E3ia1B)
 
 <br>
 
@@ -158,7 +158,7 @@ vesuvius <- tuesdata$vesuvius
 skimr::skim(tuesdata$vesuvius)
 ```
 
-We have a date variable and an indication og the magnitude of the seismic event. 
+We have a date variable and an indication of the magnitude of the seismic event. 
 
 ## Animated Visualization
 
@@ -211,7 +211,7 @@ print(animation, info = FALSE)
 
 # Sign up for the newsletter
 
-[![Sign up](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
+[![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
 
 <br>
 

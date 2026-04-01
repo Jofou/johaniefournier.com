@@ -19,7 +19,6 @@
       <description>&lt;script async src=&#34;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7674504334497845&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://subscribepage.io/E3ia1B&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;petit.png&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Subscribe button&lt;/p&gt;
 &lt;br&gt;
 &lt;p&gt;The data of this week 
 &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-05-13/readme.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Tidytuesday challenge&lt;/a&gt; inspire me to make an aminated map of the seismic events at Mount Vesuvius. The dataset contains information about seismic events detected at the famous Mount Vesuvius in Italy. It comes from the Italian Istituto Nazionale di Geofisica e Vulcanologia (INGV)&amp;rsquo;s Data Portal and can be explored along with other seismic areas on the GOSSIP website. The raw data was saved as individual CSV files from the GOSSIP website and some values were translated from Italian to English.&lt;/p&gt;
@@ -281,7 +280,7 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;We have a date variable and an indication og the magnitude of the seismic event.&lt;/p&gt;
+&lt;p&gt;We have a date variable and an indication of the magnitude of the seismic event.&lt;/p&gt;
 
 
 
@@ -341,7 +340,6 @@
 &lt;/h1&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;sign_up.png&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Sign up&lt;/p&gt;
 &lt;br&gt;
 
 
@@ -353,7 +351,7 @@
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#06287e&#34;&gt;sessionInfo&lt;/span&gt;()
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sequoia 15.5
+Running under: macOS Sequoia 15.6.1
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 

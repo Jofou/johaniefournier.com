@@ -85,6 +85,12 @@ This connects science to practice.
 Explain that this spatial architecture becomes the foundation of a drainage decision-support system.
 This subtly prepares readers for your future tool.
 
+# Have a question or a project in mind?
+
+[![](contact_me.png)](https://tally.so/r/gDZMrJ)
+
+<br>
+
 # Sign up for the newsletter
 
 [![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)

@@ -92,6 +92,12 @@ Lead into Post 3
 
 This post is the first step in a broader framework for building operational drainage zoning tools using LiDAR, soil, and climate data.
 
+# Have a question or a project in mind?
+
+[![](contact_me.png)](https://tally.so/r/gDZMrJ)
+
+<br>
+
 # Sign up for the newsletter
 
 [![](sign_up.png)](https://dashboard.mailerlite.com/forms/1478852/152663752035010469/share)
